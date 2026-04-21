@@ -2,8 +2,8 @@ import type { WidgetConfig, WidgetState } from '@bauer-group/accessibility-widge
 
 declare global {
   interface Window {
-    BFSGWidgetConfig?: WidgetConfig;
-    BFSGWidget?: {
+    AccessibilityWidgetConfig?: WidgetConfig;
+    AccessibilityWidget?: {
       open(): Promise<void>;
       close(): void;
       reset(): void;
@@ -26,12 +26,12 @@ export interface BfsgOptions {
 export function bfsgWidget(_node: HTMLElement, opts: BfsgOptions = {}): { destroy(): void } {
   if (typeof window === 'undefined') return { destroy() {} };
 
-  const loaderSrc = opts.loaderSrc ?? '/bfsg-widget-loader.min.js';
-  const cssHref = opts.cssHref ?? '/bfsg-widget.min.css';
+  const loaderSrc = opts.loaderSrc ?? '/accessibility-widget-loader.min.js';
+  const cssHref = opts.cssHref ?? '/accessibility-widget.min.css';
   const sri = opts.sri ?? {};
 
   if (opts.config) {
-    window.BFSGWidgetConfig = { ...(window.BFSGWidgetConfig ?? {}), ...opts.config };
+    window.AccessibilityWidgetConfig = { ...(window.AccessibilityWidgetConfig ?? {}), ...opts.config };
   }
   if (cssHref && !document.querySelector('link[data-bfsg="css"]')) {
     const link = document.createElement('link');
@@ -58,6 +58,6 @@ export function bfsgWidget(_node: HTMLElement, opts: BfsgOptions = {}): { destro
   return { destroy() {} };
 }
 
-export const openBFSGWidget = (): Promise<void> | undefined => window.BFSGWidget?.open();
-export const closeBFSGWidget = (): void => window.BFSGWidget?.close();
-export const resetBFSGWidget = (): void => window.BFSGWidget?.reset();
+export const openAccessibilityWidget = (): Promise<void> | undefined => window.AccessibilityWidget?.open();
+export const closeAccessibilityWidget = (): void => window.AccessibilityWidget?.close();
+export const resetAccessibilityWidget = (): void => window.AccessibilityWidget?.reset();

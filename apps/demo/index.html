@@ -8,15 +8,15 @@
     <meta name="color-scheme" content="light dark" />
     <link rel="stylesheet" href="/src/styles.css" />
     <script>
-      window.BFSGWidgetConfig = {
-        corePath: '/bfsg-widget/bfsg-widget-core.min.js',
-        cssPath: '/bfsg-widget/bfsg-widget.min.css',
+      window.AccessibilityWidgetConfig = {
+        corePath: '/accessibility-widget/accessibility-widget-core.min.js',
+        cssPath: '/accessibility-widget/accessibility-widget.min.css',
         position: 'bottom-right',
         locale: 'auto',
         primaryColor: '#0058a3',
       };
     </script>
-    <script src="/bfsg-widget/bfsg-widget-loader.min.js" defer></script>
+    <script src="/accessibility-widget/accessibility-widget-loader.min.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Zum Hauptinhalt springen</a>
@@ -88,7 +88,7 @@
 
       <section class="container" id="integration" aria-labelledby="h-int">
         <h2 id="h-int">Integration (1 Zeile)</h2>
-        <pre><code>&lt;script src="/bfsg-widget/bfsg-widget-loader.min.js" defer&gt;&lt;/script&gt;</code></pre>
+        <pre><code>&lt;script src="/accessibility-widget/accessibility-widget-loader.min.js" defer&gt;&lt;/script&gt;</code></pre>
         <p>
           Das reicht für 90 % der Use-Cases. Für CMS/Shop-Systeme existieren eigene Pakete unter
           <code>integrations/</code>: React, Vue, Angular, Svelte, Next.js, Nuxt, Astro, WordPress,
@@ -110,7 +110,7 @@
         </ul>
 
         <aside class="violations">
-          <img src="/bfsg-widget-assets/sample.svg" />
+          <img src="/accessibility-widget-assets/sample.svg" />
           <p><a href="#">hier klicken</a> für mehr.</p>
           <button class="low-contrast" type="button">Graue Aktion</button>
           <form>

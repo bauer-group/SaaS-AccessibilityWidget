@@ -6,16 +6,16 @@
 ## 1-Line-Integration
 
 ```html
-<script src="https://cdn.bauer-group.com/bfsg-widget/v1/bfsg-widget-loader.min.js" defer></script>
+<script src="https://cdn.bauer-group.com/accessibility-widget/v1/accessibility-widget-loader.min.js" defer></script>
 ```
 
 ## Mit Konfiguration
 
 ```html
 <script>
-  window.BFSGWidgetConfig = {
-    corePath: '/static/bfsg-widget-core.min.js',
-    cssPath: '/static/bfsg-widget.min.css',
+  window.AccessibilityWidgetConfig = {
+    corePath: '/static/accessibility-widget-core.min.js',
+    cssPath: '/static/accessibility-widget.min.css',
     position: 'bottom-right', // bottom-right | bottom-left | top-right | top-left
     locale: 'auto',           // auto | de | en | fr | es | it | pl | tr | ar
     primaryColor: '#0058a3',
@@ -24,12 +24,12 @@
     coreIntegrity: 'sha384-…', // optional SRI (see dist/integrity.txt)
   };
 </script>
-<script src="/static/bfsg-widget-loader.min.js" defer></script>
+<script src="/static/accessibility-widget-loader.min.js" defer></script>
 ```
 
 ## Features
 
-Das Widget stellt **User-Preference-Features** bereit — es verändert **niemals** ARIA/Semantik der Host-Seite. Alles läuft über `data-bfsg-*`-Attribute auf `<html>` und CSS-Filter.
+Das Widget stellt **User-Preference-Features** bereit — es verändert **niemals** ARIA/Semantik der Host-Seite. Alles läuft über `data-aw-*`-Attribute auf `<html>` und CSS-Filter.
 
 | Feature | Wirkung |
 |---|---|
@@ -52,11 +52,11 @@ Voreinstellungen aktivieren mehrere Features gleichzeitig: `visionImpaired`, `mo
 ## API
 
 ```js
-window.BFSGWidget.open();            // Panel öffnen
-window.BFSGWidget.close();           // schließen
-window.BFSGWidget.reset();           // alle Einstellungen zurücksetzen + reload
-window.BFSGWidget.set('fontSize', true);
-window.BFSGWidget.getState();        // aktueller persistenter State
+window.AccessibilityWidget.open();            // Panel öffnen
+window.AccessibilityWidget.close();           // schließen
+window.AccessibilityWidget.reset();           // alle Einstellungen zurücksetzen + reload
+window.AccessibilityWidget.set('fontSize', true);
+window.AccessibilityWidget.getState();        // aktueller persistenter State
 ```
 
 ## Architektur

@@ -84,6 +84,6 @@ Automatisierung deckt nicht alles. Vor jedem Release manuell:
 - [ ] `prefers-reduced-motion` respektiert?
 - [ ] RTL-Layout (`ar`-Locale) funktioniert?
 - [ ] localStorage-Persistenz über Reload bestehen?
-- [ ] `window.BFSGWidget.reset()` bringt initialen Zustand zurück?
+- [ ] `window.AccessibilityWidget.reset()` bringt initialen Zustand zurück?
 
-Der automatisierte WCAG-Scan läuft separat aus dem Compliance-Repo gegen `http://localhost:5173`.
+Der automatisierte WCAG-Scan läuft separat aus dem [Compliance-Repo](https://github.com/bauer-group/SaaS-BFSGWidget) gegen `http://localhost:5173`.

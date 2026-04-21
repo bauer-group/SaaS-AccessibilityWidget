@@ -11,16 +11,16 @@
   },
   "homepage": "https://github.com/bauer-group/SaaS-AccessibilityWidget/tree/main/packages/widget",
   "type": "module",
-  "main": "./dist/bfsg-widget-loader.min.js",
+  "main": "./dist/accessibility-widget-loader.min.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./dist/bfsg-widget-loader.min.js"
+      "default": "./dist/accessibility-widget-loader.min.js"
     },
-    "./loader": "./dist/bfsg-widget-loader.min.js",
-    "./core": "./dist/bfsg-widget-core.min.js",
-    "./styles": "./dist/bfsg-widget.min.css"
+    "./loader": "./dist/accessibility-widget-loader.min.js",
+    "./core": "./dist/accessibility-widget-core.min.js",
+    "./styles": "./dist/accessibility-widget.min.css"
   },
   "files": ["dist", "src", "README.md", "LICENSE"],
   "scripts": {

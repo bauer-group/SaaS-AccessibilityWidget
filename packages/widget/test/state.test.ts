@@ -15,23 +15,23 @@ describe('state module', () => {
     const s = createDefaultState();
     s.features.fontSize = true;
     s.fontSizeLevel = 1.4;
-    saveState('bfsg-test', s);
-    const loaded = loadState('bfsg-test');
+    saveState('aw-test', s);
+    const loaded = loadState('aw-test');
     expect(loaded.features.fontSize).toBe(true);
     expect(loaded.fontSizeLevel).toBe(1.4);
   });
 
   it('merges partial persisted state with defaults', () => {
-    localStorage.setItem('bfsg-partial', JSON.stringify({ fontSizeLevel: 1.6 }));
-    const loaded = loadState('bfsg-partial');
+    localStorage.setItem('aw-partial', JSON.stringify({ fontSizeLevel: 1.6 }));
+    const loaded = loadState('aw-partial');
     expect(loaded.fontSizeLevel).toBe(1.6);
     expect(loaded.contrastMode).toBe('off');
     expect(Object.keys(loaded.features).length).toBeGreaterThan(0);
   });
 
   it('returns defaults on corrupt JSON', () => {
-    localStorage.setItem('bfsg-corrupt', '{not json');
-    const loaded = loadState('bfsg-corrupt');
+    localStorage.setItem('aw-corrupt', '{not json');
+    const loaded = loadState('aw-corrupt');
     expect(loaded).toEqual(createDefaultState());
   });
 

@@ -69,4 +69,4 @@ Dieses Widget muss sich **an den eigenen Standards messen lassen**. Vor jedem Re
 - Alle Features per Tastatur erreichbar
 - FAB + Panel passen WCAG 2.1 AA Kontrast (4.5:1)
 
-Der automatisierte WCAG-Scan erfolgt durch das separate Compliance-Repo ([SaaS-BFSGWidget](https://github.com/bauer-group/SaaS-BFSGWidget)) gegen `http://localhost:5173`.
+Der automatisierte WCAG-Scan erfolgt durch das separate [Compliance-Repo](https://github.com/bauer-group/SaaS-BFSGWidget) (Scanner, Statement-Generator, API) gegen `http://localhost:5173`.

@@ -62,7 +62,7 @@ Registrieren in `i18n/index.ts`, Test-Case in `test/i18n.test.ts`.
 | **Hugo** / **Eleventy** / **Jekyll** Shortcode | Static-Site-Generators sind oft übersehen | 20 min |
 | **Joomla** / **Craft CMS** | Traditionelle CMS-Nischen | 60 min |
 
-**Muster** (JS): React/Vue sind identisch bis auf 20 Zeilen — schauen Sie `integrations/js/react/src/BFSGWidget.tsx` an und portieren Sie das Pattern.
+**Muster** (JS): React/Vue sind identisch bis auf 20 Zeilen — schauen Sie `integrations/js/react/src/AccessibilityWidget.tsx` an und portieren Sie das Pattern.
 
 **Trade-offs**:
 - Peer-Dependency vs. gebündelt: Wir peeren die Host-Framework-Deps (kleiner Bundle)

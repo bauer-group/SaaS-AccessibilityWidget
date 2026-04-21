@@ -63,7 +63,7 @@ jobs:
           node-version: 24
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter @bauer-group/bfsg-scanner playwright:install
+      - run: pnpm --filter @bauer-group/aw-scanner playwright:install
       - run: pnpm build
       - name: Self-audit demo app
         run: |

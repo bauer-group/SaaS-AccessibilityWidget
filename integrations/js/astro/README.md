@@ -2,21 +2,21 @@
 
 ```astro
 ---
-import BFSGWidget from '@bauer-group/accessibility-widget-astro/src/BFSGWidget.astro';
+import AccessibilityWidget from '@bauer-group/accessibility-widget-astro/src/AccessibilityWidget.astro';
 ---
 
 <html lang="de">
   <body>
     <slot />
-    <BFSGWidget
-      loaderSrc="/bfsg-widget/bfsg-widget-loader.min.js"
-      cssHref="/bfsg-widget/bfsg-widget.min.css"
+    <AccessibilityWidget
+      loaderSrc="/accessibility-widget/accessibility-widget-loader.min.js"
+      cssHref="/accessibility-widget/accessibility-widget.min.css"
       config={{ locale: 'auto' }}
     />
   </body>
 </html>
 ```
 
-Widget-Assets nach `public/bfsg-widget/*`.
+Widget-Assets nach `public/accessibility-widget/*`.
 
 MIT © BAUER GROUP

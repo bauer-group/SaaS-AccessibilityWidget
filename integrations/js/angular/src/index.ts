@@ -10,8 +10,8 @@ export interface Sri {
 
 declare global {
   interface Window {
-    BFSGWidgetConfig?: WidgetConfig;
-    BFSGWidget?: {
+    AccessibilityWidgetConfig?: WidgetConfig;
+    AccessibilityWidget?: {
       open(): Promise<void>;
       close(): void;
       reset(): void;
@@ -21,13 +21,13 @@ declare global {
 }
 
 @Component({
-  selector: 'bfsg-widget',
+  selector: 'accessibility-widget',
   standalone: true,
   template: '',
 })
-export class BFSGWidgetComponent implements OnInit {
-  @Input() loaderSrc = '/bfsg-widget-loader.min.js';
-  @Input() cssHref = '/bfsg-widget.min.css';
+export class AccessibilityWidgetComponent implements OnInit {
+  @Input() loaderSrc = '/accessibility-widget-loader.min.js';
+  @Input() cssHref = '/accessibility-widget.min.css';
   @Input() config: WidgetConfig = {};
   @Input() sri: Sri = {};
 
@@ -35,7 +35,7 @@ export class BFSGWidgetComponent implements OnInit {
 
   ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-    window.BFSGWidgetConfig = { ...(window.BFSGWidgetConfig ?? {}), ...this.config };
+    window.AccessibilityWidgetConfig = { ...(window.AccessibilityWidgetConfig ?? {}), ...this.config };
 
     if (this.cssHref && !document.querySelector('link[data-bfsg="css"]')) {
       const link = document.createElement('link');
@@ -62,6 +62,6 @@ export class BFSGWidgetComponent implements OnInit {
   }
 }
 
-export const openBFSGWidget = (): Promise<void> | undefined => window.BFSGWidget?.open();
-export const closeBFSGWidget = (): void => window.BFSGWidget?.close();
-export const resetBFSGWidget = (): void => window.BFSGWidget?.reset();
+export const openAccessibilityWidget = (): Promise<void> | undefined => window.AccessibilityWidget?.open();
+export const closeAccessibilityWidget = (): void => window.AccessibilityWidget?.close();
+export const resetAccessibilityWidget = (): void => window.AccessibilityWidget?.reset();

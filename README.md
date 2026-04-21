@@ -34,7 +34,7 @@ pnpm demo:dev           # open http://localhost:5173
 
 ```html
 <script
-  src="https://cdn.example.com/bfsg-widget/bfsg-widget-loader.min.js"
+  src="https://cdn.example.com/accessibility-widget/accessibility-widget-loader.min.js"
   defer
 ></script>
 ```

@@ -9,8 +9,8 @@ export interface SriMap {
 
 declare global {
   interface Window {
-    BFSGWidgetConfig?: WidgetConfig;
-    BFSGWidget?: {
+    AccessibilityWidgetConfig?: WidgetConfig;
+    AccessibilityWidget?: {
       open(): Promise<void>;
       close(): void;
       reset(): void;
@@ -19,18 +19,18 @@ declare global {
   }
 }
 
-export const BFSGWidget = defineComponent({
-  name: 'BFSGWidget',
+export const AccessibilityWidget = defineComponent({
+  name: 'AccessibilityWidget',
   props: {
-    loaderSrc: { type: String, default: '/bfsg-widget-loader.min.js' },
-    cssHref: { type: String, default: '/bfsg-widget.min.css' },
+    loaderSrc: { type: String, default: '/accessibility-widget-loader.min.js' },
+    cssHref: { type: String, default: '/accessibility-widget.min.css' },
     config: { type: Object as PropType<WidgetConfig>, default: () => ({}) },
     sri: { type: Object as PropType<SriMap>, default: () => ({}) },
   },
   setup(props) {
     onMounted(() => {
       if (typeof window === 'undefined') return;
-      window.BFSGWidgetConfig = { ...(window.BFSGWidgetConfig ?? {}), ...props.config };
+      window.AccessibilityWidgetConfig = { ...(window.AccessibilityWidgetConfig ?? {}), ...props.config };
 
       if (props.cssHref && !document.querySelector('link[data-bfsg="css"]')) {
         const link = document.createElement('link');
@@ -59,6 +59,6 @@ export const BFSGWidget = defineComponent({
   },
 });
 
-export const openBFSGWidget = (): Promise<void> | undefined => window.BFSGWidget?.open();
-export const closeBFSGWidget = (): void => window.BFSGWidget?.close();
-export const resetBFSGWidget = (): void => window.BFSGWidget?.reset();
+export const openAccessibilityWidget = (): Promise<void> | undefined => window.AccessibilityWidget?.open();
+export const closeAccessibilityWidget = (): void => window.AccessibilityWidget?.close();
+export const resetAccessibilityWidget = (): void => window.AccessibilityWidget?.reset();

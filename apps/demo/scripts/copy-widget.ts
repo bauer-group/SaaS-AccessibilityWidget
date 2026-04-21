@@ -5,15 +5,15 @@ import { fileURLToPath } from 'node:url';
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
 const widgetDist = resolve(root, '../../packages/widget/dist');
-const target = resolve(root, 'public/bfsg-widget');
+const target = resolve(root, 'public/accessibility-widget');
 
 await mkdir(target, { recursive: true });
 for (const f of [
-  'bfsg-widget-loader.min.js',
-  'bfsg-widget-core.min.js',
-  'bfsg-widget.min.css',
+  'accessibility-widget-loader.min.js',
+  'accessibility-widget-core.min.js',
+  'accessibility-widget.min.css',
   'integrity.txt',
 ]) {
   await cp(resolve(widgetDist, f), resolve(target, f));
 }
-console.log('Widget-Assets in public/bfsg-widget/ kopiert.');
+console.log('Widget-Assets in public/accessibility-widget/ kopiert.');

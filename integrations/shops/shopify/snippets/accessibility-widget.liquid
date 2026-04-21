@@ -1,7 +1,7 @@
 {%- comment -%}
   BFSG Accessibility Widget — Shopify snippet
   Usage:
-    {% render 'bfsg-widget',
+    {% render 'accessibility-widget',
        position: 'bottom-right',
        locale: 'auto',
        primary_color: '#0058a3',
@@ -13,9 +13,9 @@
 {%- assign _color = primary_color | default: '#0058a3' -%}
 
 <script>
-  window.BFSGWidgetConfig = {
-    corePath: {{ 'bfsg-widget-core.min.js' | asset_url | json }},
-    cssPath: {{ 'bfsg-widget.min.css' | asset_url | json }},
+  window.AccessibilityWidgetConfig = {
+    corePath: {{ 'accessibility-widget-core.min.js' | asset_url | json }},
+    cssPath: {{ 'accessibility-widget.min.css' | asset_url | json }},
     position: {{ _position | json }},
     locale: {{ _locale | json }},
     primaryColor: {{ _color | json }}
@@ -24,6 +24,6 @@
     {%- endif -%}
   };
 </script>
-<script src="{{ 'bfsg-widget-loader.min.js' | asset_url }}" defer
+<script src="{{ 'accessibility-widget-loader.min.js' | asset_url }}" defer
   {%- if loader_integrity != blank %} integrity="{{ loader_integrity }}" crossorigin="anonymous"{% endif -%}
   data-bfsg="loader"></script>

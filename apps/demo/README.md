@@ -10,7 +10,7 @@ pnpm --filter @bauer-group/accessibility-widget build
 pnpm --filter @bauer-group/accessibility-widget-demo dev
 ```
 
-Vite erwartet die Widget-Dateien unter `/bfsg-widget/*`. Das `scripts/copy-widget.ts` kopiert sie aus `packages/widget/dist` beim Build; für `dev` liegen sie als `public/bfsg-widget/*` (manuell einmal kopieren oder symlinken).
+Vite erwartet die Widget-Dateien unter `/accessibility-widget/*`. Das `scripts/copy-widget.ts` kopiert sie aus `packages/widget/dist` beim Build; für `dev` liegen sie als `public/accessibility-widget/*` (manuell einmal kopieren oder symlinken).
 
 ## Scanner gegen die Demo laufen lassen
 

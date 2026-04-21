@@ -1,5 +1,5 @@
 {
-  "name": "bauer-group/bfsg-widget-shopware",
+  "name": "bauer-group/accessibility-widget-shopware",
   "description": "BFSG Accessibility Widget für Shopware 6.6+.",
   "type": "shopware-platform-plugin",
   "license": "MIT",
@@ -10,11 +10,11 @@
   },
   "autoload": {
     "psr-4": {
-      "BauerGroup\\BFSGWidget\\": "src/"
+      "BauerGroup\\AccessibilityWidget\\": "src/"
     }
   },
   "extra": {
-    "shopware-plugin-class": "BauerGroup\\BFSGWidget\\BFSGWidget",
+    "shopware-plugin-class": "BauerGroup\\AccessibilityWidget\\AccessibilityWidget",
     "label": {
       "en-GB": "BFSG Accessibility Widget",
       "de-DE": "BFSG Barrierefreiheits-Widget"

@@ -3,18 +3,18 @@
 ## Einbindung als Theme-Block (Online Store 2.0)
 
 1. Widget-Assets aus `packages/widget/dist/` nach `assets/` des Shopify Themes kopieren:
-   - `bfsg-widget-loader.min.js`
-   - `bfsg-widget-core.min.js`
-   - `bfsg-widget.min.css`
+   - `accessibility-widget-loader.min.js`
+   - `accessibility-widget-core.min.js`
+   - `accessibility-widget.min.css`
 2. Liquid-Dateien ins Theme einfügen:
-   - `blocks/bfsg-widget.liquid` → `blocks/`
-   - `snippets/bfsg-widget.liquid` → `snippets/`
+   - `blocks/accessibility-widget.liquid` → `blocks/`
+   - `snippets/accessibility-widget.liquid` → `snippets/`
 3. Im Theme-Editor: Abschnitt → App-Block "BFSG Widget" hinzufügen.
 
 ## Einbindung per `theme.liquid` (klassisch)
 
 ```liquid
-{% render 'bfsg-widget',
+{% render 'accessibility-widget',
   position: 'bottom-right',
   locale: 'auto',
   primary_color: '#0058a3' %}

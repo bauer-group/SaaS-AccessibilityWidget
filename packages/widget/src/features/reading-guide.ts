@@ -4,7 +4,7 @@ let handler: ((e: MouseEvent | TouchEvent) => void) | null = null;
 export function readingGuideApply(on: boolean): void {
   if (on && !guideEl) {
     guideEl = document.createElement('div');
-    guideEl.className = 'bfsg-reading-guide';
+    guideEl.className = 'aw-reading-guide';
     guideEl.setAttribute('aria-hidden', 'true');
     document.body.appendChild(guideEl);
     handler = (e) => {

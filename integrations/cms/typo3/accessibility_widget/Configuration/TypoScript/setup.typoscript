@@ -2,7 +2,7 @@ page {
   headerData {
     bfsgConfig = TEXT
     bfsgConfig.value (
-      <script>window.BFSGWidgetConfig = {
+      <script>window.AccessibilityWidgetConfig = {
         corePath: "{$plugin.tx_bfsgwidget.settings.corePath}",
         cssPath: "{$plugin.tx_bfsgwidget.settings.cssPath}",
         position: "{$plugin.tx_bfsgwidget.settings.position}",

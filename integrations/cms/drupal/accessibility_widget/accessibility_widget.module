@@ -10,13 +10,13 @@ declare(strict_types=1);
 /**
  * Implements hook_page_attachments().
  */
-function bfsg_widget_page_attachments(array &$attachments): void {
-  $config = \Drupal::config('bfsg_widget.settings');
-  $module_url = \Drupal::service('extension.path.resolver')->getPath('module', 'bfsg_widget');
+function accessibility_widget_page_attachments(array &$attachments): void {
+  $config = \Drupal::config('accessibility_widget.settings');
+  $module_url = \Drupal::service('extension.path.resolver')->getPath('module', 'accessibility_widget');
 
   $widget_config = [
-    'corePath'     => '/' . $module_url . '/assets/bfsg-widget-core.min.js',
-    'cssPath'      => '/' . $module_url . '/assets/bfsg-widget.min.css',
+    'corePath'     => '/' . $module_url . '/assets/accessibility-widget-core.min.js',
+    'cssPath'      => '/' . $module_url . '/assets/accessibility-widget.min.css',
     'position'     => $config->get('position') ?: 'bottom-right',
     'locale'       => $config->get('locale') ?: 'auto',
     'primaryColor' => $config->get('primary_color') ?: '#0058a3',
@@ -30,13 +30,13 @@ function bfsg_widget_page_attachments(array &$attachments): void {
     [
       '#type' => 'html_tag',
       '#tag' => 'script',
-      '#value' => 'window.BFSGWidgetConfig = ' . json_encode($widget_config, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ';',
+      '#value' => 'window.AccessibilityWidgetConfig = ' . json_encode($widget_config, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ';',
     ],
-    'bfsg_widget_config',
+    'accessibility_widget_config',
   ];
 
   $loader_attrs = [
-    'src' => '/' . $module_url . '/assets/bfsg-widget-loader.min.js',
+    'src' => '/' . $module_url . '/assets/accessibility-widget-loader.min.js',
     'defer' => 'defer',
     'data-bfsg' => 'loader',
   ];
@@ -50,6 +50,6 @@ function bfsg_widget_page_attachments(array &$attachments): void {
       '#tag' => 'script',
       '#attributes' => $loader_attrs,
     ],
-    'bfsg_widget_loader',
+    'accessibility_widget_loader',
   ];
 }

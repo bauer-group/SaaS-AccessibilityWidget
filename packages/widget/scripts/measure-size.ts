@@ -7,9 +7,9 @@ const here = dirname(fileURLToPath(import.meta.url));
 const dist = resolve(here, '..', 'dist');
 
 const BUDGETS: Record<string, { gzip: number }> = {
-  'bfsg-widget-loader.min.js': { gzip: 5 * 1024 },
-  'bfsg-widget-core.min.js': { gzip: 12 * 1024 },
-  'bfsg-widget.min.css': { gzip: 3 * 1024 },
+  'accessibility-widget-loader.min.js': { gzip: 5 * 1024 },
+  'accessibility-widget-core.min.js': { gzip: 12 * 1024 },
+  'accessibility-widget.min.css': { gzip: 3 * 1024 },
 };
 
 let failed = false;

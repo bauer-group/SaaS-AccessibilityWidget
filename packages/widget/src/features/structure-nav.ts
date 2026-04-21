@@ -1,4 +1,4 @@
-const NAV_ID = 'bfsg-struct-nav';
+const NAV_ID = 'aw-struct-nav';
 
 export function structureNavToggle(label: string): boolean {
   const existing = document.getElementById(NAV_ID);
@@ -13,14 +13,14 @@ export function structureNavToggle(label: string): boolean {
 
   const closeBtn = document.createElement('button');
   closeBtn.type = 'button';
-  closeBtn.className = 'bfsg-struct-nav__close';
+  closeBtn.className = 'aw-struct-nav__close';
   closeBtn.textContent = '×';
   closeBtn.setAttribute('aria-label', label);
   closeBtn.addEventListener('click', () => nav.remove());
 
   const ul = document.createElement('ul');
   document.querySelectorAll<HTMLHeadingElement>('h1, h2, h3').forEach((h, i) => {
-    if (!h.id) h.id = `bfsg-h-${i}`;
+    if (!h.id) h.id = `aw-h-${i}`;
     const level = Number(h.tagName.substring(1));
     const li = document.createElement('li');
     li.dataset.level = String(level);

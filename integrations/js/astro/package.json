@@ -5,7 +5,7 @@
   "license": "MIT",
   "author": "BAUER GROUP <info@de.bauer-group.com>",
   "type": "module",
-  "main": "./src/BFSGWidget.astro",
+  "main": "./src/AccessibilityWidget.astro",
   "files": ["src", "README.md"],
   "scripts": {
     "build": "echo '(astro component: no build)'",

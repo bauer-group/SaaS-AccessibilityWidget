@@ -5,7 +5,7 @@ export {};
 declare global {
   interface Window {
     /** Public API — set by the loader. */
-    BFSGWidget?: {
+    AccessibilityWidget?: {
       open(opts?: {
         trigger?: HTMLElement;
         config?: WidgetConfig;
@@ -20,10 +20,10 @@ declare global {
     };
 
     /** Developer-supplied config. */
-    BFSGWidgetConfig?: WidgetConfig;
+    AccessibilityWidgetConfig?: WidgetConfig;
 
     /** Internal — set by the core bundle once loaded. */
-    BFSGWidgetCore?: {
+    AccessibilityWidgetCore?: {
       open(opts: {
         trigger?: HTMLElement;
         config?: WidgetConfig;
@@ -38,6 +38,6 @@ declare global {
     };
 
     /** Internal guard against double-loading. */
-    __bfsgWidgetLoaded?: boolean;
+    __accessibilityWidgetLoaded?: boolean;
   }
 }

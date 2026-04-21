@@ -15,7 +15,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "echo '(eslint not yet configured)'",
     "test": "echo '(demo: no tests — use scanner self-audit)'",
-    "clean": "rimraf dist .vite public/bfsg-widget"
+    "clean": "rimraf dist .vite public/accessibility-widget"
   },
   "dependencies": {
     "@bauer-group/accessibility-widget": "workspace:*"

@@ -1,13 +1,13 @@
 declare global {
   interface Window {
-    BFSGWidget?: { open(): Promise<void>; close(): void; reset(): void };
+    AccessibilityWidget?: { open(): Promise<void>; close(): void; reset(): void };
   }
 }
 
 document.getElementById('open-panel')?.addEventListener('click', () => {
-  window.BFSGWidget?.open();
+  window.AccessibilityWidget?.open();
 });
 
 document.getElementById('reset-panel')?.addEventListener('click', () => {
-  window.BFSGWidget?.reset();
+  window.AccessibilityWidget?.reset();
 });

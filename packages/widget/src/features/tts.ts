@@ -46,7 +46,7 @@ export function ttsStop(): void {
 }
 
 export function collectReadableText(root: Element = document.body, limit = 4000): string {
-  const excluded = 'script,style,noscript,[aria-hidden="true"],[data-bfsg-panel],[data-bfsg-fab]';
+  const excluded = 'script,style,noscript,[aria-hidden="true"],[data-aw-panel],[data-aw-fab]';
   const clone = root.cloneNode(true) as Element;
   clone.querySelectorAll(excluded).forEach((n) => n.remove());
   return (clone.textContent ?? '').replace(/\s+/g, ' ').trim().slice(0, limit);

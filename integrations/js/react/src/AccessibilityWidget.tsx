@@ -1,23 +1,23 @@
 import { useEffect, useRef } from 'react';
 import type { WidgetConfig, WidgetState } from '@bauer-group/accessibility-widget';
 
-export interface BFSGWidgetSri {
+export interface AccessibilityWidgetSri {
   loader?: string;
   core?: string;
   css?: string;
 }
 
-export interface BFSGWidgetProps {
+export interface AccessibilityWidgetProps {
   loaderSrc?: string;
   cssHref?: string;
   config?: WidgetConfig;
-  sri?: BFSGWidgetSri;
+  sri?: AccessibilityWidgetSri;
 }
 
 declare global {
   interface Window {
-    BFSGWidgetConfig?: WidgetConfig;
-    BFSGWidget?: {
+    AccessibilityWidgetConfig?: WidgetConfig;
+    AccessibilityWidget?: {
       open(): Promise<void>;
       close(): void;
       reset(): void;
@@ -27,12 +27,12 @@ declare global {
   }
 }
 
-export function BFSGWidget({
-  loaderSrc = '/bfsg-widget-loader.min.js',
-  cssHref = '/bfsg-widget.min.css',
+export function AccessibilityWidget({
+  loaderSrc = '/accessibility-widget-loader.min.js',
+  cssHref = '/accessibility-widget.min.css',
   config,
   sri,
-}: BFSGWidgetProps): null {
+}: AccessibilityWidgetProps): null {
   const mountedRef = useRef(false);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export function BFSGWidget({
     if (typeof window === 'undefined') return;
 
     if (config) {
-      window.BFSGWidgetConfig = { ...(window.BFSGWidgetConfig ?? {}), ...config };
+      window.AccessibilityWidgetConfig = { ...(window.AccessibilityWidgetConfig ?? {}), ...config };
     }
 
     if (cssHref && !document.querySelector('link[data-bfsg="css"]')) {
@@ -73,6 +73,6 @@ export function BFSGWidget({
   return null;
 }
 
-export const openBFSGWidget = (): Promise<void> | undefined => window.BFSGWidget?.open();
-export const closeBFSGWidget = (): void => window.BFSGWidget?.close();
-export const resetBFSGWidget = (): void => window.BFSGWidget?.reset();
+export const openAccessibilityWidget = (): Promise<void> | undefined => window.AccessibilityWidget?.open();
+export const closeAccessibilityWidget = (): void => window.AccessibilityWidget?.close();
+export const resetAccessibilityWidget = (): void => window.AccessibilityWidget?.reset();

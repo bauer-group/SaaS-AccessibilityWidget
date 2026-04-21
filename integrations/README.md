@@ -1,6 +1,6 @@
 # BFSG Widget — Integrationen
 
-Framework- und CMS-spezifische Wrapper. Alle verwenden den gleichen Loader-Mechanismus (`loader.min.js` + optional SRI) und setzen vor dem Loader `window.BFSGWidgetConfig`.
+Framework- und CMS-spezifische Wrapper. Alle verwenden den gleichen Loader-Mechanismus (`loader.min.js` + optional SRI) und setzen vor dem Loader `window.AccessibilityWidgetConfig`.
 
 ## JS/TS Frameworks (pnpm workspace `integrations/js/*`)
 
@@ -27,4 +27,4 @@ Framework- und CMS-spezifische Wrapper. Alle verwenden den gleichen Loader-Mecha
 
 ## Gemeinsame Konfiguration
 
-Jede Integration akzeptiert einen `config`-Payload, der 1:1 auf `window.BFSGWidgetConfig` abgebildet wird. Details siehe `packages/widget/README.md`.
+Jede Integration akzeptiert einen `config`-Payload, der 1:1 auf `window.AccessibilityWidgetConfig` abgebildet wird. Details siehe `packages/widget/README.md`.

@@ -21,13 +21,13 @@ interface BundleSpec {
 const BUNDLES: BundleSpec[] = [
   {
     entry: 'src/loader.ts',
-    out: 'bfsg-widget-loader.min.js',
+    out: 'accessibility-widget-loader.min.js',
     target: ['es2017'],
     format: 'iife',
   },
   {
     entry: 'src/core.ts',
-    out: 'bfsg-widget-core.min.js',
+    out: 'accessibility-widget-core.min.js',
     target: ['es2019'],
     format: 'iife',
   },
@@ -58,7 +58,7 @@ async function buildOne(spec: BundleSpec): Promise<void> {
 async function buildCss(): Promise<void> {
   const opts: BuildOptions = {
     entryPoints: [resolve(root, 'src/styles/widget.css')],
-    outfile: resolve(dist, 'bfsg-widget.min.css'),
+    outfile: resolve(dist, 'accessibility-widget.min.css'),
     bundle: true,
     minify: true,
     sourcemap: true,
@@ -73,7 +73,7 @@ async function buildCss(): Promise<void> {
 }
 
 async function writeIntegrity(): Promise<void> {
-  const files = ['bfsg-widget-loader.min.js', 'bfsg-widget-core.min.js', 'bfsg-widget.min.css'];
+  const files = ['accessibility-widget-loader.min.js', 'accessibility-widget-core.min.js', 'accessibility-widget.min.css'];
   const lines: string[] = ['BFSG Widget — SRI Hashes (sha384, base64)', `Built: ${new Date().toISOString()}`, ''];
   for (const f of files) {
     const buf = await readFile(resolve(dist, f));

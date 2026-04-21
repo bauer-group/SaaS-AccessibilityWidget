@@ -7,7 +7,7 @@ Svelte 5 Action.
   import { bfsgWidget } from '@bauer-group/accessibility-widget-svelte';
 </script>
 
-<div use:bfsgWidget={{ config: { locale: 'de' }, loaderSrc: '/bfsg-widget/bfsg-widget-loader.min.js' }} />
+<div use:bfsgWidget={{ config: { locale: 'de' }, loaderSrc: '/accessibility-widget/accessibility-widget-loader.min.js' }} />
 ```
 
 MIT © BAUER GROUP

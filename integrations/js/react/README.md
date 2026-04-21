@@ -8,19 +8,19 @@ React 19 Wrapper für das BFSG Accessibility Widget.
 npm install @bauer-group/accessibility-widget-react
 ```
 
-Und die Widget-Assets (`bfsg-widget-loader.min.js`, `bfsg-widget-core.min.js`, `bfsg-widget.min.css`) unter `/public/bfsg-widget/` ablegen.
+Und die Widget-Assets (`accessibility-widget-loader.min.js`, `accessibility-widget-core.min.js`, `accessibility-widget.min.css`) unter `/public/accessibility-widget/` ablegen.
 
 ## Nutzung
 
 ```tsx
-import { BFSGWidget, openBFSGWidget } from '@bauer-group/accessibility-widget-react';
+import { AccessibilityWidget, openAccessibilityWidget } from '@bauer-group/accessibility-widget-react';
 
 export function App() {
   return (
     <>
-      <BFSGWidget
-        loaderSrc="/bfsg-widget/bfsg-widget-loader.min.js"
-        cssHref="/bfsg-widget/bfsg-widget.min.css"
+      <AccessibilityWidget
+        loaderSrc="/accessibility-widget/accessibility-widget-loader.min.js"
+        cssHref="/accessibility-widget/accessibility-widget.min.css"
         config={{ position: 'bottom-right', locale: 'auto', primaryColor: '#0058a3' }}
         sri={{
           loader: 'sha384-…', // aus dist/integrity.txt
@@ -28,7 +28,7 @@ export function App() {
           css: 'sha384-…',
         }}
       />
-      <button onClick={() => openBFSGWidget()}>Barrierefreiheit</button>
+      <button onClick={() => openAccessibilityWidget()}>Barrierefreiheit</button>
     </>
   );
 }

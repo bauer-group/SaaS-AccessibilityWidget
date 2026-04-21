@@ -8,10 +8,10 @@ export interface ResolvedConfig extends Required<Omit<WidgetConfig, 'locale' | '
 }
 
 const DEFAULTS = {
-  corePath: '/bfsg-widget/bfsg-widget-core.min.js',
-  cssPath: '/bfsg-widget/bfsg-widget.min.css',
+  corePath: '/accessibility-widget/accessibility-widget-core.min.js',
+  cssPath: '/accessibility-widget/accessibility-widget.min.css',
   position: 'bottom-right' as Position,
-  storageKey: 'bfsg-widget',
+  storageKey: 'accessibility-widget',
   respectReducedMotion: true,
   primaryColor: '#0058a3',
   hideOnPrint: true,

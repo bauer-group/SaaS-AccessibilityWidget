@@ -13,7 +13,7 @@
 import type { WidgetConfig, WidgetState, Locale } from './types/index.js';
 import { buildCriticalCss } from './styles/critical.js';
 
-type CoreApi = NonNullable<Window['BFSGWidgetCore']>;
+type CoreApi = NonNullable<Window['AccessibilityWidgetCore']>;
 
 const cfg: Required<
   Pick<
@@ -28,17 +28,17 @@ const cfg: Required<
     | 'debug'
   >
 > & { locale: Locale | 'auto'; coreIntegrity: string | null; buttonLabel: string | null } = {
-  corePath: window.BFSGWidgetConfig?.corePath ?? '/bfsg-widget/bfsg-widget-core.min.js',
-  cssPath: window.BFSGWidgetConfig?.cssPath ?? '/bfsg-widget/bfsg-widget.min.css',
-  position: window.BFSGWidgetConfig?.position ?? 'bottom-right',
-  storageKey: window.BFSGWidgetConfig?.storageKey ?? 'bfsg-widget',
-  respectReducedMotion: window.BFSGWidgetConfig?.respectReducedMotion ?? true,
-  primaryColor: window.BFSGWidgetConfig?.primaryColor ?? '#0058a3',
-  hideOnPrint: window.BFSGWidgetConfig?.hideOnPrint ?? true,
-  debug: Boolean(window.BFSGWidgetConfig?.debug),
-  locale: window.BFSGWidgetConfig?.locale ?? 'auto',
-  coreIntegrity: window.BFSGWidgetConfig?.coreIntegrity ?? null,
-  buttonLabel: window.BFSGWidgetConfig?.buttonLabel ?? null,
+  corePath: window.AccessibilityWidgetConfig?.corePath ?? '/accessibility-widget/accessibility-widget-core.min.js',
+  cssPath: window.AccessibilityWidgetConfig?.cssPath ?? '/accessibility-widget/accessibility-widget.min.css',
+  position: window.AccessibilityWidgetConfig?.position ?? 'bottom-right',
+  storageKey: window.AccessibilityWidgetConfig?.storageKey ?? 'accessibility-widget',
+  respectReducedMotion: window.AccessibilityWidgetConfig?.respectReducedMotion ?? true,
+  primaryColor: window.AccessibilityWidgetConfig?.primaryColor ?? '#0058a3',
+  hideOnPrint: window.AccessibilityWidgetConfig?.hideOnPrint ?? true,
+  debug: Boolean(window.AccessibilityWidgetConfig?.debug),
+  locale: window.AccessibilityWidgetConfig?.locale ?? 'auto',
+  coreIntegrity: window.AccessibilityWidgetConfig?.coreIntegrity ?? null,
+  buttonLabel: window.AccessibilityWidgetConfig?.buttonLabel ?? null,
 };
 
 const LABELS: Record<Locale, string> = {
@@ -52,10 +52,10 @@ const LABELS: Record<Locale, string> = {
   ar: 'إعدادات إمكانية الوصول',
 };
 
-if (window.__bfsgWidgetLoaded) {
+if (window.__accessibilityWidgetLoaded) {
   // Idempotent: a second loader tag is a no-op.
 } else {
-  window.__bfsgWidgetLoaded = true;
+  window.__accessibilityWidgetLoaded = true;
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot, { once: true });
   } else {
@@ -111,29 +111,29 @@ function applyPersistedPreferences(): void {
   const s = readState();
   if (!s?.features) return;
   const html = document.documentElement;
-  html.setAttribute('data-bfsg-instant', '1');
+  html.setAttribute('data-aw-instant', '1');
   if (typeof s.fontSizeLevel === 'number')
-    html.style.setProperty('--bfsg-font-scale', String(s.fontSizeLevel));
+    html.style.setProperty('--aw-font-scale', String(s.fontSizeLevel));
   if (typeof s.lineHeightLevel === 'number')
-    html.style.setProperty('--bfsg-line-height', String(s.lineHeightLevel));
+    html.style.setProperty('--aw-line-height', String(s.lineHeightLevel));
   if (typeof s.letterSpacingLevel === 'number')
-    html.style.setProperty('--bfsg-letter-spacing', `${s.letterSpacingLevel}em`);
+    html.style.setProperty('--aw-letter-spacing', `${s.letterSpacingLevel}em`);
   const f = s.features;
-  if (f.contrast) html.setAttribute('data-bfsg-contrast', s.contrastMode ?? 'high');
-  if (f.grayscale) html.setAttribute('data-bfsg-grayscale', '1');
-  if (f.invertColors) html.setAttribute('data-bfsg-invert', '1');
-  if (f.dyslexiaFont) html.setAttribute('data-bfsg-dyslexia', '1');
-  if (f.highlightLinks) html.setAttribute('data-bfsg-highlight-links', '1');
-  if (f.pauseAnimations) html.setAttribute('data-bfsg-pause-animations', '1');
-  if (f.bigCursor) html.setAttribute('data-bfsg-big-cursor', '1');
-  if (f.focusOutline) html.setAttribute('data-bfsg-focus', '1');
+  if (f.contrast) html.setAttribute('data-aw-contrast', s.contrastMode ?? 'high');
+  if (f.grayscale) html.setAttribute('data-aw-grayscale', '1');
+  if (f.invertColors) html.setAttribute('data-aw-invert', '1');
+  if (f.dyslexiaFont) html.setAttribute('data-aw-dyslexia', '1');
+  if (f.highlightLinks) html.setAttribute('data-aw-highlight-links', '1');
+  if (f.pauseAnimations) html.setAttribute('data-aw-pause-animations', '1');
+  if (f.bigCursor) html.setAttribute('data-aw-big-cursor', '1');
+  if (f.focusOutline) html.setAttribute('data-aw-focus', '1');
 }
 
 function injectCriticalCSS(): void {
-  if (document.getElementById('bfsg-critical-css')) return;
+  if (document.getElementById('aw-critical-css')) return;
   const css = buildCriticalCss(cfg.primaryColor, cfg.hideOnPrint);
   const style = document.createElement('style');
-  style.id = 'bfsg-critical-css';
+  style.id = 'aw-critical-css';
   style.textContent = css;
   (document.head ?? document.documentElement).appendChild(style);
 }
@@ -144,12 +144,12 @@ function renderFab(): void {
 
   const btn = document.createElement('button');
   btn.type = 'button';
-  btn.className = `bfsg-fab bfsg-fab--${cfg.position}`;
+  btn.className = `aw-fab aw-fab--${cfg.position}`;
   btn.setAttribute('aria-label', label);
   btn.setAttribute('aria-haspopup', 'dialog');
-  btn.setAttribute('aria-controls', 'bfsg-panel');
+  btn.setAttribute('aria-controls', 'aw-panel');
   btn.setAttribute('aria-expanded', 'false');
-  btn.setAttribute('data-bfsg-fab', '1');
+  btn.setAttribute('data-aw-fab', '1');
 
   // Inline SVG person-icon — programmatic, no innerHTML.
   const svgNs = 'http://www.w3.org/2000/svg';
@@ -177,7 +177,7 @@ function renderFab(): void {
         btn.setAttribute('aria-expanded', 'true');
         core.open({
           trigger: btn,
-          config: window.BFSGWidgetConfig,
+          config: window.AccessibilityWidgetConfig,
           locale,
         });
       })
@@ -201,11 +201,11 @@ function renderFab(): void {
 let corePromise: Promise<CoreApi> | null = null;
 function loadCore(): Promise<CoreApi> {
   if (corePromise) return corePromise;
-  if (cfg.cssPath && !document.querySelector('link[data-bfsg-css]')) {
+  if (cfg.cssPath && !document.querySelector('link[data-aw-css]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = cfg.cssPath;
-    link.setAttribute('data-bfsg-css', '1');
+    link.setAttribute('data-aw-css', '1');
     document.head.appendChild(link);
   }
   corePromise = new Promise<CoreApi>((resolve, reject) => {
@@ -218,8 +218,8 @@ function loadCore(): Promise<CoreApi> {
       s.crossOrigin = 'anonymous';
     }
     s.onload = () => {
-      if (window.BFSGWidgetCore) resolve(window.BFSGWidgetCore);
-      else reject(new Error('Core loaded but BFSGWidgetCore is undefined'));
+      if (window.AccessibilityWidgetCore) resolve(window.AccessibilityWidgetCore);
+      else reject(new Error('Core loaded but AccessibilityWidgetCore is undefined'));
     };
     s.onerror = () => reject(new Error(`Failed to load ${cfg.corePath}`));
     document.head.appendChild(s);
@@ -232,7 +232,7 @@ const publicApi = {
     return loadCore().then((c) => c.open(opts ?? {}));
   },
   close(): void {
-    window.BFSGWidgetCore?.close();
+    window.AccessibilityWidgetCore?.close();
   },
   reset(): void {
     try {
@@ -251,4 +251,4 @@ const publicApi = {
   version: '1.0.0-alpha.1',
 };
 
-window.BFSGWidget = publicApi;
+window.AccessibilityWidget = publicApi;

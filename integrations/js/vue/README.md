@@ -4,13 +4,13 @@ Vue 3 Wrapper.
 
 ```vue
 <script setup lang="ts">
-import { BFSGWidget } from '@bauer-group/accessibility-widget-vue';
+import { AccessibilityWidget } from '@bauer-group/accessibility-widget-vue';
 </script>
 
 <template>
-  <BFSGWidget
-    loader-src="/bfsg-widget/bfsg-widget-loader.min.js"
-    css-href="/bfsg-widget/bfsg-widget.min.css"
+  <AccessibilityWidget
+    loader-src="/accessibility-widget/accessibility-widget-loader.min.js"
+    css-href="/accessibility-widget/accessibility-widget.min.css"
     :config="{ position: 'bottom-right', locale: 'auto' }"
   />
 </template>

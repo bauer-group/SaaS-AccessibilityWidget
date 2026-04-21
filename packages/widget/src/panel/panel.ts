@@ -39,13 +39,13 @@ export function openPanel(ctx: PanelContext): PanelHandle {
   let trap: FocusTrap | null = null;
 
   const root = make('div', {
-    class: `bfsg-panel bfsg-panel--${ctx.config.position}`,
+    class: `aw-panel aw-panel--${ctx.config.position}`,
     attrs: {
-      id: 'bfsg-panel',
+      id: 'aw-panel',
       role: 'dialog',
       'aria-modal': 'true',
-      'aria-labelledby': 'bfsg-panel-title',
-      'data-bfsg-panel': '1',
+      'aria-labelledby': 'aw-panel-title',
+      'data-aw-panel': '1',
       dir: ctx.locale === 'ar' ? 'rtl' : 'ltr',
       lang: ctx.locale,
     },
@@ -83,25 +83,25 @@ export function openPanel(ctx: PanelContext): PanelHandle {
   function build(): void {
     // Header ---------------------------------------------------------
     const closeBtn = make('button', {
-      class: 'bfsg-close',
+      class: 'aw-close',
       attrs: { type: 'button', 'aria-label': T.close },
       on: { click: ctx.onClose },
       children: [buildIcon({ ...ICON_CLOSE, width: 20, height: 20 })],
     });
     const title = make('h2', {
-      class: 'bfsg-title',
-      attrs: { id: 'bfsg-panel-title' },
+      class: 'aw-title',
+      attrs: { id: 'aw-panel-title' },
       text: T.title,
     });
-    const header = make('header', { class: 'bfsg-header', children: [title, closeBtn] });
+    const header = make('header', { class: 'aw-header', children: [title, closeBtn] });
 
     // Profiles -------------------------------------------------------
     const profGrid = make('div', {
-      class: 'bfsg-profile-grid',
+      class: 'aw-profile-grid',
       attrs: { role: 'group', 'aria-label': T.profiles.h },
       children: PROFILE_IDS.map((id) =>
         make('button', {
-          class: 'bfsg-profile-btn',
+          class: 'aw-profile-btn',
           attrs: { type: 'button', 'data-profile': id },
           text: T.profiles[id],
           on: {
@@ -115,14 +115,14 @@ export function openPanel(ctx: PanelContext): PanelHandle {
 
     // Features -------------------------------------------------------
     const featGrid = make('div', {
-      class: 'bfsg-feat-grid',
+      class: 'aw-feat-grid',
       attrs: { role: 'group', 'aria-label': T.features.h },
       children: FEATURE_IDS.map((id) => renderFeature(id, T)),
     });
 
     // Footer ---------------------------------------------------------
     const resetBtn = make('button', {
-      class: 'bfsg-reset',
+      class: 'aw-reset',
       attrs: { type: 'button' },
       text: T.reset,
       on: {
@@ -140,35 +140,35 @@ export function openPanel(ctx: PanelContext): PanelHandle {
       },
     });
 
-    liveEl = make('div', { class: 'bfsg-live', attrs: { 'aria-live': 'polite', 'aria-atomic': 'true' } });
+    liveEl = make('div', { class: 'aw-live', attrs: { 'aria-live': 'polite', 'aria-atomic': 'true' } });
 
     const footerChildren: HTMLElement[] = [resetBtn];
     if (ctx.statementUrl) {
       footerChildren.push(
         make('a', {
-          class: 'bfsg-statement-link',
+          class: 'aw-statement-link',
           attrs: { href: ctx.statementUrl },
           text: T.statementLink,
         }),
       );
     }
     footerChildren.push(
-      make('p', { class: 'bfsg-disclaimer', text: T.disclaimer }),
+      make('p', { class: 'aw-disclaimer', text: T.disclaimer }),
       liveEl,
     );
-    const footer = make('footer', { class: 'bfsg-footer', children: footerChildren });
+    const footer = make('footer', { class: 'aw-footer', children: footerChildren });
 
     root.appendChild(header);
     root.appendChild(
       make('div', {
-        class: 'bfsg-section',
-        children: [make('h3', { class: 'bfsg-h3', text: T.profiles.h }), profGrid],
+        class: 'aw-section',
+        children: [make('h3', { class: 'aw-h3', text: T.profiles.h }), profGrid],
       }),
     );
     root.appendChild(
       make('div', {
-        class: 'bfsg-section',
-        children: [make('h3', { class: 'bfsg-h3', text: T.features.h }), featGrid],
+        class: 'aw-section',
+        children: [make('h3', { class: 'aw-h3', text: T.features.h }), featGrid],
       }),
     );
     root.appendChild(footer);
@@ -180,7 +180,7 @@ export function openPanel(ctx: PanelContext): PanelHandle {
     const badge = computeBadge(id, T);
 
     const btn = make('button', {
-      class: 'bfsg-feat' + (active ? ' is-on' : ''),
+      class: 'aw-feat' + (active ? ' is-on' : ''),
       attrs: {
         type: 'button',
         role: 'switch',
@@ -189,8 +189,8 @@ export function openPanel(ctx: PanelContext): PanelHandle {
         'data-feature': id,
       },
       children: [
-        make('span', { class: 'bfsg-feat-label', text: label }),
-        make('span', { class: 'bfsg-feat-badge', text: badge }),
+        make('span', { class: 'aw-feat-label', text: label }),
+        make('span', { class: 'aw-feat-badge', text: badge }),
       ],
       on: {
         click: () => onFeatureClick(id, label),
@@ -292,7 +292,7 @@ export function openPanel(ctx: PanelContext): PanelHandle {
   trap = createFocusTrap(root);
   trap.activate();
   document.addEventListener('keydown', onEsc);
-  root.querySelector<HTMLButtonElement>('.bfsg-close')?.focus();
+  root.querySelector<HTMLButtonElement>('.aw-close')?.focus();
 
   return {
     root,

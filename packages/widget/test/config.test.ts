@@ -4,7 +4,7 @@ import { resolveConfig } from '../src/config.js';
 describe('resolveConfig', () => {
   it('applies sensible defaults', () => {
     const cfg = resolveConfig(undefined, 'en-US');
-    expect(cfg.corePath).toBe('/bfsg-widget/bfsg-widget-core.min.js');
+    expect(cfg.corePath).toBe('/accessibility-widget/accessibility-widget-core.min.js');
     expect(cfg.position).toBe('bottom-right');
     expect(cfg.locale).toBe('en');
   });

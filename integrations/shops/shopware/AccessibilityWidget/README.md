@@ -1,9 +1,9 @@
 # BFSG Widget — Shopware 6 Plugin
 
 ```bash
-composer require bauer-group/bfsg-widget-shopware
+composer require bauer-group/accessibility-widget-shopware
 bin/console plugin:refresh
-bin/console plugin:install --activate BFSGWidget
+bin/console plugin:install --activate AccessibilityWidget
 bin/console assets:install
 ```
 

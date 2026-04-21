@@ -1,15 +1,15 @@
 import type { WidgetConfig } from '@bauer-group/accessibility-widget';
 
 /**
- * Nuxt 3 client-only plugin. Copy this file to `plugins/bfsg-widget.client.ts`
+ * Nuxt 3 client-only plugin. Copy this file to `plugins/accessibility-widget.client.ts`
  * in your Nuxt app. Configure via `runtimeConfig.public.bfsgWidget` in nuxt.config.ts:
  *
  *   export default defineNuxtConfig({
  *     runtimeConfig: {
  *       public: {
  *         bfsgWidget: {
- *           loaderSrc: '/bfsg-widget/bfsg-widget-loader.min.js',
- *           cssHref:   '/bfsg-widget/bfsg-widget.min.css',
+ *           loaderSrc: '/accessibility-widget/accessibility-widget-loader.min.js',
+ *           cssHref:   '/accessibility-widget/accessibility-widget.min.css',
  *           config:    { locale: 'auto' },
  *         },
  *       },
@@ -33,12 +33,12 @@ declare function useRuntimeConfig(): NuxtRuntime;
 export default defineNuxtPlugin(() => {
   if (typeof window === 'undefined') return;
   const cfg = useRuntimeConfig().public.bfsgWidget ?? {};
-  const loaderSrc = cfg.loaderSrc ?? '/bfsg-widget-loader.min.js';
-  const cssHref = cfg.cssHref ?? '/bfsg-widget.min.css';
+  const loaderSrc = cfg.loaderSrc ?? '/accessibility-widget-loader.min.js';
+  const cssHref = cfg.cssHref ?? '/accessibility-widget.min.css';
   const sri = cfg.sri ?? {};
 
-  (window as unknown as { BFSGWidgetConfig?: WidgetConfig }).BFSGWidgetConfig = {
-    ...((window as unknown as { BFSGWidgetConfig?: WidgetConfig }).BFSGWidgetConfig ?? {}),
+  (window as unknown as { AccessibilityWidgetConfig?: WidgetConfig }).AccessibilityWidgetConfig = {
+    ...((window as unknown as { AccessibilityWidgetConfig?: WidgetConfig }).AccessibilityWidgetConfig ?? {}),
     ...(cfg.config ?? {}),
   };
 

@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 \Magento\Framework\Component\ComponentRegistrar::register(
     \Magento\Framework\Component\ComponentRegistrar::MODULE,
-    'BauerGroup_BFSGWidget',
+    'BauerGroup_AccessibilityWidget',
     __DIR__
 );

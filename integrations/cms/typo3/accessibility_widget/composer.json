@@ -1,5 +1,5 @@
 {
-  "name": "bauer-group/bfsg-widget-typo3",
+  "name": "bauer-group/accessibility-widget-typo3",
   "type": "typo3-cms-extension",
   "description": "BFSG Accessibility Widget für TYPO3 13.",
   "license": "MIT",
@@ -10,7 +10,7 @@
   },
   "extra": {
     "typo3/cms": {
-      "extension-key": "bfsg_widget"
+      "extension-key": "accessibility_widget"
     }
   },
   "autoload": {

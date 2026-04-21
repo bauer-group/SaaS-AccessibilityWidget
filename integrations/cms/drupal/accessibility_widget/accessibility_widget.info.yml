@@ -4,4 +4,4 @@ description: 'Lazy-loading Accessibility-Widget (BFSG/WCAG 2.2 AA) von BAUER GRO
 core_version_requirement: ^10 || ^11
 package: 'Accessibility'
 version: '1.0.0-alpha.1'
-configure: bfsg_widget.settings
+configure: accessibility_widget.settings

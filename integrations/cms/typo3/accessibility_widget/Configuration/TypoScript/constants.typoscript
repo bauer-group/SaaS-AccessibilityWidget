@@ -1,0 +1,17 @@
+plugin.tx_bfsgwidget {
+  settings {
+    # Pfade zu den Asset-Dateien
+    loaderPath = EXT:accessibility_widget/Resources/Public/JavaScript/accessibility-widget-loader.min.js
+    corePath = EXT:accessibility_widget/Resources/Public/JavaScript/accessibility-widget-core.min.js
+    cssPath = EXT:accessibility_widget/Resources/Public/Css/accessibility-widget.min.css
+
+    position = bottom-right
+    locale = auto
+    primaryColor = #0058a3
+
+    # SRI-Hashes (optional, aus dist/integrity.txt)
+    loaderIntegrity =
+    coreIntegrity =
+    cssIntegrity =
+  }
+}

@@ -79,7 +79,7 @@ function getState(): WidgetState {
 const api = { open, close, set, reset, getState, version: '1.0.0-alpha.1' };
 
 if (typeof window !== 'undefined') {
-  window.BFSGWidgetCore = api;
+  window.AccessibilityWidgetCore = api;
 }
 
 export default api;
