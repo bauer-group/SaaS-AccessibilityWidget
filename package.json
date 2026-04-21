@@ -1,5 +1,5 @@
 {
-  "name": "@bauer-group/accessibility-widget-monorepo",
+  "name": "@bauer-group/saas-accessibility-widget",
   "version": "0.1.0",
   "private": true,
   "description": "BFSG/EN 301 549 Accessibility Widget — lazy-loading, CDN-ready, plus framework integrations (React, Vue, Angular, Svelte, Next.js, Nuxt, Astro, WordPress, TYPO3, Drupal, Shopify, Shopware, Magento).",
