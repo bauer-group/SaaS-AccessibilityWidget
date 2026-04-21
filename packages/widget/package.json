@@ -34,13 +34,13 @@
     "clean": "rimraf dist"
   },
   "devDependencies": {
-    "@types/node": "^24.0.0",
-    "esbuild": "^0.24.0",
-    "happy-dom": "^17.0.0",
+    "@types/node": "^25.6.0",
+    "esbuild": "^0.28.0",
+    "happy-dom": "^20.9.0",
     "rimraf": "^6.0.1",
     "tsx": "^4.19.0",
-    "typescript": "^5.8.0",
-    "vitest": "^3.0.0"
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
   },
   "keywords": [
     "accessibility",
