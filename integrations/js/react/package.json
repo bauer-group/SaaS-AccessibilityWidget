@@ -1,5 +1,5 @@
 {
-  "name": "@bauer-group/bfsg-widget-react",
+  "name": "@bauer-group/accessibility-widget-react",
   "version": "1.0.0-alpha.1",
   "description": "React 19 Wrapper für das BFSG Accessibility Widget.",
   "license": "MIT",
@@ -26,7 +26,7 @@
     "react": ">=18"
   },
   "dependencies": {
-    "@bauer-group/bfsg-widget": "workspace:*"
+    "@bauer-group/accessibility-widget": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",

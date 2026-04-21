@@ -1,5 +1,5 @@
 {
-  "name": "@bauer-group/bfsg-widget",
+  "name": "@bauer-group/accessibility-widget",
   "version": "1.0.0-alpha.1",
   "description": "Lazy-loading Accessibility-Widget nach BFSG/EN 301 549. Loader ~4 KB gzip, Core ~10 KB gzip. Kein Tracking, kein Cookie, kein DOM-/ARIA-Override.",
   "license": "MIT",

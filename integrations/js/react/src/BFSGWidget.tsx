@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import type { WidgetConfig, WidgetState } from '@bauer-group/bfsg-widget';
+import type { WidgetConfig, WidgetState } from '@bauer-group/accessibility-widget';
 
 export interface BFSGWidgetSri {
   loader?: string;

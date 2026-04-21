@@ -46,7 +46,7 @@ jobs:
         run: pnpm test
 
       - name: Widget size budget
-        run: pnpm --filter @bauer-group/bfsg-widget size
+        run: pnpm --filter @bauer-group/accessibility-widget size
 
   scanner-e2e:
     name: Scanner self-audit
@@ -67,7 +67,7 @@ jobs:
       - run: pnpm build
       - name: Self-audit demo app
         run: |
-          pnpm --filter @bauer-group/bfsg-demo preview &
+          pnpm --filter @bauer-group/accessibility-widget-demo preview &
           sleep 5
           pnpm scanner:cli scan http://localhost:4173 --format json --out audit.json || true
       - uses: actions/upload-artifact@v4

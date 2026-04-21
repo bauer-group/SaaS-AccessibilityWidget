@@ -1,4 +1,4 @@
-# @bauer-group/bfsg-widget
+# @bauer-group/accessibility-widget
 
 > Lazy-loading Accessibility-Widget nach **BFSG / EN 301 549 / WCAG 2.2 AA**.
 > Loader ≤ 5 KB gzip, Core ≤ 12 KB gzip. Kein Tracking, kein Cookie, kein DOM-/ARIA-Override.
@@ -73,9 +73,9 @@ Siehe auch [ADR-0003: Kein DOM-/ARIA-Override](../../docs/adr/0003-widget-no-dom
 
 ```bash
 pnpm install
-pnpm --filter @bauer-group/bfsg-widget build    # baut dist/
-pnpm --filter @bauer-group/bfsg-widget size     # prüft Bundle-Budget
-pnpm --filter @bauer-group/bfsg-widget test     # Vitest
+pnpm --filter @bauer-group/accessibility-widget build    # baut dist/
+pnpm --filter @bauer-group/accessibility-widget size     # prüft Bundle-Budget
+pnpm --filter @bauer-group/accessibility-widget test     # Vitest
 ```
 
 ## Lizenz

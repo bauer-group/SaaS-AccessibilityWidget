@@ -1,10 +1,10 @@
-# @bauer-group/bfsg-widget-nextjs
+# @bauer-group/accessibility-widget-nextjs
 
 Next.js App-Router Wrapper mit `'use client'` direktive.
 
 ```tsx
 // app/layout.tsx
-import { BFSGWidgetClient } from '@bauer-group/bfsg-widget-nextjs';
+import { BFSGWidgetClient } from '@bauer-group/accessibility-widget-nextjs';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

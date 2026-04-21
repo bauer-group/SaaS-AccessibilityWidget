@@ -1,5 +1,5 @@
 import { defineComponent, onMounted, type PropType } from 'vue';
-import type { WidgetConfig, WidgetState } from '@bauer-group/bfsg-widget';
+import type { WidgetConfig, WidgetState } from '@bauer-group/accessibility-widget';
 
 export interface SriMap {
   loader?: string;

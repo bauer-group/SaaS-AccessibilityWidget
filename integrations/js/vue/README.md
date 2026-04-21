@@ -1,10 +1,10 @@
-# @bauer-group/bfsg-widget-vue
+# @bauer-group/accessibility-widget-vue
 
 Vue 3 Wrapper.
 
 ```vue
 <script setup lang="ts">
-import { BFSGWidget } from '@bauer-group/bfsg-widget-vue';
+import { BFSGWidget } from '@bauer-group/accessibility-widget-vue';
 </script>
 
 <template>

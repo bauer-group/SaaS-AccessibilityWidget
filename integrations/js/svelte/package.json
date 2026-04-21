@@ -1,5 +1,5 @@
 {
-  "name": "@bauer-group/bfsg-widget-svelte",
+  "name": "@bauer-group/accessibility-widget-svelte",
   "version": "1.0.0-alpha.1",
   "description": "Svelte 5 Component + Action für das BFSG Accessibility Widget.",
   "license": "MIT",
@@ -27,7 +27,7 @@
     "svelte": ">=5"
   },
   "dependencies": {
-    "@bauer-group/bfsg-widget": "workspace:*"
+    "@bauer-group/accessibility-widget": "workspace:*"
   },
   "devDependencies": {
     "rimraf": "^6.0.1",

@@ -1,5 +1,5 @@
 {
-  "name": "@bauer-group/bfsg-widget-angular",
+  "name": "@bauer-group/accessibility-widget-angular",
   "version": "1.0.0-alpha.1",
   "description": "Angular 19 Directive für das BFSG Accessibility Widget.",
   "license": "MIT",
@@ -27,7 +27,7 @@
     "rxjs": ">=7"
   },
   "dependencies": {
-    "@bauer-group/bfsg-widget": "workspace:*"
+    "@bauer-group/accessibility-widget": "workspace:*"
   },
   "devDependencies": {
     "@angular/common": "^19.0.0",

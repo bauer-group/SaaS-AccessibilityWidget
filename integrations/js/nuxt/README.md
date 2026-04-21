@@ -1,4 +1,4 @@
-# @bauer-group/bfsg-widget-nuxt
+# @bauer-group/accessibility-widget-nuxt
 
 Nuxt 3 Client-Plugin.
 
@@ -6,7 +6,7 @@ Nuxt 3 Client-Plugin.
 2. Plugin-Datei kopieren:
 
 ```bash
-cp node_modules/@bauer-group/bfsg-widget-nuxt/src/plugin.client.ts plugins/bfsg-widget.client.ts
+cp node_modules/@bauer-group/accessibility-widget-nuxt/src/plugin.client.ts plugins/bfsg-widget.client.ts
 ```
 
 3. In `nuxt.config.ts`:

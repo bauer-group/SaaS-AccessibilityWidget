@@ -1,11 +1,11 @@
-# @bauer-group/bfsg-widget-react
+# @bauer-group/accessibility-widget-react
 
 React 19 Wrapper für das BFSG Accessibility Widget.
 
 ## Installation
 
 ```bash
-npm install @bauer-group/bfsg-widget-react
+npm install @bauer-group/accessibility-widget-react
 ```
 
 Und die Widget-Assets (`bfsg-widget-loader.min.js`, `bfsg-widget-core.min.js`, `bfsg-widget.min.css`) unter `/public/bfsg-widget/` ablegen.
@@ -13,7 +13,7 @@ Und die Widget-Assets (`bfsg-widget-loader.min.js`, `bfsg-widget-core.min.js`, `
 ## Nutzung
 
 ```tsx
-import { BFSGWidget, openBFSGWidget } from '@bauer-group/bfsg-widget-react';
+import { BFSGWidget, openBFSGWidget } from '@bauer-group/accessibility-widget-react';
 
 export function App() {
   return (

@@ -1,4 +1,4 @@
-import type { WidgetConfig } from '@bauer-group/bfsg-widget';
+import type { WidgetConfig } from '@bauer-group/accessibility-widget';
 
 /**
  * Nuxt 3 client-only plugin. Copy this file to `plugins/bfsg-widget.client.ts`

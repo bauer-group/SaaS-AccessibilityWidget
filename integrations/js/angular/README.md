@@ -1,10 +1,10 @@
-# @bauer-group/bfsg-widget-angular
+# @bauer-group/accessibility-widget-angular
 
 Angular 19 Standalone Component (SSR-safe).
 
 ```ts
 import { Component } from '@angular/core';
-import { BFSGWidgetComponent } from '@bauer-group/bfsg-widget-angular';
+import { BFSGWidgetComponent } from '@bauer-group/accessibility-widget-angular';
 
 @Component({
   selector: 'app-root',

@@ -1,4 +1,4 @@
-import type { WidgetConfig, WidgetState } from '@bauer-group/bfsg-widget';
+import type { WidgetConfig, WidgetState } from '@bauer-group/accessibility-widget';
 
 declare global {
   interface Window {

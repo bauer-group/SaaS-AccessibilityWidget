@@ -1,5 +1,5 @@
 {
-  "name": "@bauer-group/bfsg-demo",
+  "name": "@bauer-group/accessibility-widget-demo",
   "version": "1.0.0-alpha.1",
   "description": "Interaktive Demo-Seite des BFSG Widget + Scanner-Zielscheibe mit bewusst eingebauten Barrieren.",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "clean": "rimraf dist .vite public/bfsg-widget"
   },
   "dependencies": {
-    "@bauer-group/bfsg-widget": "workspace:*"
+    "@bauer-group/accessibility-widget": "workspace:*"
   },
   "devDependencies": {
     "rimraf": "^6.0.1",

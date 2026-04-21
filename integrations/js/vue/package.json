@@ -1,5 +1,5 @@
 {
-  "name": "@bauer-group/bfsg-widget-vue",
+  "name": "@bauer-group/accessibility-widget-vue",
   "version": "1.0.0-alpha.1",
   "description": "Vue 3 Wrapper für das BFSG Accessibility Widget.",
   "license": "MIT",
@@ -25,7 +25,7 @@
     "vue": ">=3.3"
   },
   "dependencies": {
-    "@bauer-group/bfsg-widget": "workspace:*"
+    "@bauer-group/accessibility-widget": "workspace:*"
   },
   "devDependencies": {
     "rimraf": "^6.0.1",

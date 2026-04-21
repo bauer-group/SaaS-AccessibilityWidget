@@ -1,6 +1,6 @@
 import { Component, Input, PLATFORM_ID, Inject, OnInit } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import type { WidgetConfig, WidgetState } from '@bauer-group/bfsg-widget';
+import type { WidgetConfig, WidgetState } from '@bauer-group/accessibility-widget';
 
 export interface Sri {
   loader?: string;

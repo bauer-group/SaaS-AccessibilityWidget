@@ -1,10 +1,10 @@
 'use client';
-import { BFSGWidget, type BFSGWidgetProps } from '@bauer-group/bfsg-widget-react';
+import { BFSGWidget, type BFSGWidgetProps } from '@bauer-group/accessibility-widget-react';
 
 /**
  * Drop into app/layout.tsx:
  *
- *   import { BFSGWidgetClient } from '@bauer-group/bfsg-widget-nextjs';
+ *   import { BFSGWidgetClient } from '@bauer-group/accessibility-widget-nextjs';
  *   export default function RootLayout({ children }) {
  *     return (
  *       <html lang="de">

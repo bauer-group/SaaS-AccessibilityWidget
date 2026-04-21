@@ -1,5 +1,5 @@
 /**
- * Public TypeScript surface for @bauer-group/bfsg-widget.
+ * Public TypeScript surface for @bauer-group/accessibility-widget.
  *
  * Browser users load the IIFE bundles from /dist (loader + core).
  * Framework integrations (React, Vue, Angular, etc.) import the

@@ -1,5 +1,5 @@
 {
-  "name": "@bauer-group/bfsg-widget-nextjs",
+  "name": "@bauer-group/accessibility-widget-nextjs",
   "version": "1.0.0-alpha.1",
   "description": "Next.js App Router Wrapper (Client Component) für das BFSG Accessibility Widget.",
   "license": "MIT",
@@ -26,8 +26,8 @@
     "react": ">=18"
   },
   "dependencies": {
-    "@bauer-group/bfsg-widget": "workspace:*",
-    "@bauer-group/bfsg-widget-react": "workspace:*"
+    "@bauer-group/accessibility-widget": "workspace:*",
+    "@bauer-group/accessibility-widget-react": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",

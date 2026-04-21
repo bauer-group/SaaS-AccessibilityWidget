@@ -6,13 +6,13 @@ Framework- und CMS-spezifische Wrapper. Alle verwenden den gleichen Loader-Mecha
 
 | Paket | Framework | Status |
 |---|---|---|
-| [`@bauer-group/bfsg-widget-react`](./js/react/) | React 19 | ✅ |
-| [`@bauer-group/bfsg-widget-vue`](./js/vue/) | Vue 3 | ✅ |
-| [`@bauer-group/bfsg-widget-angular`](./js/angular/) | Angular 19 | ✅ |
-| [`@bauer-group/bfsg-widget-svelte`](./js/svelte/) | Svelte 5 | ✅ |
-| [`@bauer-group/bfsg-widget-nextjs`](./js/nextjs/) | Next.js App Router | ✅ |
-| [`@bauer-group/bfsg-widget-nuxt`](./js/nuxt/) | Nuxt 3 | ✅ |
-| [`@bauer-group/bfsg-widget-astro`](./js/astro/) | Astro | ✅ |
+| [`@bauer-group/accessibility-widget-react`](./js/react/) | React 19 | ✅ |
+| [`@bauer-group/accessibility-widget-vue`](./js/vue/) | Vue 3 | ✅ |
+| [`@bauer-group/accessibility-widget-angular`](./js/angular/) | Angular 19 | ✅ |
+| [`@bauer-group/accessibility-widget-svelte`](./js/svelte/) | Svelte 5 | ✅ |
+| [`@bauer-group/accessibility-widget-nextjs`](./js/nextjs/) | Next.js App Router | ✅ |
+| [`@bauer-group/accessibility-widget-nuxt`](./js/nuxt/) | Nuxt 3 | ✅ |
+| [`@bauer-group/accessibility-widget-astro`](./js/astro/) | Astro | ✅ |
 
 ## CMS & Shops (nicht Teil des npm-Workspaces)
 

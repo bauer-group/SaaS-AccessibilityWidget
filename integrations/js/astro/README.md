@@ -1,8 +1,8 @@
-# @bauer-group/bfsg-widget-astro
+# @bauer-group/accessibility-widget-astro
 
 ```astro
 ---
-import BFSGWidget from '@bauer-group/bfsg-widget-astro/src/BFSGWidget.astro';
+import BFSGWidget from '@bauer-group/accessibility-widget-astro/src/BFSGWidget.astro';
 ---
 
 <html lang="de">

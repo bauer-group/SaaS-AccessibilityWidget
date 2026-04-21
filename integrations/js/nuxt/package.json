@@ -1,5 +1,5 @@
 {
-  "name": "@bauer-group/bfsg-widget-nuxt",
+  "name": "@bauer-group/accessibility-widget-nuxt",
   "version": "1.0.0-alpha.1",
   "description": "Nuxt 3 Plugin für das BFSG Accessibility Widget.",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "nuxt": ">=3.10"
   },
   "dependencies": {
-    "@bauer-group/bfsg-widget": "workspace:*"
+    "@bauer-group/accessibility-widget": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.8.0"
