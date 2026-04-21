@@ -21,6 +21,6 @@
     "@bauer-group/bfsg-widget": "workspace:*"
   },
   "devDependencies": {
-    "typescript": "^5.8.0"
+    "typescript": "^6.0.3"
   }
 }
