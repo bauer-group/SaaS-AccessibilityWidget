@@ -43,6 +43,14 @@ That is all. The loader lazily fetches the core + stylesheet on first interactio
 
 For framework-specific wrappers, see [`integrations/`](./integrations/).
 
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for setup + conventions, [CONTRIBUTIONS-WANTED.md](./CONTRIBUTIONS-WANTED.md) for three concrete high-impact ways to help (new i18n locales, new framework/CMS integrations, better accessibility profiles), and [TESTING.md](./TESTING.md) for the current test strategy and known gaps.
+
+## Security
+
+Please report vulnerabilities via the process in [SECURITY.md](./SECURITY.md).
+
 ## License
 
 MIT — see [LICENSE](./LICENSE).
