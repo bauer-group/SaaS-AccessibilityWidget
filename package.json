@@ -2,6 +2,7 @@
   "name": "@bauer-group/saas-accessibility-widget",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "description": "BFSG/EN 301 549 Accessibility Widget — lazy-loading, CDN-ready, plus framework integrations (React, Vue, Angular, Svelte, Next.js, Nuxt, Astro, WordPress, TYPO3, Drupal, Shopify, Shopware, Magento).",
   "license": "MIT",
   "author": "BAUER GROUP <info@bauer-group.com>",
@@ -22,22 +23,27 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "test": "turbo run test",
-    "lint": "turbo run lint",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "typecheck": "turbo run typecheck",
     "clean": "turbo run clean && rimraf node_modules",
     "size": "turbo run size",
     "release": "turbo run release",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml,css}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml,css}\"",
-    "widget:build": "pnpm --filter @bauer-group/bfsg-widget build",
-    "demo:dev": "pnpm --filter @bauer-group/bfsg-demo dev"
+    "widget:build": "pnpm --filter @bauer-group/accessibility-widget build",
+    "demo:dev": "pnpm --filter @bauer-group/accessibility-widget-demo dev"
   },
   "devDependencies": {
+    "@eslint/js": "^9.20.0",
     "@types/node": "^24.0.0",
+    "eslint": "^9.20.0",
+    "globals": "^15.14.0",
     "prettier": "^3.4.2",
     "rimraf": "^6.0.1",
     "turbo": "^2.5.0",
-    "typescript": "^5.8.0"
+    "typescript": "^5.8.0",
+    "typescript-eslint": "^8.20.0"
   },
   "prettier": {
     "printWidth": 100,

@@ -4,7 +4,6 @@ import {
   PROFILE_IDS,
   type FeatureId,
   type Locale,
-  type ProfileId,
   type WidgetState,
 } from '../types/index.js';
 import { createFocusTrap, type FocusTrap } from '../focus-trap.js';
