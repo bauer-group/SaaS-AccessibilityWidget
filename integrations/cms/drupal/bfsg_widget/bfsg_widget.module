@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * @file
+ * BFSG Accessibility Widget — Drupal integration.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_page_attachments().
+ */
+function bfsg_widget_page_attachments(array &$attachments): void {
+  $config = \Drupal::config('bfsg_widget.settings');
+  $module_url = \Drupal::service('extension.path.resolver')->getPath('module', 'bfsg_widget');
+
+  $widget_config = [
+    'corePath'     => '/' . $module_url . '/assets/bfsg-widget-core.min.js',
+    'cssPath'      => '/' . $module_url . '/assets/bfsg-widget.min.css',
+    'position'     => $config->get('position') ?: 'bottom-right',
+    'locale'       => $config->get('locale') ?: 'auto',
+    'primaryColor' => $config->get('primary_color') ?: '#0058a3',
+  ];
+  $integrity = $config->get('loader_integrity');
+  if (!empty($integrity)) {
+    $widget_config['coreIntegrity'] = (string) $config->get('core_integrity');
+  }
+
+  $attachments['#attached']['html_head'][] = [
+    [
+      '#type' => 'html_tag',
+      '#tag' => 'script',
+      '#value' => 'window.BFSGWidgetConfig = ' . json_encode($widget_config, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ';',
+    ],
+    'bfsg_widget_config',
+  ];
+
+  $loader_attrs = [
+    'src' => '/' . $module_url . '/assets/bfsg-widget-loader.min.js',
+    'defer' => 'defer',
+    'data-bfsg' => 'loader',
+  ];
+  if (!empty($integrity)) {
+    $loader_attrs['integrity'] = $integrity;
+    $loader_attrs['crossorigin'] = 'anonymous';
+  }
+  $attachments['#attached']['html_head'][] = [
+    [
+      '#type' => 'html_tag',
+      '#tag' => 'script',
+      '#attributes' => $loader_attrs,
+    ],
+    'bfsg_widget_loader',
+  ];
+}

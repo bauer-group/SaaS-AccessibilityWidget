@@ -1,0 +1,54 @@
+# deps
+node_modules
+.pnpm-store
+
+# build outputs
+dist
+build
+.output
+.turbo
+coverage
+*.tsbuildinfo
+apps/demo/public/bfsg-widget/
+
+# generated declarations/JS in src (IDE/LSP side-effects — we only ship *.ts)
+packages/*/src/**/*.js
+packages/*/src/**/*.js.map
+packages/*/src/**/*.d.ts.map
+# allow hand-written ambient .d.ts (globals, shims)
+!packages/*/src/**/globals.d.ts
+# .d.ts files in src/ that shadow .ts sources are generated — block, but whitelist globals
+packages/widget/src/index.d.ts
+packages/widget/src/types/*.d.ts
+
+# env
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# editor / os
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.example.json
+.idea
+
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-error.log*
+
+# playwright
+playwright-report
+test-results
+.playwright
+
+# generated reports
+scanner-reports
+*.scan.json
+*.scan.html
+*.scan.pdf
+

@@ -1,0 +1,20 @@
+{% sw_extends '@Storefront/storefront/layout/meta.html.twig' %}
+
+{% block layout_head_javascript_tracking %}
+  {{ parent() }}
+
+  {% set pos = config('BFSGWidget.config.position') ?: 'bottom-right' %}
+  {% set loc = config('BFSGWidget.config.locale') ?: 'auto' %}
+  {% set col = config('BFSGWidget.config.primaryColor') ?: '#0058a3' %}
+
+  <script>
+    window.BFSGWidgetConfig = {
+      corePath: '{{ asset('bundles/bfsgwidget/bfsg-widget-core.min.js', 'asset') }}',
+      cssPath:  '{{ asset('bundles/bfsgwidget/bfsg-widget.min.css', 'asset') }}',
+      position: {{ pos|json_encode|raw }},
+      locale:   {{ loc|json_encode|raw }},
+      primaryColor: {{ col|json_encode|raw }}
+    };
+  </script>
+  <script src="{{ asset('bundles/bfsgwidget/bfsg-widget-loader.min.js', 'asset') }}" defer data-bfsg="loader"></script>
+{% endblock %}

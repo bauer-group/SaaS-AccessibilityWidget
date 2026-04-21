@@ -1,0 +1,35 @@
+{
+  "name": "@bauer-group/bfsg-widget-vue",
+  "version": "1.0.0-alpha.1",
+  "description": "Vue 3 Wrapper für das BFSG Accessibility Widget.",
+  "license": "MIT",
+  "author": "BAUER GROUP <info@de.bauer-group.com>",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "src", "README.md"],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo '(eslint not yet configured)'",
+    "test": "echo '(no tests)'",
+    "clean": "rimraf dist"
+  },
+  "peerDependencies": {
+    "vue": ">=3.3"
+  },
+  "dependencies": {
+    "@bauer-group/bfsg-widget": "workspace:*"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1",
+    "typescript": "^5.8.0",
+    "vue": "^3.5.0"
+  }
+}

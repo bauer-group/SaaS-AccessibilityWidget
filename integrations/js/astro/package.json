@@ -1,0 +1,20 @@
+{
+  "name": "@bauer-group/bfsg-widget-astro",
+  "version": "1.0.0-alpha.1",
+  "description": "Astro Component für das BFSG Accessibility Widget.",
+  "license": "MIT",
+  "author": "BAUER GROUP <info@de.bauer-group.com>",
+  "type": "module",
+  "main": "./src/BFSGWidget.astro",
+  "files": ["src", "README.md"],
+  "scripts": {
+    "build": "echo '(astro component: no build)'",
+    "typecheck": "echo 'skip'",
+    "lint": "echo '(eslint not yet configured)'",
+    "test": "echo '(no tests)'",
+    "clean": "echo 'nothing to clean'"
+  },
+  "peerDependencies": {
+    "astro": ">=4"
+  }
+}

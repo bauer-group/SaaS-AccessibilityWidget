@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const it: Translation = {
+  title: 'Accessibilità',
+  close: 'Chiudi',
+  reset: 'Reimposta tutte le impostazioni',
+  resetDone: 'Impostazioni reimpostate.',
+  profiles: {
+    h: 'Profili',
+    visionImpaired: 'Ipovedenti',
+    motor: 'Motorio',
+    cognitive: 'Cognitivo / lettura',
+    seizureSafe: 'Anti-crisi',
+    adhd: 'ADHD / focus',
+    blind: 'Cieco (screen reader)',
+  },
+  features: {
+    h: 'Impostazioni individuali',
+    fontSize: 'Dimensione testo',
+    lineHeight: 'Altezza riga',
+    letterSpacing: 'Spaziatura lettere',
+    contrast: 'Contrasto',
+    grayscale: 'Scala di grigi',
+    invertColors: 'Inverti colori',
+    dyslexiaFont: 'Font dislessia',
+    highlightLinks: 'Evidenzia link',
+    pauseAnimations: 'Pausa animazioni',
+    bigCursor: 'Cursore grande',
+    focusOutline: 'Bordo focus spesso',
+    readingMask: 'Maschera di lettura',
+    readingGuide: 'Guida di lettura',
+    tts: 'Leggi ad alta voce',
+    structureNav: 'Navigazione struttura',
+  },
+  values: { off: 'No', on: 'Sì', step: 'livello' },
+  contrastLabels: { off: 'Normale', high: 'Alto', dark: 'Scuro', invert: 'Invertito' },
+  aria: {
+    dialog: 'Impostazioni di accessibilità',
+    switch: 'Interruttore per',
+    triggerLabel: 'Impostazioni di accessibilità',
+  },
+  disclaimer:
+    'Questo widget integra (non sostituisce) l’accessibilità del sito. Per feedback contatta il gestore del sito.',
+  statementLink: 'Dichiarazione di accessibilità',
+};

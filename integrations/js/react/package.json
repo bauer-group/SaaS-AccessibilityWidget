@@ -1,0 +1,37 @@
+{
+  "name": "@bauer-group/bfsg-widget-react",
+  "version": "1.0.0-alpha.1",
+  "description": "React 19 Wrapper für das BFSG Accessibility Widget.",
+  "license": "MIT",
+  "author": "BAUER GROUP <info@de.bauer-group.com>",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "src", "README.md"],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo '(eslint not yet configured)'",
+    "test": "echo '(no tests — integration has no logic)'",
+    "clean": "rimraf dist"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "dependencies": {
+    "@bauer-group/bfsg-widget": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "react": "^19.0.0",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.8.0"
+  }
+}

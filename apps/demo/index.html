@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BFSG Widget — Live-Demo</title>
+    <meta name="description" content="Interaktive Demo des BFSG Accessibility Widgets von BAUER GROUP. Kein Tracking, kein Cookie." />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="stylesheet" href="/src/styles.css" />
+    <script>
+      window.BFSGWidgetConfig = {
+        corePath: '/bfsg-widget/bfsg-widget-core.min.js',
+        cssPath: '/bfsg-widget/bfsg-widget.min.css',
+        position: 'bottom-right',
+        locale: 'auto',
+        primaryColor: '#0058a3',
+      };
+    </script>
+    <script src="/bfsg-widget/bfsg-widget-loader.min.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Zum Hauptinhalt springen</a>
+
+    <header role="banner" class="site-header">
+      <div class="container site-header__inner">
+        <div class="brand">
+          <strong>BFSG Widget</strong>
+          <span class="muted">— Live Demo</span>
+        </div>
+        <nav aria-label="Hauptnavigation">
+          <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#integration">Integration</a></li>
+            <li><a href="#scanner-target">Scanner-Test</a></li>
+            <li><a href="/barrierefreiheit.html">Barrierefreiheit</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero container" aria-labelledby="h-hero">
+        <h1 id="h-hero">Live-Demo des BFSG Widgets</h1>
+        <p class="lede">
+          Klicken Sie rechts unten auf das Symbol oder nutzen Sie das Tastaturkürzel
+          <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>A</kbd>. Ihre Einstellungen werden im
+          <code>localStorage</code> gespeichert und beim nächsten Besuch vor dem ersten Render angewendet.
+        </p>
+        <div class="cta">
+          <button type="button" id="open-panel" class="primary">
+            Panel öffnen
+          </button>
+          <button type="button" id="reset-panel" class="secondary">
+            Einstellungen zurücksetzen
+          </button>
+        </div>
+      </section>
+
+      <section class="container" id="features" aria-labelledby="h-features">
+        <h2 id="h-features">Features ausprobieren</h2>
+        <p>
+          Der Beispieltext unten reagiert auf alle Widget-Einstellungen. Probieren Sie
+          <strong>Schriftgröße</strong>, <strong>Kontrast</strong>, <strong>Lese-Schrift</strong>,
+          <strong>Animationen pausieren</strong> und <strong>Links hervorheben</strong> aus.
+        </p>
+
+        <article class="card">
+          <h3>Artikel: Barrierefreiheit ist ein Qualitätsmerkmal</h3>
+          <p>
+            In der deutschen Wirtschaft gilt ab dem 28. Juni 2025 das
+            <a href="https://www.gesetze-im-internet.de/bfsg/">Barrierefreiheitsstärkungsgesetz</a>. Es
+            verpflichtet fast alle B2C-Anbieter zu technischer Barrierefreiheit — gemessen an WCAG 2.1 AA
+            / EN 301 549.
+          </p>
+          <p>
+            Ein <a href="#">Accessibility-Widget</a> ersetzt keinen sauberen Code. Aber eine gut
+            implementierte Präferenz-Ebene (Kontrast, Schriftgröße, Fokusrahmen, TTS) ist ein echter
+            Gewinn für Nutzer — und ein sichtbares Bekenntnis des Betreibers.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Animation zum Pausieren</h3>
+          <p>Dieser Punkt pulsiert, bis Sie <em>Animationen pausieren</em> aktivieren:</p>
+          <div class="pulse" aria-hidden="true"></div>
+        </article>
+      </section>
+
+      <section class="container" id="integration" aria-labelledby="h-int">
+        <h2 id="h-int">Integration (1 Zeile)</h2>
+        <pre><code>&lt;script src="/bfsg-widget/bfsg-widget-loader.min.js" defer&gt;&lt;/script&gt;</code></pre>
+        <p>
+          Das reicht für 90 % der Use-Cases. Für CMS/Shop-Systeme existieren eigene Pakete unter
+          <code>integrations/</code>: React, Vue, Angular, Svelte, Next.js, Nuxt, Astro, WordPress,
+          Shopify, Shopware, TYPO3, Drupal, Magento.
+        </p>
+      </section>
+
+      <section class="container" id="scanner-target" aria-labelledby="h-scanner">
+        <h2 id="h-scanner">Scanner-Testziel</h2>
+        <p>
+          Diese Seite enthält <strong>bewusst</strong> einige typische Barrieren, damit der Scanner etwas
+          zu finden hat:
+        </p>
+        <ul>
+          <li>Ein Bild ohne <code>alt</code>-Attribut (im <code>&lt;aside&gt;</code>)</li>
+          <li>Ein Link mit Text "hier klicken" (unspezifisch)</li>
+          <li>Ein Kontrast-Beispiel knapp unter 4.5:1 (Button "Graue Aktion")</li>
+          <li>Ein Formular-Feld ohne Label</li>
+        </ul>
+
+        <aside class="violations">
+          <img src="/bfsg-widget-assets/sample.svg" />
+          <p><a href="#">hier klicken</a> für mehr.</p>
+          <button class="low-contrast" type="button">Graue Aktion</button>
+          <form>
+            <input type="text" placeholder="Name" />
+            <button type="submit">Absenden</button>
+          </form>
+        </aside>
+
+        <p>
+          Starten Sie den Scanner gegen <code>http://localhost:4173</code> (Preview-Port) — er sollte die
+          obigen Probleme finden sowie die BFSG-Custom-Checks bestehen (diese Demo hat
+          Barrierefreiheitserklärung-Link, Kontakt per mailto, Impressum im statischen HTML).
+        </p>
+      </section>
+    </main>
+
+    <footer role="contentinfo">
+      <div class="container">
+        <p>
+          <a href="/barrierefreiheit.html">Barrierefreiheitserklärung</a> ·
+          <a href="/impressum.html">Impressum</a> ·
+          <a href="mailto:accessibility@bauer-group.com">Kontakt: accessibility@bauer-group.com</a>
+        </p>
+        <p>© BAUER GROUP — MIT Lizenz · <a href="https://github.com/bauer-group/SaaS-AccessibilityWidget">Source</a></p>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

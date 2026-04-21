@@ -1,0 +1,51 @@
+{
+  "name": "@bauer-group/accessibility-widget-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "BFSG/EN 301 549 Accessibility Widget — lazy-loading, CDN-ready, plus framework integrations (React, Vue, Angular, Svelte, Next.js, Nuxt, Astro, WordPress, TYPO3, Drupal, Shopify, Shopware, Magento).",
+  "license": "MIT",
+  "author": "BAUER GROUP <info@bauer-group.com>",
+  "homepage": "https://github.com/bauer-group/SaaS-AccessibilityWidget",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bauer-group/SaaS-AccessibilityWidget.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bauer-group/SaaS-AccessibilityWidget/issues"
+  },
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=10"
+  },
+  "packageManager": "pnpm@10.0.0",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean && rimraf node_modules",
+    "size": "turbo run size",
+    "release": "turbo run release",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml,css}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml,css}\"",
+    "widget:build": "pnpm --filter @bauer-group/bfsg-widget build",
+    "demo:dev": "pnpm --filter @bauer-group/bfsg-demo dev"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "prettier": "^3.4.2",
+    "rimraf": "^6.0.1",
+    "turbo": "^2.5.0",
+    "typescript": "^5.8.0"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "tabWidth": 2,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "semi": true,
+    "arrowParens": "always",
+    "endOfLine": "lf"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "@bauer-group/bfsg-demo",
+  "version": "1.0.0-alpha.1",
+  "description": "Interaktive Demo-Seite des BFSG Widget + Scanner-Zielscheibe mit bewusst eingebauten Barrieren.",
+  "license": "MIT",
+  "author": "BAUER GROUP <info@de.bauer-group.com>",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "predev": "tsx scripts/copy-widget.ts",
+    "dev": "vite",
+    "prebuild": "tsx scripts/copy-widget.ts",
+    "build": "vite build",
+    "preview": "vite preview --port 4173",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo '(eslint not yet configured)'",
+    "test": "echo '(demo: no tests — use scanner self-audit)'",
+    "clean": "rimraf dist .vite public/bfsg-widget"
+  },
+  "dependencies": {
+    "@bauer-group/bfsg-widget": "workspace:*"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.0",
+    "vite": "^7.0.0"
+  }
+}

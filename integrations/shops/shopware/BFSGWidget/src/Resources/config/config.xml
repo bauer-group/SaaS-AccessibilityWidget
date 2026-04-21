@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
+  <card>
+    <title>BFSG Accessibility Widget</title>
+    <title lang="de-DE">BFSG Barrierefreiheits-Widget</title>
+
+    <input-field type="single-select">
+      <name>position</name>
+      <defaultValue>bottom-right</defaultValue>
+      <label>Position</label>
+      <options>
+        <option><id>bottom-right</id><name>Bottom right</name></option>
+        <option><id>bottom-left</id><name>Bottom left</name></option>
+        <option><id>top-right</id><name>Top right</name></option>
+        <option><id>top-left</id><name>Top left</name></option>
+      </options>
+    </input-field>
+
+    <input-field type="single-select">
+      <name>locale</name>
+      <defaultValue>auto</defaultValue>
+      <label>Locale</label>
+      <options>
+        <option><id>auto</id><name>Auto</name></option>
+        <option><id>de</id><name>de</name></option>
+        <option><id>en</id><name>en</name></option>
+        <option><id>fr</id><name>fr</name></option>
+        <option><id>es</id><name>es</name></option>
+        <option><id>it</id><name>it</name></option>
+        <option><id>pl</id><name>pl</name></option>
+        <option><id>tr</id><name>tr</name></option>
+        <option><id>ar</id><name>ar</name></option>
+      </options>
+    </input-field>
+
+    <input-field type="colorpicker">
+      <name>primaryColor</name>
+      <defaultValue>#0058a3</defaultValue>
+      <label>Primärfarbe</label>
+    </input-field>
+  </card>
+</config>

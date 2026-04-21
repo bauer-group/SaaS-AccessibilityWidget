@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const tr: Translation = {
+  title: 'Erişilebilirlik',
+  close: 'Kapat',
+  reset: 'Tüm ayarları sıfırla',
+  resetDone: 'Ayarlar sıfırlandı.',
+  profiles: {
+    h: 'Profiller',
+    visionImpaired: 'Görme engelli',
+    motor: 'Motor',
+    cognitive: 'Bilişsel / okuma yardımı',
+    seizureSafe: 'Nöbet güvenli',
+    adhd: 'DEHB / odak',
+    blind: 'Görme engelli (ekran okuyucu)',
+  },
+  features: {
+    h: 'Bireysel ayarlar',
+    fontSize: 'Yazı boyutu',
+    lineHeight: 'Satır yüksekliği',
+    letterSpacing: 'Harf aralığı',
+    contrast: 'Kontrast',
+    grayscale: 'Gri tonlama',
+    invertColors: 'Renkleri ters çevir',
+    dyslexiaFont: 'Disleksi yazı tipi',
+    highlightLinks: 'Bağlantıları vurgula',
+    pauseAnimations: 'Animasyonları duraklat',
+    bigCursor: 'Büyük imleç',
+    focusOutline: 'Kalın odak çerçevesi',
+    readingMask: 'Okuma maskesi',
+    readingGuide: 'Okuma kılavuzu',
+    tts: 'Sesli oku',
+    structureNav: 'Yapı gezintisi',
+  },
+  values: { off: 'Kapalı', on: 'Açık', step: 'adım' },
+  contrastLabels: { off: 'Normal', high: 'Yüksek', dark: 'Koyu', invert: 'Ters' },
+  aria: {
+    dialog: 'Erişilebilirlik ayarları',
+    switch: 'Anahtar:',
+    triggerLabel: 'Erişilebilirlik ayarları',
+  },
+  disclaimer:
+    'Bu widget sitenin erişilebilirliğini tamamlar, yerine geçmez. Geri bildirim için site operatörüne başvurun.',
+  statementLink: 'Erişilebilirlik beyanı',
+};

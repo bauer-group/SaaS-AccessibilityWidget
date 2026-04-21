@@ -1,0 +1,26 @@
+{
+  "name": "@bauer-group/bfsg-widget-nuxt",
+  "version": "1.0.0-alpha.1",
+  "description": "Nuxt 3 Plugin für das BFSG Accessibility Widget.",
+  "license": "MIT",
+  "author": "BAUER GROUP <info@de.bauer-group.com>",
+  "type": "module",
+  "main": "./src/plugin.client.ts",
+  "files": ["src", "README.md"],
+  "scripts": {
+    "build": "echo '(nuxt plugin: no build needed)'",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo '(eslint not yet configured)'",
+    "test": "echo '(no tests)'",
+    "clean": "echo 'nothing to clean'"
+  },
+  "peerDependencies": {
+    "nuxt": ">=3.10"
+  },
+  "dependencies": {
+    "@bauer-group/bfsg-widget": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0"
+  }
+}

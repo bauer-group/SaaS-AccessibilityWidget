@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const en: Translation = {
+  title: 'Accessibility',
+  close: 'Close',
+  reset: 'Reset all settings',
+  resetDone: 'Settings reset.',
+  profiles: {
+    h: 'Profiles',
+    visionImpaired: 'Vision impaired',
+    motor: 'Motor',
+    cognitive: 'Cognitive / reading aid',
+    seizureSafe: 'Seizure-safe',
+    adhd: 'ADHD / focus',
+    blind: 'Blind (screen reader)',
+  },
+  features: {
+    h: 'Individual settings',
+    fontSize: 'Font size',
+    lineHeight: 'Line height',
+    letterSpacing: 'Letter spacing',
+    contrast: 'Contrast',
+    grayscale: 'Grayscale',
+    invertColors: 'Invert colors',
+    dyslexiaFont: 'Dyslexia font',
+    highlightLinks: 'Highlight links',
+    pauseAnimations: 'Pause animations',
+    bigCursor: 'Big cursor',
+    focusOutline: 'Thick focus ring',
+    readingMask: 'Reading mask',
+    readingGuide: 'Reading guide',
+    tts: 'Read aloud (TTS)',
+    structureNav: 'Structure navigation',
+  },
+  values: { off: 'Off', on: 'On', step: 'step' },
+  contrastLabels: { off: 'Normal', high: 'High', dark: 'Dark', invert: 'Inverted' },
+  aria: {
+    dialog: 'Accessibility settings',
+    switch: 'Toggle for',
+    triggerLabel: 'Accessibility settings',
+  },
+  disclaimer:
+    'This widget complements (but does not replace) genuine accessibility of the underlying site. Feedback per EAA: please contact the site operator.',
+  statementLink: 'Accessibility statement',
+};

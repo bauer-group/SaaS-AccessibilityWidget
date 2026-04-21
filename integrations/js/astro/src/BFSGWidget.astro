@@ -1,0 +1,29 @@
+---
+interface Props {
+  loaderSrc?: string;
+  cssHref?: string;
+  config?: Record<string, unknown>;
+  sri?: { loader?: string; css?: string };
+}
+
+const {
+  loaderSrc = '/bfsg-widget-loader.min.js',
+  cssHref = '/bfsg-widget.min.css',
+  config = {},
+  sri = {},
+} = Astro.props;
+
+const configJson = JSON.stringify(config);
+---
+
+<script is:inline define:vars={{ configJson }}>
+  try {
+    window.BFSGWidgetConfig = { ...(window.BFSGWidgetConfig ?? {}), ...JSON.parse(configJson) };
+  } catch (e) { /* silent */ }
+</script>
+{cssHref && (
+  <link rel="stylesheet" href={cssHref} data-bfsg="css" {...(sri.css ? { integrity: sri.css, crossorigin: 'anonymous' } : {})} />
+)}
+{loaderSrc && (
+  <script src={loaderSrc} defer data-bfsg="loader" {...(sri.loader ? { integrity: sri.loader, crossorigin: 'anonymous' } : {})} />
+)}

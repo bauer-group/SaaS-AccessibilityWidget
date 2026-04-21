@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const pl: Translation = {
+  title: 'Dostępność',
+  close: 'Zamknij',
+  reset: 'Zresetuj wszystkie ustawienia',
+  resetDone: 'Ustawienia zresetowane.',
+  profiles: {
+    h: 'Profile',
+    visionImpaired: 'Słabowidzący',
+    motor: 'Motoryczny',
+    cognitive: 'Poznawczy / pomoc w czytaniu',
+    seizureSafe: 'Bezpieczny dla padaczki',
+    adhd: 'ADHD / skupienie',
+    blind: 'Niewidomy (czytnik ekranu)',
+  },
+  features: {
+    h: 'Ustawienia indywidualne',
+    fontSize: 'Rozmiar czcionki',
+    lineHeight: 'Wysokość linii',
+    letterSpacing: 'Odstępy między literami',
+    contrast: 'Kontrast',
+    grayscale: 'Skala szarości',
+    invertColors: 'Odwróć kolory',
+    dyslexiaFont: 'Czcionka dla dyslektyków',
+    highlightLinks: 'Wyróżnij linki',
+    pauseAnimations: 'Wstrzymaj animacje',
+    bigCursor: 'Duży kursor',
+    focusOutline: 'Grubszy focus',
+    readingMask: 'Maska czytania',
+    readingGuide: 'Linijka czytania',
+    tts: 'Czytaj na głos',
+    structureNav: 'Nawigacja po strukturze',
+  },
+  values: { off: 'Wył.', on: 'Wł.', step: 'poziom' },
+  contrastLabels: { off: 'Normalny', high: 'Wysoki', dark: 'Ciemny', invert: 'Odwrócony' },
+  aria: {
+    dialog: 'Ustawienia dostępności',
+    switch: 'Przełącznik dla',
+    triggerLabel: 'Ustawienia dostępności',
+  },
+  disclaimer:
+    'Ten widget uzupełnia (ale nie zastępuje) prawdziwej dostępności strony. Opinie kieruj do operatora strony.',
+  statementLink: 'Oświadczenie o dostępności',
+};

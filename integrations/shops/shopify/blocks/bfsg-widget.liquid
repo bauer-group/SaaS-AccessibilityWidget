@@ -1,0 +1,50 @@
+{%- comment -%}
+  Online Store 2.0 app block. Merchant-configurable via theme editor.
+{%- endcomment -%}
+{% render 'bfsg-widget',
+  position: block.settings.position,
+  locale: block.settings.locale,
+  primary_color: block.settings.primary_color,
+  loader_integrity: block.settings.loader_integrity,
+  core_integrity: block.settings.core_integrity %}
+
+{% schema %}
+{
+  "name": "BFSG Accessibility Widget",
+  "target": "body",
+  "settings": [
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Position",
+      "default": "bottom-right",
+      "options": [
+        { "value": "bottom-right", "label": "Bottom right" },
+        { "value": "bottom-left",  "label": "Bottom left" },
+        { "value": "top-right",    "label": "Top right" },
+        { "value": "top-left",     "label": "Top left" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "locale",
+      "label": "Locale",
+      "default": "auto",
+      "options": [
+        { "value": "auto", "label": "Auto" },
+        { "value": "de", "label": "Deutsch" },
+        { "value": "en", "label": "English" },
+        { "value": "fr", "label": "Français" },
+        { "value": "es", "label": "Español" },
+        { "value": "it", "label": "Italiano" },
+        { "value": "pl", "label": "Polski" },
+        { "value": "tr", "label": "Türkçe" },
+        { "value": "ar", "label": "العربية" }
+      ]
+    },
+    { "type": "color", "id": "primary_color", "label": "Brand color", "default": "#0058a3" },
+    { "type": "text", "id": "loader_integrity", "label": "Loader SRI (optional)" },
+    { "type": "text", "id": "core_integrity", "label": "Core SRI (optional)" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,40 @@
+{
+  "name": "@bauer-group/bfsg-widget-angular",
+  "version": "1.0.0-alpha.1",
+  "description": "Angular 19 Directive für das BFSG Accessibility Widget.",
+  "license": "MIT",
+  "author": "BAUER GROUP <info@de.bauer-group.com>",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "src", "README.md"],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo '(eslint not yet configured)'",
+    "test": "echo '(no tests)'",
+    "clean": "rimraf dist"
+  },
+  "peerDependencies": {
+    "@angular/common": ">=19",
+    "@angular/core": ">=19",
+    "rxjs": ">=7"
+  },
+  "dependencies": {
+    "@bauer-group/bfsg-widget": "workspace:*"
+  },
+  "devDependencies": {
+    "@angular/common": "^19.0.0",
+    "@angular/core": "^19.0.0",
+    "rimraf": "^6.0.1",
+    "rxjs": "^7.8.0",
+    "typescript": "^5.8.0",
+    "zone.js": "^0.15.0"
+  }
+}

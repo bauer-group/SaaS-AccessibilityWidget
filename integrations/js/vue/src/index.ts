@@ -1,0 +1,64 @@
+import { defineComponent, onMounted, type PropType } from 'vue';
+import type { WidgetConfig, WidgetState } from '@bauer-group/bfsg-widget';
+
+export interface SriMap {
+  loader?: string;
+  core?: string;
+  css?: string;
+}
+
+declare global {
+  interface Window {
+    BFSGWidgetConfig?: WidgetConfig;
+    BFSGWidget?: {
+      open(): Promise<void>;
+      close(): void;
+      reset(): void;
+      getState(): WidgetState | null;
+    };
+  }
+}
+
+export const BFSGWidget = defineComponent({
+  name: 'BFSGWidget',
+  props: {
+    loaderSrc: { type: String, default: '/bfsg-widget-loader.min.js' },
+    cssHref: { type: String, default: '/bfsg-widget.min.css' },
+    config: { type: Object as PropType<WidgetConfig>, default: () => ({}) },
+    sri: { type: Object as PropType<SriMap>, default: () => ({}) },
+  },
+  setup(props) {
+    onMounted(() => {
+      if (typeof window === 'undefined') return;
+      window.BFSGWidgetConfig = { ...(window.BFSGWidgetConfig ?? {}), ...props.config };
+
+      if (props.cssHref && !document.querySelector('link[data-bfsg="css"]')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = props.cssHref;
+        link.dataset.bfsg = 'css';
+        if (props.sri.css) {
+          link.integrity = props.sri.css;
+          link.crossOrigin = 'anonymous';
+        }
+        document.head.appendChild(link);
+      }
+      if (props.loaderSrc && !document.querySelector('script[data-bfsg="loader"]')) {
+        const s = document.createElement('script');
+        s.src = props.loaderSrc;
+        s.defer = true;
+        s.dataset.bfsg = 'loader';
+        if (props.sri.loader) {
+          s.integrity = props.sri.loader;
+          s.crossOrigin = 'anonymous';
+        }
+        document.head.appendChild(s);
+      }
+    });
+    return () => null;
+  },
+});
+
+export const openBFSGWidget = (): Promise<void> | undefined => window.BFSGWidget?.open();
+export const closeBFSGWidget = (): void => window.BFSGWidget?.close();
+export const resetBFSGWidget = (): void => window.BFSGWidget?.reset();

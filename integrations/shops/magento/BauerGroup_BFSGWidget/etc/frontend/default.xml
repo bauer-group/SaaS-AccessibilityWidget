@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+  <default>
+    <bfsg_widget>
+      <settings>
+        <position>bottom-right</position>
+        <locale>auto</locale>
+        <primary_color>#0058a3</primary_color>
+      </settings>
+    </bfsg_widget>
+  </default>
+</config>

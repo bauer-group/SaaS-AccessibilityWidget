@@ -1,0 +1,20 @@
+page {
+  headerData {
+    bfsgConfig = TEXT
+    bfsgConfig.value (
+      <script>window.BFSGWidgetConfig = {
+        corePath: "{$plugin.tx_bfsgwidget.settings.corePath}",
+        cssPath: "{$plugin.tx_bfsgwidget.settings.cssPath}",
+        position: "{$plugin.tx_bfsgwidget.settings.position}",
+        locale: "{$plugin.tx_bfsgwidget.settings.locale}",
+        primaryColor: "{$plugin.tx_bfsgwidget.settings.primaryColor}"
+      };</script>
+    )
+  }
+  includeJSFooterlibs {
+    bfsgLoader = {$plugin.tx_bfsgwidget.settings.loaderPath}
+    bfsgLoader.disableCompression = 1
+    bfsgLoader.excludeFromConcatenation = 1
+    bfsgLoader.defer = 1
+  }
+}

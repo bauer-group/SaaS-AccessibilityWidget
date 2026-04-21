@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const ar: Translation = {
+  title: 'إمكانية الوصول',
+  close: 'إغلاق',
+  reset: 'إعادة تعيين جميع الإعدادات',
+  resetDone: 'تمت إعادة التعيين.',
+  profiles: {
+    h: 'ملفات التعريف',
+    visionImpaired: 'ضعف البصر',
+    motor: 'حركي',
+    cognitive: 'معرفي / مساعدة القراءة',
+    seizureSafe: 'آمن من النوبات',
+    adhd: 'اضطراب فرط الحركة / التركيز',
+    blind: 'كفيف (قارئ الشاشة)',
+  },
+  features: {
+    h: 'إعدادات فردية',
+    fontSize: 'حجم الخط',
+    lineHeight: 'ارتفاع السطر',
+    letterSpacing: 'تباعد الأحرف',
+    contrast: 'التباين',
+    grayscale: 'تدرج الرمادي',
+    invertColors: 'عكس الألوان',
+    dyslexiaFont: 'خط عسر القراءة',
+    highlightLinks: 'تمييز الروابط',
+    pauseAnimations: 'إيقاف الحركات',
+    bigCursor: 'مؤشر كبير',
+    focusOutline: 'إطار تركيز سميك',
+    readingMask: 'قناع القراءة',
+    readingGuide: 'دليل القراءة',
+    tts: 'قراءة بصوت عالٍ',
+    structureNav: 'التنقل حسب البنية',
+  },
+  values: { off: 'مغلق', on: 'مفعل', step: 'مستوى' },
+  contrastLabels: { off: 'عادي', high: 'مرتفع', dark: 'داكن', invert: 'مقلوب' },
+  aria: {
+    dialog: 'إعدادات إمكانية الوصول',
+    switch: 'مفتاح:',
+    triggerLabel: 'إعدادات إمكانية الوصول',
+  },
+  disclaimer:
+    'هذه الأداة تُكمل إمكانية الوصول لهذا الموقع ولا تحل محلها. للتعليقات راسل مشغل الموقع.',
+  statementLink: 'بيان إمكانية الوصول',
+};

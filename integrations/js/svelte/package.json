@@ -1,0 +1,37 @@
+{
+  "name": "@bauer-group/bfsg-widget-svelte",
+  "version": "1.0.0-alpha.1",
+  "description": "Svelte 5 Component + Action für das BFSG Accessibility Widget.",
+  "license": "MIT",
+  "author": "BAUER GROUP <info@de.bauer-group.com>",
+  "type": "module",
+  "main": "./src/index.js",
+  "svelte": "./src/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "svelte": "./src/index.js",
+      "import": "./src/index.js"
+    }
+  },
+  "files": ["src", "dist", "README.md"],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo '(eslint not yet configured)'",
+    "test": "echo '(no tests)'",
+    "clean": "rimraf dist"
+  },
+  "peerDependencies": {
+    "svelte": ">=5"
+  },
+  "dependencies": {
+    "@bauer-group/bfsg-widget": "workspace:*"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1",
+    "svelte": "^5.0.0",
+    "typescript": "^5.8.0"
+  }
+}

@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const de: Translation = {
+  title: 'Barrierefreiheit',
+  close: 'Schließen',
+  reset: 'Alle Einstellungen zurücksetzen',
+  resetDone: 'Einstellungen zurückgesetzt.',
+  profiles: {
+    h: 'Profile',
+    visionImpaired: 'Sehbehinderung',
+    motor: 'Motorik',
+    cognitive: 'Kognition / Lesehilfe',
+    seizureSafe: 'Anfallsicher',
+    adhd: 'ADHS / Fokus',
+    blind: 'Blind (Screenreader)',
+  },
+  features: {
+    h: 'Einzelne Einstellungen',
+    fontSize: 'Schriftgröße',
+    lineHeight: 'Zeilenabstand',
+    letterSpacing: 'Buchstabenabstand',
+    contrast: 'Kontrast',
+    grayscale: 'Graustufen',
+    invertColors: 'Farben invertieren',
+    dyslexiaFont: 'Lese-Schrift (Dyslexie)',
+    highlightLinks: 'Links hervorheben',
+    pauseAnimations: 'Animationen pausieren',
+    bigCursor: 'Großer Cursor',
+    focusOutline: 'Dicker Fokusrahmen',
+    readingMask: 'Lesemaske',
+    readingGuide: 'Leseführung',
+    tts: 'Vorlesen (Text-to-Speech)',
+    structureNav: 'Strukturnavigation',
+  },
+  values: { off: 'Aus', on: 'An', step: 'Stufe' },
+  contrastLabels: { off: 'Normal', high: 'Hoch', dark: 'Dunkel', invert: 'Invertiert' },
+  aria: {
+    dialog: 'Einstellungen zur Barrierefreiheit',
+    switch: 'Umschalter für',
+    triggerLabel: 'Barrierefreiheit einstellen',
+  },
+  disclaimer:
+    'Dieses Widget ergänzt die Barrierefreiheit dieser Website, ersetzt sie nicht. Feedback gemäß § 14 BFSG bitte an den Seitenbetreiber senden.',
+  statementLink: 'Barrierefreiheitserklärung',
+};

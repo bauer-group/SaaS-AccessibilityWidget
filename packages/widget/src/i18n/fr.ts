@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const fr: Translation = {
+  title: 'Accessibilité',
+  close: 'Fermer',
+  reset: 'Réinitialiser tous les réglages',
+  resetDone: 'Réglages réinitialisés.',
+  profiles: {
+    h: 'Profils',
+    visionImpaired: 'Malvoyance',
+    motor: 'Motricité',
+    cognitive: 'Cognition / aide à la lecture',
+    seizureSafe: 'Anti-crise',
+    adhd: 'TDAH / focus',
+    blind: 'Aveugle (lecteur d’écran)',
+  },
+  features: {
+    h: 'Réglages individuels',
+    fontSize: 'Taille du texte',
+    lineHeight: 'Hauteur de ligne',
+    letterSpacing: 'Espacement des lettres',
+    contrast: 'Contraste',
+    grayscale: 'Niveaux de gris',
+    invertColors: 'Inverser les couleurs',
+    dyslexiaFont: 'Police dyslexie',
+    highlightLinks: 'Surligner les liens',
+    pauseAnimations: 'Pauser les animations',
+    bigCursor: 'Grand curseur',
+    focusOutline: 'Contour de focus épais',
+    readingMask: 'Masque de lecture',
+    readingGuide: 'Guide de lecture',
+    tts: 'Lecture à voix haute',
+    structureNav: 'Navigation par structure',
+  },
+  values: { off: 'Off', on: 'On', step: 'niveau' },
+  contrastLabels: { off: 'Normal', high: 'Élevé', dark: 'Sombre', invert: 'Inversé' },
+  aria: {
+    dialog: 'Réglages d’accessibilité',
+    switch: 'Bascule pour',
+    triggerLabel: 'Réglages d’accessibilité',
+  },
+  disclaimer:
+    'Ce widget complète (sans la remplacer) l’accessibilité réelle du site. Merci de contacter l’exploitant du site pour tout retour.',
+  statementLink: 'Déclaration d’accessibilité',
+};
