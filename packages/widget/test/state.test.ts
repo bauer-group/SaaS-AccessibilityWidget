@@ -1,20 +1,8 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { createDefaultState, loadState, saveState, cycleStep, STEPS, hasAnyFeatureOn } from '../src/state.js';
 
-/**
- * happy-dom's localStorage.clear() throws in some versions
- * (`localStorage.clear is not a function`). Iterating keys works reliably
- * across happy-dom + jsdom + real browsers.
- */
-function resetLocalStorage(): void {
-  for (let i = localStorage.length - 1; i >= 0; i--) {
-    const key = localStorage.key(i);
-    if (key !== null) localStorage.removeItem(key);
-  }
-}
-
 describe('state module', () => {
-  beforeEach(() => resetLocalStorage());
+  beforeEach(() => localStorage.clear());
 
   it('returns a pristine default state', () => {
     const s = createDefaultState();
