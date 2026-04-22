@@ -1,6 +1,21 @@
 # @bauer-group/accessibility-widget-demo
 
-Interaktive Demo-Seite für das BAUER GROUP Accessibility Widget — Landing-Page, Live-Vorführung, Integration-Snippets und Scanner-Testziel.
+Interaktive Landing-Page, Runtime-API-Playground, Integration-Showcase und Scanner-Testziel für das BAUER GROUP Accessibility Widget.
+
+## Was die Demo zeigt
+
+| Sektion | Zweck |
+|---|---|
+| Hero + Status-Karte | 1-Line-Integration + Bundle-Sizes auf einen Blick |
+| Profile Quick-Actions | 6 Buttons, die via `AccessibilityWidget.applyProfile()` direkt auf der Demo-Seite feuern — ohne erst das Panel zu öffnen |
+| Live-Beispielinhalt | Text, Links, Animation, die sofort auf aktive Features reagieren |
+| Runtime-API-Explorer | Interaktive Buttons für jede der 9 `window.AccessibilityWidget.*`-Methoden mit Live-Feedback |
+| Event-Stream | Live-Log der 6 CustomEvent-Typen, die das Widget dispatch't (`stateChange`, `profileApplied`, …) |
+| Locale-Switcher | Dropdown mit allen 28 Locales in nativem Namen; nutzt die neue `setLocale()`-API (kein Reload) |
+| Integration-Tabs | Copy-Buttons für HTML, React, Vue, WordPress, Shopify Snippets |
+| Live-State-Panel | JSON-Dump von `getState()` mit 500 ms Polling |
+| Compliance-Karten | BFSG · EN 301 549 · WCAG 2.2 AA mit Deep-Links |
+| Scanner-Testzone | Collapsible, enthält **bewusst** WCAG-Violations für axe/pa11y/Lighthouse |
 
 ## Dev-Workflow
 
@@ -10,14 +25,14 @@ Interaktive Demo-Seite für das BAUER GROUP Accessibility Widget — Landing-Pag
 pnpm demo:dev
 ```
 
-Das baut das Widget einmal, startet dann **beide** Watch-Prozesse parallel:
+Baut das Widget einmal, startet dann **beide** Watch-Prozesse parallel:
 
-1. `@bauer-group/accessibility-widget` — esbuild im Watch-Modus, rebuildet bei jeder Widget-Source-Änderung
+1. `@bauer-group/accessibility-widget` — esbuild-Watch, rebuildet bei jeder Widget-Source-Änderung
 2. `@bauer-group/accessibility-widget-demo` — Vite Dev-Server auf `http://localhost:5173`
 
-Änderungen am Widget landen nach Browser-Reload sofort im Demo — die Vite-Middleware serviert `/accessibility-widget/*` direkt aus `packages/widget/dist/` (siehe [`vite.config.ts`](./vite.config.ts)). Kein `copy-on-save`, keine stale Dateien.
+Änderungen am Widget landen nach Browser-Reload sofort im Demo — die Vite-Middleware serviert `/accessibility-widget/*` direkt aus `packages/widget/dist/` (siehe [`vite.config.ts`](./vite.config.ts)).
 
-### Nur Demo (Widget bereits gebaut)
+### Nur Demo
 
 ```bash
 pnpm --filter @bauer-group/accessibility-widget-demo dev
@@ -25,40 +40,29 @@ pnpm --filter @bauer-group/accessibility-widget-demo dev
 
 Der `predev`-Hook baut das Widget einmal, falls nötig, und startet dann Vite. Keine Watch auf dem Widget — für reine Demo-UI-Arbeit.
 
-### Mit Widget-Watch (zwei Terminals)
+### Zwei Terminals (Widget-Watch manuell)
 
 ```bash
-# Terminal 1 — Widget-Watch
+# Terminal 1
 pnpm --filter @bauer-group/accessibility-widget dev
 
-# Terminal 2 — Demo
+# Terminal 2
 pnpm --filter @bauer-group/accessibility-widget-demo dev
 ```
 
 ## Build
 
 ```bash
-pnpm demo:build
+pnpm demo:build       # prebuild (widget + copy) → typecheck → vite build
+pnpm demo:preview     # serviert dist/ auf :4173 (strictPort)
 ```
-
-führt sequenziell aus:
-
-1. `prebuild` — Widget bauen + Files nach `public/accessibility-widget/` kopieren (via [`scripts/copy-widget.ts`](./scripts/copy-widget.ts))
-2. `typecheck` — `tsc --noEmit` gegen `tsconfig.json`
-3. `vite build` — Bundle nach `dist/` mit Sourcemaps und gehashed Assets
-
-```bash
-pnpm demo:preview
-```
-
-startet die gebaute Version unter `http://localhost:4173` (strict port).
 
 ## Scanner-Testziel
 
-Die Demo enthält **bewusst** WCAG-Violations als stabile Testfälle für automatisierte Scanner (axe-core, pa11y, Lighthouse, Playwright-AxE):
+Die Demo enthält **absichtlich** vier WCAG-Violations als stabile Testfälle:
 
 - `<img>` ohne `alt`-Attribut
-- Link-Text „hier klicken"
+- Link-Text „hier klicken" (nicht kontextbezogen)
 - Button mit Kontrast < 4.5:1
 - `<input>` ohne Label
 
@@ -73,29 +77,22 @@ npx @axe-core/cli http://localhost:4173 --exit
 
 ```text
 apps/demo/
-├── index.html                         Landing-Page
+├── index.html                         Landing-Page (alle Sektionen)
 ├── src/
-│   ├── main.ts                        Orchestrierung (Locale-Switcher, Live-State, Tabs, Copy)
-│   └── styles.css                     Design-System
+│   ├── main.ts                        Orchestrierung (API-Explorer, Event-Stream, Tabs, Copy)
+│   └── styles.css                     Design-System mit CSS-Variablen, Light/Dark, clamp()
 ├── public/
-│   ├── accessibility-widget-assets/   Demo-spezifische Assets (Icons, Fallback)
+│   ├── accessibility-widget-assets/   Demo-spezifische Icons
 │   ├── accessibility-widget/          Wird von prebuild befüllt (gitignored)
 │   ├── barrierefreiheit.html          A11y-Erklärung (§ 14 BFSG)
 │   └── impressum.html
 ├── scripts/
-│   └── copy-widget.ts                 Kopiert widget/dist → public/ für Prod-Build
+│   ├── copy-widget.ts                 Kopiert widget/dist → public/ für Prod-Build
+│   └── ensure-widget-built.ts         Idempotenter predev-Guard
 ├── vite.config.ts                     Dev-Middleware + Build-Config
 ├── tsconfig.json                      TS-Config (strict, node + vite/client)
 └── package.json
 ```
-
-## Features
-
-- **Locale-Switcher** (28 Sprachen): Persistiert in `localStorage['aw-demo-locale']`, setzt `AccessibilityWidgetConfig.locale` vor Loader-Boot
-- **Live-State-Panel**: Poll-basierte Anzeige von `window.AccessibilityWidget.getState()` alle 500 ms
-- **Integration-Tabs** mit Copy-Button für HTML, React, Vue, WordPress, Shopify
-- **Responsive Design** mit Light/Dark Mode (prefers-color-scheme)
-- **WCAG 2.2 AA konform** — der eigene Frame der Seite, nicht die Violations-Testzone
 
 ## Lizenz
 
