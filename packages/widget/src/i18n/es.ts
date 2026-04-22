@@ -38,6 +38,10 @@ export const es: Translation = {
     dialog: 'Ajustes de accesibilidad',
     switch: 'Interruptor para',
     triggerLabel: 'Ajustes de accesibilidad',
+    dragHandle: 'Mover el panel',
+    oversized: 'Widget ampliado',
+    language: 'Idioma',
+    info: 'Acerca de esta función',
   },
   disclaimer:
     'Este widget complementa (no sustituye) la accesibilidad real del sitio. Envía tu opinión al responsable del sitio.',

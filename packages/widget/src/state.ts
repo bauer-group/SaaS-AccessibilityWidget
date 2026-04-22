@@ -27,6 +27,7 @@ export function loadState(storageKey: string): WidgetState {
       lineHeightLevel: parsed.lineHeightLevel ?? fresh.lineHeightLevel,
       letterSpacingLevel: parsed.letterSpacingLevel ?? fresh.letterSpacingLevel,
       contrastMode: parsed.contrastMode ?? fresh.contrastMode,
+      oversized: parsed.oversized ?? fresh.oversized,
     };
   } catch (err) {
     warnIfDebug(`loadState("${storageKey}") failed, falling back to defaults`, err);

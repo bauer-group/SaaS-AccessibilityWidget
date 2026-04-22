@@ -38,6 +38,10 @@ export const ro: Translation = {
     dialog: 'Setări de accesibilitate',
     switch: 'Comutator',
     triggerLabel: 'Setări de accesibilitate',
+    dragHandle: 'Mutați panoul',
+    oversized: 'Widget mărit',
+    language: 'Limbă',
+    info: 'Despre această funcție',
   },
   disclaimer:
     'Acest widget completează, dar nu înlocuiește accesibilitatea reală a site-ului. Feedback conform EAA: contactați operatorul site-ului.',

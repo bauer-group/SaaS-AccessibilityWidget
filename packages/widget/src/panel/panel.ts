@@ -2,6 +2,8 @@ import {
   CONTRAST_MODES,
   FEATURE_IDS,
   PROFILE_IDS,
+  SUPPORTED_LOCALES,
+  isLocale,
   isRtl,
   type FeatureId,
   type Locale,
@@ -10,12 +12,95 @@ import {
 import { createFocusTrap, type FocusTrap } from '../focus-trap.js';
 import { make } from '../util/dom.js';
 import { buildIcon, ICON_CLOSE } from '../util/svg.js';
-import { t, type Translation } from '../i18n/index.js';
+import {
+  FEATURE_ICONS,
+  ICON_CHECK,
+  ICON_CHEVRON,
+  ICON_GLOBE,
+  ICON_GRIP,
+  ICON_INFO,
+  ICON_MAXIMIZE,
+  ICON_RESET,
+} from '../util/feature-icons.js';
+import { LANGUAGE_NAMES } from '../util/language-names.js';
+import { makeDraggable, type DraggableHandle } from './drag.js';
+import { t, translations, type Translation } from '../i18n/index.js';
 import { applyState } from '../features/apply.js';
 import { applyProfile } from '../features/profile.js';
 import { collectReadableText, ttsActive, ttsStart, ttsStop } from '../features/tts.js';
 import { structureNavToggle } from '../features/structure-nav.js';
 import { cycleStep, saveState, STEPS } from '../state.js';
+
+interface CycleDescriptor {
+  readonly steps: readonly (number | string)[];
+  readonly index: number;
+  readonly max: number;
+  readonly label: string;
+}
+
+function indexIn<T extends number | string>(steps: readonly T[], value: T): number {
+  const i = (steps as readonly unknown[]).indexOf(value);
+  return i < 0 ? 0 : i;
+}
+
+function describeCycle(id: FeatureId, state: WidgetState, T: Translation): CycleDescriptor | null {
+  switch (id) {
+    case 'fontSize':
+      return {
+        steps: STEPS.fontSize,
+        index: state.features.fontSize ? indexIn(STEPS.fontSize, state.fontSizeLevel as never) : 0,
+        max: STEPS.fontSize.length - 1,
+        label: state.features.fontSize ? String(state.fontSizeLevel) : T.values.off,
+      };
+    case 'lineHeight':
+      return {
+        steps: STEPS.lineHeight,
+        index: state.features.lineHeight
+          ? indexIn(STEPS.lineHeight, state.lineHeightLevel as never)
+          : 0,
+        max: STEPS.lineHeight.length - 1,
+        label: state.features.lineHeight ? String(state.lineHeightLevel) : T.values.off,
+      };
+    case 'letterSpacing':
+      return {
+        steps: STEPS.letterSpacing,
+        index: state.features.letterSpacing
+          ? indexIn(STEPS.letterSpacing, state.letterSpacingLevel as never)
+          : 0,
+        max: STEPS.letterSpacing.length - 1,
+        label: state.features.letterSpacing ? String(state.letterSpacingLevel) : T.values.off,
+      };
+    case 'contrast':
+      return {
+        steps: STEPS.contrast,
+        index: indexIn(STEPS.contrast, state.contrastMode),
+        max: STEPS.contrast.length - 1,
+        label: T.contrastLabels[state.contrastMode],
+      };
+    default:
+      return null;
+  }
+}
+
+function featureDescription(id: FeatureId, T: Translation): string {
+  return T.featureDescriptions?.[id] ?? translations.en.featureDescriptions?.[id] ?? '';
+}
+
+function renderStageDots(currentIndex: number, max: number): HTMLElement {
+  const dots: HTMLElement[] = [];
+  for (let i = 0; i <= max; i += 1) {
+    dots.push(
+      make('span', {
+        class: 'aw-stage-dot' + (i <= currentIndex && currentIndex > 0 ? ' is-filled' : ''),
+      }),
+    );
+  }
+  return make('span', {
+    class: 'aw-stage-dots',
+    attrs: { 'aria-hidden': 'true' },
+    children: dots,
+  });
+}
 import type { ResolvedConfig } from '../config.js';
 
 interface PanelContext {
@@ -34,10 +119,12 @@ export interface PanelHandle {
 }
 
 export function openPanel(ctx: PanelContext): PanelHandle {
-  const T = t(ctx.locale);
+  let locale = ctx.locale;
+  let T = t(locale);
   let state = ctx.state;
   let liveEl: HTMLDivElement | null = null;
   let trap: FocusTrap | null = null;
+  let drag: DraggableHandle | null = null;
 
   const root = make('div', {
     class: `aw-panel aw-panel--${ctx.config.position}`,
@@ -47,10 +134,20 @@ export function openPanel(ctx: PanelContext): PanelHandle {
       'aria-modal': 'true',
       'aria-labelledby': 'aw-panel-title',
       'data-aw-panel': '1',
-      dir: isRtl(ctx.locale) ? 'rtl' : 'ltr',
-      lang: ctx.locale,
+      dir: isRtl(locale) ? 'rtl' : 'ltr',
+      lang: locale,
     },
   });
+
+  function applyLocaleAttrs(): void {
+    root.setAttribute('dir', isRtl(locale) ? 'rtl' : 'ltr');
+    root.setAttribute('lang', locale);
+  }
+
+  function applyOversized(): void {
+    root.classList.toggle('aw-panel--xl', Boolean(state.oversized));
+  }
+  applyOversized();
 
   function announce(text: string): void {
     if (liveEl) liveEl.textContent = text;
@@ -66,26 +163,31 @@ export function openPanel(ctx: PanelContext): PanelHandle {
   }
 
   function rerender(): void {
-    // Preserve currently focused element label for restoration
-    const focusLabel =
-      document.activeElement instanceof HTMLElement
-        ? document.activeElement.getAttribute('aria-label')
-        : null;
+    // Preserve focus across re-render via a language-stable selector.
+    // aria-label would break when the user switches locale mid-session.
+    const focusSelector = focusRestoreSelector();
 
     while (root.firstChild) root.removeChild(root.firstChild);
     build();
 
-    if (focusLabel) {
-      const target = root.querySelector<HTMLElement>(`[aria-label="${CSS.escape(focusLabel)}"]`);
-      target?.focus();
+    if (focusSelector) root.querySelector<HTMLElement>(focusSelector)?.focus();
+  }
+
+  function focusRestoreSelector(): string | null {
+    const el = document.activeElement;
+    if (!(el instanceof HTMLElement) || !root.contains(el)) return null;
+    for (const attr of ['data-feature', 'data-profile', 'data-aw-action'] as const) {
+      const v = el.getAttribute(attr);
+      if (v) return `[${attr}="${CSS.escape(v)}"]`;
     }
+    return null;
   }
 
   function build(): void {
     // Header ---------------------------------------------------------
     const closeBtn = make('button', {
       class: 'aw-close',
-      attrs: { type: 'button', 'aria-label': T.close },
+      attrs: { type: 'button', 'aria-label': T.close, 'data-aw-action': 'close' },
       on: { click: ctx.onClose },
       children: [buildIcon({ ...ICON_CLOSE, width: 20, height: 20 })],
     });
@@ -94,7 +196,75 @@ export function openPanel(ctx: PanelContext): PanelHandle {
       attrs: { id: 'aw-panel-title' },
       text: T.title,
     });
-    const header = make('header', { class: 'aw-header', children: [title, closeBtn] });
+    const gripIcon = make('span', {
+      class: 'aw-drag-grip',
+      attrs: { 'aria-hidden': 'true' },
+      children: [buildIcon({ ...ICON_GRIP, width: 20, height: 20 })],
+    });
+    const header = make('header', {
+      class: 'aw-header',
+      attrs: { 'data-aw-drag-handle': '1', title: T.aria.dragHandle },
+      children: [gripIcon, title, closeBtn],
+    });
+
+    // Toolbar: language + oversized ---------------------------------
+    const langSelect = make('select', {
+      class: 'aw-lang',
+      attrs: { 'aria-label': T.aria.language, 'data-aw-action': 'language' },
+      children: SUPPORTED_LOCALES.map((loc) =>
+        make('option', {
+          attrs: { value: loc, selected: loc === locale },
+          text: LANGUAGE_NAMES[loc],
+        }),
+      ),
+      on: {
+        change: (ev) => {
+          const next = (ev.target as HTMLSelectElement).value;
+          if (isLocale(next) && next !== locale) {
+            locale = next;
+            T = t(locale);
+            applyLocaleAttrs();
+            announce(LANGUAGE_NAMES[locale]);
+            rerender();
+          }
+        },
+      },
+    });
+    const langWrap = make('label', {
+      class: 'aw-tool aw-tool--lang',
+      children: [
+        buildIcon({ ...ICON_GLOBE, width: 18, height: 18 }),
+        langSelect,
+      ],
+    });
+
+    const oversizedBtn = make('button', {
+      class: 'aw-tool aw-tool--oversize' + (state.oversized ? ' is-on' : ''),
+      attrs: {
+        type: 'button',
+        role: 'switch',
+        'aria-checked': state.oversized ? 'true' : 'false',
+        'aria-label': T.aria.oversized,
+        'data-aw-action': 'oversized',
+      },
+      children: [
+        buildIcon({ ...ICON_MAXIMIZE, width: 18, height: 18 }),
+        make('span', { text: T.aria.oversized }),
+      ],
+      on: {
+        click: () => {
+          const next = !state.oversized;
+          commit({ ...state, oversized: next }, T.aria.oversized);
+          applyOversized();
+        },
+      },
+    });
+
+    const toolbar = make('div', {
+      class: 'aw-toolbar',
+      attrs: { role: 'group', 'aria-label': T.title },
+      children: [langWrap, oversizedBtn],
+    });
 
     // Profiles -------------------------------------------------------
     const profGrid = make('div', {
@@ -124,8 +294,11 @@ export function openPanel(ctx: PanelContext): PanelHandle {
     // Footer ---------------------------------------------------------
     const resetBtn = make('button', {
       class: 'aw-reset',
-      attrs: { type: 'button' },
-      text: T.reset,
+      attrs: { type: 'button', 'data-aw-action': 'reset' },
+      children: [
+        buildIcon({ ...ICON_RESET, width: 18, height: 18 }),
+        make('span', { text: T.reset }),
+      ],
       on: {
         click: () => {
           const fresh: WidgetState = {
@@ -160,12 +333,22 @@ export function openPanel(ctx: PanelContext): PanelHandle {
     const footer = make('footer', { class: 'aw-footer', children: footerChildren });
 
     root.appendChild(header);
-    root.appendChild(
-      make('div', {
-        class: 'aw-section',
-        children: [make('h3', { class: 'aw-h3', text: T.profiles.h }), profGrid],
-      }),
-    );
+    root.appendChild(toolbar);
+
+    const profSummary = make('summary', {
+      class: 'aw-h3 aw-summary',
+      children: [
+        make('span', { text: T.profiles.h }),
+        buildIcon({ ...ICON_CHEVRON, width: 16, height: 16 }),
+      ],
+    });
+    const profDetails = make('details', {
+      class: 'aw-section aw-collapsible',
+      attrs: { open: true },
+      children: [profSummary, profGrid],
+    });
+    root.appendChild(profDetails);
+
     root.appendChild(
       make('div', {
         class: 'aw-section',
@@ -175,45 +358,89 @@ export function openPanel(ctx: PanelContext): PanelHandle {
     root.appendChild(footer);
   }
 
-  function renderFeature(id: FeatureId, T: Translation): HTMLButtonElement {
+  function renderFeature(id: FeatureId, T: Translation): HTMLElement {
     const label = T.features[id];
     const active = state.features[id];
-    const badge = computeBadge(id, T);
+    const cycle = describeCycle(id, state, T);
+    const isCycle = cycle !== null;
+    const description = featureDescription(id, T);
 
-    const btn = make('button', {
-      class: 'aw-feat' + (active ? ' is-on' : ''),
-      attrs: {
-        type: 'button',
-        role: 'switch',
-        'aria-checked': active ? 'true' : 'false',
-        'aria-label': `${T.aria.switch} ${label}`,
-        'data-feature': id,
-      },
-      children: [
-        make('span', { class: 'aw-feat-label', text: label }),
-        make('span', { class: 'aw-feat-badge', text: badge }),
-      ],
-      on: {
-        click: () => onFeatureClick(id, label),
-      },
+    const iconSpec = FEATURE_ICONS[id];
+    const iconEl = make('span', {
+      class: 'aw-feat-icon',
+      children: [buildIcon({ ...iconSpec, width: 28, height: 28 })],
     });
-    return btn;
-  }
 
-  function computeBadge(id: FeatureId, T: Translation): string {
-    if (id === 'fontSize') {
-      return state.features.fontSize ? String(state.fontSizeLevel) : T.values.off;
+    const activeBadge = make('span', {
+      class: 'aw-feat-check',
+      attrs: { 'aria-hidden': 'true' },
+      children: [buildIcon({ ...ICON_CHECK, width: 14, height: 14 })],
+    });
+
+    const descId = `aw-desc-${id}`;
+    const infoBadge = description
+      ? make('span', {
+          class: 'aw-feat-info',
+          attrs: { 'aria-hidden': 'true', role: 'img', 'aria-label': T.aria.info },
+          children: [buildIcon({ ...ICON_INFO, width: 14, height: 14 })],
+        })
+      : null;
+    const descEl = description
+      ? make('span', {
+          class: 'aw-feat-tooltip',
+          attrs: { id: descId, role: 'tooltip' },
+          text: description,
+        })
+      : null;
+
+    const children: (HTMLElement | null)[] = [
+      infoBadge,
+      iconEl,
+      make('span', { class: 'aw-feat-label', text: label }),
+    ];
+    if (cycle) {
+      children.push(renderStageDots(cycle.index, cycle.max));
+      children.push(make('span', { class: 'aw-feat-badge', text: cycle.label }));
+    } else {
+      children.push(
+        make('span', {
+          class: 'aw-feat-badge',
+          text: active ? T.values.on : T.values.off,
+        }),
+      );
     }
-    if (id === 'lineHeight') {
-      return state.features.lineHeight ? String(state.lineHeightLevel) : T.values.off;
+    children.push(activeBadge);
+
+    const attrs: Record<string, string> = {
+      type: 'button',
+      'aria-label': `${T.aria.switch} ${label}`,
+      'data-feature': id,
+    };
+    if (description) attrs['aria-describedby'] = descId;
+    if (isCycle && cycle) {
+      // Multi-stage control: expose slider semantics so screenreaders announce "step 2 of 3".
+      attrs.role = 'slider';
+      attrs['aria-valuemin'] = '0';
+      attrs['aria-valuemax'] = String(cycle.max);
+      attrs['aria-valuenow'] = String(cycle.index);
+      attrs['aria-valuetext'] = cycle.label;
+    } else {
+      attrs.role = 'switch';
+      attrs['aria-checked'] = active ? 'true' : 'false';
     }
-    if (id === 'letterSpacing') {
-      return state.features.letterSpacing ? String(state.letterSpacingLevel) : T.values.off;
-    }
-    if (id === 'contrast') {
-      return T.contrastLabels[state.contrastMode];
-    }
-    return state.features[id] ? T.values.on : T.values.off;
+
+    const button = make('button', {
+      class: 'aw-feat' + (active ? ' is-on' : ''),
+      attrs,
+      children: children.filter((c): c is HTMLElement => c !== null),
+      on: { click: () => onFeatureClick(id, label) },
+    });
+
+    if (!descEl) return button;
+    return make('div', {
+      class: 'aw-feat-wrap',
+      children: [button, descEl],
+    });
   }
 
   function onFeatureClick(id: FeatureId, label: string): void {
@@ -294,14 +521,32 @@ export function openPanel(ctx: PanelContext): PanelHandle {
   trap.activate();
   document.addEventListener('keydown', onEsc);
   root.querySelector<HTMLButtonElement>('.aw-close')?.focus();
+  attachDrag();
+
+  function attachDrag(): void {
+    const handle = root.querySelector<HTMLElement>('[data-aw-drag-handle]');
+    if (!handle) return;
+    drag?.destroy();
+    drag = makeDraggable({ root, handle, storageKey: ctx.config.storageKey });
+  }
+
+  // After every rerender, the header node is rebuilt — re-bind drag listeners
+  // to the fresh handle and restore the saved position.
+  const originalRerender = rerender;
+  function rerenderWithDrag(): void {
+    originalRerender();
+    attachDrag();
+  }
 
   return {
     root,
     destroy: () => {
       trap?.deactivate();
+      drag?.destroy();
+      drag = null;
       document.removeEventListener('keydown', onEsc);
       root.remove();
     },
-    rerender,
+    rerender: rerenderWithDrag,
   };
 }

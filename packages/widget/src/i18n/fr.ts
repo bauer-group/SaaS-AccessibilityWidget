@@ -38,6 +38,10 @@ export const fr: Translation = {
     dialog: 'Réglages d’accessibilité',
     switch: 'Bascule pour',
     triggerLabel: 'Réglages d’accessibilité',
+    dragHandle: 'Déplacer le panneau',
+    oversized: 'Widget agrandi',
+    language: 'Langue',
+    info: 'À propos de cette fonction',
   },
   disclaimer:
     'Ce widget complète (sans la remplacer) l’accessibilité réelle du site. Merci de contacter l’exploitant du site pour tout retour.',

@@ -38,6 +38,10 @@ export const it: Translation = {
     dialog: 'Impostazioni di accessibilità',
     switch: 'Interruttore per',
     triggerLabel: 'Impostazioni di accessibilità',
+    dragHandle: 'Sposta il pannello',
+    oversized: 'Widget ingrandito',
+    language: 'Lingua',
+    info: 'Informazioni su questa funzione',
   },
   disclaimer:
     'Questo widget integra (non sostituisce) l’accessibilità del sito. Per feedback contatta il gestore del sito.',

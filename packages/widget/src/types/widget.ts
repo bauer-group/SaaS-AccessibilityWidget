@@ -42,6 +42,8 @@ export interface WidgetState {
   lineHeightLevel: number;
   letterSpacingLevel: number;
   contrastMode: ContrastMode;
+  /** Enlarges panel controls & tap targets — independent from font-size feature. */
+  oversized?: boolean;
 }
 
 export interface WidgetConfig {
@@ -78,6 +80,7 @@ export const DEFAULT_STATE: WidgetState = {
   lineHeightLevel: 1.5,
   letterSpacingLevel: 0,
   contrastMode: 'off',
+  oversized: false,
 };
 
 export const PROFILES: Record<ProfileId, ProfilePreset> = {

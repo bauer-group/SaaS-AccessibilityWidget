@@ -38,6 +38,10 @@ export const ko: Translation = {
     dialog: '접근성 설정',
     switch: '토글',
     triggerLabel: '접근성 설정',
+    dragHandle: '패널 이동',
+    oversized: '확대된 위젯',
+    language: '언어',
+    info: '이 기능 정보',
   },
   disclaimer:
     '이 위젯은 웹사이트 자체의 접근성을 보완할 뿐, 대체하지 않습니다. 의견은 사이트 운영자에게 연락해 주세요.',

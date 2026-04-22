@@ -38,6 +38,10 @@ export const ja: Translation = {
     dialog: 'アクセシビリティ設定',
     switch: '切替',
     triggerLabel: 'アクセシビリティ設定',
+    dragHandle: 'パネルを移動',
+    oversized: '拡大ウィジェット',
+    language: '言語',
+    info: 'この機能について',
   },
   disclaimer:
     'このウィジェットはウェブサイト自体のアクセシビリティを補完するものであり、代替するものではありません。ご意見はサイト運営者までお寄せください。',

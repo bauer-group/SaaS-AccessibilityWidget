@@ -38,6 +38,10 @@ export const zh: Translation = {
     dialog: '无障碍设置',
     switch: '切换开关',
     triggerLabel: '无障碍设置',
+    dragHandle: '移动面板',
+    oversized: '加大控件',
+    language: '语言',
+    info: '关于此功能',
   },
   disclaimer:
     '此小部件补充(但不替代)网站本身的无障碍性。如有反馈,请联系网站运营方。',

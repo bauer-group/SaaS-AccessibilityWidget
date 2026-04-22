@@ -38,6 +38,10 @@ export const tr: Translation = {
     dialog: 'Erişilebilirlik ayarları',
     switch: 'Anahtar:',
     triggerLabel: 'Erişilebilirlik ayarları',
+    dragHandle: 'Paneli taşı',
+    oversized: 'Büyütülmüş widget',
+    language: 'Dil',
+    info: 'Bu özellik hakkında',
   },
   disclaimer:
     'Bu widget sitenin erişilebilirliğini tamamlar, yerine geçmez. Geri bildirim için site operatörüne başvurun.',

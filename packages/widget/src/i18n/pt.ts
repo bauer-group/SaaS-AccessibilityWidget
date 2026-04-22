@@ -38,6 +38,10 @@ export const pt: Translation = {
     dialog: 'Definições de acessibilidade',
     switch: 'Alternar',
     triggerLabel: 'Definições de acessibilidade',
+    dragHandle: 'Mover painel',
+    oversized: 'Widget ampliado',
+    language: 'Idioma',
+    info: 'Sobre esta funcionalidade',
   },
   disclaimer:
     'Este widget complementa (mas não substitui) a acessibilidade real do site. Para comentários nos termos da EAA, contacte o operador do site.',

@@ -38,6 +38,10 @@ export const hu: Translation = {
     dialog: 'Akadálymentességi beállítások',
     switch: 'Kapcsoló',
     triggerLabel: 'Akadálymentességi beállítások',
+    dragHandle: 'Panel áthelyezése',
+    oversized: 'Kinagyított widget',
+    language: 'Nyelv',
+    info: 'Erről a funkcióról',
   },
   disclaimer:
     'Ez a widget kiegészíti, de nem helyettesíti a weboldal tényleges akadálymentességét. Visszajelzést az üzemeltetőnek küldjön.',

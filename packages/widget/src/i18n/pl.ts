@@ -38,6 +38,10 @@ export const pl: Translation = {
     dialog: 'Ustawienia dostępności',
     switch: 'Przełącznik dla',
     triggerLabel: 'Ustawienia dostępności',
+    dragHandle: 'Przenieś panel',
+    oversized: 'Powiększony widget',
+    language: 'Język',
+    info: 'O tej funkcji',
   },
   disclaimer:
     'Ten widget uzupełnia (ale nie zastępuje) prawdziwej dostępności strony. Opinie kieruj do operatora strony.',

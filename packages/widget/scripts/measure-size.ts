@@ -10,14 +10,16 @@ const dist = resolve(here, '..', 'dist');
  * Size budgets (gzip).
  *
  * Core grew from 12 KB → 24 KB when we expanded i18n from 8 to 28 locales.
- * Each non-Latin locale (Hindi, Chinese, Thai, …) costs more bytes per string
- * under UTF-8, but the Translation-object shape is shared across all of them,
- * so gzip amortises the key overhead. The loader IIFE stays at 5 KB because
- * it only ships the short FAB button label per locale, not the full Translation.
+ * It then grew to ~28 KB after adding feature pictograms, multi-stage
+ * indicators, panel dragging, oversized mode, runtime language switching
+ * and feature tooltips. The loader IIFE is the hot path for 99.9 % of page
+ * visitors who never open the panel — it stays at 5 KB because it only
+ * ships the short FAB button label per locale, not the full Translation.
+ * The core only loads on first widget interaction.
  */
 const BUDGETS: Record<string, { gzip: number }> = {
   'accessibility-widget-loader.min.js': { gzip: 5 * 1024 },
-  'accessibility-widget-core.min.js': { gzip: 24 * 1024 },
+  'accessibility-widget-core.min.js': { gzip: 30 * 1024 },
   'accessibility-widget.min.css': { gzip: 3 * 1024 },
 };
 

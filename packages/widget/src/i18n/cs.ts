@@ -38,6 +38,10 @@ export const cs: Translation = {
     dialog: 'Nastavení přístupnosti',
     switch: 'Přepínač',
     triggerLabel: 'Nastavení přístupnosti',
+    dragHandle: 'Přesunout panel',
+    oversized: 'Zvětšený widget',
+    language: 'Jazyk',
+    info: 'O této funkci',
   },
   disclaimer:
     'Tento widget doplňuje, ale nenahrazuje skutečnou přístupnost samotného webu. Zpětnou vazbu posílejte provozovateli webu.',

@@ -6,7 +6,7 @@
 .aw-panel {
   position: fixed;
   z-index: 2147483647;
-  width: 380px;
+  width: 420px;
   max-width: 95vw;
   max-height: 85vh;
   overflow-y: auto;
@@ -42,6 +42,28 @@
   margin-bottom: 12px;
   border-bottom: 1px solid #e0e0e0;
   padding-bottom: 12px;
+  cursor: grab;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.aw-header.is-dragging {
+  cursor: grabbing;
+}
+.aw-drag-grip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  margin-inline-end: 8px;
+  flex: 0 0 auto;
+}
+@media (pointer: coarse) {
+  /* Touch devices: show the grip but don't enable pointer drag on narrow viewports.
+     Panel position on mobile is controlled by CSS preset + safe-area insets. */
+  .aw-drag-grip {
+    opacity: 0.5;
+  }
 }
 .aw-title {
   font-size: 1.25rem;
@@ -65,6 +87,73 @@
 .aw-close svg {
   width: 20px;
   height: 20px;
+}
+
+.aw-toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  align-items: stretch;
+}
+.aw-tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 2px solid #d1e0ee;
+  background: #f7f9fc;
+  color: #0058a3;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.aw-tool:hover,
+.aw-tool:focus-within,
+.aw-tool:focus-visible {
+  border-color: #0058a3;
+  outline: 3px solid #ff6a00;
+  outline-offset: 1px;
+}
+.aw-tool--lang {
+  flex: 1 1 auto;
+}
+.aw-tool--lang select.aw-lang {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  padding: 2px 0;
+  width: 100%;
+  cursor: pointer;
+}
+.aw-tool--lang select.aw-lang:focus {
+  outline: none;
+}
+.aw-tool--oversize.is-on {
+  background: #0058a3;
+  color: #fff;
+  border-color: #003c73;
+}
+
+.aw-panel--xl {
+  width: 520px;
+  font-size: 1.08rem;
+}
+.aw-panel--xl .aw-feat {
+  min-height: 128px;
+  padding: 14px 10px 12px;
+}
+.aw-panel--xl .aw-feat-icon svg {
+  width: 34px;
+  height: 34px;
+}
+.aw-panel--xl .aw-feat-label {
+  font-size: 0.95rem;
+}
+.aw-panel--xl .aw-profile-btn {
+  padding: 14px 10px;
+  font-size: 1rem;
 }
 
 .aw-section {
@@ -108,21 +197,28 @@
 
 .aw-feat-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 6px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
 }
 .aw-feat {
-  display: flex;
-  justify-content: space-between;
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  justify-items: center;
   align-items: center;
-  background: #f7f9fc;
+  gap: 4px;
+  background: #fff;
   border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 10px 12px;
+  border-radius: 10px;
+  padding: 12px 8px 10px;
+  min-height: 108px;
   cursor: pointer;
   font: inherit;
-  text-align: left;
+  text-align: center;
   color: #111;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
 }
 .aw-feat:hover,
 .aw-feat:focus-visible {
@@ -131,27 +227,157 @@
   outline-offset: 1px;
 }
 .aw-feat.is-on {
-  background: #0058a3;
-  color: #fff;
-  border-color: #003c73;
+  background: #eef5ff;
+  border-color: #0058a3;
+  color: #002c57;
 }
-.aw-feat.is-on .aw-feat-badge {
-  background: #fff;
+.aw-feat-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
   color: #0058a3;
 }
+.aw-feat.is-on .aw-feat-icon {
+  color: #003c73;
+}
 .aw-feat-label {
-  font-weight: 500;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
 }
 .aw-feat-badge {
   display: inline-block;
-  min-width: 32px;
-  padding: 2px 8px;
-  background: #d1e0ee;
+  min-width: 28px;
+  padding: 1px 7px;
+  background: #e9eff7;
   color: #0058a3;
   border-radius: 999px;
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   font-weight: 700;
   text-align: center;
+  line-height: 1.4;
+}
+.aw-stage-dots {
+  display: inline-flex;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 2px 0 1px;
+}
+.aw-stage-dot {
+  flex: 1 1 0;
+  max-width: 18px;
+  height: 4px;
+  border-radius: 2px;
+  background: #d1e0ee;
+  transition: background 0.15s;
+}
+.aw-stage-dot.is-filled {
+  background: #0058a3;
+}
+.aw-feat.is-on .aw-stage-dot {
+  background: #b6cce5;
+}
+.aw-feat.is-on .aw-stage-dot.is-filled {
+  background: #003c73;
+}
+.aw-feat.is-on .aw-feat-badge {
+  background: #0058a3;
+  color: #fff;
+}
+.aw-feat-check {
+  position: absolute;
+  top: 6px;
+  inset-inline-end: 6px;
+  width: 20px;
+  height: 20px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #0058a3;
+  color: #fff;
+}
+.aw-feat.is-on .aw-feat-check {
+  display: inline-flex;
+}
+.aw-feat-info {
+  position: absolute;
+  top: 6px;
+  inset-inline-start: 6px;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #6b8aac;
+  background: #eef2f7;
+}
+.aw-feat.is-on .aw-feat-info {
+  color: #0058a3;
+  background: #fff;
+}
+
+.aw-feat-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.aw-feat-wrap > .aw-feat {
+  width: 100%;
+}
+.aw-feat-tooltip {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: none;
+  padding: 6px 10px;
+  background: #111;
+  color: #fff;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  border-radius: 6px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+}
+.aw-feat-wrap:hover > .aw-feat-tooltip,
+.aw-feat-wrap:focus-within > .aw-feat-tooltip {
+  display: block;
+}
+
+.aw-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  list-style: none;
+  padding: 4px 0;
+  margin-bottom: 4px;
+}
+.aw-summary::-webkit-details-marker {
+  display: none;
+}
+.aw-summary svg {
+  transition: transform 0.15s;
+}
+.aw-collapsible[open] .aw-summary svg {
+  transform: rotate(180deg);
+}
+.aw-collapsible:not([open]) .aw-h3 {
+  margin-bottom: 0;
+}
+
+@media (max-width: 380px) {
+  .aw-feat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .aw-footer {
@@ -161,6 +387,10 @@
 }
 .aw-reset {
   width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   background: #fff;
   color: #c00;
   border: 2px solid #c00;
@@ -168,6 +398,9 @@
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
+}
+.aw-reset svg {
+  flex: 0 0 auto;
 }
 .aw-reset:hover,
 .aw-reset:focus-visible {
@@ -330,12 +563,61 @@
     background: #2c2c2c;
   }
   .aw-feat.is-on {
-    background: #0a66c2;
-    border-color: #064d8f;
+    background: #0f2d4c;
+    border-color: #0a66c2;
+    color: #fff;
+  }
+  .aw-feat-icon {
+    color: #6ea8e6;
+  }
+  .aw-feat.is-on .aw-feat-icon {
+    color: #cfe1f7;
   }
   .aw-feat-badge {
     background: #3b3b3b;
     color: #6ea8e6;
+  }
+  .aw-feat.is-on .aw-feat-badge {
+    background: #0a66c2;
+    color: #fff;
+  }
+  .aw-feat-check {
+    background: #0a66c2;
+  }
+  .aw-feat-info {
+    background: #2c2c2c;
+    color: #9aa6b3;
+  }
+  .aw-feat.is-on .aw-feat-info {
+    background: #0f2d4c;
+    color: #cfe1f7;
+  }
+  .aw-feat-tooltip {
+    background: #eee;
+    color: #111;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  }
+  .aw-tool {
+    background: #2a2a2a;
+    border-color: #3b3b3b;
+    color: #6ea8e6;
+  }
+  .aw-tool--oversize.is-on {
+    background: #0a66c2;
+    color: #fff;
+    border-color: #064d8f;
+  }
+  .aw-stage-dot {
+    background: #3b3b3b;
+  }
+  .aw-stage-dot.is-filled {
+    background: #6ea8e6;
+  }
+  .aw-feat.is-on .aw-stage-dot {
+    background: #064d8f;
+  }
+  .aw-feat.is-on .aw-stage-dot.is-filled {
+    background: #cfe1f7;
   }
   .aw-footer {
     border-color: #333;

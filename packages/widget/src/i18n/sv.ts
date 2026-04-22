@@ -38,6 +38,10 @@ export const sv: Translation = {
     dialog: 'Tillgänglighetsinställningar',
     switch: 'Växla',
     triggerLabel: 'Tillgänglighetsinställningar',
+    dragHandle: 'Flytta panelen',
+    oversized: 'Förstorad widget',
+    language: 'Språk',
+    info: 'Om denna funktion',
   },
   disclaimer:
     'Denna widget kompletterar men ersätter inte webbplatsens faktiska tillgänglighet. Feedback enligt EAA: kontakta webbplatsens ägare.',

@@ -38,6 +38,10 @@ export const vi: Translation = {
     dialog: 'Cài đặt trợ năng',
     switch: 'Chuyển đổi',
     triggerLabel: 'Cài đặt trợ năng',
+    dragHandle: 'Di chuyển bảng',
+    oversized: 'Tiện ích phóng to',
+    language: 'Ngôn ngữ',
+    info: 'Giới thiệu tính năng',
   },
   disclaimer:
     'Tiện ích này bổ sung nhưng không thay thế khả năng tiếp cận thực tế của trang. Vui lòng gửi phản hồi đến người vận hành trang.',

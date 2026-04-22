@@ -38,6 +38,10 @@ export const nl: Translation = {
     dialog: 'Toegankelijkheidsinstellingen',
     switch: 'Schakelaar',
     triggerLabel: 'Toegankelijkheidsinstellingen',
+    dragHandle: 'Paneel verplaatsen',
+    oversized: 'Vergrote widget',
+    language: 'Taal',
+    info: 'Over deze functie',
   },
   disclaimer:
     'Deze widget vult de toegankelijkheid van de website aan maar vervangt deze niet. Feedback volgens de EAA: neem contact op met de sitebeheerder.',

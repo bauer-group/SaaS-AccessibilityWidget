@@ -38,6 +38,10 @@ export const he: Translation = {
     dialog: 'הגדרות נגישות',
     switch: 'מתג',
     triggerLabel: 'הגדרות נגישות',
+    dragHandle: 'הזזת הפאנל',
+    oversized: 'ווידג׳ט מוגדל',
+    language: 'שפה',
+    info: 'על תכונה זו',
   },
   disclaimer:
     'יישומון זה משלים אך אינו מחליף את הנגישות של האתר עצמו. לשליחת משוב פנה למפעיל האתר.',
