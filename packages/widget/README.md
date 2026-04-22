@@ -158,13 +158,56 @@ Voreinstellungen aktivieren mehrere Features gleichzeitig: `visionImpaired`, `mo
 
 ## Runtime-API
 
+| Method | Signatur | Zweck |
+|---|---|---|
+| `open(opts?)` | `Promise<void>` | Panel öffnen (lädt Core bei Bedarf) |
+| `close()` | `void` | Panel schließen |
+| `reset()` | `void` | Alle Präferenzen löschen + Page-Reload |
+| `set(id, value)` | `Promise<void>` | Einzelnes Feature toggeln |
+| `applyProfile(id)` | `Promise<boolean>` | Profil-Preset anwenden (6 Profile, siehe oben) |
+| `setLocale(locale)` | `Promise<boolean>` | Sprache zur Laufzeit wechseln (persistent, Panel rerendert live) |
+| `setPosition(pos)` | `void` | FAB an `{ x, y }` setzen oder mit `null` auf Config-Anker zurück |
+| `getState()` | `WidgetState \| null` | Persistenten State synchron lesen |
+| `on(event, cb)` | `() => void` | Event abonnieren, gibt Unsubscribe zurück |
+
+### Beispiele
+
 ```js
-window.AccessibilityWidget.open();                    // Panel öffnen
-window.AccessibilityWidget.close();                   // schließen
-window.AccessibilityWidget.reset();                   // alle Einstellungen löschen + Reload
-window.AccessibilityWidget.set('fontSize', true);     // einzelnes Feature setzen
-window.AccessibilityWidget.getState();                // aktuellen persistenten State lesen
+// Feature toggeln
+window.AccessibilityWidget.set('fontSize', true);
+
+// Profil anwenden
+await window.AccessibilityWidget.applyProfile('visionImpaired');
+
+// Sprache wechseln (ohne Reload, Panel rerendert)
+await window.AccessibilityWidget.setLocale('fr');
+
+// FAB programmatisch positionieren
+window.AccessibilityWidget.setPosition({ x: 40, y: 200 });
+window.AccessibilityWidget.setPosition(null); // zurück zum Config-Anker
+
+// Events abonnieren (z.B. Analytics, privacy-friendly)
+const off = window.AccessibilityWidget.on('stateChange', ({ state }) => {
+  console.log('active:', Object.keys(state.features).filter((k) => state.features[k]));
+});
+off(); // später unsubscriben
+
+// Alternativ nativ, ohne Helper
+document.addEventListener('accessibility-widget:profileApplied', (e) => {
+  analytics.track('a11y_profile', e.detail.profile);
+});
 ```
+
+### Events
+
+| Event | Payload | Feuert bei |
+|---|---|---|
+| `stateChange` | `{ state: WidgetState }` | Jeder State-Änderung (Feature, Profil, Locale, Reset) |
+| `open` | `{ trigger: HTMLElement \| null }` | Panel wird geöffnet |
+| `close` | `{}` | Panel wird geschlossen |
+| `profileApplied` | `{ profile: ProfileId; state: WidgetState }` | Profil-Preset wird angewendet |
+| `localeChanged` | `{ locale: Locale }` | Locale wechselt |
+| `reset` | `{}` | Alle Präferenzen gelöscht |
 
 ## Architektur
 

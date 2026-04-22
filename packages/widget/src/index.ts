@@ -6,3 +6,4 @@
  * type-level API from here.
  */
 export type * from './types/index.js';
+export type { WidgetEventMap, WidgetEventName } from './util/events.js';

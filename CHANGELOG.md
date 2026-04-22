@@ -20,6 +20,12 @@ Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/), die V
 
 ### Added
 
+- **Runtime-API vervollständigt — alle Gaps geschlossen.** `window.AccessibilityWidget` bekommt vier neue Methoden und einen Event-Bus, damit Hosts das Widget vollständig programmatisch fernsteuern können:
+  - `applyProfile(id)` — wendet eines der 6 Profil-Presets an; respektiert `disabledFeatures`
+  - `setLocale(locale)` — Sprachwechsel zur Laufzeit, persistiert in `WidgetState.locale`, Panel rerendert live (vorher nur in-Panel möglich und transient)
+  - `setPosition({ x, y } | null)` — FAB programmatisch positionieren oder auf Config-Anker zurück; funktioniert unabhängig von `draggableFab`
+  - `on(event, handler)` — Event-Subscription via CustomEvent auf `document`. 6 Events: `stateChange`, `open`, `close`, `profileApplied`, `localeChanged`, `reset`. Rückgabewert ist Unsubscribe. Alternative: `document.addEventListener('accessibility-widget:*', …)` ohne Helper.
+- **WidgetState erweitert** um `locale?: string` (persistierter User-Locale-Override). Panel-Dropdown speichert jetzt ebenfalls diese Locale — vorher war die In-Panel-Sprachumschaltung transient und ging bei Reload verloren.
 - **Opt-in draggable FAB.** Neue Config-Option `draggableFab: true` erlaubt End-Usern, den FAB per Maus / Touch / Shift+Arrow zu verschieben. Position persistiert in `WidgetState.fabPosition` unter dem konfigurierten `storageKey` — beim nächsten Besuch lädt der Loader-IIFE sie **vor First Paint** via inline CSS custom properties (`--aw-fab-x/y`). Viewport-Clamp verhindert Off-Screen-Dragging; Panel-Reset löscht auch die custom Position. Loader-Budget von 5 KB auf 5.5 KB gzip gebumpt (Begründung in `scripts/measure-size.ts`).
 - **Professionelle `WidgetConfig`-API.** Die 1-Line-Integration bleibt der Default-Pfad; die Config ist optional, aber jetzt umfassend dokumentiert und validiert. Alle Felder haben JSDoc-Kommentare für IDE-Autocomplete. Neu hinzugekommen:
   - `cssIntegrity` — SRI-Hash für die CSS-Datei (Parität zu `coreIntegrity`)

@@ -1,4 +1,5 @@
-import type { WidgetConfig, WidgetState, Locale } from './types/index.js';
+import type { ProfileId, WidgetConfig, WidgetState, Locale } from './types/index.js';
+import type { WidgetEventMap, WidgetEventName } from './util/events.js';
 
 export {};
 
@@ -15,7 +16,14 @@ declare global {
       close(): void;
       reset(): void;
       set(id: string, value: unknown): Promise<void>;
+      applyProfile(id: string): Promise<boolean>;
+      setLocale(locale: string): Promise<boolean>;
+      setPosition(pos: { x: number; y: number } | null): void;
       getState(): WidgetState | null;
+      on<K extends WidgetEventName>(
+        name: K,
+        handler: (detail: WidgetEventMap[K]) => void,
+      ): () => void;
       version: string;
     };
 
@@ -32,6 +40,8 @@ declare global {
       }): void;
       close(): void;
       set(id: string, value: unknown): void;
+      applyProfile(id: string): boolean;
+      setLocale(locale: string): boolean;
       reset(): void;
       getState(): WidgetState;
       version: string;
@@ -41,3 +51,7 @@ declare global {
     __accessibilityWidgetLoaded?: boolean;
   }
 }
+
+// Re-export public types so consumers importing from the package root
+// also get the event map for `window.AccessibilityWidget.on<...>`.
+export type { ProfileId, WidgetConfig, WidgetState, Locale, WidgetEventMap, WidgetEventName };

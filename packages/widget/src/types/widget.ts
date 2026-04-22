@@ -51,6 +51,13 @@ export interface WidgetState {
    * FAB uses the configured `position` + `offset` anchor.
    */
   fabPosition?: { x: number; y: number } | null;
+  /**
+   * User-chosen locale override. When set, wins over `config.locale`
+   * on the next panel open and gets applied on reload by the loader.
+   * Populated by the in-panel language dropdown and the public
+   * `setLocale()` runtime API.
+   */
+  locale?: string;
 }
 
 /**

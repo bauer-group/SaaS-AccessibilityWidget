@@ -116,6 +116,11 @@ export interface PanelHandle {
   root: HTMLDivElement;
   destroy(): void;
   rerender(): void;
+  /**
+   * Swap the active locale while the panel stays open. Silently no-ops
+   * when the locale is already active or not supported.
+   */
+  setLocale(next: Locale): void;
 }
 
 export function openPanel(ctx: PanelContext): PanelHandle {
@@ -221,11 +226,7 @@ export function openPanel(ctx: PanelContext): PanelHandle {
         change: (ev) => {
           const next = (ev.target as HTMLSelectElement).value;
           if (isLocale(next) && next !== locale) {
-            locale = next;
-            T = t(locale);
-            applyLocaleAttrs();
-            announce(LANGUAGE_NAMES[locale]);
-            rerender();
+            setActiveLocale(next);
           }
         },
       },
@@ -557,6 +558,19 @@ export function openPanel(ctx: PanelContext): PanelHandle {
     attachDrag();
   }
 
+  function setActiveLocale(next: Locale): void {
+    if (next === locale || !isLocale(next)) return;
+    locale = next;
+    T = t(locale);
+    applyLocaleAttrs();
+    // Persist to state so the new locale survives page reload.
+    state = { ...state, locale: next };
+    saveState(ctx.config.storageKey, state);
+    ctx.onStateChange(state);
+    announce(LANGUAGE_NAMES[locale]);
+    rerenderWithDrag();
+  }
+
   return {
     root,
     destroy: () => {
@@ -567,5 +581,6 @@ export function openPanel(ctx: PanelContext): PanelHandle {
       root.remove();
     },
     rerender: rerenderWithDrag,
+    setLocale: setActiveLocale,
   };
 }

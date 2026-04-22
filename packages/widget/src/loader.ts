@@ -12,6 +12,11 @@
  */
 import type { FeatureId, WidgetConfig, WidgetState, Locale } from './types/index.js';
 import { buildCriticalCss } from './styles/critical.js';
+import {
+  onWidgetEvent,
+  type WidgetEventMap,
+  type WidgetEventName,
+} from './util/events.js';
 
 type CoreApi = NonNullable<Window['AccessibilityWidgetCore']>;
 
@@ -416,8 +421,56 @@ const publicApi = {
   set(id: string, value: unknown): Promise<void> {
     return loadCore().then((c) => c.set(id, value));
   },
+  applyProfile(id: string): Promise<boolean> {
+    return loadCore().then((c) => c.applyProfile(id));
+  },
+  setLocale(locale: string): Promise<boolean> {
+    return loadCore().then((c) => c.setLocale(locale));
+  },
+  /**
+   * Programmatically move the FAB to viewport-pixel coords (from top-left)
+   * or reset to the config-anchor via `null`. Works independently of
+   * `draggableFab` — the host is always allowed to set the position.
+   */
+  setPosition(pos: { x: number; y: number } | null): void {
+    const btn = document.querySelector<HTMLButtonElement>('[data-aw-fab]');
+    if (!btn) return;
+    if (pos === null) {
+      btn.removeAttribute('data-aw-fab-pos');
+      btn.style.removeProperty('--aw-fab-x');
+      btn.style.removeProperty('--aw-fab-y');
+      try {
+        const raw = localStorage.getItem(cfg.storageKey);
+        if (raw) {
+          const parsed = JSON.parse(raw) as Record<string, unknown>;
+          delete parsed.fabPosition;
+          localStorage.setItem(cfg.storageKey, JSON.stringify(parsed));
+        }
+      } catch (err) {
+        if (cfg.debug) console.warn('[aw] setPosition(null) clear failed', err);
+      }
+      return;
+    }
+    if (!Number.isFinite(pos.x) || !Number.isFinite(pos.y)) {
+      if (cfg.debug) console.warn('[aw] setPosition: x and y must be finite numbers');
+      return;
+    }
+    setFabPos(btn, pos.x, pos.y);
+    persistFab(pos.x, pos.y);
+  },
   getState(): WidgetState | null {
     return readState();
+  },
+  /**
+   * Subscribe to widget lifecycle events. Returns unsubscribe function.
+   * Events dispatch as CustomEvent on document — consumers can also use
+   * `document.addEventListener('accessibility-widget:<name>', …)` directly.
+   */
+  on<K extends WidgetEventName>(
+    name: K,
+    handler: (detail: WidgetEventMap[K]) => void,
+  ): () => void {
+    return onWidgetEvent(name, handler);
   },
   version: '1.0.0-alpha.1',
 };
