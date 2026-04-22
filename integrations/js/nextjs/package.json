@@ -1,7 +1,7 @@
 {
   "name": "@bauer-group/accessibility-widget-nextjs",
   "version": "1.0.0-alpha.1",
-  "description": "Next.js App Router Wrapper (Client Component) für das BFSG Accessibility Widget.",
+  "description": "Next.js App Router Wrapper (Client Component) für das BAUER GROUP Accessibility Widget.",
   "license": "MIT",
   "author": "BAUER GROUP <info@de.bauer-group.com>",
   "type": "module",
@@ -17,8 +17,6 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
-    "lint": "echo '(eslint not yet configured)'",
-    "test": "echo '(no tests)'",
     "clean": "rimraf dist"
   },
   "peerDependencies": {
@@ -26,13 +24,13 @@
     "react": ">=18"
   },
   "dependencies": {
-    "@bauer-group/accessibility-widget": "workspace:*",
-    "@bauer-group/accessibility-widget-react": "workspace:*"
+    "@bauer-group/accessibility-widget": "^1.0.0-alpha.1",
+    "@bauer-group/accessibility-widget-react": "^1.0.0-alpha.1"
   },
   "devDependencies": {
-    "@types/react": "^19.0.0",
-    "next": "^15.1.0",
-    "react": "^19.0.0",
+    "@types/react": "^19.1.0",
+    "next": "^15.2.0",
+    "react": "^19.1.0",
     "rimraf": "^6.0.1",
     "typescript": "^5.8.0"
   }

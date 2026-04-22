@@ -1,7 +1,7 @@
 {
   "name": "@bauer-group/accessibility-widget-react",
   "version": "1.0.0-alpha.1",
-  "description": "React 19 Wrapper für das BFSG Accessibility Widget.",
+  "description": "React Wrapper für das BAUER GROUP Accessibility Widget.",
   "license": "MIT",
   "author": "BAUER GROUP <info@de.bauer-group.com>",
   "type": "module",
@@ -18,20 +18,25 @@
     "build": "tsc -p tsconfig.build.json",
     "dev": "tsc -p tsconfig.build.json --watch",
     "typecheck": "tsc --noEmit",
-    "lint": "echo '(eslint not yet configured)'",
-    "test": "echo '(no tests — integration has no logic)'",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "clean": "rimraf dist"
   },
   "peerDependencies": {
     "react": ">=18"
   },
   "dependencies": {
-    "@bauer-group/accessibility-widget": "workspace:*"
+    "@bauer-group/accessibility-widget": "^1.0.0-alpha.1"
   },
   "devDependencies": {
-    "@types/react": "^19.0.0",
-    "react": "^19.0.0",
+    "@testing-library/react": "^16.3.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "happy-dom": "^17.4.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "rimraf": "^6.0.1",
-    "typescript": "^5.8.0"
+    "typescript": "^5.8.0",
+    "vitest": "^3.1.0"
   }
 }

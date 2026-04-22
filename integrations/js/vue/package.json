@@ -1,7 +1,7 @@
 {
   "name": "@bauer-group/accessibility-widget-vue",
   "version": "1.0.0-alpha.1",
-  "description": "Vue 3 Wrapper für das BFSG Accessibility Widget.",
+  "description": "Vue 3 Wrapper für das BAUER GROUP Accessibility Widget.",
   "license": "MIT",
   "author": "BAUER GROUP <info@de.bauer-group.com>",
   "type": "module",
@@ -17,15 +17,13 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
-    "lint": "echo '(eslint not yet configured)'",
-    "test": "echo '(no tests)'",
     "clean": "rimraf dist"
   },
   "peerDependencies": {
     "vue": ">=3.3"
   },
   "dependencies": {
-    "@bauer-group/accessibility-widget": "workspace:*"
+    "@bauer-group/accessibility-widget": "^1.0.0-alpha.1"
   },
   "devDependencies": {
     "rimraf": "^6.0.1",

@@ -1,24 +1,20 @@
 {
   "name": "@bauer-group/accessibility-widget-nuxt",
   "version": "1.0.0-alpha.1",
-  "description": "Nuxt 3 Plugin für das BFSG Accessibility Widget.",
+  "description": "Nuxt Plugin für das BAUER GROUP Accessibility Widget.",
   "license": "MIT",
   "author": "BAUER GROUP <info@de.bauer-group.com>",
   "type": "module",
   "main": "./src/plugin.client.ts",
   "files": ["src", "README.md"],
   "scripts": {
-    "build": "echo '(nuxt plugin: no build needed)'",
-    "typecheck": "tsc --noEmit",
-    "lint": "echo '(eslint not yet configured)'",
-    "test": "echo '(no tests)'",
-    "clean": "echo 'nothing to clean'"
+    "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
     "nuxt": ">=3.10"
   },
   "dependencies": {
-    "@bauer-group/accessibility-widget": "workspace:*"
+    "@bauer-group/accessibility-widget": "^1.0.0-alpha.1"
   },
   "devDependencies": {
     "typescript": "^5.8.0"
