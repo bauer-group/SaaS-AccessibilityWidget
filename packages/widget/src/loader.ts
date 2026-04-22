@@ -1,5 +1,5 @@
 /*!
- * BFSG Accessibility Widget — Loader (IIFE, ~4 KB gzip)
+ * BAUER GROUP Accessibility Widget — Loader (IIFE, ~4 KB gzip)
  * License: MIT — © BAUER GROUP
  *
  * Responsibilities:
@@ -185,7 +185,7 @@ function renderFab(): void {
       .catch((err) => {
         btn.disabled = false;
         btn.removeAttribute('aria-busy');
-        if (cfg.debug) console.error('[bfsg] Core load failed:', err);
+        if (cfg.debug) console.error('[aw] Core load failed:', err);
       });
   });
 

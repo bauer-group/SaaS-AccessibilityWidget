@@ -1,5 +1,5 @@
 /*!
- * BFSG Accessibility Widget — Core (on-demand bundle)
+ * BAUER GROUP Accessibility Widget — Core (on-demand bundle)
  * License: MIT — © BAUER GROUP
  */
 import { isLocale, type Locale, type WidgetState } from './types/index.js';

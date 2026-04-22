@@ -74,7 +74,7 @@ async function buildCss(): Promise<void> {
 
 async function writeIntegrity(): Promise<void> {
   const files = ['accessibility-widget-loader.min.js', 'accessibility-widget-core.min.js', 'accessibility-widget.min.css'];
-  const lines: string[] = ['BFSG Widget — SRI Hashes (sha384, base64)', `Built: ${new Date().toISOString()}`, ''];
+  const lines: string[] = ['BAUER GROUP Accessibility Widget — SRI Hashes (sha384, base64)', `Built: ${new Date().toISOString()}`, ''];
   for (const f of files) {
     const buf = await readFile(resolve(dist, f));
     const hash = createHash('sha384').update(buf).digest('base64');
