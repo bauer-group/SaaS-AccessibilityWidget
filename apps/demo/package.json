@@ -1,6 +1,6 @@
 {
   "name": "@bauer-group/accessibility-widget-demo",
-  "version": "1.0.0-alpha.1",
+  "version": "0.1.0",
   "description": "Interaktive Demo + Scanner-Testziel für das BAUER GROUP Accessibility Widget.",
   "license": "MIT",
   "author": "BAUER GROUP <info@de.bauer-group.com>",

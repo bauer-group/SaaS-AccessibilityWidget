@@ -1,0 +1,22 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.1.4/schema.json",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "fixed": [
+    [
+      "@bauer-group/accessibility-widget",
+      "@bauer-group/accessibility-widget-react",
+      "@bauer-group/accessibility-widget-vue",
+      "@bauer-group/accessibility-widget-angular",
+      "@bauer-group/accessibility-widget-svelte",
+      "@bauer-group/accessibility-widget-astro",
+      "@bauer-group/accessibility-widget-nextjs",
+      "@bauer-group/accessibility-widget-nuxt"
+    ]
+  ],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": []
+}

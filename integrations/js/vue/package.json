@@ -1,6 +1,6 @@
 {
   "name": "@bauer-group/accessibility-widget-vue",
-  "version": "1.0.0-alpha.1",
+  "version": "0.1.0",
   "description": "Vue 3 Wrapper für das BAUER GROUP Accessibility Widget.",
   "license": "MIT",
   "author": "BAUER GROUP <info@de.bauer-group.com>",
@@ -23,7 +23,7 @@
     "vue": ">=3.3"
   },
   "dependencies": {
-    "@bauer-group/accessibility-widget": "^1.0.0-alpha.1"
+    "@bauer-group/accessibility-widget": "workspace:*"
   },
   "devDependencies": {
     "rimraf": "^6.0.1",

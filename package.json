@@ -28,7 +28,10 @@
     "typecheck": "turbo run typecheck",
     "clean": "turbo run clean && rimraf node_modules",
     "size": "turbo run size",
-    "release": "turbo run release",
+    "changeset": "changeset",
+    "changeset:version": "changeset version",
+    "changeset:publish": "changeset publish",
+    "release": "pnpm run build && pnpm run test && pnpm run changeset:publish",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml,css}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml,css}\"",
     "widget:build": "pnpm --filter @bauer-group/accessibility-widget build",
@@ -37,6 +40,7 @@
     "demo:preview": "pnpm --filter @bauer-group/accessibility-widget-demo preview"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.31.0",
     "@eslint/js": "^9.20.0",
     "@types/node": "^24.0.0",
     "eslint": "^9.20.0",

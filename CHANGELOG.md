@@ -7,9 +7,8 @@ Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/), die V
 
 ### Changed
 
-- **Integrations-Pakete aus pnpm-Workspace entfernt.** `pnpm-workspace.yaml` verwaltet nur noch `packages/*` + `apps/*`. Alle Integrationen (`integrations/js/*`, `integrations/cms/*`, `integrations/shops/*`) sind jetzt eigenständige Artefakte mit eigener Dependency-Auflösung und unabhängigem Release-Zyklus. Folgeänderungen:
-  - `workspace:*`-Referenzen in Integration-`package.json` wurden auf `^1.0.0-alpha.1` umgestellt
-  - ESLint-Ignore weitet sich auf `integrations/**`
+- **Integrations-Pakete zurück in den pnpm-Workspace aufgenommen.** `pnpm-workspace.yaml` listet jetzt `packages/*`, `apps/*` und `integrations/js/*`. Lokale Cross-Package-Entwicklung ist dadurch reibungslos — Änderungen am Widget sind sofort in den Integration-Tests sichtbar, kein Zwischen-Publish nötig. Dependency-Referenzen verwenden `workspace:*` und werden beim Publish via pnpm durch die aktuelle Version ersetzt.
+- **Zentrale Release-Pipeline via [Changesets](https://github.com/changesets/changesets).** Alle acht publizierbaren Pakete (widget + 7 JS-Integrationen) werden als `fixed`-Gruppe versioniert — ein einziges `pnpm changeset` → `pnpm version` → `pnpm release` bumped und publiziert synchron, samt CHANGELOG-Generierung pro Paket.
 - **Abschluss BFSG → AccessibilityWidget-Rename.** Rest-Vorkommen, die beim initialen Rename übersehen wurden, sind konsolidiert — betraf sowohl Laufzeit-kritische als auch kosmetische Stellen:
   - **Laufzeit-kritisch (war vorher tatsächlich gebrochen):** `window.BFSGWidgetConfig` → `window.AccessibilityWidgetConfig` in Shopware-Twig und Magento-Phtml; `data-bfsg="loader"`/`"css"` → `data-aw-loader`/`data-aw-css` in allen JS-, CMS- und Shop-Integrationen; `bfsg-widget-*.min.js`-Pfade → `accessibility-widget-*.min.js` in Shopware/Magento
   - **Magento-Modul-Namespace:** `BauerGroup_BFSGWidget` → `BauerGroup_AccessibilityWidget` in `module.xml` und `view/frontend/layout/default.xml` (synchron mit `registration.php`); scopeConfig-Namespace `bfsg_widget` → `accessibility_widget`
@@ -56,7 +55,7 @@ Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/), die V
 - **Shared-Types integriert**: Statt eines separaten Packages leben Widget-Types jetzt direkt in `packages/widget/src/types/` und werden über den Public-Entry-Point exportiert.
 - **DTS-Build hinzugefügt**: Der Widget-Build emittiert zusätzlich kompilierte `.d.ts`-Files. Integrationen konsumieren Types über Node-Resolution statt per Source-Alias.
 
-## [1.0.0-alpha.1]
+## [0.1.0]
 
 Initiales Release:
 

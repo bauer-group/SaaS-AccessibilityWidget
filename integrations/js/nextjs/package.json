@@ -1,6 +1,6 @@
 {
   "name": "@bauer-group/accessibility-widget-nextjs",
-  "version": "1.0.0-alpha.1",
+  "version": "0.1.0",
   "description": "Next.js App Router Wrapper (Client Component) für das BAUER GROUP Accessibility Widget.",
   "license": "MIT",
   "author": "BAUER GROUP <info@de.bauer-group.com>",
@@ -24,8 +24,8 @@
     "react": ">=18"
   },
   "dependencies": {
-    "@bauer-group/accessibility-widget": "^1.0.0-alpha.1",
-    "@bauer-group/accessibility-widget-react": "^1.0.0-alpha.1"
+    "@bauer-group/accessibility-widget": "workspace:*",
+    "@bauer-group/accessibility-widget-react": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^19.1.0",

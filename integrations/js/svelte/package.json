@@ -1,6 +1,6 @@
 {
   "name": "@bauer-group/accessibility-widget-svelte",
-  "version": "1.0.0-alpha.1",
+  "version": "0.1.0",
   "description": "Svelte 5 Component + Action für das BAUER GROUP Accessibility Widget.",
   "license": "MIT",
   "author": "BAUER GROUP <info@de.bauer-group.com>",
@@ -25,7 +25,7 @@
     "svelte": ">=5"
   },
   "dependencies": {
-    "@bauer-group/accessibility-widget": "^1.0.0-alpha.1"
+    "@bauer-group/accessibility-widget": "workspace:*"
   },
   "devDependencies": {
     "rimraf": "^6.0.1",

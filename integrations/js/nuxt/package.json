@@ -1,6 +1,6 @@
 {
   "name": "@bauer-group/accessibility-widget-nuxt",
-  "version": "1.0.0-alpha.1",
+  "version": "0.1.0",
   "description": "Nuxt Plugin für das BAUER GROUP Accessibility Widget.",
   "license": "MIT",
   "author": "BAUER GROUP <info@de.bauer-group.com>",
@@ -14,7 +14,7 @@
     "nuxt": ">=3.10"
   },
   "dependencies": {
-    "@bauer-group/accessibility-widget": "^1.0.0-alpha.1"
+    "@bauer-group/accessibility-widget": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.8.0"

@@ -1,6 +1,6 @@
 {
   "name": "@bauer-group/accessibility-widget-astro",
-  "version": "1.0.0-alpha.1",
+  "version": "0.1.0",
   "description": "Astro Component für das BAUER GROUP Accessibility Widget.",
   "license": "MIT",
   "author": "BAUER GROUP <info@de.bauer-group.com>",
