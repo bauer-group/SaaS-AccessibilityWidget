@@ -107,6 +107,11 @@ function boot(): void {
 }
 
 function detectLocale(): Locale {
+  // Runtime override wins: setLocale() persists the user choice to
+  // state.locale and we must honor it here so the FAB aria-label matches
+  // the language the panel will render in.
+  const stateLocale = readState()?.locale;
+  if (typeof stateLocale === 'string' && isSupportedLocale(stateLocale)) return stateLocale;
   if (cfg.locale !== 'auto') return cfg.locale as Locale;
   const htmlLang = (document.documentElement.lang || '').toLowerCase();
   const candidate = (htmlLang || (navigator.language ?? 'en').toLowerCase()).split(/[-_]/)[0];
@@ -232,6 +237,13 @@ function renderFab(): void {
 
   btn.addEventListener('click', (e) => {
     e.preventDefault();
+    // Toggle: if the panel is already open, second click closes it.
+    // We read aria-expanded off the FAB itself — it's the single source of
+    // truth, kept in sync with panel state via the widget's open/close events.
+    if (btn.getAttribute('aria-expanded') === 'true') {
+      window.AccessibilityWidgetCore?.close();
+      return;
+    }
     btn.disabled = true;
     btn.setAttribute('aria-busy', 'true');
     loadCore()
@@ -242,7 +254,6 @@ function renderFab(): void {
         core.open({
           trigger: btn,
           config: window.AccessibilityWidgetConfig,
-          locale,
         });
       })
       .catch((err) => {
@@ -250,6 +261,16 @@ function renderFab(): void {
         btn.removeAttribute('aria-busy');
         if (cfg.debug) console.error('[aw] Core load failed:', err);
       });
+  });
+
+  // Keep FAB's aria-expanded in sync when the panel closes by any route
+  // (ESC key, X button, programmatic close via AccessibilityWidget.close()).
+  // Without this, the toggle logic above would think the panel is still open.
+  onWidgetEvent('close', () => {
+    btn.setAttribute('aria-expanded', 'false');
+  });
+  onWidgetEvent('open', () => {
+    btn.setAttribute('aria-expanded', 'true');
   });
 
   document.addEventListener('keydown', (e) => {

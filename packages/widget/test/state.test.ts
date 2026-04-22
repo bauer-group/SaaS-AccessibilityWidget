@@ -43,4 +43,34 @@ describe('state module', () => {
     expect(again.next).toBe(1.2);
     expect(again.wrapped).toBe(false);
   });
+
+  it('preserves locale override across load/save — otherwise any feature toggle wipes it', () => {
+    localStorage.setItem(
+      'aw-pref',
+      JSON.stringify({ features: {}, fontSizeLevel: 1, locale: 'ja' }),
+    );
+    const loaded = loadState('aw-pref');
+    expect(loaded.locale).toBe('ja');
+
+    // Simulate a feature toggle that re-saves the loaded state — locale must survive.
+    loaded.features.bigCursor = true;
+    saveState('aw-pref', loaded);
+    expect(loadState('aw-pref').locale).toBe('ja');
+  });
+
+  it('drops an unsupported locale string rather than trusting it', () => {
+    localStorage.setItem('aw-bad', JSON.stringify({ features: {}, locale: 'xx' }));
+    expect(loadState('aw-bad').locale).toBeUndefined();
+  });
+
+  it('preserves fabPosition across load/save', () => {
+    localStorage.setItem(
+      'aw-fab',
+      JSON.stringify({ features: {}, fabPosition: { x: 120, y: 340 } }),
+    );
+    const loaded = loadState('aw-fab');
+    expect(loaded.fabPosition).toEqual({ x: 120, y: 340 });
+    saveState('aw-fab', loaded);
+    expect(loadState('aw-fab').fabPosition).toEqual({ x: 120, y: 340 });
+  });
 });

@@ -174,8 +174,18 @@ export function openPanel(ctx: PanelContext): PanelHandle {
 
     while (root.firstChild) root.removeChild(root.firstChild);
     build();
+    attachDrag();
 
     if (focusSelector) root.querySelector<HTMLElement>(focusSelector)?.focus();
+  }
+
+  // Forward declaration so build()/commit() can reference it; defined below
+  // after the initial DOM exists because it reads from `root` directly.
+  function attachDrag(): void {
+    const handle = root.querySelector<HTMLElement>('[data-aw-drag-handle]');
+    if (!handle) return;
+    drag?.destroy();
+    drag = makeDraggable({ root, handle, storageKey: ctx.config.storageKey });
   }
 
   function focusRestoreSelector(): string | null {
@@ -543,21 +553,6 @@ export function openPanel(ctx: PanelContext): PanelHandle {
   root.querySelector<HTMLButtonElement>('.aw-close')?.focus();
   attachDrag();
 
-  function attachDrag(): void {
-    const handle = root.querySelector<HTMLElement>('[data-aw-drag-handle]');
-    if (!handle) return;
-    drag?.destroy();
-    drag = makeDraggable({ root, handle, storageKey: ctx.config.storageKey });
-  }
-
-  // After every rerender, the header node is rebuilt — re-bind drag listeners
-  // to the fresh handle and restore the saved position.
-  const originalRerender = rerender;
-  function rerenderWithDrag(): void {
-    originalRerender();
-    attachDrag();
-  }
-
   function setActiveLocale(next: Locale): void {
     if (next === locale || !isLocale(next)) return;
     locale = next;
@@ -568,7 +563,7 @@ export function openPanel(ctx: PanelContext): PanelHandle {
     saveState(ctx.config.storageKey, state);
     ctx.onStateChange(state);
     announce(LANGUAGE_NAMES[locale]);
-    rerenderWithDrag();
+    rerender();
   }
 
   return {
@@ -580,7 +575,7 @@ export function openPanel(ctx: PanelContext): PanelHandle {
       document.removeEventListener('keydown', onEsc);
       root.remove();
     },
-    rerender: rerenderWithDrag,
+    rerender,
     setLocale: setActiveLocale,
   };
 }

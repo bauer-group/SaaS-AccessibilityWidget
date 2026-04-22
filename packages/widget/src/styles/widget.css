@@ -140,8 +140,10 @@
   width: 520px;
   font-size: 1.08rem;
 }
+.aw-panel--xl .aw-feat-grid {
+  grid-auto-rows: 160px;
+}
 .aw-panel--xl .aw-feat {
-  min-height: 128px;
   padding: 14px 10px 12px;
 }
 .aw-panel--xl .aw-feat-icon svg {
@@ -198,12 +200,16 @@
 .aw-feat-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  /* Every row is locked to the same height so cards look identical
+     regardless of label length / language. 136px fits 3-line labels plus
+     icon, stage-dots and status badge across every supported translation. */
+  grid-auto-rows: 136px;
   gap: 8px;
 }
 .aw-feat {
   position: relative;
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto minmax(0, 1fr) auto;
   justify-items: center;
   align-items: center;
   gap: 4px;
@@ -211,11 +217,11 @@
   border: 2px solid #e0e0e0;
   border-radius: 10px;
   padding: 12px 8px 10px;
-  min-height: 108px;
   cursor: pointer;
   font: inherit;
   text-align: center;
   color: #111;
+  overflow: hidden;
   transition:
     border-color 0.15s,
     background 0.15s;
@@ -333,19 +339,27 @@
 }
 .aw-feat-tooltip {
   position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  right: 0;
-  z-index: 2;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
   display: none;
-  padding: 6px 10px;
+  width: max-content;
+  min-width: 180px;
+  max-width: 260px;
+  padding: 8px 12px;
   background: #111;
   color: #fff;
-  font-size: 0.75rem;
-  line-height: 1.35;
+  font-size: 0.78rem;
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: center;
   border-radius: 6px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
   pointer-events: none;
+  overflow-wrap: anywhere;
+  word-wrap: break-word;
+  white-space: normal;
 }
 .aw-feat-wrap:hover > .aw-feat-tooltip,
 .aw-feat-wrap:focus-within > .aw-feat-tooltip {

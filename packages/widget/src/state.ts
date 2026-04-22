@@ -1,4 +1,10 @@
-import { DEFAULT_STATE, type WidgetState, type FeatureId, type ContrastMode } from './types/index.js';
+import {
+  DEFAULT_STATE,
+  isLocale,
+  type WidgetState,
+  type FeatureId,
+  type ContrastMode,
+} from './types/index.js';
 import { warnIfDebug } from './util/debug.js';
 
 export const STEPS = {
@@ -21,7 +27,7 @@ export function loadState(storageKey: string): WidgetState {
     if (!raw) return createDefaultState();
     const parsed = JSON.parse(raw) as Partial<WidgetState>;
     const fresh = createDefaultState();
-    return {
+    const next: WidgetState = {
       features: { ...fresh.features, ...(parsed.features ?? {}) },
       fontSizeLevel: parsed.fontSizeLevel ?? fresh.fontSizeLevel,
       lineHeightLevel: parsed.lineHeightLevel ?? fresh.lineHeightLevel,
@@ -29,6 +35,20 @@ export function loadState(storageKey: string): WidgetState {
       contrastMode: parsed.contrastMode ?? fresh.contrastMode,
       oversized: parsed.oversized ?? fresh.oversized,
     };
+    // Preserve optional runtime-override fields. Without these the next save
+    // (triggered by any feature toggle) would wipe the user's language
+    // choice and their dragged FAB position.
+    if (typeof parsed.locale === 'string' && isLocale(parsed.locale)) {
+      next.locale = parsed.locale;
+    }
+    if (
+      parsed.fabPosition &&
+      typeof parsed.fabPosition.x === 'number' &&
+      typeof parsed.fabPosition.y === 'number'
+    ) {
+      next.fabPosition = { x: parsed.fabPosition.x, y: parsed.fabPosition.y };
+    }
+    return next;
   } catch (err) {
     warnIfDebug(`loadState("${storageKey}") failed, falling back to defaults`, err);
     return createDefaultState();
