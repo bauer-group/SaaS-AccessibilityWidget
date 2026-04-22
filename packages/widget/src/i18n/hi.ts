@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const hi: Translation = {
+  title: 'सुगम्यता',
+  close: 'बंद करें',
+  reset: 'सभी सेटिंग्स रीसेट करें',
+  resetDone: 'सेटिंग्स रीसेट हो गईं।',
+  profiles: {
+    h: 'प्रोफ़ाइल',
+    visionImpaired: 'दृष्टिबाधित',
+    motor: 'मोटर / गतिविधि',
+    cognitive: 'संज्ञानात्मक / पठन सहायता',
+    seizureSafe: 'दौरा-सुरक्षित',
+    adhd: 'ADHD / एकाग्रता',
+    blind: 'दृष्टिहीन (स्क्रीन रीडर)',
+  },
+  features: {
+    h: 'एकल सेटिंग्स',
+    fontSize: 'फ़ॉन्ट आकार',
+    lineHeight: 'पंक्ति ऊँचाई',
+    letterSpacing: 'अक्षर अंतर',
+    contrast: 'कंट्रास्ट',
+    grayscale: 'ग्रेस्केल',
+    invertColors: 'रंग उलटें',
+    dyslexiaFont: 'डिस्लेक्सिया फ़ॉन्ट',
+    highlightLinks: 'लिंक हाइलाइट करें',
+    pauseAnimations: 'एनिमेशन रोकें',
+    bigCursor: 'बड़ा कर्सर',
+    focusOutline: 'मोटा फ़ोकस रेखा',
+    readingMask: 'पठन मास्क',
+    readingGuide: 'पठन गाइड',
+    tts: 'पढ़कर सुनाएँ (TTS)',
+    structureNav: 'संरचना नेविगेशन',
+  },
+  values: { off: 'बंद', on: 'चालू', step: 'स्तर' },
+  contrastLabels: { off: 'सामान्य', high: 'उच्च', dark: 'गहरा', invert: 'उलटा' },
+  aria: {
+    dialog: 'सुगम्यता सेटिंग्स',
+    switch: 'स्विच',
+    triggerLabel: 'सुगम्यता सेटिंग्स',
+  },
+  disclaimer:
+    'यह विजेट वेबसाइट की अपनी सुगम्यता का पूरक है, उसका विकल्प नहीं। फ़ीडबैक के लिए कृपया साइट संचालक से संपर्क करें।',
+  statementLink: 'सुगम्यता वक्तव्य',
+};

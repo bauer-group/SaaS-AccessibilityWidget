@@ -47,14 +47,19 @@ pnpm --filter @bauer-group/accessibility-widget-demo dev
 Das Widget hat **harte Größen-Ziele**:
 
 - Loader: ≤ 5 KB gzip
-- Core:   ≤ 12 KB gzip
-- CSS:    ≤ 2 KB gzip
+- Core:   ≤ 24 KB gzip (28 Locales eingebettet — `accessibility-widget-core.min.js`)
+- CSS:    ≤ 3 KB gzip
 
 Jeder Build zeigt die Größen am Ende (`scripts/measure-size.ts`). Wenn Sie einen Feature-PR machen, der das Budget überschreitet, ist eine Diskussion fällig, **bevor** Code gemergt wird.
 
-## i18n (8 Locales)
+## i18n (28 Locales)
 
-Aktuell unterstützt: `de`, `en`, `fr`, `es`, `it`, `pl`, `tr`, `ar`. Neue Locale hinzufügen:
+Aktuell unterstützt (28 Locales, alle Sprachen mit ≥ 8 Mio Sprechern & zuverlässig renderbarer Schrift):
+`de`, `en`, `fr`, `es`, `it`, `pl`, `tr`, `ar`, `zh`, `hi`, `pt`, `bn`, `ru`, `ja`, `ko`, `vi`, `fa`, `ur`, `th`, `id`, `he`, `nl`, `sv`, `cs`, `el`, `hu`, `ro`, `uk`.
+
+RTL-Locales: `ar`, `fa`, `ur`, `he` (Panel dreht automatisch via `isRtl()`).
+
+Neue Locale hinzufügen:
 
 1. `packages/widget/src/types/locale.ts` — Locale-Code in `SUPPORTED_LOCALES` aufnehmen
 2. `packages/widget/src/i18n/` — neue Datei `<code>.ts` nach dem Muster von `de.ts`
@@ -69,4 +74,4 @@ Dieses Widget muss sich **an den eigenen Standards messen lassen**. Vor jedem Re
 - Alle Features per Tastatur erreichbar
 - FAB + Panel passen WCAG 2.1 AA Kontrast (4.5:1)
 
-Der automatisierte WCAG-Scan erfolgt durch das separate [Compliance-Repo](https://github.com/bauer-group/SaaS-BFSGWidget) (Scanner, Statement-Generator, API) gegen `http://localhost:5173`.
+Der automatisierte WCAG-Scan läuft außerhalb dieses Repos und ist nicht Teil der CI dieses Widget-Repos.

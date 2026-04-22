@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const id: Translation = {
+  title: 'Aksesibilitas',
+  close: 'Tutup',
+  reset: 'Atur ulang semua pengaturan',
+  resetDone: 'Pengaturan diatur ulang.',
+  profiles: {
+    h: 'Profil',
+    visionImpaired: 'Tunanetra sebagian',
+    motor: 'Motorik',
+    cognitive: 'Kognitif / bantuan baca',
+    seizureSafe: 'Aman kejang',
+    adhd: 'ADHD / fokus',
+    blind: 'Tunanetra (pembaca layar)',
+  },
+  features: {
+    h: 'Pengaturan individual',
+    fontSize: 'Ukuran huruf',
+    lineHeight: 'Tinggi baris',
+    letterSpacing: 'Jarak huruf',
+    contrast: 'Kontras',
+    grayscale: 'Skala abu',
+    invertColors: 'Balik warna',
+    dyslexiaFont: 'Huruf disleksia',
+    highlightLinks: 'Sorot tautan',
+    pauseAnimations: 'Jeda animasi',
+    bigCursor: 'Kursor besar',
+    focusOutline: 'Garis fokus tebal',
+    readingMask: 'Masker baca',
+    readingGuide: 'Pemandu baca',
+    tts: 'Baca nyaring (TTS)',
+    structureNav: 'Navigasi struktur',
+  },
+  values: { off: 'Mati', on: 'Nyala', step: 'tingkat' },
+  contrastLabels: { off: 'Normal', high: 'Tinggi', dark: 'Gelap', invert: 'Balik' },
+  aria: {
+    dialog: 'Pengaturan aksesibilitas',
+    switch: 'Saklar',
+    triggerLabel: 'Pengaturan aksesibilitas',
+  },
+  disclaimer:
+    'Widget ini melengkapi tetapi tidak menggantikan aksesibilitas situs itu sendiri. Silakan hubungi pengelola situs untuk umpan balik.',
+  statementLink: 'Pernyataan aksesibilitas',
+};

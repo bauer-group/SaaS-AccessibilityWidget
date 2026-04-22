@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const ko: Translation = {
+  title: '접근성',
+  close: '닫기',
+  reset: '모든 설정 초기화',
+  resetDone: '설정이 초기화되었습니다.',
+  profiles: {
+    h: '프로필',
+    visionImpaired: '시각 장애',
+    motor: '운동 / 지체',
+    cognitive: '인지 / 읽기 보조',
+    seizureSafe: '발작 안전',
+    adhd: 'ADHD / 집중',
+    blind: '전맹 (스크린 리더)',
+  },
+  features: {
+    h: '개별 설정',
+    fontSize: '글자 크기',
+    lineHeight: '행 높이',
+    letterSpacing: '자간',
+    contrast: '명암 대비',
+    grayscale: '회색조',
+    invertColors: '색 반전',
+    dyslexiaFont: '난독증 글꼴',
+    highlightLinks: '링크 강조',
+    pauseAnimations: '애니메이션 정지',
+    bigCursor: '큰 커서',
+    focusOutline: '굵은 포커스 테두리',
+    readingMask: '독서 마스크',
+    readingGuide: '독서 가이드',
+    tts: '읽어주기 (TTS)',
+    structureNav: '구조 탐색',
+  },
+  values: { off: '끔', on: '켬', step: '단계' },
+  contrastLabels: { off: '보통', high: '높음', dark: '어둡게', invert: '반전' },
+  aria: {
+    dialog: '접근성 설정',
+    switch: '토글',
+    triggerLabel: '접근성 설정',
+  },
+  disclaimer:
+    '이 위젯은 웹사이트 자체의 접근성을 보완할 뿐, 대체하지 않습니다. 의견은 사이트 운영자에게 연락해 주세요.',
+  statementLink: '접근성 선언문',
+};

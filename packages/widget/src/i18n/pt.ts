@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const pt: Translation = {
+  title: 'Acessibilidade',
+  close: 'Fechar',
+  reset: 'Repor todas as definições',
+  resetDone: 'Definições repostas.',
+  profiles: {
+    h: 'Perfis',
+    visionImpaired: 'Baixa visão',
+    motor: 'Motor',
+    cognitive: 'Cognitivo / ajuda de leitura',
+    seizureSafe: 'Seguro para epilepsia',
+    adhd: 'TDAH / foco',
+    blind: 'Cego (leitor de ecrã)',
+  },
+  features: {
+    h: 'Configurações individuais',
+    fontSize: 'Tamanho do texto',
+    lineHeight: 'Altura de linha',
+    letterSpacing: 'Espaçamento entre letras',
+    contrast: 'Contraste',
+    grayscale: 'Tons de cinzento',
+    invertColors: 'Inverter cores',
+    dyslexiaFont: 'Tipo de letra para dislexia',
+    highlightLinks: 'Realçar ligações',
+    pauseAnimations: 'Pausar animações',
+    bigCursor: 'Cursor grande',
+    focusOutline: 'Contorno de foco espesso',
+    readingMask: 'Máscara de leitura',
+    readingGuide: 'Guia de leitura',
+    tts: 'Ler em voz alta (TTS)',
+    structureNav: 'Navegação por estrutura',
+  },
+  values: { off: 'Desl.', on: 'Ligado', step: 'nível' },
+  contrastLabels: { off: 'Normal', high: 'Alto', dark: 'Escuro', invert: 'Invertido' },
+  aria: {
+    dialog: 'Definições de acessibilidade',
+    switch: 'Alternar',
+    triggerLabel: 'Definições de acessibilidade',
+  },
+  disclaimer:
+    'Este widget complementa (mas não substitui) a acessibilidade real do site. Para comentários nos termos da EAA, contacte o operador do site.',
+  statementLink: 'Declaração de acessibilidade',
+};

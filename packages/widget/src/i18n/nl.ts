@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const nl: Translation = {
+  title: 'Toegankelijkheid',
+  close: 'Sluiten',
+  reset: 'Alle instellingen resetten',
+  resetDone: 'Instellingen gereset.',
+  profiles: {
+    h: 'Profielen',
+    visionImpaired: 'Slechtziend',
+    motor: 'Motoriek',
+    cognitive: 'Cognitief / leeshulp',
+    seizureSafe: 'Epilepsie-veilig',
+    adhd: 'ADHD / focus',
+    blind: 'Blind (schermlezer)',
+  },
+  features: {
+    h: 'Individuele instellingen',
+    fontSize: 'Lettergrootte',
+    lineHeight: 'Regelafstand',
+    letterSpacing: 'Letterafstand',
+    contrast: 'Contrast',
+    grayscale: 'Grijstinten',
+    invertColors: 'Kleuren omkeren',
+    dyslexiaFont: 'Dyslexie-lettertype',
+    highlightLinks: 'Koppelingen markeren',
+    pauseAnimations: 'Animaties pauzeren',
+    bigCursor: 'Grote cursor',
+    focusOutline: 'Dikke focusrand',
+    readingMask: 'Leesmasker',
+    readingGuide: 'Leeslineaal',
+    tts: 'Voorlezen (TTS)',
+    structureNav: 'Structuurnavigatie',
+  },
+  values: { off: 'Uit', on: 'Aan', step: 'stap' },
+  contrastLabels: { off: 'Normaal', high: 'Hoog', dark: 'Donker', invert: 'Omgekeerd' },
+  aria: {
+    dialog: 'Toegankelijkheidsinstellingen',
+    switch: 'Schakelaar',
+    triggerLabel: 'Toegankelijkheidsinstellingen',
+  },
+  disclaimer:
+    'Deze widget vult de toegankelijkheid van de website aan maar vervangt deze niet. Feedback volgens de EAA: neem contact op met de sitebeheerder.',
+  statementLink: 'Toegankelijkheidsverklaring',
+};

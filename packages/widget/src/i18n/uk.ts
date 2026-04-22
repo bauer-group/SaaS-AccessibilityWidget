@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const uk: Translation = {
+  title: 'Доступність',
+  close: 'Закрити',
+  reset: 'Скинути всі налаштування',
+  resetDone: 'Налаштування скинуто.',
+  profiles: {
+    h: 'Профілі',
+    visionImpaired: 'Слабозорі',
+    motor: 'Моторика',
+    cognitive: 'Когнітивні / допомога читанню',
+    seizureSafe: 'Безпечно від нападів',
+    adhd: 'СДУГ / фокус',
+    blind: 'Незрячі (зчитувач екрана)',
+  },
+  features: {
+    h: 'Окремі налаштування',
+    fontSize: 'Розмір шрифту',
+    lineHeight: 'Міжрядковий інтервал',
+    letterSpacing: 'Міжбуквений інтервал',
+    contrast: 'Контрастність',
+    grayscale: 'Відтінки сірого',
+    invertColors: 'Інвертувати кольори',
+    dyslexiaFont: 'Шрифт для дислексії',
+    highlightLinks: 'Виділити посилання',
+    pauseAnimations: 'Зупинити анімації',
+    bigCursor: 'Великий курсор',
+    focusOutline: 'Товста рамка фокусу',
+    readingMask: 'Маска читання',
+    readingGuide: 'Напрямна читання',
+    tts: 'Озвучення (TTS)',
+    structureNav: 'Навігація за структурою',
+  },
+  values: { off: 'Вимк.', on: 'Увімк.', step: 'рівень' },
+  contrastLabels: { off: 'Звичайний', high: 'Високий', dark: 'Темний', invert: 'Інвертований' },
+  aria: {
+    dialog: 'Налаштування доступності',
+    switch: 'Перемикач',
+    triggerLabel: 'Налаштування доступності',
+  },
+  disclaimer:
+    'Цей віджет доповнює, але не замінює фактичну доступність сайту. Відгуки надсилайте оператору сайту.',
+  statementLink: 'Декларація доступності',
+};

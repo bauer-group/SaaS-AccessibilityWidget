@@ -4,22 +4,19 @@ Das Widget hat eine solide technische Basis. An **drei Stellen** macht Ihr Praxi
 
 ---
 
-## 🟢 Beitrag 1 — Zusätzliche i18n-Locales
+## 🟢 Beitrag 1 — Native-Review für neue i18n-Locales oder zusätzliche Locales
 
-**Datei**: `packages/widget/src/i18n/` (pro Locale eine neue Datei, dann Import in `index.ts`)
+**Datei**: `packages/widget/src/i18n/` (pro Locale eine Datei, dann Import in `index.ts`)
 
-**Aktuell unterstützt** (8): `de`, `en`, `fr`, `es`, `it`, `pl`, `tr`, `ar`.
+**Aktuell unterstützt** (28): `de`, `en`, `fr`, `es`, `it`, `pl`, `tr`, `ar`, `zh`, `hi`, `pt`, `bn`, `ru`, `ja`, `ko`, `vi`, `fa`, `ur`, `th`, `id`, `he`, `nl`, `sv`, `cs`, `el`, `hu`, `ro`, `uk`.
 
 **Wo Sie Wirkung haben**:
 
-- `nl` (Niederländisch) — EAA gilt auch für Niederlande und Belgien
-- `pt` (Portugiesisch) — Portugal/Brasilien
-- `cs` / `sk` — Tschechien/Slowakei
-- `hu` — Ungarn
-- `ro` / `bg` — Rumänien/Bulgarien (oft unterversorgt in A11y-Tools)
-- `sv` / `no` / `da` / `fi` — Skandinavien
+1. **Native-Review** für die 20 zuletzt hinzugefügten Locales. A11y-Fachterminologie („Screenreader", „Fokusrahmen", „Kontrastmodus", „Lesemaske", „Strukturnavigation") hat in jeder Sprache eine etablierte Form, die nur ein Muttersprachler mit A11y-Erfahrung sicher trifft. Patch-PRs für einzelne Strings sind willkommen.
+2. **Weitere Locales < 8 Mio Sprecher, A11y-relevant**: `da` (Dänisch), `fi` (Finnisch), `nb` / `no` (Norwegisch), `sk` (Slowakisch), `hr` (Kroatisch), `sr` (Serbisch), `bg` (Bulgarisch), `lt` (Litauisch), `lv` (Lettisch), `et` (Estnisch), `sl` (Slowenisch) — Nordeuropa und Südosteuropa.
+3. **Weitere > 8 Mio Sprecher mit speziellen Rendering-Anforderungen**: `ta` (Tamil), `te` (Telugu), `mr` (Marathi), `gu` (Gujarati), `pa` (Punjabi), `ms` (Malay), `ha` (Hausa), `yo` (Yoruba), `sw` (Swahili), `my` (Burmesisch), `am` (Amharisch) — brauchen je nach Script-Unterstützung zusätzliche Font-Pipeline-Überlegungen.
 
-**Aufwand**: ~30 Minuten je Locale (ca. 40 Strings, 1:1 Port des `de.ts`-Schemas).
+**Aufwand**: ~30 Minuten für native Review je Locale, ~45 Minuten für eine neue Locale-Datei (40 Strings, 1:1 Port von `de.ts` oder `en.ts`).
 
 **Template**:
 
@@ -36,7 +33,7 @@ export const nl: Translation = {
 
 Registrieren in `i18n/index.ts`, Test-Case in `test/i18n.test.ts`.
 
-**Trade-offs**: Maschinelle Übersetzung geht nicht — A11y-Fachtermini wie „Screenreader", „Fokusrahmen", „Kontrastmodus" haben in jeder Sprache ihre etablierte Form, die nur ein Muttersprachler mit A11y-Erfahrung trifft.
+**Trade-offs**: Die initialen Translations für die 20 neuen Locales entstanden ohne Native-Review — Fachtermini sind sinnerhaltend, aber nicht garantiert idiomatisch. Genau hier hilft Ihr Beitrag am meisten.
 
 ---
 

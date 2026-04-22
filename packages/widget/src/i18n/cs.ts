@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const cs: Translation = {
+  title: 'Přístupnost',
+  close: 'Zavřít',
+  reset: 'Obnovit všechna nastavení',
+  resetDone: 'Nastavení obnovena.',
+  profiles: {
+    h: 'Profily',
+    visionImpaired: 'Zrakově postižení',
+    motor: 'Motorika',
+    cognitive: 'Kognitivní / pomoc při čtení',
+    seizureSafe: 'Bezpečné při epilepsii',
+    adhd: 'ADHD / soustředění',
+    blind: 'Nevidomí (čtečka obrazovky)',
+  },
+  features: {
+    h: 'Jednotlivá nastavení',
+    fontSize: 'Velikost písma',
+    lineHeight: 'Řádkování',
+    letterSpacing: 'Mezery mezi písmeny',
+    contrast: 'Kontrast',
+    grayscale: 'Stupně šedi',
+    invertColors: 'Invertovat barvy',
+    dyslexiaFont: 'Písmo pro dyslexii',
+    highlightLinks: 'Zvýraznit odkazy',
+    pauseAnimations: 'Pozastavit animace',
+    bigCursor: 'Velký kurzor',
+    focusOutline: 'Tlustý rámeček zaměření',
+    readingMask: 'Maska čtení',
+    readingGuide: 'Vodítko čtení',
+    tts: 'Předčítání (TTS)',
+    structureNav: 'Navigace podle struktury',
+  },
+  values: { off: 'Vyp.', on: 'Zap.', step: 'úroveň' },
+  contrastLabels: { off: 'Normální', high: 'Vysoký', dark: 'Tmavý', invert: 'Invertovaný' },
+  aria: {
+    dialog: 'Nastavení přístupnosti',
+    switch: 'Přepínač',
+    triggerLabel: 'Nastavení přístupnosti',
+  },
+  disclaimer:
+    'Tento widget doplňuje, ale nenahrazuje skutečnou přístupnost samotného webu. Zpětnou vazbu posílejte provozovateli webu.',
+  statementLink: 'Prohlášení o přístupnosti',
+};

@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const sv: Translation = {
+  title: 'Tillgänglighet',
+  close: 'Stäng',
+  reset: 'Återställ alla inställningar',
+  resetDone: 'Inställningar återställda.',
+  profiles: {
+    h: 'Profiler',
+    visionImpaired: 'Synskadad',
+    motor: 'Motorik',
+    cognitive: 'Kognitiv / läshjälp',
+    seizureSafe: 'Epilepsisäker',
+    adhd: 'ADHD / fokus',
+    blind: 'Blind (skärmläsare)',
+  },
+  features: {
+    h: 'Enskilda inställningar',
+    fontSize: 'Teckenstorlek',
+    lineHeight: 'Radavstånd',
+    letterSpacing: 'Bokstavsavstånd',
+    contrast: 'Kontrast',
+    grayscale: 'Gråskala',
+    invertColors: 'Invertera färger',
+    dyslexiaFont: 'Dyslexi-typsnitt',
+    highlightLinks: 'Markera länkar',
+    pauseAnimations: 'Pausa animationer',
+    bigCursor: 'Stor pekare',
+    focusOutline: 'Tjock fokusram',
+    readingMask: 'Läsmask',
+    readingGuide: 'Läsguide',
+    tts: 'Läs upp (TTS)',
+    structureNav: 'Strukturnavigering',
+  },
+  values: { off: 'Av', on: 'På', step: 'nivå' },
+  contrastLabels: { off: 'Normal', high: 'Hög', dark: 'Mörk', invert: 'Inverterad' },
+  aria: {
+    dialog: 'Tillgänglighetsinställningar',
+    switch: 'Växla',
+    triggerLabel: 'Tillgänglighetsinställningar',
+  },
+  disclaimer:
+    'Denna widget kompletterar men ersätter inte webbplatsens faktiska tillgänglighet. Feedback enligt EAA: kontakta webbplatsens ägare.',
+  statementLink: 'Tillgänglighetsredogörelse',
+};

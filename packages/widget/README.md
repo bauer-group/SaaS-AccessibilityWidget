@@ -1,7 +1,7 @@
 # @bauer-group/accessibility-widget
 
 > Lazy-loading Accessibility-Widget nach **BFSG / EN 301 549 / WCAG 2.2 AA**.
-> Loader ≤ 5 KB gzip, Core ≤ 12 KB gzip. Kein Tracking, kein Cookie, kein DOM-/ARIA-Override.
+> Loader ≤ 5 KB gzip, Core ≤ 24 KB gzip (28 Locales eingebettet). Kein Tracking, kein Cookie, kein DOM-/ARIA-Override.
 
 ## 1-Line-Integration
 
@@ -17,7 +17,7 @@
     corePath: '/static/accessibility-widget-core.min.js',
     cssPath: '/static/accessibility-widget.min.css',
     position: 'bottom-right', // bottom-right | bottom-left | top-right | top-left
-    locale: 'auto',           // auto | de | en | fr | es | it | pl | tr | ar
+    locale: 'auto',           // auto | de | en | fr | es | it | pl | tr | ar | zh | hi | pt | bn | ru | ja | ko | vi | fa | ur | th | id | he | nl | sv | cs | el | hu | ro | uk
     primaryColor: '#0058a3',
     hideOnPrint: true,
     respectReducedMotion: true,

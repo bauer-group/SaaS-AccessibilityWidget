@@ -15,7 +15,10 @@ describe('resolveConfig', () => {
   });
 
   it('falls back to de for unsupported navigator language', () => {
-    const cfg = resolveConfig({ locale: 'auto' }, 'ja-JP');
+    // 'lv' (Latvian) is intentionally NOT in SUPPORTED_LOCALES — picking a
+    // language that is actually unsupported avoids false negatives when we
+    // expand the locale list.
+    const cfg = resolveConfig({ locale: 'auto' }, 'lv-LV');
     expect(cfg.locale).toBe('de');
   });
 

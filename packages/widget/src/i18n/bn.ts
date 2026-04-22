@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const bn: Translation = {
+  title: 'অ্যাক্সেসযোগ্যতা',
+  close: 'বন্ধ করুন',
+  reset: 'সব সেটিংস রিসেট করুন',
+  resetDone: 'সেটিংস রিসেট হয়েছে।',
+  profiles: {
+    h: 'প্রোফাইল',
+    visionImpaired: 'দৃষ্টিপ্রতিবন্ধী',
+    motor: 'মোটর / চলন',
+    cognitive: 'জ্ঞানীয় / পাঠ সহায়তা',
+    seizureSafe: 'খিঁচুনি-নিরাপদ',
+    adhd: 'ADHD / মনোনিবেশ',
+    blind: 'অন্ধ (স্ক্রিন রিডার)',
+  },
+  features: {
+    h: 'একক সেটিংস',
+    fontSize: 'হরফের আকার',
+    lineHeight: 'পঙক্তির উচ্চতা',
+    letterSpacing: 'অক্ষরের ব্যবধান',
+    contrast: 'কনট্রাস্ট',
+    grayscale: 'গ্রেস্কেল',
+    invertColors: 'রং উল্টে দিন',
+    dyslexiaFont: 'ডিসলেক্সিয়া ফন্ট',
+    highlightLinks: 'লিঙ্কগুলি চিহ্নিত করুন',
+    pauseAnimations: 'অ্যানিমেশন থামান',
+    bigCursor: 'বড় কার্সর',
+    focusOutline: 'মোটা ফোকাস রেখা',
+    readingMask: 'পঠন মুখোশ',
+    readingGuide: 'পঠন গাইড',
+    tts: 'পড়ে শোনান (TTS)',
+    structureNav: 'কাঠামো নেভিগেশন',
+  },
+  values: { off: 'বন্ধ', on: 'চালু', step: 'স্তর' },
+  contrastLabels: { off: 'সাধারণ', high: 'উচ্চ', dark: 'গাঢ়', invert: 'উল্টানো' },
+  aria: {
+    dialog: 'অ্যাক্সেসযোগ্যতা সেটিংস',
+    switch: 'টগল',
+    triggerLabel: 'অ্যাক্সেসযোগ্যতা সেটিংস',
+  },
+  disclaimer:
+    'এই উইজেটটি ওয়েবসাইটের নিজস্ব অ্যাক্সেসযোগ্যতাকে পরিপূরক করে, প্রতিস্থাপন করে না। মতামতের জন্য সাইট পরিচালকের সাথে যোগাযোগ করুন।',
+  statementLink: 'অ্যাক্সেসযোগ্যতা বিবৃতি',
+};

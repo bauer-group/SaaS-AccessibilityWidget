@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const vi: Translation = {
+  title: 'Trợ năng',
+  close: 'Đóng',
+  reset: 'Đặt lại tất cả cài đặt',
+  resetDone: 'Đã đặt lại cài đặt.',
+  profiles: {
+    h: 'Hồ sơ',
+    visionImpaired: 'Khiếm thị',
+    motor: 'Vận động',
+    cognitive: 'Nhận thức / hỗ trợ đọc',
+    seizureSafe: 'An toàn động kinh',
+    adhd: 'ADHD / tập trung',
+    blind: 'Mù (đọc màn hình)',
+  },
+  features: {
+    h: 'Cài đặt riêng lẻ',
+    fontSize: 'Cỡ chữ',
+    lineHeight: 'Khoảng cách dòng',
+    letterSpacing: 'Khoảng cách chữ',
+    contrast: 'Độ tương phản',
+    grayscale: 'Tông xám',
+    invertColors: 'Đảo màu',
+    dyslexiaFont: 'Phông chữ chứng khó đọc',
+    highlightLinks: 'Làm nổi liên kết',
+    pauseAnimations: 'Tạm dừng hoạt ảnh',
+    bigCursor: 'Con trỏ lớn',
+    focusOutline: 'Viền tiêu điểm dày',
+    readingMask: 'Mặt nạ đọc',
+    readingGuide: 'Thanh dẫn đọc',
+    tts: 'Đọc to (TTS)',
+    structureNav: 'Điều hướng cấu trúc',
+  },
+  values: { off: 'Tắt', on: 'Bật', step: 'mức' },
+  contrastLabels: { off: 'Thường', high: 'Cao', dark: 'Tối', invert: 'Đảo' },
+  aria: {
+    dialog: 'Cài đặt trợ năng',
+    switch: 'Chuyển đổi',
+    triggerLabel: 'Cài đặt trợ năng',
+  },
+  disclaimer:
+    'Tiện ích này bổ sung nhưng không thay thế khả năng tiếp cận thực tế của trang. Vui lòng gửi phản hồi đến người vận hành trang.',
+  statementLink: 'Tuyên bố trợ năng',
+};

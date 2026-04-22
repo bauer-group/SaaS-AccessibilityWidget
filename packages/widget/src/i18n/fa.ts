@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const fa: Translation = {
+  title: 'دسترس‌پذیری',
+  close: 'بستن',
+  reset: 'بازنشانی همهٔ تنظیمات',
+  resetDone: 'تنظیمات بازنشانی شد.',
+  profiles: {
+    h: 'پروفایل‌ها',
+    visionImpaired: 'کم‌بینا',
+    motor: 'حرکتی',
+    cognitive: 'شناختی / کمک خواندن',
+    seizureSafe: 'ایمن در برابر تشنج',
+    adhd: 'ADHD / تمرکز',
+    blind: 'نابینا (صفحه‌خوان)',
+  },
+  features: {
+    h: 'تنظیمات جداگانه',
+    fontSize: 'اندازهٔ قلم',
+    lineHeight: 'فاصلهٔ خطوط',
+    letterSpacing: 'فاصلهٔ حروف',
+    contrast: 'کنتراست',
+    grayscale: 'خاکستری',
+    invertColors: 'وارونه‌سازی رنگ',
+    dyslexiaFont: 'قلم نارساخوانی',
+    highlightLinks: 'برجسته‌سازی پیوندها',
+    pauseAnimations: 'توقف انیمیشن‌ها',
+    bigCursor: 'نشانگر بزرگ',
+    focusOutline: 'قاب تمرکز ضخیم',
+    readingMask: 'ماسک خواندن',
+    readingGuide: 'راهنمای خواندن',
+    tts: 'خواندن با صدا (TTS)',
+    structureNav: 'ناوبری ساختاری',
+  },
+  values: { off: 'خاموش', on: 'روشن', step: 'مرحله' },
+  contrastLabels: { off: 'عادی', high: 'بالا', dark: 'تیره', invert: 'وارونه' },
+  aria: {
+    dialog: 'تنظیمات دسترس‌پذیری',
+    switch: 'تغییر وضعیت',
+    triggerLabel: 'تنظیمات دسترس‌پذیری',
+  },
+  disclaimer:
+    'این ابزار مکمل دسترس‌پذیری خود وب‌سایت است و جایگزین آن نیست. بازخورد را به گردانندهٔ سایت ارسال کنید.',
+  statementLink: 'بیانیهٔ دسترس‌پذیری',
+};

@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const ja: Translation = {
+  title: 'アクセシビリティ',
+  close: '閉じる',
+  reset: 'すべての設定をリセット',
+  resetDone: '設定をリセットしました。',
+  profiles: {
+    h: 'プロファイル',
+    visionImpaired: '視覚障害',
+    motor: '肢体 / 運動',
+    cognitive: '認知 / 読書補助',
+    seizureSafe: '発作対応',
+    adhd: 'ADHD / 集中',
+    blind: '全盲(スクリーンリーダー)',
+  },
+  features: {
+    h: '個別設定',
+    fontSize: '文字サイズ',
+    lineHeight: '行間',
+    letterSpacing: '字間',
+    contrast: 'コントラスト',
+    grayscale: 'グレースケール',
+    invertColors: '色を反転',
+    dyslexiaFont: 'ディスレクシア用フォント',
+    highlightLinks: 'リンクを強調',
+    pauseAnimations: 'アニメーションを停止',
+    bigCursor: '大きいカーソル',
+    focusOutline: '太いフォーカス枠',
+    readingMask: '読書マスク',
+    readingGuide: '読書ガイド',
+    tts: '読み上げ(TTS)',
+    structureNav: '構造ナビゲーション',
+  },
+  values: { off: 'オフ', on: 'オン', step: '段階' },
+  contrastLabels: { off: '通常', high: '高', dark: 'ダーク', invert: '反転' },
+  aria: {
+    dialog: 'アクセシビリティ設定',
+    switch: '切替',
+    triggerLabel: 'アクセシビリティ設定',
+  },
+  disclaimer:
+    'このウィジェットはウェブサイト自体のアクセシビリティを補完するものであり、代替するものではありません。ご意見はサイト運営者までお寄せください。',
+  statementLink: 'アクセシビリティ声明',
+};

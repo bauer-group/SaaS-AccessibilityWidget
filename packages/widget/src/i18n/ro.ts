@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const ro: Translation = {
+  title: 'Accesibilitate',
+  close: 'Închide',
+  reset: 'Resetează toate setările',
+  resetDone: 'Setări resetate.',
+  profiles: {
+    h: 'Profiluri',
+    visionImpaired: 'Deficiență de vedere',
+    motor: 'Motorie',
+    cognitive: 'Cognitiv / ajutor de citire',
+    seizureSafe: 'Sigur pentru epilepsie',
+    adhd: 'ADHD / concentrare',
+    blind: 'Nevăzător (cititor de ecran)',
+  },
+  features: {
+    h: 'Setări individuale',
+    fontSize: 'Dimensiune font',
+    lineHeight: 'Înălțime rând',
+    letterSpacing: 'Spațiere caractere',
+    contrast: 'Contrast',
+    grayscale: 'Tonuri de gri',
+    invertColors: 'Inversează culorile',
+    dyslexiaFont: 'Font pentru dislexie',
+    highlightLinks: 'Evidențiază linkurile',
+    pauseAnimations: 'Oprește animațiile',
+    bigCursor: 'Cursor mare',
+    focusOutline: 'Contur de focalizare gros',
+    readingMask: 'Mască de citire',
+    readingGuide: 'Ghid de citire',
+    tts: 'Citește cu voce (TTS)',
+    structureNav: 'Navigare pe structură',
+  },
+  values: { off: 'Oprit', on: 'Pornit', step: 'nivel' },
+  contrastLabels: { off: 'Normal', high: 'Ridicat', dark: 'Întunecat', invert: 'Inversat' },
+  aria: {
+    dialog: 'Setări de accesibilitate',
+    switch: 'Comutator',
+    triggerLabel: 'Setări de accesibilitate',
+  },
+  disclaimer:
+    'Acest widget completează, dar nu înlocuiește accesibilitatea reală a site-ului. Feedback conform EAA: contactați operatorul site-ului.',
+  statementLink: 'Declarație de accesibilitate',
+};

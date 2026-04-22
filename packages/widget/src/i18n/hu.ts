@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const hu: Translation = {
+  title: 'Akadálymentesség',
+  close: 'Bezárás',
+  reset: 'Minden beállítás visszaállítása',
+  resetDone: 'A beállítások visszaállítva.',
+  profiles: {
+    h: 'Profilok',
+    visionImpaired: 'Látássérült',
+    motor: 'Mozgásszervi',
+    cognitive: 'Kognitív / olvasási segítség',
+    seizureSafe: 'Rohambiztos',
+    adhd: 'ADHD / összpontosítás',
+    blind: 'Vak (képernyőolvasó)',
+  },
+  features: {
+    h: 'Egyedi beállítások',
+    fontSize: 'Betűméret',
+    lineHeight: 'Sormagasság',
+    letterSpacing: 'Betűköz',
+    contrast: 'Kontraszt',
+    grayscale: 'Szürkeárnyalat',
+    invertColors: 'Színek invertálása',
+    dyslexiaFont: 'Diszlexia betűtípus',
+    highlightLinks: 'Hivatkozások kiemelése',
+    pauseAnimations: 'Animációk szüneteltetése',
+    bigCursor: 'Nagy kurzor',
+    focusOutline: 'Vastag fókuszkeret',
+    readingMask: 'Olvasómaszk',
+    readingGuide: 'Olvasási segéd',
+    tts: 'Felolvasás (TTS)',
+    structureNav: 'Struktúra-navigáció',
+  },
+  values: { off: 'Ki', on: 'Be', step: 'szint' },
+  contrastLabels: { off: 'Normál', high: 'Magas', dark: 'Sötét', invert: 'Invertált' },
+  aria: {
+    dialog: 'Akadálymentességi beállítások',
+    switch: 'Kapcsoló',
+    triggerLabel: 'Akadálymentességi beállítások',
+  },
+  disclaimer:
+    'Ez a widget kiegészíti, de nem helyettesíti a weboldal tényleges akadálymentességét. Visszajelzést az üzemeltetőnek küldjön.',
+  statementLink: 'Akadálymentességi nyilatkozat',
+};

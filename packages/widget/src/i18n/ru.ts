@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const ru: Translation = {
+  title: 'Доступность',
+  close: 'Закрыть',
+  reset: 'Сбросить все настройки',
+  resetDone: 'Настройки сброшены.',
+  profiles: {
+    h: 'Профили',
+    visionImpaired: 'Слабовидящие',
+    motor: 'Моторика',
+    cognitive: 'Когнитивные / помощь чтению',
+    seizureSafe: 'Безопасно при эпилепсии',
+    adhd: 'СДВГ / фокус',
+    blind: 'Слепые (экранный диктор)',
+  },
+  features: {
+    h: 'Отдельные настройки',
+    fontSize: 'Размер шрифта',
+    lineHeight: 'Межстрочный интервал',
+    letterSpacing: 'Межбуквенный интервал',
+    contrast: 'Контрастность',
+    grayscale: 'Оттенки серого',
+    invertColors: 'Инвертировать цвета',
+    dyslexiaFont: 'Шрифт для дислексии',
+    highlightLinks: 'Выделять ссылки',
+    pauseAnimations: 'Остановить анимации',
+    bigCursor: 'Большой курсор',
+    focusOutline: 'Толстая рамка фокуса',
+    readingMask: 'Маска чтения',
+    readingGuide: 'Направляющая чтения',
+    tts: 'Озвучивание (TTS)',
+    structureNav: 'Навигация по структуре',
+  },
+  values: { off: 'Выкл.', on: 'Вкл.', step: 'уровень' },
+  contrastLabels: { off: 'Обычный', high: 'Высокий', dark: 'Тёмный', invert: 'Инверсия' },
+  aria: {
+    dialog: 'Настройки доступности',
+    switch: 'Переключатель',
+    triggerLabel: 'Настройки доступности',
+  },
+  disclaimer:
+    'Этот виджет дополняет, но не заменяет реальную доступность сайта. Отзывы направляйте владельцу сайта.',
+  statementLink: 'Декларация о доступности',
+};

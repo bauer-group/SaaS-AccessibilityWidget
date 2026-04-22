@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const el: Translation = {
+  title: 'Προσβασιμότητα',
+  close: 'Κλείσιμο',
+  reset: 'Επαναφορά όλων των ρυθμίσεων',
+  resetDone: 'Οι ρυθμίσεις επαναφέρθηκαν.',
+  profiles: {
+    h: 'Προφίλ',
+    visionImpaired: 'Προβλήματα όρασης',
+    motor: 'Κινητικά',
+    cognitive: 'Γνωστικά / βοήθεια ανάγνωσης',
+    seizureSafe: 'Ασφαλές για επιληψία',
+    adhd: 'ΔΕΠΥ / εστίαση',
+    blind: 'Τυφλοί (αναγνώστης οθόνης)',
+  },
+  features: {
+    h: 'Επιμέρους ρυθμίσεις',
+    fontSize: 'Μέγεθος γραμματοσειράς',
+    lineHeight: 'Απόσταση γραμμών',
+    letterSpacing: 'Απόσταση χαρακτήρων',
+    contrast: 'Αντίθεση',
+    grayscale: 'Αποχρώσεις του γκρι',
+    invertColors: 'Αντιστροφή χρωμάτων',
+    dyslexiaFont: 'Γραμματοσειρά δυσλεξίας',
+    highlightLinks: 'Επισήμανση συνδέσμων',
+    pauseAnimations: 'Παύση κινούμενων εικόνων',
+    bigCursor: 'Μεγάλος δρομέας',
+    focusOutline: 'Παχύ πλαίσιο εστίασης',
+    readingMask: 'Μάσκα ανάγνωσης',
+    readingGuide: 'Οδηγός ανάγνωσης',
+    tts: 'Εκφώνηση (TTS)',
+    structureNav: 'Πλοήγηση δομής',
+  },
+  values: { off: 'Ανεν.', on: 'Ενεργ.', step: 'βήμα' },
+  contrastLabels: { off: 'Κανονική', high: 'Υψηλή', dark: 'Σκοτεινή', invert: 'Ανεστραμμένη' },
+  aria: {
+    dialog: 'Ρυθμίσεις προσβασιμότητας',
+    switch: 'Εναλλαγή',
+    triggerLabel: 'Ρυθμίσεις προσβασιμότητας',
+  },
+  disclaimer:
+    'Αυτό το widget συμπληρώνει αλλά δεν αντικαθιστά την πραγματική προσβασιμότητα του ιστότοπου. Για σχόλια επικοινωνήστε με τον διαχειριστή του ιστότοπου.',
+  statementLink: 'Δήλωση προσβασιμότητας',
+};

@@ -2,6 +2,7 @@ import {
   CONTRAST_MODES,
   FEATURE_IDS,
   PROFILE_IDS,
+  isRtl,
   type FeatureId,
   type Locale,
   type WidgetState,
@@ -46,7 +47,7 @@ export function openPanel(ctx: PanelContext): PanelHandle {
       'aria-modal': 'true',
       'aria-labelledby': 'aw-panel-title',
       'data-aw-panel': '1',
-      dir: ctx.locale === 'ar' ? 'rtl' : 'ltr',
+      dir: isRtl(ctx.locale) ? 'rtl' : 'ltr',
       lang: ctx.locale,
     },
   });

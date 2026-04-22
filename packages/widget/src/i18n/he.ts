@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const he: Translation = {
+  title: 'נגישות',
+  close: 'סגור',
+  reset: 'אפס את כל ההגדרות',
+  resetDone: 'ההגדרות אופסו.',
+  profiles: {
+    h: 'פרופילים',
+    visionImpaired: 'לקות ראייה',
+    motor: 'מוטורי',
+    cognitive: 'קוגניטיבי / עזר קריאה',
+    seizureSafe: 'בטוח מפני התקפים',
+    adhd: 'ADHD / ריכוז',
+    blind: 'עיוור (קורא מסך)',
+  },
+  features: {
+    h: 'הגדרות בודדות',
+    fontSize: 'גודל גופן',
+    lineHeight: 'גובה שורה',
+    letterSpacing: 'מרווח אותיות',
+    contrast: 'ניגודיות',
+    grayscale: 'גווני אפור',
+    invertColors: 'הפוך צבעים',
+    dyslexiaFont: 'גופן דיסלקציה',
+    highlightLinks: 'הדגש קישורים',
+    pauseAnimations: 'השהה אנימציות',
+    bigCursor: 'סמן גדול',
+    focusOutline: 'מסגרת מיקוד עבה',
+    readingMask: 'מסכת קריאה',
+    readingGuide: 'מדריך קריאה',
+    tts: 'הקראה (TTS)',
+    structureNav: 'ניווט מבני',
+  },
+  values: { off: 'כבוי', on: 'דלוק', step: 'רמה' },
+  contrastLabels: { off: 'רגיל', high: 'גבוה', dark: 'כהה', invert: 'הפוך' },
+  aria: {
+    dialog: 'הגדרות נגישות',
+    switch: 'מתג',
+    triggerLabel: 'הגדרות נגישות',
+  },
+  disclaimer:
+    'יישומון זה משלים אך אינו מחליף את הנגישות של האתר עצמו. לשליחת משוב פנה למפעיל האתר.',
+  statementLink: 'הצהרת נגישות',
+};

@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const zh: Translation = {
+  title: '无障碍',
+  close: '关闭',
+  reset: '重置所有设置',
+  resetDone: '设置已重置。',
+  profiles: {
+    h: '配置方案',
+    visionImpaired: '视力障碍',
+    motor: '运动障碍',
+    cognitive: '认知 / 阅读辅助',
+    seizureSafe: '癫痫安全',
+    adhd: 'ADHD / 专注',
+    blind: '盲人(屏幕阅读器)',
+  },
+  features: {
+    h: '单项设置',
+    fontSize: '字号',
+    lineHeight: '行距',
+    letterSpacing: '字距',
+    contrast: '对比度',
+    grayscale: '灰度',
+    invertColors: '反色',
+    dyslexiaFont: '阅读障碍字体',
+    highlightLinks: '突出显示链接',
+    pauseAnimations: '暂停动画',
+    bigCursor: '大光标',
+    focusOutline: '粗焦点框',
+    readingMask: '阅读遮罩',
+    readingGuide: '阅读引导',
+    tts: '朗读(文本转语音)',
+    structureNav: '结构导航',
+  },
+  values: { off: '关', on: '开', step: '级' },
+  contrastLabels: { off: '普通', high: '高', dark: '深色', invert: '反转' },
+  aria: {
+    dialog: '无障碍设置',
+    switch: '切换开关',
+    triggerLabel: '无障碍设置',
+  },
+  disclaimer:
+    '此小部件补充(但不替代)网站本身的无障碍性。如有反馈,请联系网站运营方。',
+  statementLink: '无障碍声明',
+};

@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const ur: Translation = {
+  title: 'رسائی',
+  close: 'بند کریں',
+  reset: 'تمام ترتیبات ری سیٹ کریں',
+  resetDone: 'ترتیبات ری سیٹ ہو گئیں۔',
+  profiles: {
+    h: 'پروفائلز',
+    visionImpaired: 'کمزور بینائی',
+    motor: 'حرکی',
+    cognitive: 'ذہنی / پڑھنے کی مدد',
+    seizureSafe: 'دورہ‌محفوظ',
+    adhd: 'ADHD / توجہ',
+    blind: 'نابینا (اسکرین ریڈر)',
+  },
+  features: {
+    h: 'انفرادی ترتیبات',
+    fontSize: 'فونٹ کا سائز',
+    lineHeight: 'سطر کا فاصلہ',
+    letterSpacing: 'حروف کا فاصلہ',
+    contrast: 'متضادیت',
+    grayscale: 'خاکستری',
+    invertColors: 'رنگ اُلٹیں',
+    dyslexiaFont: 'ڈسلیکسیا فونٹ',
+    highlightLinks: 'لنکس نمایاں کریں',
+    pauseAnimations: 'اینیمیشنز روکیں',
+    bigCursor: 'بڑا کرسر',
+    focusOutline: 'موٹی فوکس لائن',
+    readingMask: 'قرأت ماسک',
+    readingGuide: 'قرأت گائیڈ',
+    tts: 'بلند پڑھیں (TTS)',
+    structureNav: 'ساختی تشریف',
+  },
+  values: { off: 'بند', on: 'آن', step: 'درجہ' },
+  contrastLabels: { off: 'عام', high: 'اعلیٰ', dark: 'گہرا', invert: 'اُلٹا' },
+  aria: {
+    dialog: 'رسائی کی ترتیبات',
+    switch: 'سوئچ',
+    triggerLabel: 'رسائی کی ترتیبات',
+  },
+  disclaimer:
+    'یہ ویجٹ ویب سائٹ کی اپنی رسائی کو مکمل کرتا ہے، اس کا متبادل نہیں۔ رائے کے لیے سائٹ کے منتظم سے رابطہ کریں۔',
+  statementLink: 'رسائی بیان',
+};

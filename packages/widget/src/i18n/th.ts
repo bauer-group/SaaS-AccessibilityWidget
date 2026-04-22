@@ -1,0 +1,45 @@
+import type { Translation } from './types.js';
+
+export const th: Translation = {
+  title: 'การเข้าถึง',
+  close: 'ปิด',
+  reset: 'รีเซ็ตการตั้งค่าทั้งหมด',
+  resetDone: 'รีเซ็ตการตั้งค่าแล้ว',
+  profiles: {
+    h: 'โปรไฟล์',
+    visionImpaired: 'สายตาเลือนราง',
+    motor: 'การเคลื่อนไหว',
+    cognitive: 'ปัญญา / ช่วยอ่าน',
+    seizureSafe: 'ปลอดภัยต่อลมชัก',
+    adhd: 'ADHD / สมาธิ',
+    blind: 'ตาบอด (โปรแกรมอ่านหน้าจอ)',
+  },
+  features: {
+    h: 'การตั้งค่าทีละรายการ',
+    fontSize: 'ขนาดตัวอักษร',
+    lineHeight: 'ความสูงบรรทัด',
+    letterSpacing: 'ระยะห่างตัวอักษร',
+    contrast: 'คอนทราสต์',
+    grayscale: 'ขาวดำ',
+    invertColors: 'สลับสี',
+    dyslexiaFont: 'ฟอนต์ดิสเล็กเซีย',
+    highlightLinks: 'เน้นลิงก์',
+    pauseAnimations: 'หยุดภาพเคลื่อนไหว',
+    bigCursor: 'เคอร์เซอร์ใหญ่',
+    focusOutline: 'กรอบโฟกัสหนา',
+    readingMask: 'หน้ากากอ่าน',
+    readingGuide: 'แถบนำอ่าน',
+    tts: 'อ่านออกเสียง (TTS)',
+    structureNav: 'นำทางตามโครงสร้าง',
+  },
+  values: { off: 'ปิด', on: 'เปิด', step: 'ระดับ' },
+  contrastLabels: { off: 'ปกติ', high: 'สูง', dark: 'เข้ม', invert: 'สลับ' },
+  aria: {
+    dialog: 'การตั้งค่าการเข้าถึง',
+    switch: 'สลับ',
+    triggerLabel: 'การตั้งค่าการเข้าถึง',
+  },
+  disclaimer:
+    'วิดเจ็ตนี้เสริม (แต่ไม่ทดแทน) การเข้าถึงที่แท้จริงของเว็บไซต์ ข้อเสนอแนะโปรดติดต่อผู้ดูแลเว็บไซต์',
+  statementLink: 'คำประกาศการเข้าถึง',
+};
