@@ -1,7 +1,7 @@
 {
   "name": "bauer-group/accessibility-widget-typo3",
   "type": "typo3-cms-extension",
-  "description": "BFSG Accessibility Widget für TYPO3 13.",
+  "description": "BAUER GROUP Accessibility Widget für TYPO3 13.",
   "license": "MIT",
   "authors": [{ "name": "BAUER GROUP", "email": "info@de.bauer-group.com" }],
   "require": {
@@ -15,7 +15,7 @@
   },
   "autoload": {
     "psr-4": {
-      "BauerGroup\\BfsgWidget\\": "Classes/"
+      "BauerGroup\\AccessibilityWidget\\": "Classes/"
     }
   }
 }

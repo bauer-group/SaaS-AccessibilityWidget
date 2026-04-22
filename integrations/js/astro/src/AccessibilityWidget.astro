@@ -22,8 +22,8 @@ const configJson = JSON.stringify(config);
   } catch (e) { /* silent */ }
 </script>
 {cssHref && (
-  <link rel="stylesheet" href={cssHref} data-bfsg="css" {...(sri.css ? { integrity: sri.css, crossorigin: 'anonymous' } : {})} />
+  <link rel="stylesheet" href={cssHref} data-aw-css="1" {...(sri.css ? { integrity: sri.css, crossorigin: 'anonymous' } : {})} />
 )}
 {loaderSrc && (
-  <script src={loaderSrc} defer data-bfsg="loader" {...(sri.loader ? { integrity: sri.loader, crossorigin: 'anonymous' } : {})} />
+  <script src={loaderSrc} defer data-aw-loader="1" {...(sri.loader ? { integrity: sri.loader, crossorigin: 'anonymous' } : {})} />
 )}

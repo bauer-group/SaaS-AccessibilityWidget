@@ -1,6 +1,6 @@
 {
   "name": "bauer-group/accessibility-widget-magento",
-  "description": "BFSG Accessibility Widget for Magento 2.4+.",
+  "description": "BAUER GROUP Accessibility Widget for Magento 2.4+.",
   "type": "magento2-module",
   "license": "MIT",
   "authors": [{ "name": "BAUER GROUP", "email": "info@de.bauer-group.com" }],

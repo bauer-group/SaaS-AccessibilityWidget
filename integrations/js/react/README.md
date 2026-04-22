@@ -1,6 +1,6 @@
 # @bauer-group/accessibility-widget-react
 
-React 19 Wrapper für das BFSG Accessibility Widget.
+React Wrapper für das BAUER GROUP Accessibility Widget (BFSG / EN 301 549 / WCAG 2.2 AA).
 
 ## Installation
 
@@ -33,6 +33,19 @@ export function App() {
   );
 }
 ```
+
+## Entwicklung
+
+Dieses Paket ist **nicht** Teil des pnpm-Root-Workspace. Dependencies werden direkt im Paketordner installiert:
+
+```bash
+cd integrations/js/react
+pnpm install
+pnpm build
+pnpm test
+```
+
+Smoke-Tests (Vitest + happy-dom) in [`test/AccessibilityWidget.test.tsx`](./test/AccessibilityWidget.test.tsx) dienen als Referenz-Pattern für weitere Integrationen (Vue, Svelte, Angular, …) — das Dedupe-Muster (`data-aw-loader`, `data-aw-css`) ist identisch.
 
 ## Lizenz
 

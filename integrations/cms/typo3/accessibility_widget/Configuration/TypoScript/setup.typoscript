@@ -1,20 +1,20 @@
 page {
   headerData {
-    bfsgConfig = TEXT
-    bfsgConfig.value (
+    accessibilityWidgetConfig = TEXT
+    accessibilityWidgetConfig.value (
       <script>window.AccessibilityWidgetConfig = {
-        corePath: "{$plugin.tx_bfsgwidget.settings.corePath}",
-        cssPath: "{$plugin.tx_bfsgwidget.settings.cssPath}",
-        position: "{$plugin.tx_bfsgwidget.settings.position}",
-        locale: "{$plugin.tx_bfsgwidget.settings.locale}",
-        primaryColor: "{$plugin.tx_bfsgwidget.settings.primaryColor}"
+        corePath: "{$plugin.tx_accessibilitywidget.settings.corePath}",
+        cssPath: "{$plugin.tx_accessibilitywidget.settings.cssPath}",
+        position: "{$plugin.tx_accessibilitywidget.settings.position}",
+        locale: "{$plugin.tx_accessibilitywidget.settings.locale}",
+        primaryColor: "{$plugin.tx_accessibilitywidget.settings.primaryColor}"
       };</script>
     )
   }
   includeJSFooterlibs {
-    bfsgLoader = {$plugin.tx_bfsgwidget.settings.loaderPath}
-    bfsgLoader.disableCompression = 1
-    bfsgLoader.excludeFromConcatenation = 1
-    bfsgLoader.defer = 1
+    accessibilityWidgetLoader = {$plugin.tx_accessibilitywidget.settings.loaderPath}
+    accessibilityWidgetLoader.disableCompression = 1
+    accessibilityWidgetLoader.excludeFromConcatenation = 1
+    accessibilityWidgetLoader.defer = 1
   }
 }

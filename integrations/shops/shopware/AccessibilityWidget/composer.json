@@ -1,6 +1,6 @@
 {
   "name": "bauer-group/accessibility-widget-shopware",
-  "description": "BFSG Accessibility Widget für Shopware 6.6+.",
+  "description": "BAUER GROUP Accessibility Widget für Shopware 6.6+.",
   "type": "shopware-platform-plugin",
   "license": "MIT",
   "authors": [{ "name": "BAUER GROUP", "email": "info@de.bauer-group.com" }],
@@ -16,8 +16,8 @@
   "extra": {
     "shopware-plugin-class": "BauerGroup\\AccessibilityWidget\\AccessibilityWidget",
     "label": {
-      "en-GB": "BFSG Accessibility Widget",
-      "de-DE": "BFSG Barrierefreiheits-Widget"
+      "en-GB": "BAUER GROUP Accessibility Widget",
+      "de-DE": "BAUER GROUP Barrierefreiheits-Widget"
     },
     "description": {
       "en-GB": "Lazy-loading accessibility widget, ~4 KB gzip loader, WCAG 2.2 AA.",

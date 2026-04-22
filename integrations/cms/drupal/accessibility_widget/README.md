@@ -1,4 +1,4 @@
-# BFSG Widget — Drupal 10/11 Module
+# Accessibility Widget — Drupal 10/11 Module
 
 ```bash
 composer require bauer-group/accessibility-widget-drupal

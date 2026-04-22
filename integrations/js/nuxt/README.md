@@ -15,7 +15,7 @@ cp node_modules/@bauer-group/accessibility-widget-nuxt/src/plugin.client.ts plug
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      bfsgWidget: {
+      accessibilityWidget: {
         loaderSrc: '/accessibility-widget/accessibility-widget-loader.min.js',
         config: { locale: 'auto' },
       },

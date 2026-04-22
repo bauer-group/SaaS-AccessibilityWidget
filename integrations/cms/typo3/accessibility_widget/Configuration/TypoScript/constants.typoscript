@@ -1,4 +1,4 @@
-plugin.tx_bfsgwidget {
+plugin.tx_accessibilitywidget {
   settings {
     # Pfade zu den Asset-Dateien
     loaderPath = EXT:accessibility_widget/Resources/Public/JavaScript/accessibility-widget-loader.min.js

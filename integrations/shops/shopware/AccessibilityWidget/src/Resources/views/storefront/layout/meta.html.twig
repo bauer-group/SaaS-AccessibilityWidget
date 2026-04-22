@@ -3,18 +3,18 @@
 {% block layout_head_javascript_tracking %}
   {{ parent() }}
 
-  {% set pos = config('BFSGWidget.config.position') ?: 'bottom-right' %}
-  {% set loc = config('BFSGWidget.config.locale') ?: 'auto' %}
-  {% set col = config('BFSGWidget.config.primaryColor') ?: '#0058a3' %}
+  {% set pos = config('AccessibilityWidget.config.position') ?: 'bottom-right' %}
+  {% set loc = config('AccessibilityWidget.config.locale') ?: 'auto' %}
+  {% set col = config('AccessibilityWidget.config.primaryColor') ?: '#0058a3' %}
 
   <script>
-    window.BFSGWidgetConfig = {
-      corePath: '{{ asset('bundles/bfsgwidget/bfsg-widget-core.min.js', 'asset') }}',
-      cssPath:  '{{ asset('bundles/bfsgwidget/bfsg-widget.min.css', 'asset') }}',
+    window.AccessibilityWidgetConfig = {
+      corePath: '{{ asset('bundles/accessibilitywidget/accessibility-widget-core.min.js', 'asset') }}',
+      cssPath:  '{{ asset('bundles/accessibilitywidget/accessibility-widget.min.css', 'asset') }}',
       position: {{ pos|json_encode|raw }},
       locale:   {{ loc|json_encode|raw }},
       primaryColor: {{ col|json_encode|raw }}
     };
   </script>
-  <script src="{{ asset('bundles/bfsgwidget/bfsg-widget-loader.min.js', 'asset') }}" defer data-bfsg="loader"></script>
+  <script src="{{ asset('bundles/accessibilitywidget/accessibility-widget-loader.min.js', 'asset') }}" defer data-aw-loader="1"></script>
 {% endblock %}

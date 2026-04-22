@@ -2,8 +2,8 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
   <card>
-    <title>BFSG Accessibility Widget</title>
-    <title lang="de-DE">BFSG Barrierefreiheits-Widget</title>
+    <title>BAUER GROUP Accessibility Widget</title>
+    <title lang="de-DE">BAUER GROUP Barrierefreiheits-Widget</title>
 
     <input-field type="single-select">
       <name>position</name>
@@ -31,6 +31,26 @@
         <option><id>pl</id><name>pl</name></option>
         <option><id>tr</id><name>tr</name></option>
         <option><id>ar</id><name>ar</name></option>
+        <option><id>zh</id><name>zh</name></option>
+        <option><id>hi</id><name>hi</name></option>
+        <option><id>pt</id><name>pt</name></option>
+        <option><id>bn</id><name>bn</name></option>
+        <option><id>ru</id><name>ru</name></option>
+        <option><id>ja</id><name>ja</name></option>
+        <option><id>ko</id><name>ko</name></option>
+        <option><id>vi</id><name>vi</name></option>
+        <option><id>fa</id><name>fa</name></option>
+        <option><id>ur</id><name>ur</name></option>
+        <option><id>th</id><name>th</name></option>
+        <option><id>id</id><name>id</name></option>
+        <option><id>he</id><name>he</name></option>
+        <option><id>nl</id><name>nl</name></option>
+        <option><id>sv</id><name>sv</name></option>
+        <option><id>cs</id><name>cs</name></option>
+        <option><id>el</id><name>el</name></option>
+        <option><id>hu</id><name>hu</name></option>
+        <option><id>ro</id><name>ro</name></option>
+        <option><id>uk</id><name>uk</name></option>
       </options>
     </input-field>
 

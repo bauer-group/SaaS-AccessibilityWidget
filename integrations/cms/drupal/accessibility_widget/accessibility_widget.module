@@ -2,7 +2,7 @@
 
 /**
  * @file
- * BFSG Accessibility Widget — Drupal integration.
+ * BAUER GROUP Accessibility Widget — Drupal integration.
  */
 
 declare(strict_types=1);
@@ -38,7 +38,7 @@ function accessibility_widget_page_attachments(array &$attachments): void {
   $loader_attrs = [
     'src' => '/' . $module_url . '/assets/accessibility-widget-loader.min.js',
     'defer' => 'defer',
-    'data-bfsg' => 'loader',
+    'data-aw-loader' => '1',
   ];
   if (!empty($integrity)) {
     $loader_attrs['integrity'] = $integrity;

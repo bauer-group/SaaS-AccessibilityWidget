@@ -4,8 +4,8 @@
   <body>
     <referenceBlock name="before.body.end">
       <block class="Magento\Framework\View\Element\Template"
-             name="bfsg.widget.loader"
-             template="BauerGroup_BFSGWidget::loader.phtml"
+             name="accessibility.widget.loader"
+             template="BauerGroup_AccessibilityWidget::loader.phtml"
              after="-"/>
     </referenceBlock>
   </body>

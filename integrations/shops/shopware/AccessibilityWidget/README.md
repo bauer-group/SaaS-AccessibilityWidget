@@ -1,4 +1,4 @@
-# BFSG Widget — Shopware 6 Plugin
+# Accessibility Widget — Shopware 6 Plugin
 
 ```bash
 composer require bauer-group/accessibility-widget-shopware
@@ -7,7 +7,7 @@ bin/console plugin:install --activate AccessibilityWidget
 bin/console assets:install
 ```
 
-Widget-Assets aus `packages/widget/dist/` nach `src/Resources/public/` kopieren. Nach `bin/console assets:install` liegen sie unter `/bundles/bfsgwidget/*`.
+Widget-Assets aus `packages/widget/dist/` nach `src/Resources/public/` kopieren. Nach `bin/console assets:install` liegen sie unter `/bundles/accessibilitywidget/*`.
 
 Konfiguration: Plugin-Einstellungen im Shopware-Admin.
 

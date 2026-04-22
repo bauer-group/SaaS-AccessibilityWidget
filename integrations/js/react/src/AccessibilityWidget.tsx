@@ -44,11 +44,12 @@ export function AccessibilityWidget({
       window.AccessibilityWidgetConfig = { ...(window.AccessibilityWidgetConfig ?? {}), ...config };
     }
 
-    if (cssHref && !document.querySelector('link[data-bfsg="css"]')) {
+    // Matches the IIFE loader's dedupe selector (link[data-aw-css]).
+    if (cssHref && !document.querySelector('link[data-aw-css]')) {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
       link.href = cssHref;
-      link.dataset.bfsg = 'css';
+      link.setAttribute('data-aw-css', '1');
       if (sri?.css) {
         link.integrity = sri.css;
         link.crossOrigin = 'anonymous';
@@ -56,11 +57,11 @@ export function AccessibilityWidget({
       document.head.appendChild(link);
     }
 
-    if (loaderSrc && !document.querySelector('script[data-bfsg="loader"]')) {
+    if (loaderSrc && !document.querySelector('script[data-aw-loader]')) {
       const s = document.createElement('script');
       s.src = loaderSrc;
       s.defer = true;
-      s.dataset.bfsg = 'loader';
+      s.setAttribute('data-aw-loader', '1');
       if (sri?.loader) {
         s.integrity = sri.loader;
         s.crossOrigin = 'anonymous';

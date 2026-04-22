@@ -1,13 +1,13 @@
 import type { WidgetConfig } from '@bauer-group/accessibility-widget';
 
 /**
- * Nuxt 3 client-only plugin. Copy this file to `plugins/accessibility-widget.client.ts`
- * in your Nuxt app. Configure via `runtimeConfig.public.bfsgWidget` in nuxt.config.ts:
+ * Nuxt client-only plugin. Copy this file to `plugins/accessibility-widget.client.ts`
+ * in your Nuxt app. Configure via `runtimeConfig.public.accessibilityWidget` in nuxt.config.ts:
  *
  *   export default defineNuxtConfig({
  *     runtimeConfig: {
  *       public: {
- *         bfsgWidget: {
+ *         accessibilityWidget: {
  *           loaderSrc: '/accessibility-widget/accessibility-widget-loader.min.js',
  *           cssHref:   '/accessibility-widget/accessibility-widget.min.css',
  *           config:    { locale: 'auto' },
@@ -18,7 +18,7 @@ import type { WidgetConfig } from '@bauer-group/accessibility-widget';
  */
 interface NuxtRuntime {
   public: {
-    bfsgWidget?: {
+    accessibilityWidget?: {
       loaderSrc?: string;
       cssHref?: string;
       config?: WidgetConfig;
@@ -32,7 +32,7 @@ declare function useRuntimeConfig(): NuxtRuntime;
 
 export default defineNuxtPlugin(() => {
   if (typeof window === 'undefined') return;
-  const cfg = useRuntimeConfig().public.bfsgWidget ?? {};
+  const cfg = useRuntimeConfig().public.accessibilityWidget ?? {};
   const loaderSrc = cfg.loaderSrc ?? '/accessibility-widget-loader.min.js';
   const cssHref = cfg.cssHref ?? '/accessibility-widget.min.css';
   const sri = cfg.sri ?? {};
@@ -42,22 +42,22 @@ export default defineNuxtPlugin(() => {
     ...(cfg.config ?? {}),
   };
 
-  if (cssHref && !document.querySelector('link[data-bfsg="css"]')) {
+  if (cssHref && !document.querySelector('link[data-aw-css]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = cssHref;
-    link.dataset.bfsg = 'css';
+    link.setAttribute('data-aw-css', '1');
     if (sri.css) {
       link.integrity = sri.css;
       link.crossOrigin = 'anonymous';
     }
     document.head.appendChild(link);
   }
-  if (loaderSrc && !document.querySelector('script[data-bfsg="loader"]')) {
+  if (loaderSrc && !document.querySelector('script[data-aw-loader]')) {
     const s = document.createElement('script');
     s.src = loaderSrc;
     s.defer = true;
-    s.dataset.bfsg = 'loader';
+    s.setAttribute('data-aw-loader', '1');
     if (sri.loader) {
       s.integrity = sri.loader;
       s.crossOrigin = 'anonymous';

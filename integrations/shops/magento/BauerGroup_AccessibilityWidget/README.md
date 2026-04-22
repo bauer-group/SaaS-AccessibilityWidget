@@ -1,4 +1,4 @@
-# BFSG Widget — Magento 2 Module
+# Accessibility Widget — Magento 2 Module
 
 ```bash
 composer require bauer-group/accessibility-widget-magento

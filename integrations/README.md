@@ -1,4 +1,4 @@
-# BFSG Widget — Integrationen
+# Accessibility Widget — Integrationen
 
 Framework- und CMS-spezifische Wrapper. Alle verwenden den gleichen Loader-Mechanismus (`loader.min.js` + optional SRI) und setzen vor dem Loader `window.AccessibilityWidgetConfig`.
 

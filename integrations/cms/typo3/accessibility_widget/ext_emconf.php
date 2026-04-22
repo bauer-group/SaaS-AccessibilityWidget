@@ -1,8 +1,8 @@
 <?php
 
 $EM_CONF[$_EXTKEY] = [
-    'title' => 'BFSG Accessibility Widget',
-    'description' => 'Lazy-loading Accessibility-Widget (BFSG/WCAG 2.2 AA) von BAUER GROUP.',
+    'title' => 'BAUER GROUP Accessibility Widget',
+    'description' => 'Lazy-loading Accessibility-Widget (BFSG/EN 301 549/WCAG 2.2 AA) von BAUER GROUP.',
     'category' => 'fe',
     'author' => 'BAUER GROUP',
     'author_email' => 'info@de.bauer-group.com',

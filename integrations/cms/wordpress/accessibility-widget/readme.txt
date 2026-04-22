@@ -1,4 +1,4 @@
-=== BFSG Accessibility Widget ===
+=== Accessibility Widget ===
 Contributors: bauergroup
 Tags: accessibility, a11y, bfsg, wcag, barrierefreiheit
 Requires at least: 6.5
@@ -8,11 +8,11 @@ Stable tag: 1.0.0-alpha.1
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
-Lazy-loading Accessibility-Widget nach BFSG / WCAG 2.2 AA. Loader ~4 KB gzip, Core ~12 KB gzip.
+Lazy-loading Accessibility-Widget nach BFSG / EN 301 549 / WCAG 2.2 AA. Loader ~4 KB gzip, Core ~24 KB gzip (28 Locales).
 
 == Description ==
 
-BAUER GROUP BFSG Widget — Hilfsmittel für das Barrierefreiheitsstärkungsgesetz (BFSG) und WCAG 2.2 AA. Kein Tracking, kein Cookie, kein DOM-Override.
+BAUER GROUP Accessibility Widget — Hilfsmittel für das Barrierefreiheitsstärkungsgesetz (BFSG), EN 301 549 und WCAG 2.2 AA. Kein Tracking, kein Cookie, kein DOM-Override.
 
 Features:
 * Schriftgröße, Zeilenabstand, Buchstabenabstand
@@ -22,11 +22,13 @@ Features:
 * TTS (Web Speech API)
 * Strukturnavigation
 
+28 Locales unterstützt (de, en, fr, es, it, pl, tr, ar, zh, hi, pt, bn, ru, ja, ko, vi, fa, ur, th, id, he, nl, sv, cs, el, hu, ro, uk).
+
 == Installation ==
 
-1. Plugin-Ordner `bfsg-widget/` in `wp-content/plugins/` hochladen.
+1. Plugin-Ordner `accessibility-widget/` in `wp-content/plugins/` hochladen.
 2. Plugin aktivieren.
-3. Unter "Einstellungen → BFSG Widget" konfigurieren.
+3. Unter "Einstellungen → Accessibility Widget" konfigurieren.
 
 == Changelog ==
 

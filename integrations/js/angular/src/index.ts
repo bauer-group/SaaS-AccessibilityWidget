@@ -37,22 +37,22 @@ export class AccessibilityWidgetComponent implements OnInit {
     if (!isPlatformBrowser(this.platformId)) return;
     window.AccessibilityWidgetConfig = { ...(window.AccessibilityWidgetConfig ?? {}), ...this.config };
 
-    if (this.cssHref && !document.querySelector('link[data-bfsg="css"]')) {
+    if (this.cssHref && !document.querySelector('link[data-aw-css]')) {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
       link.href = this.cssHref;
-      link.dataset['bfsg'] = 'css';
+      link.setAttribute('data-aw-css', '1');
       if (this.sri.css) {
         link.integrity = this.sri.css;
         link.crossOrigin = 'anonymous';
       }
       document.head.appendChild(link);
     }
-    if (this.loaderSrc && !document.querySelector('script[data-bfsg="loader"]')) {
+    if (this.loaderSrc && !document.querySelector('script[data-aw-loader]')) {
       const s = document.createElement('script');
       s.src = this.loaderSrc;
       s.defer = true;
-      s.dataset['bfsg'] = 'loader';
+      s.setAttribute('data-aw-loader', '1');
       if (this.sri.loader) {
         s.integrity = this.sri.loader;
         s.crossOrigin = 'anonymous';

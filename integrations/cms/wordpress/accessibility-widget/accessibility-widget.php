@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name:       BFSG Accessibility Widget
- * Description:       BAUER GROUP Accessibility Widget — WCAG 2.2 AA / BFSG-konformes Hilfsmittel. Loader ~4 KB gzip.
+ * Plugin Name:       Accessibility Widget
+ * Description:       BAUER GROUP Accessibility Widget — BFSG / EN 301 549 / WCAG 2.2 AA. Loader ~4 KB gzip, Core ~24 KB gzip (28 Locales).
  * Version:           1.0.0-alpha.1
  * Requires at least: 6.5
  * Requires PHP:      8.1
@@ -17,18 +17,18 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('BFSG_WIDGET_VERSION', '1.0.0-alpha.1');
-define('BFSG_WIDGET_SLUG', 'accessibility-widget');
+define('ACCESSIBILITY_WIDGET_VERSION', '1.0.0-alpha.1');
+define('ACCESSIBILITY_WIDGET_SLUG', 'accessibility-widget');
 
 /** Enqueue loader + CSS on every front-end page. */
 function accessibility_widget_enqueue(): void {
     $base_url = plugins_url('assets/', __FILE__);
     $opts     = wp_parse_args(get_option('accessibility_widget_options', []), [
-        'position'       => 'bottom-right',
-        'locale'         => 'auto',
-        'primary_color'  => '#0058a3',
-        'core_integrity' => '',
-        'css_integrity'  => '',
+        'position'         => 'bottom-right',
+        'locale'           => 'auto',
+        'primary_color'    => '#0058a3',
+        'core_integrity'   => '',
+        'css_integrity'    => '',
         'loader_integrity' => '',
     ]);
 
@@ -43,7 +43,7 @@ function accessibility_widget_enqueue(): void {
         $config['coreIntegrity'] = sanitize_text_field($opts['core_integrity']);
     }
 
-    wp_register_script('accessibility-widget-inline-config', '', [], BFSG_WIDGET_VERSION, true);
+    wp_register_script('accessibility-widget-inline-config', '', [], ACCESSIBILITY_WIDGET_VERSION, true);
     wp_enqueue_script('accessibility-widget-inline-config');
     wp_add_inline_script(
         'accessibility-widget-inline-config',
@@ -55,7 +55,7 @@ function accessibility_widget_enqueue(): void {
         'accessibility-widget-loader',
         $base_url . 'accessibility-widget-loader.min.js',
         [],
-        BFSG_WIDGET_VERSION,
+        ACCESSIBILITY_WIDGET_VERSION,
         ['strategy' => 'defer', 'in_footer' => true]
     );
 }
@@ -75,7 +75,7 @@ function accessibility_widget_script_loader_tag(string $tag, string $handle, str
 }
 add_filter('script_loader_tag', 'accessibility_widget_script_loader_tag', 10, 3);
 
-/** Settings page (Settings → BFSG Widget) */
+/** Settings page (Settings → Accessibility Widget) */
 function accessibility_widget_register_settings(): void {
     register_setting(
         'accessibility_widget',
@@ -90,9 +90,15 @@ function accessibility_widget_register_settings(): void {
 add_action('admin_init', 'accessibility_widget_register_settings');
 
 function accessibility_widget_sanitize(array $input): array {
+    $supported_locales = [
+        'auto', 'de', 'en', 'fr', 'es', 'it', 'pl', 'tr', 'ar',
+        'zh', 'hi', 'pt', 'bn', 'ru', 'ja', 'ko', 'vi', 'fa', 'ur',
+        'th', 'id', 'he', 'nl', 'sv', 'cs', 'el', 'hu', 'ro', 'uk',
+    ];
+    $locale = sanitize_key($input['locale'] ?? 'auto');
     return [
         'position'         => in_array($input['position'] ?? '', ['bottom-right', 'bottom-left', 'top-right', 'top-left'], true) ? $input['position'] : 'bottom-right',
-        'locale'           => sanitize_key($input['locale'] ?? 'auto'),
+        'locale'           => in_array($locale, $supported_locales, true) ? $locale : 'auto',
         'primary_color'    => sanitize_hex_color($input['primary_color'] ?? '#0058a3') ?: '#0058a3',
         'loader_integrity' => sanitize_text_field($input['loader_integrity'] ?? ''),
         'core_integrity'   => sanitize_text_field($input['core_integrity'] ?? ''),
@@ -101,7 +107,13 @@ function accessibility_widget_sanitize(array $input): array {
 }
 
 function accessibility_widget_settings_page(): void {
-    add_options_page('BFSG Widget', 'BFSG Widget', 'manage_options', 'accessibility-widget', 'accessibility_widget_render_settings');
+    add_options_page(
+        'Accessibility Widget',
+        'Accessibility Widget',
+        'manage_options',
+        'accessibility-widget',
+        'accessibility_widget_render_settings'
+    );
 }
 add_action('admin_menu', 'accessibility_widget_settings_page');
 
@@ -110,21 +122,26 @@ function accessibility_widget_render_settings(): void {
         return;
     }
     $opts = wp_parse_args(get_option('accessibility_widget_options', []), [
-        'position' => 'bottom-right',
-        'locale' => 'auto',
+        'position'      => 'bottom-right',
+        'locale'        => 'auto',
         'primary_color' => '#0058a3',
     ]);
+    $locales = [
+        'auto', 'de', 'en', 'fr', 'es', 'it', 'pl', 'tr', 'ar',
+        'zh', 'hi', 'pt', 'bn', 'ru', 'ja', 'ko', 'vi', 'fa', 'ur',
+        'th', 'id', 'he', 'nl', 'sv', 'cs', 'el', 'hu', 'ro', 'uk',
+    ];
     ?>
     <div class="wrap">
-      <h1>BFSG Accessibility Widget</h1>
+      <h1>Accessibility Widget</h1>
       <p>Konfiguration des lazy-loading Widgets. Details: <a href="https://github.com/bauer-group/SaaS-AccessibilityWidget" target="_blank" rel="noopener">GitHub</a>.</p>
       <form method="post" action="options.php">
         <?php settings_fields('accessibility_widget'); ?>
         <table class="form-table" role="presentation">
           <tr>
-            <th><label for="bfsg_position">Position</label></th>
+            <th><label for="aw_position">Position</label></th>
             <td>
-              <select name="accessibility_widget_options[position]" id="bfsg_position">
+              <select name="accessibility_widget_options[position]" id="aw_position">
                 <?php foreach (['bottom-right', 'bottom-left', 'top-right', 'top-left'] as $p): ?>
                   <option value="<?= esc_attr($p) ?>" <?= selected($opts['position'], $p, false) ?>><?= esc_html($p) ?></option>
                 <?php endforeach; ?>
@@ -132,25 +149,26 @@ function accessibility_widget_render_settings(): void {
             </td>
           </tr>
           <tr>
-            <th><label for="bfsg_locale">Locale</label></th>
+            <th><label for="aw_locale">Locale</label></th>
             <td>
-              <select name="accessibility_widget_options[locale]" id="bfsg_locale">
-                <?php foreach (['auto', 'de', 'en', 'fr', 'es', 'it', 'pl', 'tr', 'ar'] as $l): ?>
+              <select name="accessibility_widget_options[locale]" id="aw_locale">
+                <?php foreach ($locales as $l): ?>
                   <option value="<?= esc_attr($l) ?>" <?= selected($opts['locale'], $l, false) ?>><?= esc_html($l) ?></option>
                 <?php endforeach; ?>
               </select>
+              <p class="description">28 Locales unterstützt; <code>auto</code> erkennt die Browser-/HTML-Sprache.</p>
             </td>
           </tr>
           <tr>
-            <th><label for="bfsg_color">Markenfarbe</label></th>
+            <th><label for="aw_color">Markenfarbe</label></th>
             <td>
-              <input type="text" id="bfsg_color" name="accessibility_widget_options[primary_color]" value="<?= esc_attr($opts['primary_color']) ?>" class="regular-text" />
+              <input type="text" id="aw_color" name="accessibility_widget_options[primary_color]" value="<?= esc_attr($opts['primary_color']) ?>" class="regular-text" />
               <p class="description">Hex-Farbe des FAB-Buttons (z. B. #0058a3).</p>
             </td>
           </tr>
           <tr>
-            <th><label for="bfsg_sri_loader">SRI Loader (optional)</label></th>
-            <td><input type="text" id="bfsg_sri_loader" name="accessibility_widget_options[loader_integrity]" value="<?= esc_attr($opts['loader_integrity'] ?? '') ?>" class="large-text" placeholder="sha384-..." /></td>
+            <th><label for="aw_sri_loader">SRI Loader (optional)</label></th>
+            <td><input type="text" id="aw_sri_loader" name="accessibility_widget_options[loader_integrity]" value="<?= esc_attr($opts['loader_integrity'] ?? '') ?>" class="large-text" placeholder="sha384-..." /></td>
           </tr>
         </table>
         <?php submit_button(); ?>

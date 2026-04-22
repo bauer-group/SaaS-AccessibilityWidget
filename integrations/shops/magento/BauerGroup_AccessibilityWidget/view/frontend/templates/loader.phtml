@@ -7,20 +7,20 @@
 $scopeConfig = $block->getData('scopeConfig')
     ?? \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Framework\App\Config\ScopeConfigInterface::class);
 
-$position = (string) ($scopeConfig->getValue('bfsg_widget/settings/position') ?: 'bottom-right');
-$locale = (string) ($scopeConfig->getValue('bfsg_widget/settings/locale') ?: 'auto');
-$color = (string) ($scopeConfig->getValue('bfsg_widget/settings/primary_color') ?: '#0058a3');
+$position = (string) ($scopeConfig->getValue('accessibility_widget/settings/position') ?: 'bottom-right');
+$locale = (string) ($scopeConfig->getValue('accessibility_widget/settings/locale') ?: 'auto');
+$color = (string) ($scopeConfig->getValue('accessibility_widget/settings/primary_color') ?: '#0058a3');
 
-$baseUrl = $block->getViewFileUrl('BauerGroup_BFSGWidget::');
+$baseUrl = $block->getViewFileUrl('BauerGroup_AccessibilityWidget::');
 $cfg = [
-    'corePath' => $baseUrl . 'bfsg-widget-core.min.js',
-    'cssPath' => $baseUrl . 'bfsg-widget.min.css',
+    'corePath' => $baseUrl . 'accessibility-widget-core.min.js',
+    'cssPath' => $baseUrl . 'accessibility-widget.min.css',
     'position' => $position,
     'locale' => $locale,
     'primaryColor' => $color,
 ];
 ?>
 <script>
-  window.BFSGWidgetConfig = <?= /* @noEscape */ json_encode($cfg, JSON_UNESCAPED_SLASHES) ?>;
+  window.AccessibilityWidgetConfig = <?= /* @noEscape */ json_encode($cfg, JSON_UNESCAPED_SLASHES) ?>;
 </script>
-<script src="<?= $escaper->escapeUrl($baseUrl . 'bfsg-widget-loader.min.js') ?>" defer data-bfsg="loader"></script>
+<script src="<?= $escaper->escapeUrl($baseUrl . 'accessibility-widget-loader.min.js') ?>" defer data-aw-loader="1"></script>
