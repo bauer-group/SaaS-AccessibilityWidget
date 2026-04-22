@@ -46,17 +46,124 @@ export interface WidgetState {
   oversized?: boolean;
 }
 
+/**
+ * Host-supplied configuration for the widget loader.
+ *
+ * Set via `window.AccessibilityWidgetConfig = { … }` **before** the loader
+ * script executes. All fields are optional — the widget ships with sensible
+ * defaults. Invalid values are coerced to defaults; with `debug: true` they
+ * emit console warnings so mis-configurations are discoverable.
+ *
+ * @example Minimal override
+ * ```ts
+ * window.AccessibilityWidgetConfig = { locale: 'de', primaryColor: '#0058a3' };
+ * ```
+ *
+ * @example Enterprise deployment
+ * ```ts
+ * window.AccessibilityWidgetConfig = {
+ *   corePath: '/assets/accessibility-widget-core.min.js',
+ *   cssPath:  '/assets/accessibility-widget.min.css',
+ *   coreIntegrity: 'sha384-…',
+ *   cssIntegrity:  'sha384-…',
+ *   position: 'bottom-left',
+ *   offset: { x: 24, y: 96 },  // clear the chat widget
+ *   zIndex: 9999,
+ *   primaryColor: '#0058a3',
+ *   storageKey: 'mycorp-a11y',
+ *   statementUrl: '/accessibility-statement',
+ *   disabledFeatures: ['tts'],
+ *   initialFeatures: { focusOutline: true },
+ *   debug: false,
+ * };
+ * ```
+ */
 export interface WidgetConfig {
+  // ─── asset loading ────────────────────────────────────────────────
+  /** URL to the on-demand core bundle. Default: `/accessibility-widget/accessibility-widget-core.min.js`. */
   corePath?: string;
+  /** URL to the widget stylesheet. Default: `/accessibility-widget/accessibility-widget.min.css`. */
   cssPath?: string;
-  position?: Position;
-  locale?: Locale | 'auto';
-  storageKey?: string;
-  buttonLabel?: string | null;
-  respectReducedMotion?: boolean;
-  primaryColor?: string;
-  hideOnPrint?: boolean;
+  /** SRI hash for the core bundle (`sha384-…`). Matches the value printed in `dist/integrity.txt`. */
   coreIntegrity?: string | null;
+  /** SRI hash for the stylesheet. Matches the value printed in `dist/integrity.txt`. */
+  cssIntegrity?: string | null;
+
+  // ─── localization ─────────────────────────────────────────────────
+  /**
+   * Widget locale. `'auto'` (default) picks from `document.documentElement.lang`
+   * or `navigator.language`, falling back to `de`. Set explicitly to override.
+   */
+  locale?: Locale | 'auto';
+
+  // ─── UI / branding ────────────────────────────────────────────────
+  /** FAB anchor corner. Default: `bottom-right`. */
+  position?: Position;
+  /**
+   * Pixel offset of the FAB from its anchor corner.
+   * Useful when other fixed elements (chat widgets, cookie banners) would collide.
+   * Default: `{ x: 20, y: 20 }`.
+   */
+  offset?: { x?: number; y?: number };
+  /**
+   * Override the FAB z-index. Default: `2147483646` (one below max int32).
+   * Lower values allow in-page dialogs to stack on top of the FAB.
+   */
+  zIndex?: number;
+  /** FAB background color. Default: `#0058a3` (BAUER GROUP blue). Must be a valid CSS color. */
+  primaryColor?: string;
+  /** Override the FAB `aria-label`. `null` → use the localized default for the active locale. */
+  buttonLabel?: string | null;
+
+  // ─── persistence ──────────────────────────────────────────────────
+  /**
+   * localStorage key for user preferences. Default: `accessibility-widget`.
+   * Change this to namespace the widget on multi-tenant platforms where
+   * different sub-brands need isolated preferences.
+   */
+  storageKey?: string;
+
+  // ─── initial experience ───────────────────────────────────────────
+  /**
+   * Features turned ON for a first-time visitor (no persisted state yet).
+   * Only applies once — once the user has modified anything in the panel,
+   * the persisted state wins.
+   *
+   * @example Public-sector site that wants a visible focus ring by default
+   * ```ts
+   * { initialFeatures: { focusOutline: true, highlightLinks: true } }
+   * ```
+   */
+  initialFeatures?: Partial<Record<FeatureId, boolean>>;
+
+  // ─── feature gating ───────────────────────────────────────────────
+  /**
+   * Features hidden from the panel UI. Useful when certain features don't
+   * make sense in context (e.g. `tts` on a site with no text content).
+   * Hidden features are neither toggle-able nor activated by profile presets.
+   */
+  disabledFeatures?: readonly FeatureId[];
+
+  // ─── legal / compliance ───────────────────────────────────────────
+  /**
+   * URL of the site's accessibility statement. When set, a link is rendered
+   * in the panel footer (label is localized — see `Translation.statementLink`).
+   * Recommended for BFSG § 14 / EN 301 549 § 12.1.1 compliance.
+   */
+  statementUrl?: string;
+
+  // ─── behavior ─────────────────────────────────────────────────────
+  /** When true, features that add motion respect `prefers-reduced-motion`. Default: `true`. */
+  respectReducedMotion?: boolean;
+  /** When true, the FAB is hidden in print media (`@media print`). Default: `true`. */
+  hideOnPrint?: boolean;
+
+  // ─── debug ────────────────────────────────────────────────────────
+  /**
+   * When true, normally-silent failures (localStorage quota, malformed
+   * persisted state, failed core fetch) emit `console.warn`. Production
+   * bundles should keep this `false` (default) to avoid noise.
+   */
   debug?: boolean;
 }
 

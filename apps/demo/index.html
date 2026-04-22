@@ -14,25 +14,50 @@
     <link rel="icon" href="/accessibility-widget-assets/sample.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/src/styles.css" />
 
-    <!-- Widget config: reads demo-locale from localStorage so the
-         <select> in the page can re-flow the widget without a page reload
-         of this file; the widget itself still requires a reload to pick it up. -->
+    <!--
+      Widget-Config: wird VOR dem Loader-Script gesetzt, damit der IIFE-Loader
+      sie beim Boot lesen kann. Alle Felder sind optional; siehe
+      packages/widget/README.md für die vollständige Referenz.
+    -->
     <script>
       (() => {
         const stored = (() => {
-          try {
-            return localStorage.getItem('aw-demo-locale');
-          } catch {
-            return null;
-          }
+          try { return localStorage.getItem('aw-demo-locale'); } catch { return null; }
         })();
+
         window.AccessibilityWidgetConfig = {
+          // ─── Asset-Loading ────────────────────────────────────────
           corePath: '/accessibility-widget/accessibility-widget-core.min.js',
-          cssPath: '/accessibility-widget/accessibility-widget.min.css',
-          position: 'bottom-right',
-          locale: stored ?? 'auto',
+          cssPath:  '/accessibility-widget/accessibility-widget.min.css',
+          // coreIntegrity: 'sha384-…',   // SRI-Pinning für CDN-Deploys
+          // cssIntegrity:  'sha384-…',
+
+          // ─── Lokalisierung ────────────────────────────────────────
+          locale: stored ?? 'auto',     // 'auto' | de/en/fr/es/it/pl/tr/ar/zh/hi/pt/bn/ru/ja/ko/vi/fa/ur/th/id/he/nl/sv/cs/el/hu/ro/uk
+
+          // ─── Branding / Position ──────────────────────────────────
+          position: 'bottom-right',     // bottom-right | bottom-left | top-right | top-left
+          offset: { x: 20, y: 20 },     // Pixel-Abstand zur Ankerecke
+          // zIndex: 2147483646,        // z.B. 9999 wenn Page-Dialoge drüber stacken sollen
           primaryColor: '#0058a3',
-          debug: true,
+          // buttonLabel: 'Custom A11y',// überschreibt lokalisierten FAB-aria-label
+
+          // ─── Persistenz ───────────────────────────────────────────
+          // storageKey: 'accessibility-widget',  // für Multi-Tenant-Plattformen abweichend setzen
+
+          // ─── First-Visit-Experience ───────────────────────────────
+          // initialFeatures: { focusOutline: true },  // für Erstbesucher ein
+
+          // ─── Feature-Gating ───────────────────────────────────────
+          // disabledFeatures: ['tts'],   // Features aus dem Panel komplett entfernen
+
+          // ─── Legal / Compliance ───────────────────────────────────
+          statementUrl: '/barrierefreiheit.html',
+
+          // ─── Verhalten ────────────────────────────────────────────
+          respectReducedMotion: true,
+          hideOnPrint: true,
+          debug: true,                  // Silent-Failures werden console.warn'd
         };
       })();
     </script>

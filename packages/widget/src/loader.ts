@@ -10,35 +10,32 @@
  *
  * Does NOT import from /shared — everything must be inlined to keep the bundle tiny.
  */
-import type { WidgetConfig, WidgetState, Locale } from './types/index.js';
+import type { FeatureId, WidgetConfig, WidgetState, Locale } from './types/index.js';
 import { buildCriticalCss } from './styles/critical.js';
 
 type CoreApi = NonNullable<Window['AccessibilityWidgetCore']>;
 
-const cfg: Required<
-  Pick<
-    WidgetConfig,
-    | 'corePath'
-    | 'cssPath'
-    | 'position'
-    | 'storageKey'
-    | 'respectReducedMotion'
-    | 'primaryColor'
-    | 'hideOnPrint'
-    | 'debug'
-  >
-> & { locale: Locale | 'auto'; coreIntegrity: string | null; buttonLabel: string | null } = {
-  corePath: window.AccessibilityWidgetConfig?.corePath ?? '/accessibility-widget/accessibility-widget-core.min.js',
-  cssPath: window.AccessibilityWidgetConfig?.cssPath ?? '/accessibility-widget/accessibility-widget.min.css',
-  position: window.AccessibilityWidgetConfig?.position ?? 'bottom-right',
-  storageKey: window.AccessibilityWidgetConfig?.storageKey ?? 'accessibility-widget',
-  respectReducedMotion: window.AccessibilityWidgetConfig?.respectReducedMotion ?? true,
-  primaryColor: window.AccessibilityWidgetConfig?.primaryColor ?? '#0058a3',
-  hideOnPrint: window.AccessibilityWidgetConfig?.hideOnPrint ?? true,
-  debug: Boolean(window.AccessibilityWidgetConfig?.debug),
-  locale: window.AccessibilityWidgetConfig?.locale ?? 'auto',
-  coreIntegrity: window.AccessibilityWidgetConfig?.coreIntegrity ?? null,
-  buttonLabel: window.AccessibilityWidgetConfig?.buttonLabel ?? null,
+const userCfg: WidgetConfig = window.AccessibilityWidgetConfig ?? {};
+
+const cfg = {
+  corePath: userCfg.corePath ?? '/accessibility-widget/accessibility-widget-core.min.js',
+  cssPath: userCfg.cssPath ?? '/accessibility-widget/accessibility-widget.min.css',
+  position: userCfg.position ?? 'bottom-right',
+  offset: {
+    x: Number.isFinite(userCfg.offset?.x) ? (userCfg.offset!.x as number) : 20,
+    y: Number.isFinite(userCfg.offset?.y) ? (userCfg.offset!.y as number) : 20,
+  },
+  zIndex: Number.isFinite(userCfg.zIndex) ? (userCfg.zIndex as number) : 2_147_483_646,
+  storageKey: userCfg.storageKey ?? 'accessibility-widget',
+  respectReducedMotion: userCfg.respectReducedMotion ?? true,
+  primaryColor: userCfg.primaryColor ?? '#0058a3',
+  hideOnPrint: userCfg.hideOnPrint ?? true,
+  debug: Boolean(userCfg.debug),
+  locale: userCfg.locale ?? 'auto',
+  coreIntegrity: userCfg.coreIntegrity ?? null,
+  cssIntegrity: userCfg.cssIntegrity ?? null,
+  buttonLabel: userCfg.buttonLabel ?? null,
+  initialFeatures: userCfg.initialFeatures ?? null,
 };
 
 const LABELS: Record<Locale, string> = {
@@ -85,6 +82,7 @@ if (window.__accessibilityWidgetLoaded) {
 
 function boot(): void {
   injectCriticalCSS();
+  seedInitialFeaturesIfEmpty();
   applyPersistedPreferences();
   renderFab();
   if (hasPersistedSettings()) {
@@ -103,7 +101,7 @@ function boot(): void {
 }
 
 function detectLocale(): Locale {
-  if (cfg.locale !== 'auto') return cfg.locale;
+  if (cfg.locale !== 'auto') return cfg.locale as Locale;
   const htmlLang = (document.documentElement.lang || '').toLowerCase();
   const candidate = (htmlLang || (navigator.language ?? 'en').toLowerCase()).split(/[-_]/)[0];
   return isSupportedLocale(candidate) ? candidate : 'de';
@@ -128,6 +126,39 @@ function hasPersistedSettings(): boolean {
   return Boolean(s?.features && Object.values(s.features).some(Boolean));
 }
 
+/**
+ * If the visitor has no persisted state yet and the host declared
+ * `initialFeatures`, write that as the initial state. Next-load
+ * behavior is identical to a normal returning user — once something
+ * is persisted, the persisted state takes over.
+ */
+function seedInitialFeaturesIfEmpty(): void {
+  if (!cfg.initialFeatures) return;
+  let existing: string | null;
+  try {
+    existing = localStorage.getItem(cfg.storageKey);
+  } catch {
+    return;
+  }
+  if (existing) return;
+  const features: Record<string, boolean> = {};
+  for (const [id, on] of Object.entries(cfg.initialFeatures)) {
+    features[id] = Boolean(on);
+  }
+  const seed = {
+    features,
+    fontSizeLevel: 1,
+    lineHeightLevel: 1.5,
+    letterSpacingLevel: 0,
+    contrastMode: 'off',
+  };
+  try {
+    localStorage.setItem(cfg.storageKey, JSON.stringify(seed));
+  } catch (err) {
+    if (cfg.debug) console.warn('[aw] loader.seedInitialFeatures failed', err);
+  }
+}
+
 function applyPersistedPreferences(): void {
   const s = readState();
   if (!s?.features) return;
@@ -139,7 +170,7 @@ function applyPersistedPreferences(): void {
     html.style.setProperty('--aw-line-height', String(s.lineHeightLevel));
   if (typeof s.letterSpacingLevel === 'number')
     html.style.setProperty('--aw-letter-spacing', `${s.letterSpacingLevel}em`);
-  const f = s.features;
+  const f = s.features as Partial<Record<FeatureId, boolean>>;
   if (f.contrast) html.setAttribute('data-aw-contrast', s.contrastMode ?? 'high');
   if (f.grayscale) html.setAttribute('data-aw-grayscale', '1');
   if (f.invertColors) html.setAttribute('data-aw-invert', '1');
@@ -152,7 +183,13 @@ function applyPersistedPreferences(): void {
 
 function injectCriticalCSS(): void {
   if (document.getElementById('aw-critical-css')) return;
-  const css = buildCriticalCss(cfg.primaryColor, cfg.hideOnPrint);
+  const css = buildCriticalCss({
+    primaryColor: cfg.primaryColor,
+    hideOnPrint: cfg.hideOnPrint,
+    offsetX: cfg.offset.x,
+    offsetY: cfg.offset.y,
+    zIndex: cfg.zIndex,
+  });
   const style = document.createElement('style');
   style.id = 'aw-critical-css';
   style.textContent = css;
@@ -227,6 +264,10 @@ function loadCore(): Promise<CoreApi> {
     link.rel = 'stylesheet';
     link.href = cfg.cssPath;
     link.setAttribute('data-aw-css', '1');
+    if (cfg.cssIntegrity) {
+      link.integrity = cfg.cssIntegrity;
+      link.crossOrigin = 'anonymous';
+    }
     document.head.appendChild(link);
   }
   corePromise = new Promise<CoreApi>((resolve, reject) => {

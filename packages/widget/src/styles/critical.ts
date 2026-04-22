@@ -2,9 +2,19 @@
  * Critical CSS inlined by the loader. Kept minimal so the loader stays ~4 KB gzip.
  * Uses only `data-aw-*` attributes on <html>, never touches host DOM.
  *
- * The primaryColor is interpolated at runtime so brands can theme without a build step.
+ * The primaryColor + offset + zIndex are interpolated at runtime so brands
+ * can theme and layout without a build step.
  */
-export function buildCriticalCss(primaryColor: string, hideOnPrint: boolean): string {
+export interface CriticalCssOptions {
+  primaryColor: string;
+  hideOnPrint: boolean;
+  offsetX: number;
+  offsetY: number;
+  zIndex: number;
+}
+
+export function buildCriticalCss(opts: CriticalCssOptions): string {
+  const { primaryColor, hideOnPrint, offsetX, offsetY, zIndex } = opts;
   return (
     // base CSS variables
     'html[data-aw-instant]{--aw-font-scale:1;--aw-line-height:1.5;--aw-letter-spacing:0em}' +
@@ -29,13 +39,13 @@ export function buildCriticalCss(primaryColor: string, hideOnPrint: boolean): st
     // thick focus
     'html[data-aw-focus] *:focus,html[data-aw-focus] *:focus-visible{outline:4px solid #ff6a00!important;outline-offset:2px!important}' +
     // FAB
-    `.aw-fab{position:fixed;width:48px;height:48px;border-radius:50%;background:${primaryColor};color:#fff;border:2px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.25);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2147483646;padding:0;transition:transform .15s}` +
+    `.aw-fab{position:fixed;width:48px;height:48px;border-radius:50%;background:${primaryColor};color:#fff;border:2px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.25);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:${zIndex};padding:0;transition:transform .15s}` +
     '.aw-fab:hover,.aw-fab:focus-visible{outline:3px solid #ff6a00;outline-offset:2px;transform:scale(1.05)}' +
     '.aw-fab svg{width:28px;height:28px;fill:currentColor}' +
-    '.aw-fab--bottom-right{bottom:20px;right:20px}' +
-    '.aw-fab--bottom-left{bottom:20px;left:20px}' +
-    '.aw-fab--top-right{top:20px;right:20px}' +
-    '.aw-fab--top-left{top:20px;left:20px}' +
+    `.aw-fab--bottom-right{bottom:${offsetY}px;right:${offsetX}px}` +
+    `.aw-fab--bottom-left{bottom:${offsetY}px;left:${offsetX}px}` +
+    `.aw-fab--top-right{top:${offsetY}px;right:${offsetX}px}` +
+    `.aw-fab--top-left{top:${offsetY}px;left:${offsetX}px}` +
     (hideOnPrint ? '@media print{.aw-fab{display:none!important}}' : '') +
     '@media (prefers-reduced-motion:reduce){.aw-fab{transition:none}}'
   );

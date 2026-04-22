@@ -2,7 +2,7 @@
  * BAUER GROUP Accessibility Widget — Core (on-demand bundle)
  * License: MIT — © BAUER GROUP
  */
-import { isLocale, type Locale, type WidgetState } from './types/index.js';
+import { isLocale, type Locale, type WidgetConfig, type WidgetState } from './types/index.js';
 import { resolveConfig, type ResolvedConfig } from './config.js';
 import { applyState } from './features/apply.js';
 import { loadState, saveState, clearState } from './state.js';
@@ -10,7 +10,7 @@ import { openPanel, type PanelHandle } from './panel/panel.js';
 
 export interface CoreOpenOptions {
   trigger?: HTMLElement;
-  config?: Parameters<typeof resolveConfig>[0];
+  config?: WidgetConfig;
   locale?: Locale | 'auto';
   statementUrl?: string;
 }
@@ -18,12 +18,24 @@ export interface CoreOpenOptions {
 let panel: PanelHandle | null = null;
 let lastTrigger: HTMLElement | null = null;
 
+/**
+ * Read the host-supplied config from window every time (over reading it
+ * once at module load) so late mutations — e.g. SPA navigation that rewrites
+ * AccessibilityWidgetConfig — are honored.
+ */
+function readUserConfig(): WidgetConfig {
+  if (typeof window === 'undefined') return {};
+  return window.AccessibilityWidgetConfig ?? {};
+}
+
 function open(opts: CoreOpenOptions = {}): void {
   if (panel) return;
-  const config: ResolvedConfig = resolveConfig(
-    { ...(opts.config ?? {}), ...(opts.locale && opts.locale !== 'auto' ? { locale: opts.locale } : {}) },
-    navigator.language,
-  );
+  const mergedInput: WidgetConfig = {
+    ...readUserConfig(),
+    ...(opts.config ?? {}),
+    ...(opts.locale && opts.locale !== 'auto' ? { locale: opts.locale } : {}),
+  };
+  const config: ResolvedConfig = resolveConfig(mergedInput, navigator.language);
   const locale: Locale =
     opts.locale && opts.locale !== 'auto' && isLocale(opts.locale) ? opts.locale : config.locale;
 
@@ -35,7 +47,9 @@ function open(opts: CoreOpenOptions = {}): void {
     config,
     locale,
     state,
-    statementUrl: opts.statementUrl,
+    // opts.statementUrl wins over config.statementUrl — covers the
+    // "open the widget with a one-off statement link" edge case.
+    statementUrl: opts.statementUrl ?? config.statementUrl ?? undefined,
     onClose: close,
     onStateChange: () => {
       /* state already saved inside panel */
@@ -51,7 +65,11 @@ function close(): void {
 }
 
 function set(id: string, value: unknown): void {
-  const cfg = resolveConfig({}, navigator.language);
+  const cfg = resolveConfig(readUserConfig(), navigator.language);
+  if (cfg.disabledFeatures.has(id as never)) {
+    if (cfg.debug) console.warn(`[aw] core.set: feature "${id}" is disabled by config; ignoring`);
+    return;
+  }
   const state = loadState(cfg.storageKey);
   if (id in state.features) {
     (state.features as Record<string, boolean>)[id] = Boolean(value);
@@ -64,7 +82,7 @@ function set(id: string, value: unknown): void {
 }
 
 function reset(): void {
-  const cfg = resolveConfig({}, navigator.language);
+  const cfg = resolveConfig(readUserConfig(), navigator.language);
   clearState(cfg.storageKey);
   const fresh = loadState(cfg.storageKey);
   applyState(fresh);
@@ -72,7 +90,7 @@ function reset(): void {
 }
 
 function getState(): WidgetState {
-  const cfg = resolveConfig({}, navigator.language);
+  const cfg = resolveConfig(readUserConfig(), navigator.language);
   return loadState(cfg.storageKey);
 }
 

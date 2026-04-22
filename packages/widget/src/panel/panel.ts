@@ -277,7 +277,13 @@ export function openPanel(ctx: PanelContext): PanelHandle {
           text: T.profiles[id],
           on: {
             click: () => {
-              commit(applyProfile(state, id), T.profiles[id]);
+              const next = applyProfile(state, id);
+              // Strip features the host has disabled so profile presets
+              // can't re-enable them.
+              for (const disabled of ctx.config.disabledFeatures) {
+                next.features[disabled] = false;
+              }
+              commit(next, T.profiles[id]);
             },
           },
         }),
@@ -285,10 +291,13 @@ export function openPanel(ctx: PanelContext): PanelHandle {
     });
 
     // Features -------------------------------------------------------
+    const visibleFeatures = FEATURE_IDS.filter(
+      (id) => !ctx.config.disabledFeatures.has(id),
+    );
     const featGrid = make('div', {
       class: 'aw-feat-grid',
       attrs: { role: 'group', 'aria-label': T.features.h },
-      children: FEATURE_IDS.map((id) => renderFeature(id, T)),
+      children: visibleFeatures.map((id) => renderFeature(id, T)),
     });
 
     // Footer ---------------------------------------------------------

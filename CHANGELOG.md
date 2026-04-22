@@ -20,6 +20,15 @@ Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/), die V
 
 ### Added
 
+- **Professionelle `WidgetConfig`-API.** Die 1-Line-Integration bleibt der Default-Pfad; die Config ist optional, aber jetzt umfassend dokumentiert und validiert. Alle Felder haben JSDoc-Kommentare für IDE-Autocomplete. Neu hinzugekommen:
+  - `cssIntegrity` — SRI-Hash für die CSS-Datei (Parität zu `coreIntegrity`)
+  - `offset: { x, y }` — Pixel-Abstand des FAB zur Ankerecke (für Chat-Widget/Cookie-Banner-Kollisionen)
+  - `zIndex` — überschreibt den Default-z-index des FAB
+  - `statementUrl` — URL zur Barrierefreiheitserklärung; rendert als Panel-Footer-Link, blockiert `javascript:` / `data:` Schemes
+  - `disabledFeatures` — Feature-IDs, die komplett aus dem Panel entfernt und auch via Profil-Preset nicht aktiviert werden (z.B. `['tts']` auf Seiten ohne Text-Content)
+  - `initialFeatures` — Features, die für **Erstbesucher** (ohne persistierten State) an sind. Wird einmalig in den localStorage geseed, ab dann übernimmt das Persistierte
+- **Runtime-Validation.** `resolveConfig` validiert alle Felder (ungültige Locale/Position/Color → Fallback, non-finite zIndex/offset → Fallback, unbekannte FeatureIds in disabledFeatures/initialFeatures → Drop). Mit `debug: true` erscheinen die Validation-Ergebnisse als `console.warn`. Full-shape `ResolvedConfig`-Interface für alle Call-Sites.
+- **Storage-Key-Bug in core.ts gefixt.** `core.set()`, `core.reset()`, `core.getState()` resolvten Config vorher aus leerem Input und ignorierten damit den User-supplied `storageKey` — bei Custom-Storage-Keys wurde auf der Default-Location gelesen/geschrieben. Jetzt lesen alle drei durch `readUserConfig()` aus `window.AccessibilityWidgetConfig`.
 - **Demo-App professionalisiert.** [apps/demo/](./apps/demo/) komplett überarbeitet: Hero mit Status-Karte (≤5 KB Loader, ≤24 KB Core, 28 Locales, 0 Dependencies), sticky Topbar, Try-Karten mit Locale-Switcher (persistiert in `localStorage`), Integration-Tabs mit Copy-Buttons und ARIA-Keyboard-Navigation, Live-State-Panel (Poll alle 500 ms), Compliance-Karten (BFSG / EN 301 549 / WCAG 2.2 AA), Scanner-Testzone (collapsible). Design-System mit CSS-Variablen, Light/Dark, `clamp()`-basierter responsiver Typografie.
 - **Live-Dev-Kopplung Demo ↔ Widget.** Neue Vite-Middleware in [apps/demo/vite.config.ts](./apps/demo/vite.config.ts) serviert `/accessibility-widget/*` direkt aus `packages/widget/dist/*` — kein Copy-on-predev mehr, Widget-Rebuilds sind nach Browser-Reload sofort sichtbar. Root-Script `pnpm demo:dev` startet Widget-Watch + Vite parallel.
 - **Sauberer Demo-Build-Pipeline.** `pnpm demo:build` = Widget bauen → Files in `public/` kopieren → `tsc --noEmit` Typecheck → `vite build` mit Sourcemaps und gehashed Assets. `demo:preview` auf Port 4173 strict.
