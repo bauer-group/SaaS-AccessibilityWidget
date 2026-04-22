@@ -43,7 +43,7 @@ Ein Ticket dazu ist ein guter Einstiegs-PR für Beitragende.
 
 ### 3. Demo-App hat keine automatisierten Tests
 
-**Begründung**: Die Demo ist selbst das Test-Subjekt — sie enthält **bewusst** 4 WCAG-Barrieren als Scanner-Zielscheibe (Bild ohne `alt`, unspezifischer Link-Text, niedriger Kontrast-Button, Formular ohne Label). Diese werden gegen den Scanner aus dem Compliance-Repo getestet.
+**Begründung**: Die Demo ist selbst das Test-Subjekt — sie enthält **bewusst** 4 WCAG-Barrieren als Scanner-Zielscheibe (Bild ohne `alt`, unspezifischer Link-Text, niedriger Kontrast-Button, Formular ohne Label). Sie dient als stabiles Ziel für externe WCAG-Scanner (axe-core, pa11y, Playwright-AxE, Lighthouse CI).
 
 ## Test-Commands
 
@@ -86,4 +86,4 @@ Automatisierung deckt nicht alles. Vor jedem Release manuell:
 - [ ] localStorage-Persistenz über Reload bestehen?
 - [ ] `window.AccessibilityWidget.reset()` bringt initialen Zustand zurück?
 
-Der automatisierte WCAG-Scan läuft separat aus dem [Compliance-Repo](https://github.com/bauer-group/SaaS-BFSGWidget) gegen `http://localhost:5173`.
+Der automatisierte WCAG-Scan gegen `http://localhost:5173` wird außerhalb dieses Repos von einem Compliance-Scanner betrieben und ist daher nicht Teil der CI dieses Widget-Repos.

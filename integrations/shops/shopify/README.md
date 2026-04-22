@@ -1,4 +1,4 @@
-# BFSG Widget — Shopify Theme Integration
+# Accessibility Widget — Shopify Theme Integration
 
 ## Einbindung als Theme-Block (Online Store 2.0)
 
@@ -9,7 +9,7 @@
 2. Liquid-Dateien ins Theme einfügen:
    - `blocks/accessibility-widget.liquid` → `blocks/`
    - `snippets/accessibility-widget.liquid` → `snippets/`
-3. Im Theme-Editor: Abschnitt → App-Block "BFSG Widget" hinzufügen.
+3. Im Theme-Editor: Abschnitt → App-Block "Accessibility Widget" hinzufügen.
 
 ## Einbindung per `theme.liquid` (klassisch)
 

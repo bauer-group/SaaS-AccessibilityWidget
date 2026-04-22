@@ -1,15 +1,13 @@
 # @bauer-group/accessibility-widget
 
-> BFSG / EN 301 549 Accessibility Widget — lazy-loading, CDN-ready, zero-tracking.
+> BFSG / EN 301 549 / WCAG 2.2 AA Accessibility Widget — lazy-loading, CDN-ready, zero-tracking.
 > Loader ~4 KB gzip, Core ~10 KB gzip. No cookies, no DOM/ARIA overrides.
 
 Built by [BAUER GROUP](https://bauer-group.com) · MIT License
 
 ---
 
-## Repository scope
-
-This monorepo contains **only** the statically-served accessibility widget and its framework integrations. Compliance tooling (scanner, statement generator, backend API) lives in a separate repository.
+## Repository layout
 
 ```text
 packages/
@@ -22,11 +20,13 @@ integrations/
   shops/                  Shopify, Shopware, Magento
 ```
 
+The **`packages/` + `apps/`** workspaces are managed by pnpm + Turbo. The **`integrations/`** folder is intentionally **outside the workspace** — each integration is a standalone publishable artifact with its own dependency tree and release cadence.
+
 ## Quick start
 
 ```bash
 pnpm install
-pnpm build              # build widget + integrations
+pnpm build              # builds widget + demo
 pnpm demo:dev           # open http://localhost:5173
 ```
 
@@ -45,7 +45,7 @@ For framework-specific wrappers, see [`integrations/`](./integrations/).
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for setup + conventions, [CONTRIBUTIONS-WANTED.md](./CONTRIBUTIONS-WANTED.md) for three concrete high-impact ways to help (new i18n locales, new framework/CMS integrations, better accessibility profiles), and [TESTING.md](./TESTING.md) for the current test strategy and known gaps.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for setup + conventions, [CONTRIBUTIONS-WANTED.md](./CONTRIBUTIONS-WANTED.md) for concrete high-impact ways to help (new i18n locales, new framework/CMS integrations, better accessibility profiles), and [TESTING.md](./TESTING.md) for the current test strategy and known gaps.
 
 ## Security
 

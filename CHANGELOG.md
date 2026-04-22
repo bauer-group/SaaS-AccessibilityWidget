@@ -6,38 +6,46 @@ Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/), die V
 ## [Unreleased]
 
 ### Changed
-- **Full BFSG → AccessibilityWidget rename**: Alle Code-Identifier, Window-Globals, CDN-Filenames, URL-Pfade, localStorage-Key, CSS-Klassen und DOM-Attribute wurden vom provisorischen BFSG-Arbeitsnamen auf den finalen Produktnamen umgestellt. Das Widget war nie produktiv eingebunden, daher kein Migration-Pfad nötig.
-  - NPM-Pakete: `@bauer-group/bfsg-widget*` → `@bauer-group/accessibility-widget*`
-  - Runtime-Globals: `window.BFSGWidget` → `window.AccessibilityWidget`, `window.BFSGWidgetConfig` → `window.AccessibilityWidgetConfig`, `window.BFSGWidgetCore` → `window.AccessibilityWidgetCore`
-  - CDN-Filenames: `bfsg-widget-loader.min.js` → `accessibility-widget-loader.min.js` (analog core + css)
-  - URL-Prefix: `/bfsg-widget/` → `/accessibility-widget/`
-  - localStorage-Key: `bfsg-widget` → `accessibility-widget`
-  - TypeScript-Exports: `BFSGWidget`, `BFSGWidgetClient`, `BFSGWidgetComponent`, `BFSGWidgetProps`, `BFSGWidgetSri`, `openBFSGWidget`/`closeBFSGWidget`/`resetBFSGWidget` → jeweils `AccessibilityWidget*`
-  - CSS-Klassen: `.bfsg-*` → `.aw-*` (interner Kurzprefix, minifier-freundlich)
-  - DOM-Attribute: `data-bfsg-*` → `data-aw-*`
-  - Integrations-Ordnernamen (Drupal/TYPO3/WordPress/Shopware/Magento) und PHP-/Liquid-Filenamen angepasst
 
-### Changed (vor diesem Rename)
-- **Repository-Split**: Aus dem ursprünglichen `SaaS-BFSGWidget`-Monorepo ausgelagert. Dieses Repo enthält nur noch das Widget + Framework-Integrationen + Demo. Der Scanner, die REST-API und der Statement-Generator verbleiben im [Compliance-Repo](https://github.com/bauer-group/SaaS-BFSGWidget).
-- **Shared-Types integriert**: Statt eines eigenen `@bauer-group/bfsg-shared`-Pakets leben Widget-Types jetzt direkt in `packages/widget/src/types/` und werden über den Public-Entry-Point exportiert.
-- **DTS-Build hinzugefügt**: Der Widget-Build emittiert jetzt zusätzlich kompilierte `.d.ts`-Files. Integrationen konsumieren Types über Node-Resolution statt per Source-Alias (kein `paths`-Mapping mehr auf Cross-Package-Source).
+- **Integrations-Pakete aus pnpm-Workspace entfernt.** `pnpm-workspace.yaml` verwaltet nur noch `packages/*` + `apps/*`. Alle Integrationen (`integrations/js/*`, `integrations/cms/*`, `integrations/shops/*`) sind jetzt eigenständige Artefakte mit eigener Dependency-Auflösung und unabhängigem Release-Zyklus. Folgeänderungen:
+  - `workspace:*`-Referenzen in Integration-`package.json` wurden auf `^1.0.0-alpha.1` umgestellt
+  - ESLint-Ignore weitet sich auf `integrations/**`
+- **Abschluss BFSG → AccessibilityWidget-Rename.** Rest-Vorkommen, die beim initialen Rename übersehen wurden, sind konsolidiert — betraf sowohl Laufzeit-kritische als auch kosmetische Stellen:
+  - **Laufzeit-kritisch (war vorher tatsächlich gebrochen):** `window.BFSGWidgetConfig` → `window.AccessibilityWidgetConfig` in Shopware-Twig und Magento-Phtml; `data-bfsg="loader"`/`"css"` → `data-aw-loader`/`data-aw-css` in allen JS-, CMS- und Shop-Integrationen; `bfsg-widget-*.min.js`-Pfade → `accessibility-widget-*.min.js` in Shopware/Magento
+  - **Magento-Modul-Namespace:** `BauerGroup_BFSGWidget` → `BauerGroup_AccessibilityWidget` in `module.xml` und `view/frontend/layout/default.xml` (synchron mit `registration.php`); scopeConfig-Namespace `bfsg_widget` → `accessibility_widget`
+  - **TYPO3-TypoScript-Prefix:** `plugin.tx_bfsgwidget` → `plugin.tx_accessibilitywidget`; header-/footer-Keys `bfsgConfig`/`bfsgLoader` → `accessibilityWidgetConfig`/`accessibilityWidgetLoader`; PSR-4 `BauerGroup\BfsgWidget\\` → `BauerGroup\AccessibilityWidget\\`
+  - **Svelte Action umbenannt:** `bfsgWidget` → `accessibilityWidget`; Nuxt-runtimeConfig-Key `bfsgWidget` → `accessibilityWidget`
+  - **Shopware/Shopify/Drupal:** composer-Beschreibungen, Plugin-Titel und Modul-Kommentare konsolidiert
+- **Abhängigkeiten auf aktuelle Stable-Versionen.** Integration-Peer- und devDependencies gebumpt (React 19.1, Angular 19.2, Svelte 5.20, Next 15.2, Astro 5, Nuxt ≥3.10). TypeScript-Caret `^5.8`, Vite 7, Vitest 3 im Haupt-Workspace bleiben.
 
 ### Added
-- `eslint.config.js` mit flat config (ESLint 9, typescript-eslint 8)
-- Widget-spezifische CONTRIBUTING, CHANGELOG, CONTRIBUTIONS-WANTED, TESTING-Dokumente
-- Wurzel-`type: module`
+
+- **Demo-App professionalisiert.** [apps/demo/](./apps/demo/) komplett überarbeitet: Hero mit Status-Karte (≤5 KB Loader, ≤24 KB Core, 28 Locales, 0 Dependencies), sticky Topbar, Try-Karten mit Locale-Switcher (persistiert in `localStorage`), Integration-Tabs mit Copy-Buttons und ARIA-Keyboard-Navigation, Live-State-Panel (Poll alle 500 ms), Compliance-Karten (BFSG / EN 301 549 / WCAG 2.2 AA), Scanner-Testzone (collapsible). Design-System mit CSS-Variablen, Light/Dark, `clamp()`-basierter responsiver Typografie.
+- **Live-Dev-Kopplung Demo ↔ Widget.** Neue Vite-Middleware in [apps/demo/vite.config.ts](./apps/demo/vite.config.ts) serviert `/accessibility-widget/*` direkt aus `packages/widget/dist/*` — kein Copy-on-predev mehr, Widget-Rebuilds sind nach Browser-Reload sofort sichtbar. Root-Script `pnpm demo:dev` startet Widget-Watch + Vite parallel.
+- **Sauberer Demo-Build-Pipeline.** `pnpm demo:build` = Widget bauen → Files in `public/` kopieren → `tsc --noEmit` Typecheck → `vite build` mit Sourcemaps und gehashed Assets. `demo:preview` auf Port 4173 strict.
+- `packages/widget/src/util/debug.ts` — `warnIfDebug()`-Helper. Alle bisher **silent-failenden** catch-Blöcke in `state.ts` + `loader.ts` emittieren jetzt `console.warn`, wenn `AccessibilityWidgetConfig.debug === true` gesetzt ist. Produktion bleibt rauschfrei.
+- Smoke-Test-Scaffold für React-Integration (`integrations/js/react/test/AccessibilityWidget.test.tsx` + Vitest-Config). Verifiziert: idempotente Script-/Link-Injektion, Config-Merge ohne Clobbering, SRI-Propagation. Referenz-Pattern für analoge Tests in Vue/Svelte/Angular.
+- **20 neue i18n-Locales** (alle Sprachen mit ≥ 8 Mio Sprechern, die mit Standard-Fonts sauber rendern):
+  `zh`, `hi`, `pt`, `bn`, `ru`, `ja`, `ko`, `vi`, `fa`, `ur`, `th`, `id`, `he`, `nl`, `sv`, `cs`, `el`, `hu`, `ro`, `uk`.
+  Total jetzt **28 Locales**. `fa`, `ur`, `he` sind RTL (wie `ar`) und werden im Panel via `dir="rtl"` automatisch gelayoutet.
+  ⚠ Fachterminologie (Screenreader, Fokusrahmen, Kontrastmodus) braucht pro Locale Review durch Muttersprachler:innen mit A11y-Erfahrung — siehe [CONTRIBUTIONS-WANTED.md](./CONTRIBUTIONS-WANTED.md).
 
 ### Fixed
-- `AccessibilityWidgetClient()` in Next.js-Integration hatte falschen Return-Typ (`: null` statt inferiert)
-- Fehlende `@angular/common`-Peer-Dependency in Angular-Integration
-- Globale `Window`-Deklarationen in `loader.ts` und `core.ts` waren inkonsistent — jetzt konsolidiert in `src/globals.d.ts`
+
+- `state.test.ts` — `localStorage.clear is not a function` unter happy-dom. Ersetzt durch manuelle Iterator-Variante, die unter happy-dom + jsdom + realen Browsern identisch arbeitet. 18/18 Tests grün.
+- React-Wrapper deduplizierte injizierte Assets über `data-bfsg`-Attribute — die tatsächliche Laufzeit des IIFE-Loaders sucht aber nach `data-aw-css`. Wrapper und Loader sind jetzt auf dieselben `data-aw-*`-Marker harmonisiert, damit SSR-Inject + IIFE-Re-Check korrekt dedupen.
+
+### Changed (vor diesem Release)
+
+- **Shared-Types integriert**: Statt eines separaten Packages leben Widget-Types jetzt direkt in `packages/widget/src/types/` und werden über den Public-Entry-Point exportiert.
+- **DTS-Build hinzugefügt**: Der Widget-Build emittiert zusätzlich kompilierte `.d.ts`-Files. Integrationen konsumieren Types über Node-Resolution statt per Source-Alias.
 
 ## [1.0.0-alpha.1]
 
-Initialer Stand aus dem vorherigen Monorepo (`SaaS-BFSGWidget`):
+Initiales Release:
 
 - `packages/widget` — Lazy-Loading Accessibility-Widget (Loader + Core), Vanilla TS, 8 Locales
 - `apps/demo` — Interaktive Vite-Demo mit eingebauten A11y-Barrieren als Scanner-Zielscheibe
-- `integrations/js/*` — React 19, Vue 3, Angular 19, Svelte 5, Next.js 15, Nuxt 3, Astro 4
-- `integrations/cms/*` — WordPress 6, TYPO3 13, Drupal 11
-- `integrations/shops/*` — Shopify, Shopware 6, Magento 2.4
+- `integrations/js/*` — React, Vue, Angular, Svelte, Next.js, Nuxt, Astro
+- `integrations/cms/*` — WordPress, TYPO3, Drupal
+- `integrations/shops/*` — Shopify, Shopware, Magento
