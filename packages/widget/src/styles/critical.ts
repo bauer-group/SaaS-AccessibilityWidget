@@ -46,6 +46,10 @@ export function buildCriticalCss(opts: CriticalCssOptions): string {
     `.aw-fab--bottom-left{bottom:${offsetY}px;left:${offsetX}px}` +
     `.aw-fab--top-right{top:${offsetY}px;right:${offsetX}px}` +
     `.aw-fab--top-left{top:${offsetY}px;left:${offsetX}px}` +
+    // Drag: when data-aw-fab-pos=custom, ignore corner-based anchoring and
+    // honor the inline --aw-fab-x / --aw-fab-y custom properties set by
+    // the loader. Explicit unsets override the corner-class rules above.
+    '.aw-fab[data-aw-fab-pos="custom"]{top:var(--aw-fab-y)!important;left:var(--aw-fab-x)!important;right:auto!important;bottom:auto!important}' +
     (hideOnPrint ? '@media print{.aw-fab{display:none!important}}' : '') +
     '@media (prefers-reduced-motion:reduce){.aw-fab{transition:none}}'
   );

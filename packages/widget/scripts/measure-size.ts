@@ -13,12 +13,15 @@ const dist = resolve(here, '..', 'dist');
  * It then grew to ~28 KB after adding feature pictograms, multi-stage
  * indicators, panel dragging, oversized mode, runtime language switching
  * and feature tooltips. The loader IIFE is the hot path for 99.9 % of page
- * visitors who never open the panel — it stays at 5 KB because it only
+ * visitors who never open the panel — it stays near 5 KB because it only
  * ships the short FAB button label per locale, not the full Translation.
- * The core only loads on first widget interaction.
+ * Loader bumped 5 → 5.5 KB to carry opt-in FAB-drag (pointer + Shift+Arrow
+ * keyboard drag, viewport clamp, state-persist, click-suppress). Still
+ * dwarfed by typical GA/GTM loaders (15-40 KB). The core only loads on
+ * first widget interaction.
  */
 const BUDGETS: Record<string, { gzip: number }> = {
-  'accessibility-widget-loader.min.js': { gzip: 5 * 1024 },
+  'accessibility-widget-loader.min.js': { gzip: Math.round(5.5 * 1024) },
   'accessibility-widget-core.min.js': { gzip: 30 * 1024 },
   'accessibility-widget.min.css': { gzip: 3 * 1024 },
 };

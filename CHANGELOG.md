@@ -20,6 +20,7 @@ Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/), die V
 
 ### Added
 
+- **Opt-in draggable FAB.** Neue Config-Option `draggableFab: true` erlaubt End-Usern, den FAB per Maus / Touch / Shift+Arrow zu verschieben. Position persistiert in `WidgetState.fabPosition` unter dem konfigurierten `storageKey` — beim nächsten Besuch lädt der Loader-IIFE sie **vor First Paint** via inline CSS custom properties (`--aw-fab-x/y`). Viewport-Clamp verhindert Off-Screen-Dragging; Panel-Reset löscht auch die custom Position. Loader-Budget von 5 KB auf 5.5 KB gzip gebumpt (Begründung in `scripts/measure-size.ts`).
 - **Professionelle `WidgetConfig`-API.** Die 1-Line-Integration bleibt der Default-Pfad; die Config ist optional, aber jetzt umfassend dokumentiert und validiert. Alle Felder haben JSDoc-Kommentare für IDE-Autocomplete. Neu hinzugekommen:
   - `cssIntegrity` — SRI-Hash für die CSS-Datei (Parität zu `coreIntegrity`)
   - `offset: { x, y }` — Pixel-Abstand des FAB zur Ankerecke (für Chat-Widget/Cookie-Banner-Kollisionen)

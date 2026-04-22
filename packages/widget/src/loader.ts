@@ -27,6 +27,7 @@ const cfg = {
   },
   zIndex: Number.isFinite(userCfg.zIndex) ? (userCfg.zIndex as number) : 2_147_483_646,
   storageKey: userCfg.storageKey ?? 'accessibility-widget',
+  draggableFab: Boolean(userCfg.draggableFab),
   respectReducedMotion: userCfg.respectReducedMotion ?? true,
   primaryColor: userCfg.primaryColor ?? '#0058a3',
   hideOnPrint: userCfg.hideOnPrint ?? true,
@@ -253,7 +254,115 @@ function renderFab(): void {
     }
   });
 
+  if (cfg.draggableFab) {
+    attachDragHandlers(btn);
+    applyPersistedFabPosition(btn);
+  }
+
   document.body.appendChild(btn);
+}
+
+// ─── FAB drag (opt-in via config.draggableFab) ─────────────────────
+// Shift+Arrow moves in 10 px steps (WCAG 2.1.1 — no pointer-only interactions).
+
+function applyPersistedFabPosition(btn: HTMLButtonElement): void {
+  const p = readState()?.fabPosition;
+  if (p && Number.isFinite(p.x) && Number.isFinite(p.y)) setFabPos(btn, p.x, p.y);
+}
+
+function setFabPos(btn: HTMLButtonElement, x: number, y: number): void {
+  const size = 48;
+  const cx = Math.min(Math.max(0, x), Math.max(0, window.innerWidth - size));
+  const cy = Math.min(Math.max(0, y), Math.max(0, window.innerHeight - size));
+  btn.setAttribute('data-aw-fab-pos', 'custom');
+  btn.style.setProperty('--aw-fab-x', cx + 'px');
+  btn.style.setProperty('--aw-fab-y', cy + 'px');
+}
+
+function persistFab(x: number, y: number): void {
+  try {
+    const raw = localStorage.getItem(cfg.storageKey);
+    const parsed = raw ? (JSON.parse(raw) as Record<string, unknown>) : {};
+    parsed.fabPosition = { x, y };
+    localStorage.setItem(cfg.storageKey, JSON.stringify(parsed));
+  } catch (err) {
+    if (cfg.debug) console.warn('[aw] persistFab failed', err);
+  }
+}
+
+function attachDragHandlers(btn: HTMLButtonElement): void {
+  btn.style.touchAction = 'none';
+  btn.style.cursor = 'grab';
+  let pid = -1;
+  let sx = 0;
+  let sy = 0;
+  let bx = 0;
+  let by = 0;
+  let moved = false;
+
+  btn.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0 && e.pointerType !== 'touch') return;
+    pid = e.pointerId;
+    sx = e.clientX;
+    sy = e.clientY;
+    const r = btn.getBoundingClientRect();
+    bx = r.left;
+    by = r.top;
+    moved = false;
+    try {
+      btn.setPointerCapture(pid);
+    } catch {
+      /* noop */
+    }
+  });
+
+  btn.addEventListener('pointermove', (e) => {
+    if (pid !== e.pointerId) return;
+    const dx = e.clientX - sx;
+    const dy = e.clientY - sy;
+    if (!moved && Math.hypot(dx, dy) < 5) return;
+    moved = true;
+    e.preventDefault();
+    setFabPos(btn, bx + dx, by + dy);
+  });
+
+  const finish = (e: PointerEvent): void => {
+    if (pid !== e.pointerId) return;
+    try {
+      btn.releasePointerCapture(pid);
+    } catch {
+      /* noop */
+    }
+    pid = -1;
+    if (moved) {
+      const r = btn.getBoundingClientRect();
+      persistFab(r.left, r.top);
+      // Swallow the synthetic click so a drag doesn't open the panel.
+      btn.addEventListener(
+        'click',
+        (ev) => {
+          ev.stopPropagation();
+          ev.preventDefault();
+        },
+        { capture: true, once: true },
+      );
+    }
+  };
+  btn.addEventListener('pointerup', finish);
+  btn.addEventListener('pointercancel', finish);
+
+  btn.addEventListener('keydown', (e) => {
+    if (!e.shiftKey) return;
+    const k = e.key;
+    const dx = k === 'ArrowLeft' ? -10 : k === 'ArrowRight' ? 10 : 0;
+    const dy = k === 'ArrowUp' ? -10 : k === 'ArrowDown' ? 10 : 0;
+    if (!dx && !dy) return;
+    e.preventDefault();
+    const r = btn.getBoundingClientRect();
+    setFabPos(btn, r.left + dx, r.top + dy);
+    const final = btn.getBoundingClientRect();
+    persistFab(final.left, final.top);
+  });
 }
 
 let corePromise: Promise<CoreApi> | null = null;

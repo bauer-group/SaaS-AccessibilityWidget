@@ -151,6 +151,23 @@ describe('resolveConfig — statementUrl', () => {
   });
 });
 
+describe('resolveConfig — draggableFab', () => {
+  it('defaults to false', () => {
+    expect(resolveConfig(undefined, 'de').draggableFab).toBe(false);
+    expect(resolveConfig({}, 'de').draggableFab).toBe(false);
+  });
+
+  it('passes through explicit true', () => {
+    expect(resolveConfig({ draggableFab: true }, 'de').draggableFab).toBe(true);
+  });
+
+  it('is independent from the config.position anchor', () => {
+    const cfg = resolveConfig({ position: 'top-left', draggableFab: true }, 'de');
+    expect(cfg.position).toBe('top-left');
+    expect(cfg.draggableFab).toBe(true);
+  });
+});
+
 describe('resolveConfig — SRI', () => {
   it('keeps user-supplied coreIntegrity + cssIntegrity', () => {
     const cfg = resolveConfig(

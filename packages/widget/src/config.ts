@@ -28,6 +28,7 @@ export interface ResolvedConfig {
   initialFeatures: Readonly<Partial<Record<FeatureId, boolean>>>;
   disabledFeatures: ReadonlySet<FeatureId>;
   statementUrl: string | null;
+  draggableFab: boolean;
   respectReducedMotion: boolean;
   hideOnPrint: boolean;
   debug: boolean;
@@ -41,6 +42,7 @@ const DEFAULTS = {
   zIndex: 2_147_483_646,
   primaryColor: '#0058a3',
   storageKey: 'accessibility-widget',
+  draggableFab: false,
   respectReducedMotion: true,
   hideOnPrint: true,
   debug: false,
@@ -70,6 +72,7 @@ export function resolveConfig(input: WidgetConfig | undefined, navLang: string):
     initialFeatures: resolveInitialFeatures(cfg.initialFeatures, debug),
     disabledFeatures: resolveDisabledFeatures(cfg.disabledFeatures, debug),
     statementUrl: resolveStatementUrl(cfg.statementUrl, debug),
+    draggableFab: cfg.draggableFab ?? DEFAULTS.draggableFab,
     respectReducedMotion: cfg.respectReducedMotion ?? DEFAULTS.respectReducedMotion,
     hideOnPrint: cfg.hideOnPrint ?? DEFAULTS.hideOnPrint,
     debug,

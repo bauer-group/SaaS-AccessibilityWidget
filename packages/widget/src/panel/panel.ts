@@ -310,12 +310,22 @@ export function openPanel(ctx: PanelContext): PanelHandle {
       ],
       on: {
         click: () => {
+          // Also clear any drag-dropped FAB position so it returns to its
+          // config-defined anchor on next paint (user reset-intent spans
+          // feature toggles AND visual overrides).
+          const fab = document.querySelector<HTMLElement>('[data-aw-fab]');
+          if (fab) {
+            fab.removeAttribute('data-aw-fab-pos');
+            fab.style.removeProperty('--aw-fab-x');
+            fab.style.removeProperty('--aw-fab-y');
+          }
           const fresh: WidgetState = {
             features: Object.fromEntries(FEATURE_IDS.map((id) => [id, false])) as WidgetState['features'],
             fontSizeLevel: 1,
             lineHeightLevel: 1.5,
             letterSpacingLevel: 0,
             contrastMode: 'off',
+            fabPosition: null,
           };
           ttsStop();
           commit(fresh, T.resetDone);

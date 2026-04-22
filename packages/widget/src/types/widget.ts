@@ -44,6 +44,13 @@ export interface WidgetState {
   contrastMode: ContrastMode;
   /** Enlarges panel controls & tap targets — independent from font-size feature. */
   oversized?: boolean;
+  /**
+   * Custom FAB position set by user drag (only populated when `draggableFab`
+   * is enabled and the user actually moved the button). Coordinates are
+   * viewport-pixel distances from the **top-left** corner. When absent, the
+   * FAB uses the configured `position` + `offset` anchor.
+   */
+  fabPosition?: { x: number; y: number } | null;
 }
 
 /**
@@ -153,6 +160,14 @@ export interface WidgetConfig {
   statementUrl?: string;
 
   // ─── behavior ─────────────────────────────────────────────────────
+  /**
+   * When true, end users can drag the FAB to a custom position (pointer or
+   * keyboard). The chosen position persists under `storageKey` as part of
+   * the widget state and is restored on the next visit. Default: `false`.
+   *
+   * Keyboard: focus the FAB, hold Shift + Arrow keys to move in 10 px steps.
+   */
+  draggableFab?: boolean;
   /** When true, features that add motion respect `prefers-reduced-motion`. Default: `true`. */
   respectReducedMotion?: boolean;
   /** When true, the FAB is hidden in print media (`@media print`). Default: `true`. */
@@ -188,6 +203,7 @@ export const DEFAULT_STATE: WidgetState = {
   letterSpacingLevel: 0,
   contrastMode: 'off',
   oversized: false,
+  fabPosition: null,
 };
 
 export const PROFILES: Record<ProfileId, ProfilePreset> = {

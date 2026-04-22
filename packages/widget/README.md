@@ -92,6 +92,7 @@ RTL: `ar`, `fa`, `ur`, `he`.
 
 | Feld | Typ | Default | Zweck |
 |---|---|---|---|
+| `draggableFab` | `boolean` | `false` | End-User kann FAB per Maus/Touch/Shift+Arrow verschieben. Position persistiert in `storageKey` und wird beim nächsten Besuch angewendet. Reset im Panel löscht sie. |
 | `respectReducedMotion` | `boolean` | `true` | Respektiere `prefers-reduced-motion` bei Animations-Features |
 | `hideOnPrint` | `boolean` | `true` | FAB in Print-Medien ausblenden |
 | `debug` | `boolean` | `false` | Silent-Failures (localStorage-Quota, Load-Fehler, Validation) als `console.warn` ausgeben |
