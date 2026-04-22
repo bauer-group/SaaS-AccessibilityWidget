@@ -1,7 +1,7 @@
 {
   "name": "@bauer-group/accessibility-widget",
   "version": "1.0.0-alpha.1",
-  "description": "Lazy-loading Accessibility-Widget nach BFSG/EN 301 549. Loader ~4 KB gzip, Core ~10 KB gzip. Kein Tracking, kein Cookie, kein DOM-/ARIA-Override.",
+  "description": "Lazy-loading Accessibility-Widget nach BFSG/EN 301 549/WCAG 2.2 AA. Loader ~4 KB gzip, Core ~14 KB gzip. Kein Tracking, kein Cookie, kein DOM-/ARIA-Override.",
   "license": "MIT",
   "author": "BAUER GROUP <info@de.bauer-group.com>",
   "repository": {
@@ -29,18 +29,17 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "lint": "echo '(eslint not yet configured)'",
     "size": "tsx scripts/measure-size.ts",
     "clean": "rimraf dist"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
-    "esbuild": "^0.24.0",
-    "happy-dom": "^17.0.0",
+    "esbuild": "^0.25.0",
+    "happy-dom": "^17.4.0",
     "rimraf": "^6.0.1",
     "tsx": "^4.19.0",
     "typescript": "^5.8.0",
-    "vitest": "^3.0.0"
+    "vitest": "^3.1.0"
   },
   "keywords": [
     "accessibility",
