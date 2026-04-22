@@ -3,138 +3,482 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>BFSG Widget — Live-Demo</title>
-    <meta name="description" content="Interaktive Demo des BFSG Accessibility Widgets von BAUER GROUP. Kein Tracking, kein Cookie." />
+    <title>Accessibility Widget — Live-Demo</title>
+    <meta
+      name="description"
+      content="Interaktive Demo des BAUER GROUP Accessibility Widgets — BFSG / EN 301 549 / WCAG 2.2 AA. 28 Sprachen, 4 KB Loader, kein Tracking."
+    />
     <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#0058a3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0e14" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/accessibility-widget-assets/sample.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/src/styles.css" />
+
+    <!-- Widget config: reads demo-locale from localStorage so the
+         <select> in the page can re-flow the widget without a page reload
+         of this file; the widget itself still requires a reload to pick it up. -->
     <script>
-      window.AccessibilityWidgetConfig = {
-        corePath: '/accessibility-widget/accessibility-widget-core.min.js',
-        cssPath: '/accessibility-widget/accessibility-widget.min.css',
-        position: 'bottom-right',
-        locale: 'auto',
-        primaryColor: '#0058a3',
-      };
+      (() => {
+        const stored = (() => {
+          try {
+            return localStorage.getItem('aw-demo-locale');
+          } catch {
+            return null;
+          }
+        })();
+        window.AccessibilityWidgetConfig = {
+          corePath: '/accessibility-widget/accessibility-widget-core.min.js',
+          cssPath: '/accessibility-widget/accessibility-widget.min.css',
+          position: 'bottom-right',
+          locale: stored ?? 'auto',
+          primaryColor: '#0058a3',
+          debug: true,
+        };
+      })();
     </script>
     <script src="/accessibility-widget/accessibility-widget-loader.min.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Zum Hauptinhalt springen</a>
 
-    <header role="banner" class="site-header">
-      <div class="container site-header__inner">
-        <div class="brand">
-          <strong>BFSG Widget</strong>
-          <span class="muted">— Live Demo</span>
-        </div>
-        <nav aria-label="Hauptnavigation">
-          <ul>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#integration">Integration</a></li>
-            <li><a href="#scanner-target">Scanner-Test</a></li>
-            <li><a href="/barrierefreiheit.html">Barrierefreiheit</a></li>
-          </ul>
+    <header class="topbar" role="banner">
+      <div class="container topbar__inner">
+        <a class="topbar__brand" href="/" aria-label="Startseite">
+          <svg
+            class="topbar__logo"
+            viewBox="0 0 32 32"
+            aria-hidden="true"
+            focusable="false"
+            width="28"
+            height="28"
+          >
+            <rect width="32" height="32" rx="8" fill="currentColor" />
+            <path
+              d="M16 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm-8 6.5 8 2.5 8-2.5.6 2.4L17 17v4l4 8.5-2 1L16 22l-3 8.5-2-1L15 21v-4L7 14.9l.6-2.4z"
+              fill="#fff"
+            />
+          </svg>
+          <span class="topbar__title">
+            <strong>Accessibility Widget</strong>
+            <em>BAUER GROUP</em>
+          </span>
+        </a>
+        <nav class="topbar__nav" aria-label="Hauptnavigation">
+          <a href="#try">Ausprobieren</a>
+          <a href="#integration">Integration</a>
+          <a href="#compliance">Compliance</a>
+          <a href="#scanner">Scanner</a>
+          <a
+            class="topbar__github"
+            href="https://github.com/bauer-group/SaaS-AccessibilityWidget"
+            rel="noopener"
+          >
+            GitHub
+          </a>
         </nav>
       </div>
     </header>
 
     <main id="main">
-      <section class="hero container" aria-labelledby="h-hero">
-        <h1 id="h-hero">Live-Demo des BFSG Widgets</h1>
-        <p class="lede">
-          Klicken Sie rechts unten auf das Symbol oder nutzen Sie das Tastaturkürzel
-          <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>A</kbd>. Ihre Einstellungen werden im
-          <code>localStorage</code> gespeichert und beim nächsten Besuch vor dem ersten Render angewendet.
-        </p>
-        <div class="cta">
-          <button type="button" id="open-panel" class="primary">
-            Panel öffnen
-          </button>
-          <button type="button" id="reset-panel" class="secondary">
-            Einstellungen zurücksetzen
-          </button>
+      <!-- HERO -->
+      <section class="hero">
+        <div class="container hero__grid">
+          <div class="hero__content">
+            <p class="eyebrow">BFSG · EN 301 549 · WCAG 2.2 AA</p>
+            <h1 class="hero__title">
+              Digitale Barrierefreiheit —
+              <span class="hero__title-accent">in einer Zeile</span>
+            </h1>
+            <p class="hero__lede">
+              Ein lazy-loading Accessibility-Widget: 4 KB Loader, 24 KB Core,
+              <strong>28 Sprachen</strong>, keine Cookies, kein Tracking, kein DOM/ARIA-Override
+              der Host-Seite.
+            </p>
+            <div class="hero__actions">
+              <button type="button" id="open-panel" class="btn btn-primary">
+                <span aria-hidden="true">✦</span> Widget öffnen
+              </button>
+              <button type="button" id="reset-panel" class="btn btn-ghost">
+                Einstellungen zurücksetzen
+              </button>
+            </div>
+            <p class="hero__hint">
+              Oder nutze das Tastaturkürzel
+              <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>A</kbd> — oder den Button unten rechts.
+            </p>
+          </div>
+          <aside class="hero__card" aria-label="Schnellfakten">
+            <dl class="hero__facts">
+              <div>
+                <dt>Loader</dt>
+                <dd>≤ 5 KB <small>gzip</small></dd>
+              </div>
+              <div>
+                <dt>Core</dt>
+                <dd>≤ 24 KB <small>gzip</small></dd>
+              </div>
+              <div>
+                <dt>Locales</dt>
+                <dd>28 <small>Sprachen</small></dd>
+              </div>
+              <div>
+                <dt>Dependencies</dt>
+                <dd>0 <small>zero runtime</small></dd>
+              </div>
+            </dl>
+          </aside>
         </div>
       </section>
 
-      <section class="container" id="features" aria-labelledby="h-features">
-        <h2 id="h-features">Features ausprobieren</h2>
-        <p>
-          Der Beispieltext unten reagiert auf alle Widget-Einstellungen. Probieren Sie
-          <strong>Schriftgröße</strong>, <strong>Kontrast</strong>, <strong>Lese-Schrift</strong>,
-          <strong>Animationen pausieren</strong> und <strong>Links hervorheben</strong> aus.
-        </p>
+      <!-- TRY SECTION -->
+      <section id="try" class="section" aria-labelledby="h-try">
+        <div class="container">
+          <header class="section__header">
+            <h2 id="h-try">Ausprobieren</h2>
+            <p>
+              Alle Änderungen im Widget werden im <code>localStorage</code> persistiert und vor
+              dem ersten Render angewendet — ohne FOUC.
+            </p>
+          </header>
 
-        <article class="card">
-          <h3>Artikel: Barrierefreiheit ist ein Qualitätsmerkmal</h3>
-          <p>
-            In der deutschen Wirtschaft gilt ab dem 28. Juni 2025 das
-            <a href="https://www.gesetze-im-internet.de/bfsg/">Barrierefreiheitsstärkungsgesetz</a>. Es
-            verpflichtet fast alle B2C-Anbieter zu technischer Barrierefreiheit — gemessen an WCAG 2.1 AA
-            / EN 301 549.
-          </p>
-          <p>
-            Ein <a href="#">Accessibility-Widget</a> ersetzt keinen sauberen Code. Aber eine gut
-            implementierte Präferenz-Ebene (Kontrast, Schriftgröße, Fokusrahmen, TTS) ist ein echter
-            Gewinn für Nutzer — und ein sichtbares Bekenntnis des Betreibers.
-          </p>
-        </article>
+          <div class="grid-2">
+            <article class="try-card">
+              <h3>
+                <span class="try-card__kicker">Schritt 1</span>
+                Sprache wählen
+              </h3>
+              <p>
+                Das Widget ist in 28 Sprachen verfügbar. Auswahl wird im
+                <code>localStorage</code> gespeichert, die Seite lädt neu.
+              </p>
+              <label class="field">
+                <span class="field__label">Widget-Sprache</span>
+                <select id="locale-select" aria-label="Widget-Sprache"></select>
+              </label>
+            </article>
 
-        <article class="card">
-          <h3>Animation zum Pausieren</h3>
-          <p>Dieser Punkt pulsiert, bis Sie <em>Animationen pausieren</em> aktivieren:</p>
-          <div class="pulse" aria-hidden="true"></div>
-        </article>
+            <article class="try-card">
+              <h3>
+                <span class="try-card__kicker">Schritt 2</span>
+                Profil-Preset aktivieren
+              </h3>
+              <p>
+                Sechs kuratierte Voreinstellungen — Sehbehinderung, Motorik, Kognition,
+                Anfallsicher, ADHS, Blind (Screenreader).
+              </p>
+              <button type="button" class="btn btn-primary" data-action="open">
+                Widget öffnen & Profil wählen
+              </button>
+            </article>
+          </div>
+        </div>
       </section>
 
-      <section class="container" id="integration" aria-labelledby="h-int">
-        <h2 id="h-int">Integration (1 Zeile)</h2>
-        <pre><code>&lt;script src="/accessibility-widget/accessibility-widget-loader.min.js" defer&gt;&lt;/script&gt;</code></pre>
-        <p>
-          Das reicht für 90 % der Use-Cases. Für CMS/Shop-Systeme existieren eigene Pakete unter
-          <code>integrations/</code>: React, Vue, Angular, Svelte, Next.js, Nuxt, Astro, WordPress,
-          Shopify, Shopware, TYPO3, Drupal, Magento.
-        </p>
+      <!-- SAMPLE CONTENT -->
+      <section id="sample" class="section section--alt" aria-labelledby="h-sample">
+        <div class="container">
+          <header class="section__header">
+            <h2 id="h-sample">Beispielinhalt</h2>
+            <p>
+              Dieser Text reagiert auf alle Widget-Einstellungen. Aktiviere Schriftgröße,
+              Kontrast oder Lesehilfen und beobachte die Veränderung hier.
+            </p>
+          </header>
+
+          <article class="prose-card">
+            <h3>Rechtlicher Hintergrund</h3>
+            <p>
+              Seit dem 28. Juni 2025 verpflichtet das
+              <a href="https://www.gesetze-im-internet.de/bfsg/" rel="noopener">
+                Barrierefreiheitsstärkungsgesetz (BFSG)
+              </a>
+              fast alle B2C-Anbieter zu digitaler Barrierefreiheit. Grundlage ist die
+              EU-Richtlinie (EU) 2019/882 (European Accessibility Act, EAA), technisch
+              umgesetzt über EN 301 549 — die wiederum auf
+              <a href="https://www.w3.org/TR/WCAG22/" rel="noopener">WCAG 2.2 AA</a> verweist.
+            </p>
+            <p>
+              Ein Widget ersetzt keinen sauberen Code. Aber eine gut implementierte
+              Präferenz-Ebene (Kontrast, Schriftgröße, Fokusrahmen, TTS) ist ein echter
+              Gewinn für Nutzer:innen — und ein sichtbares Bekenntnis des Betreibers.
+            </p>
+          </article>
+
+          <article class="prose-card">
+            <h3>Animations-Test</h3>
+            <p>
+              Dieser Punkt pulsiert, bis du im Widget <em>Animationen pausieren</em>
+              aktivierst. Das Widget respektiert zusätzlich
+              <code>prefers-reduced-motion</code>.
+            </p>
+            <div class="pulse" aria-hidden="true"></div>
+          </article>
+        </div>
       </section>
 
-      <section class="container" id="scanner-target" aria-labelledby="h-scanner">
-        <h2 id="h-scanner">Scanner-Testziel</h2>
-        <p>
-          Diese Seite enthält <strong>bewusst</strong> einige typische Barrieren, damit der Scanner etwas
-          zu finden hat:
-        </p>
-        <ul>
-          <li>Ein Bild ohne <code>alt</code>-Attribut (im <code>&lt;aside&gt;</code>)</li>
-          <li>Ein Link mit Text "hier klicken" (unspezifisch)</li>
-          <li>Ein Kontrast-Beispiel knapp unter 4.5:1 (Button "Graue Aktion")</li>
-          <li>Ein Formular-Feld ohne Label</li>
-        </ul>
+      <!-- INTEGRATION TABS -->
+      <section id="integration" class="section" aria-labelledby="h-int">
+        <div class="container">
+          <header class="section__header">
+            <h2 id="h-int">Integration</h2>
+            <p>
+              Ein <code>&lt;script&gt;</code>-Tag reicht. Für Frameworks und CMS/Shop-Systeme
+              gibt es fertige Wrapper.
+            </p>
+          </header>
 
-        <aside class="violations">
-          <img src="/accessibility-widget-assets/sample.svg" />
-          <p><a href="#">hier klicken</a> für mehr.</p>
-          <button class="low-contrast" type="button">Graue Aktion</button>
-          <form>
-            <input type="text" placeholder="Name" />
-            <button type="submit">Absenden</button>
-          </form>
-        </aside>
+          <div class="tabs" data-tabs>
+            <div class="tabs__list" role="tablist" aria-label="Integration-Beispiele">
+              <button role="tab" aria-selected="true" id="tab-html" data-tab="html">HTML</button>
+              <button role="tab" aria-selected="false" id="tab-react" data-tab="react" tabindex="-1">
+                React
+              </button>
+              <button role="tab" aria-selected="false" id="tab-vue" data-tab="vue" tabindex="-1">
+                Vue
+              </button>
+              <button
+                role="tab"
+                aria-selected="false"
+                id="tab-wordpress"
+                data-tab="wordpress"
+                tabindex="-1"
+              >
+                WordPress
+              </button>
+              <button
+                role="tab"
+                aria-selected="false"
+                id="tab-shopify"
+                data-tab="shopify"
+                tabindex="-1"
+              >
+                Shopify
+              </button>
+            </div>
 
-        <p>
-          Starten Sie den Scanner gegen <code>http://localhost:4173</code> (Preview-Port) — er sollte die
-          obigen Probleme finden sowie die BFSG-Custom-Checks bestehen (diese Demo hat
-          Barrierefreiheitserklärung-Link, Kontakt per mailto, Impressum im statischen HTML).
-        </p>
+            <div
+              class="tabs__panel"
+              role="tabpanel"
+              aria-labelledby="tab-html"
+              data-panel="html"
+            >
+              <div class="code-block">
+                <button class="copy-btn" data-copy aria-label="Code kopieren">Kopieren</button>
+                <pre><code>&lt;script
+  src="https://cdn.example.com/accessibility-widget/accessibility-widget-loader.min.js"
+  defer
+&gt;&lt;/script&gt;</code></pre>
+              </div>
+            </div>
+
+            <div
+              class="tabs__panel"
+              role="tabpanel"
+              aria-labelledby="tab-react"
+              data-panel="react"
+              hidden
+            >
+              <div class="code-block">
+                <button class="copy-btn" data-copy aria-label="Code kopieren">Kopieren</button>
+                <pre><code>import { AccessibilityWidget } from '@bauer-group/accessibility-widget-react';
+
+export default function Layout({ children }) {
+  return (
+    &lt;&gt;
+      {children}
+      &lt;AccessibilityWidget
+        loaderSrc="/accessibility-widget/accessibility-widget-loader.min.js"
+        cssHref="/accessibility-widget/accessibility-widget.min.css"
+        config={{ locale: 'auto', primaryColor: '#0058a3' }}
+      /&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+              </div>
+            </div>
+
+            <div
+              class="tabs__panel"
+              role="tabpanel"
+              aria-labelledby="tab-vue"
+              data-panel="vue"
+              hidden
+            >
+              <div class="code-block">
+                <button class="copy-btn" data-copy aria-label="Code kopieren">Kopieren</button>
+                <pre><code>&lt;script setup lang="ts"&gt;
+import { AccessibilityWidget } from '@bauer-group/accessibility-widget-vue';
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;AccessibilityWidget
+    loader-src="/accessibility-widget/accessibility-widget-loader.min.js"
+    css-href="/accessibility-widget/accessibility-widget.min.css"
+    :config="{ locale: 'auto' }"
+  /&gt;
+&lt;/template&gt;</code></pre>
+              </div>
+            </div>
+
+            <div
+              class="tabs__panel"
+              role="tabpanel"
+              aria-labelledby="tab-wordpress"
+              data-panel="wordpress"
+              hidden
+            >
+              <div class="code-block">
+                <button class="copy-btn" data-copy aria-label="Code kopieren">Kopieren</button>
+                <pre><code># 1. Plugin-Ordner nach wp-content/plugins/
+cp -r integrations/cms/wordpress/accessibility-widget \
+      wp-content/plugins/
+
+# 2. Assets einkopieren
+cp packages/widget/dist/accessibility-widget-*.min.{js,css} \
+   wp-content/plugins/accessibility-widget/assets/
+
+# 3. Im WP-Admin: Plugins → aktivieren → Einstellungen → Accessibility Widget</code></pre>
+              </div>
+            </div>
+
+            <div
+              class="tabs__panel"
+              role="tabpanel"
+              aria-labelledby="tab-shopify"
+              data-panel="shopify"
+              hidden
+            >
+              <div class="code-block">
+                <button class="copy-btn" data-copy aria-label="Code kopieren">Kopieren</button>
+                <pre><code>{%- comment -%} Im theme.liquid {%- endcomment -%}
+{% render 'accessibility-widget',
+   position: 'bottom-right',
+   locale: 'auto',
+   primary_color: '#0058a3' %}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- LIVE STATE -->
+      <section id="state" class="section section--alt" aria-labelledby="h-state">
+        <div class="container">
+          <details class="state-panel">
+            <summary>
+              <h2 id="h-state">Live-State</h2>
+              <span class="state-panel__hint">
+                JSON-Dump des persistierten Widget-Zustands — aktualisiert sich live
+              </span>
+            </summary>
+            <div class="code-block">
+              <button class="copy-btn" data-copy aria-label="State kopieren">Kopieren</button>
+              <pre><code id="state-output">Initialisiere …</code></pre>
+            </div>
+            <p class="muted">
+              Quelle: <code>window.AccessibilityWidget.getState()</code> — Poll-Intervall 500 ms.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <!-- COMPLIANCE -->
+      <section id="compliance" class="section" aria-labelledby="h-comp">
+        <div class="container">
+          <header class="section__header">
+            <h2 id="h-comp">Compliance</h2>
+            <p>Das Widget orientiert sich an drei überlappenden Regelwerken:</p>
+          </header>
+
+          <div class="compliance-grid">
+            <article class="compliance-card">
+              <h3>🇩🇪 BFSG</h3>
+              <p>
+                Barrierefreiheitsstärkungsgesetz — nationale Umsetzung der EAA. Gilt in
+                Deutschland ab 28.06.2025 für fast alle B2C-Anbieter.
+              </p>
+              <a href="https://www.gesetze-im-internet.de/bfsg/" rel="noopener">Gesetzestext →</a>
+            </article>
+            <article class="compliance-card">
+              <h3>🇪🇺 EN 301 549</h3>
+              <p>
+                Europäische Norm für digitale Barrierefreiheit. Referenziert WCAG 2.1 AA und
+                fügt ICT-spezifische Anforderungen hinzu.
+              </p>
+              <a href="https://www.etsi.org/deliver/etsi_en/301500_301599/301549/" rel="noopener">
+                ETSI-Dokument →
+              </a>
+            </article>
+            <article class="compliance-card">
+              <h3>🌍 WCAG 2.2 AA</h3>
+              <p>
+                Web Content Accessibility Guidelines des W3C. De-facto globaler Standard für
+                barrierefreies Web-Design.
+              </p>
+              <a href="https://www.w3.org/TR/WCAG22/" rel="noopener">W3C-Recommendation →</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCANNER TEST ZONE -->
+      <section id="scanner" class="section section--alt" aria-labelledby="h-scanner">
+        <div class="container">
+          <details class="scanner-panel">
+            <summary>
+              <h2 id="h-scanner">Scanner-Testzone</h2>
+              <span class="scanner-panel__hint">Enthält <strong>bewusst</strong> WCAG-Violations</span>
+            </summary>
+            <p>
+              Diese Seite dient automatisierten Scannern (axe-core, pa11y, Lighthouse,
+              Playwright-AxE) als Ziel. In einem Produktivsystem wären die folgenden Barrieren
+              natürlich behoben — hier existieren sie als stabile Testfälle:
+            </p>
+            <ul class="violations-list">
+              <li><code>&lt;img&gt;</code> ohne <code>alt</code>-Attribut</li>
+              <li>Link-Text <q>hier klicken</q> (nicht kontextbezogen)</li>
+              <li>Button mit Kontrast &lt; 4.5:1</li>
+              <li>Formular-<code>&lt;input&gt;</code> ohne Label</li>
+            </ul>
+            <div class="violations" aria-label="Intentional WCAG violations — test content only">
+              <img src="/accessibility-widget-assets/sample.svg" />
+              <p><a href="#">hier klicken</a> für mehr.</p>
+              <button class="low-contrast" type="button">Graue Aktion</button>
+              <form>
+                <input type="text" placeholder="Name" />
+                <button type="submit">Absenden</button>
+              </form>
+            </div>
+            <p class="muted">
+              Preview-Port für den Scanner: <code>http://localhost:4173</code>
+              (nach <code>pnpm demo:build && pnpm demo:preview</code>).
+            </p>
+          </details>
+        </div>
       </section>
     </main>
 
-    <footer role="contentinfo">
-      <div class="container">
-        <p>
-          <a href="/barrierefreiheit.html">Barrierefreiheitserklärung</a> ·
-          <a href="/impressum.html">Impressum</a> ·
-          <a href="mailto:accessibility@bauer-group.com">Kontakt: accessibility@bauer-group.com</a>
-        </p>
-        <p>© BAUER GROUP — MIT Lizenz · <a href="https://github.com/bauer-group/SaaS-AccessibilityWidget">Source</a></p>
+    <footer class="footer" role="contentinfo">
+      <div class="container footer__inner">
+        <div class="footer__brand">
+          <strong>BAUER GROUP</strong> · MIT-Lizenz
+          <p class="muted">
+            Version <code id="widget-version">—</code> ·
+            <a href="/accessibility-widget/integrity.txt">SRI-Hashes</a> ·
+            <a href="https://github.com/bauer-group/SaaS-AccessibilityWidget" rel="noopener">
+              Source auf GitHub
+            </a>
+          </p>
+        </div>
+        <div class="footer__meta">
+          <p>
+            <a href="/barrierefreiheit.html">Barrierefreiheitserklärung</a> ·
+            <a href="/impressum.html">Impressum</a> ·
+            <a href="mailto:accessibility@bauer-group.com">
+              accessibility@bauer-group.com
+            </a>
+          </p>
+        </div>
       </div>
     </footer>
 

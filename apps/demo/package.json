@@ -1,26 +1,29 @@
 {
   "name": "@bauer-group/accessibility-widget-demo",
   "version": "1.0.0-alpha.1",
-  "description": "Interaktive Demo-Seite des BFSG Widget + Scanner-Zielscheibe mit bewusst eingebauten Barrieren.",
+  "description": "Interaktive Demo + Scanner-Testziel für das BAUER GROUP Accessibility Widget.",
   "license": "MIT",
   "author": "BAUER GROUP <info@de.bauer-group.com>",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=10"
+  },
   "scripts": {
-    "predev": "tsx scripts/copy-widget.ts",
+    "predev": "tsx scripts/ensure-widget-built.ts",
     "dev": "vite",
-    "prebuild": "tsx scripts/copy-widget.ts",
-    "build": "vite build",
-    "preview": "vite preview --port 4173",
-    "typecheck": "tsc --noEmit",
-    "lint": "echo '(eslint not yet configured)'",
-    "test": "echo '(demo: no tests — use scanner self-audit)'",
+    "prebuild": "pnpm --filter @bauer-group/accessibility-widget build && tsx scripts/copy-widget.ts",
+    "build": "pnpm typecheck && vite build",
+    "preview": "vite preview --port 4173 --strictPort",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
     "clean": "rimraf dist .vite public/accessibility-widget"
   },
   "dependencies": {
     "@bauer-group/accessibility-widget": "workspace:*"
   },
   "devDependencies": {
+    "@types/node": "^24.0.0",
     "rimraf": "^6.0.1",
     "tsx": "^4.19.0",
     "typescript": "^5.8.0",
