@@ -1,4 +1,5 @@
 import { DEFAULT_STATE, type WidgetState, type FeatureId, type ContrastMode } from './types/index.js';
+import { warnIfDebug } from './util/debug.js';
 
 export const STEPS = {
   fontSize: [1, 1.2, 1.4, 1.6] as const,
@@ -27,7 +28,8 @@ export function loadState(storageKey: string): WidgetState {
       letterSpacingLevel: parsed.letterSpacingLevel ?? fresh.letterSpacingLevel,
       contrastMode: parsed.contrastMode ?? fresh.contrastMode,
     };
-  } catch {
+  } catch (err) {
+    warnIfDebug(`loadState("${storageKey}") failed, falling back to defaults`, err);
     return createDefaultState();
   }
 }
@@ -35,16 +37,17 @@ export function loadState(storageKey: string): WidgetState {
 export function saveState(storageKey: string, state: WidgetState): void {
   try {
     localStorage.setItem(storageKey, JSON.stringify(state));
-  } catch {
-    /* quota exceeded / disabled storage — fail silent per WCAG 3.3.1 */
+  } catch (err) {
+    // Quota exceeded / storage disabled (Safari Private Mode, Intelligent Tracking Prevention, …).
+    warnIfDebug(`saveState("${storageKey}") failed — preferences will not persist`, err);
   }
 }
 
 export function clearState(storageKey: string): void {
   try {
     localStorage.removeItem(storageKey);
-  } catch {
-    /* ignore */
+  } catch (err) {
+    warnIfDebug(`clearState("${storageKey}") failed`, err);
   }
 }
 

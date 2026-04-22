@@ -97,7 +97,8 @@ function readState(): WidgetState | null {
   try {
     const raw = localStorage.getItem(cfg.storageKey);
     return raw ? (JSON.parse(raw) as WidgetState) : null;
-  } catch {
+  } catch (err) {
+    if (cfg.debug) console.warn('[aw] loader.readState failed', err);
     return null;
   }
 }
@@ -237,8 +238,8 @@ const publicApi = {
   reset(): void {
     try {
       localStorage.removeItem(cfg.storageKey);
-    } catch {
-      /* ignore */
+    } catch (err) {
+      if (cfg.debug) console.warn('[aw] loader.reset clear failed', err);
     }
     location.reload();
   },
