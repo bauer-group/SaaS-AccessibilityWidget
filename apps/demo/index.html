@@ -90,10 +90,11 @@
           </span>
         </a>
         <nav class="topbar__nav" aria-label="Hauptnavigation">
-          <a href="#try">Ausprobieren</a>
+          <a href="#profiles">Profile</a>
+          <a href="#api-explorer">API</a>
+          <a href="#events">Events</a>
           <a href="#integration">Integration</a>
           <a href="#compliance">Compliance</a>
-          <a href="#scanner">Scanner</a>
           <a
             class="topbar__github"
             href="https://github.com/bauer-group/SaaS-AccessibilityWidget"
@@ -137,11 +138,11 @@
             <dl class="hero__facts">
               <div>
                 <dt>Loader</dt>
-                <dd>≤ 5 KB <small>gzip</small></dd>
+                <dd>≤ 5.5 KB <small>gzip</small></dd>
               </div>
               <div>
                 <dt>Core</dt>
-                <dd>≤ 24 KB <small>gzip</small></dd>
+                <dd>≤ 30 KB <small>gzip</small></dd>
               </div>
               <div>
                 <dt>Locales</dt>
@@ -156,13 +157,63 @@
         </div>
       </section>
 
-      <!-- TRY SECTION -->
-      <section id="try" class="section" aria-labelledby="h-try">
+      <!-- PROFILES QUICK-ACTIONS -->
+      <section id="profiles" class="section" aria-labelledby="h-profiles">
         <div class="container">
           <header class="section__header">
-            <h2 id="h-try">Ausprobieren</h2>
+            <h2 id="h-profiles">Profile ausprobieren</h2>
             <p>
-              Alle Änderungen im Widget werden im <code>localStorage</code> persistiert und vor
+              Ein Klick aktiviert ein kuratiertes Set aus mehreren Features via
+              <code>AccessibilityWidget.applyProfile()</code>. Änderungen sind
+              <strong>sofort sichtbar</strong> auf dieser Seite und persistieren.
+            </p>
+          </header>
+          <div class="profile-grid" role="group" aria-label="Profil-Presets">
+            <button type="button" class="profile-chip" data-profile="visionImpaired">
+              <span class="profile-chip__icon" aria-hidden="true">👁️</span>
+              <span class="profile-chip__label">Sehbehinderung</span>
+              <span class="profile-chip__hint">Größere Schrift · Hoher Kontrast · Links hervorheben</span>
+            </button>
+            <button type="button" class="profile-chip" data-profile="motor">
+              <span class="profile-chip__icon" aria-hidden="true">✋</span>
+              <span class="profile-chip__label">Motorik</span>
+              <span class="profile-chip__hint">Großer Cursor · Animationen pausiert · Dicker Fokus</span>
+            </button>
+            <button type="button" class="profile-chip" data-profile="cognitive">
+              <span class="profile-chip__icon" aria-hidden="true">🧠</span>
+              <span class="profile-chip__label">Kognition</span>
+              <span class="profile-chip__hint">Dyslexie-Schrift · Zeilenabstand · Leseführung</span>
+            </button>
+            <button type="button" class="profile-chip" data-profile="seizureSafe">
+              <span class="profile-chip__icon" aria-hidden="true">⚡</span>
+              <span class="profile-chip__label">Anfallsicher</span>
+              <span class="profile-chip__hint">Animationen pausiert · Graustufen</span>
+            </button>
+            <button type="button" class="profile-chip" data-profile="adhd">
+              <span class="profile-chip__icon" aria-hidden="true">🎯</span>
+              <span class="profile-chip__label">ADHS</span>
+              <span class="profile-chip__hint">Lesemaske · Animationen pausiert · Fokusring</span>
+            </button>
+            <button type="button" class="profile-chip" data-profile="blind">
+              <span class="profile-chip__icon" aria-hidden="true">♿</span>
+              <span class="profile-chip__label">Blind (Screenreader)</span>
+              <span class="profile-chip__hint">Strukturnavigation · Links hervorheben · Fokusring</span>
+            </button>
+          </div>
+          <p class="profile-grid__footnote muted">
+            Kein passendes Profil?
+            <button type="button" class="link-btn" data-action="open">Alle Features einzeln wählen →</button>
+          </p>
+        </div>
+      </section>
+
+      <!-- LOCALE + RESET TRY SECTION -->
+      <section id="try" class="section section--alt" aria-labelledby="h-try">
+        <div class="container">
+          <header class="section__header">
+            <h2 id="h-try">Sprache &amp; Zurücksetzen</h2>
+            <p>
+              Alle Änderungen werden im <code>localStorage</code> persistiert und vor
               dem ersten Render angewendet — ohne FOUC.
             </p>
           </header>
@@ -170,12 +221,12 @@
           <div class="grid-2">
             <article class="try-card">
               <h3>
-                <span class="try-card__kicker">Schritt 1</span>
-                Sprache wählen
+                <span class="try-card__kicker">Live, ohne Reload</span>
+                Sprache wechseln
               </h3>
               <p>
-                Das Widget ist in 28 Sprachen verfügbar. Auswahl wird im
-                <code>localStorage</code> gespeichert, die Seite lädt neu.
+                28 Sprachen verfügbar. Neu: Panel rerendert live via
+                <code>AccessibilityWidget.setLocale()</code>, State-persistiert.
               </p>
               <label class="field">
                 <span class="field__label">Widget-Sprache</span>
@@ -185,15 +236,15 @@
 
             <article class="try-card">
               <h3>
-                <span class="try-card__kicker">Schritt 2</span>
-                Profil-Preset aktivieren
+                <span class="try-card__kicker">Alles zurück</span>
+                Präferenzen löschen
               </h3>
               <p>
-                Sechs kuratierte Voreinstellungen — Sehbehinderung, Motorik, Kognition,
-                Anfallsicher, ADHS, Blind (Screenreader).
+                Löscht den <code>localStorage</code>-Key und lädt die Seite neu.
+                Das Widget kommt zurück in den <em>niemals-konfigurierten</em>-Zustand.
               </p>
-              <button type="button" class="btn btn-primary" data-action="open">
-                Widget öffnen & Profil wählen
+              <button type="button" class="btn btn-ghost" id="hard-reset">
+                Zurücksetzen &amp; neu laden
               </button>
             </article>
           </div>
@@ -201,7 +252,7 @@
       </section>
 
       <!-- SAMPLE CONTENT -->
-      <section id="sample" class="section section--alt" aria-labelledby="h-sample">
+      <section id="sample" class="section" aria-labelledby="h-sample">
         <div class="container">
           <header class="section__header">
             <h2 id="h-sample">Beispielinhalt</h2>
@@ -242,8 +293,93 @@
         </div>
       </section>
 
+      <!-- RUNTIME API EXPLORER -->
+      <section id="api-explorer" class="section section--alt" aria-labelledby="h-api">
+        <div class="container">
+          <header class="section__header">
+            <h2 id="h-api">Runtime-API-Explorer</h2>
+            <p>
+              Jede Methode von <code>window.AccessibilityWidget</code> mit einem
+              Klick testen. Ergebnis der jeweils letzten Aktion erscheint rechts
+              im <em>Result-Panel</em>.
+            </p>
+          </header>
+
+          <div class="api-grid">
+            <div class="api-actions">
+              <h3 class="api-actions__heading">Kontrolle</h3>
+              <div class="api-actions__row">
+                <button type="button" class="btn btn-primary" data-api="open">open()</button>
+                <button type="button" class="btn btn-ghost" data-api="close">close()</button>
+                <button type="button" class="btn btn-ghost" data-api="reset">reset()</button>
+              </div>
+
+              <h3 class="api-actions__heading">Features &amp; Profile</h3>
+              <div class="api-actions__row">
+                <button type="button" class="btn btn-ghost" data-api="set" data-args='["fontSize",true]'>set('fontSize', true)</button>
+                <button type="button" class="btn btn-ghost" data-api="set" data-args='["contrast",true]'>set('contrast', true)</button>
+                <button type="button" class="btn btn-ghost" data-api="set" data-args='["focusOutline",true]'>set('focusOutline', true)</button>
+                <button type="button" class="btn btn-ghost" data-api="applyProfile" data-args='["blind"]'>applyProfile('blind')</button>
+              </div>
+
+              <h3 class="api-actions__heading">Sprache</h3>
+              <div class="api-actions__row">
+                <button type="button" class="btn btn-ghost" data-api="setLocale" data-args='["de"]'>setLocale('de')</button>
+                <button type="button" class="btn btn-ghost" data-api="setLocale" data-args='["en"]'>setLocale('en')</button>
+                <button type="button" class="btn btn-ghost" data-api="setLocale" data-args='["ja"]'>setLocale('ja')</button>
+                <button type="button" class="btn btn-ghost" data-api="setLocale" data-args='["ar"]'>setLocale('ar')</button>
+              </div>
+
+              <h3 class="api-actions__heading">FAB-Position</h3>
+              <div class="api-actions__row">
+                <button type="button" class="btn btn-ghost" data-api="setPosition" data-args='[{"x":40,"y":200}]'>setPosition({40, 200})</button>
+                <button type="button" class="btn btn-ghost" data-api="setPosition" data-args='[{"x":400,"y":80}]'>setPosition({400, 80})</button>
+                <button type="button" class="btn btn-ghost" data-api="setPosition" data-args='[null]'>setPosition(null)</button>
+              </div>
+
+              <h3 class="api-actions__heading">Inspektion</h3>
+              <div class="api-actions__row">
+                <button type="button" class="btn btn-ghost" data-api="getState">getState()</button>
+              </div>
+            </div>
+
+            <aside class="api-result" aria-labelledby="api-result-heading">
+              <h3 id="api-result-heading" class="api-result__heading">Result</h3>
+              <div class="code-block code-block--compact">
+                <button class="copy-btn" data-copy aria-label="Result kopieren">Kopieren</button>
+                <pre><code id="api-result-output">Klicke eine API-Methode links, um Ergebnis &amp; Rückgabewert zu sehen.</code></pre>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- EVENT STREAM -->
+      <section id="events" class="section" aria-labelledby="h-events">
+        <div class="container">
+          <header class="section__header">
+            <h2 id="h-events">Event-Stream</h2>
+            <p>
+              Live-Log aller <code>AccessibilityWidget</code>-Events (CustomEvents
+              auf <code>document</code> unter <code>accessibility-widget:*</code>).
+              Privacy-friendly: die Payloads landen nur hier, nicht extern.
+            </p>
+          </header>
+
+          <div class="event-stream">
+            <div class="event-stream__toolbar">
+              <button type="button" class="btn btn-ghost btn-sm" id="events-clear">Log leeren</button>
+              <span class="muted event-stream__count" id="events-count">0 Events</span>
+            </div>
+            <ol class="event-stream__log" id="events-log" aria-live="polite">
+              <li class="event-stream__empty">Noch keine Events. Klicke im API-Explorer oben oder im Panel.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
       <!-- INTEGRATION TABS -->
-      <section id="integration" class="section" aria-labelledby="h-int">
+      <section id="integration" class="section section--alt" aria-labelledby="h-int">
         <div class="container">
           <header class="section__header">
             <h2 id="h-int">Integration</h2>
@@ -388,7 +524,7 @@ cp packages/widget/dist/accessibility-widget-*.min.{js,css} \
       </section>
 
       <!-- LIVE STATE -->
-      <section id="state" class="section section--alt" aria-labelledby="h-state">
+      <section id="state" class="section" aria-labelledby="h-state">
         <div class="container">
           <details class="state-panel">
             <summary>
@@ -409,7 +545,7 @@ cp packages/widget/dist/accessibility-widget-*.min.{js,css} \
       </section>
 
       <!-- COMPLIANCE -->
-      <section id="compliance" class="section" aria-labelledby="h-comp">
+      <section id="compliance" class="section section--alt" aria-labelledby="h-comp">
         <div class="container">
           <header class="section__header">
             <h2 id="h-comp">Compliance</h2>
@@ -448,7 +584,7 @@ cp packages/widget/dist/accessibility-widget-*.min.{js,css} \
       </section>
 
       <!-- SCANNER TEST ZONE -->
-      <section id="scanner" class="section section--alt" aria-labelledby="h-scanner">
+      <section id="scanner" class="section" aria-labelledby="h-scanner">
         <div class="container">
           <details class="scanner-panel">
             <summary>
