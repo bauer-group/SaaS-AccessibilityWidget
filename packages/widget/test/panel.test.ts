@@ -232,3 +232,52 @@ describe('profile auto-application', () => {
     expect(loadState(STORAGE).features.fontSize).toBe(false);
   });
 });
+
+describe('accessibility statement link (statementUrl)', () => {
+  function mountWithStatement(statementUrl?: string): PanelHandle {
+    const handle = openPanel({
+      config: buildConfig(),
+      locale: 'en',
+      state: createDefaultState(),
+      statementUrl,
+      onClose: () => {},
+      onStateChange: () => {},
+    });
+    return handle;
+  }
+
+  it('renders no link when statementUrl is omitted', () => {
+    mounted = mountWithStatement();
+    expect(document.querySelector('.aw-statement-link')).toBeNull();
+  });
+
+  it('renders a relative URL as same-tab link — no target attribute', () => {
+    mounted = mountWithStatement('/barrierefreiheit.html');
+    const link = document.querySelector<HTMLAnchorElement>('.aw-statement-link');
+    expect(link?.getAttribute('href')).toBe('/barrierefreiheit.html');
+    expect(link?.hasAttribute('target')).toBe(false);
+    expect(link?.hasAttribute('rel')).toBe(false);
+  });
+
+  it('renders an absolute https URL with target=_blank + rel=noopener noreferrer', () => {
+    // External origins: open in a new tab so the panel stays put,
+    // rel guards against reverse-tabnabbing + referrer leakage.
+    mounted = mountWithStatement('https://example.com/a11y');
+    const link = document.querySelector<HTMLAnchorElement>('.aw-statement-link');
+    expect(link?.getAttribute('href')).toBe('https://example.com/a11y');
+    expect(link?.getAttribute('target')).toBe('_blank');
+    expect(link?.getAttribute('rel')).toBe('noopener noreferrer');
+  });
+
+  it('treats protocol-relative URLs (//cdn.example.com/...) as external', () => {
+    mounted = mountWithStatement('//cdn.example.com/a11y.html');
+    const link = document.querySelector<HTMLAnchorElement>('.aw-statement-link');
+    expect(link?.getAttribute('target')).toBe('_blank');
+  });
+
+  it('keeps hash-fragment URLs in same tab', () => {
+    mounted = mountWithStatement('#a11y');
+    const link = document.querySelector<HTMLAnchorElement>('.aw-statement-link');
+    expect(link?.hasAttribute('target')).toBe(false);
+  });
+});

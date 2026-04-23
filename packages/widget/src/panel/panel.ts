@@ -348,10 +348,20 @@ export function openPanel(ctx: PanelContext): PanelHandle {
 
     const footerChildren: HTMLElement[] = [resetBtn];
     if (ctx.statementUrl) {
+      // Absolute / protocol-relative URLs point at a different origin;
+      // open those in a new tab so the user doesn't lose their panel state
+      // when reading the statement. rel=noopener+noreferrer is the standard
+      // hardening against reverse-tabnabbing + referrer leakage on _blank.
+      const isExternal = /^(?:https?:)?\/\//i.test(ctx.statementUrl);
+      const attrs: Record<string, string> = { href: ctx.statementUrl };
+      if (isExternal) {
+        attrs.target = '_blank';
+        attrs.rel = 'noopener noreferrer';
+      }
       footerChildren.push(
         make('a', {
           class: 'aw-statement-link',
-          attrs: { href: ctx.statementUrl },
+          attrs,
           text: T.statementLink,
         }),
       );
