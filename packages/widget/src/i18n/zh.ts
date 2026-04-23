@@ -43,7 +43,6 @@ export const zh: Translation = {
     language: '语言',
     info: '关于此功能',
   },
-  disclaimer:
-    '此小部件补充(但不替代)网站本身的无障碍性。如有反馈,请联系网站运营方。',
+  poweredBy: '技术支持',
   statementLink: '无障碍声明',
 };

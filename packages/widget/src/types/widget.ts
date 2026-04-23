@@ -163,8 +163,32 @@ export interface WidgetConfig {
    * URL of the site's accessibility statement. When set, a link is rendered
    * in the panel footer (label is localized — see `Translation.statementLink`).
    * Recommended for BFSG § 14 / EN 301 549 § 12.1.1 compliance.
+   *
+   * Absolute URLs (`http://`, `https://`, protocol-relative `//…`) open in a
+   * new tab with `rel="noopener noreferrer"`; relative paths stay same-tab.
    */
   statementUrl?: string;
+
+  /**
+   * Optional free-form disclaimer text rendered in the panel footer above
+   * the "Powered by" line. No default — if you want the footer to carry
+   * guidance ("Feedback zur Barrierefreiheit bitte an die Hotline …"), set
+   * it per host. Kept as plain text, not HTML; line breaks render as
+   * whitespace.
+   *
+   * @example
+   * ```ts
+   * { disclaimer: 'Feedback an barrierefreiheit@example.com' }
+   * ```
+   */
+  disclaimer?: string;
+
+  /**
+   * Suppress the "Powered by BAUER GROUP Accessibility-Widget" footer line.
+   * Intended for white-label deployments — the default (`false`) shows a
+   * small localised attribution with a link back to the product page.
+   */
+  hidePoweredBy?: boolean;
 
   // ─── behavior ─────────────────────────────────────────────────────
   /**

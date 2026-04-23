@@ -43,7 +43,6 @@ export const hu: Translation = {
     language: 'Nyelv',
     info: 'Erről a funkcióról',
   },
-  disclaimer:
-    'Ez a widget kiegészíti, de nem helyettesíti a weboldal tényleges akadálymentességét. Visszajelzést az üzemeltetőnek küldjön.',
+  poweredBy: 'Működteti',
   statementLink: 'Akadálymentességi nyilatkozat',
 };

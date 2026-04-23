@@ -60,7 +60,6 @@ export const de: Translation = {
     language: 'Sprache',
     info: 'Info zur Funktion',
   },
-  disclaimer:
-    'Dieses Widget ergänzt die Barrierefreiheit dieser Website, ersetzt sie nicht. Feedback gemäß § 14 BFSG bitte an den Seitenbetreiber senden.',
+  poweredBy: 'Bereitgestellt von',
   statementLink: 'Barrierefreiheitserklärung',
 };

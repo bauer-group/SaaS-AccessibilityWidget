@@ -43,7 +43,6 @@ export const id: Translation = {
     language: 'Bahasa',
     info: 'Tentang fitur ini',
   },
-  disclaimer:
-    'Widget ini melengkapi tetapi tidak menggantikan aksesibilitas situs itu sendiri. Silakan hubungi pengelola situs untuk umpan balik.',
+  poweredBy: 'Didukung oleh',
   statementLink: 'Pernyataan aksesibilitas',
 };

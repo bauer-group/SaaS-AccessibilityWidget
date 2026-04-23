@@ -43,7 +43,6 @@ export const ar: Translation = {
     language: 'اللغة',
     info: 'عن هذه الميزة',
   },
-  disclaimer:
-    'هذه الأداة تُكمل إمكانية الوصول لهذا الموقع ولا تحل محلها. للتعليقات راسل مشغل الموقع.',
+  poweredBy: 'بدعم من',
   statementLink: 'بيان إمكانية الوصول',
 };

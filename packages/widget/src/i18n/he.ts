@@ -43,7 +43,6 @@ export const he: Translation = {
     language: 'שפה',
     info: 'על תכונה זו',
   },
-  disclaimer:
-    'יישומון זה משלים אך אינו מחליף את הנגישות של האתר עצמו. לשליחת משוב פנה למפעיל האתר.',
+  poweredBy: 'מופעל על ידי',
   statementLink: 'הצהרת נגישות',
 };

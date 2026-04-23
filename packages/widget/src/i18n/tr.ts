@@ -43,7 +43,6 @@ export const tr: Translation = {
     language: 'Dil',
     info: 'Bu özellik hakkında',
   },
-  disclaimer:
-    'Bu widget sitenin erişilebilirliğini tamamlar, yerine geçmez. Geri bildirim için site operatörüne başvurun.',
+  poweredBy: 'Geliştiren',
   statementLink: 'Erişilebilirlik beyanı',
 };

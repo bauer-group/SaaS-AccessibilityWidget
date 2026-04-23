@@ -43,7 +43,6 @@ export const vi: Translation = {
     language: 'Ngôn ngữ',
     info: 'Giới thiệu tính năng',
   },
-  disclaimer:
-    'Tiện ích này bổ sung nhưng không thay thế khả năng tiếp cận thực tế của trang. Vui lòng gửi phản hồi đến người vận hành trang.',
+  poweredBy: 'Cung cấp bởi',
   statementLink: 'Tuyên bố trợ năng',
 };

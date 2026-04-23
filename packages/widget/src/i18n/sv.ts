@@ -43,7 +43,6 @@ export const sv: Translation = {
     language: 'Språk',
     info: 'Om denna funktion',
   },
-  disclaimer:
-    'Denna widget kompletterar men ersätter inte webbplatsens faktiska tillgänglighet. Feedback enligt EAA: kontakta webbplatsens ägare.',
+  poweredBy: 'Driven av',
   statementLink: 'Tillgänglighetsredogörelse',
 };

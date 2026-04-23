@@ -28,6 +28,8 @@ export interface ResolvedConfig {
   initialFeatures: Readonly<Partial<Record<FeatureId, boolean>>>;
   disabledFeatures: ReadonlySet<FeatureId>;
   statementUrl: string | null;
+  disclaimer: string | null;
+  hidePoweredBy: boolean;
   draggableFab: boolean;
   respectReducedMotion: boolean;
   hideOnPrint: boolean;
@@ -72,6 +74,8 @@ export function resolveConfig(input: WidgetConfig | undefined, navLang: string):
     initialFeatures: resolveInitialFeatures(cfg.initialFeatures, debug),
     disabledFeatures: resolveDisabledFeatures(cfg.disabledFeatures, debug),
     statementUrl: resolveStatementUrl(cfg.statementUrl, debug),
+    disclaimer: resolveDisclaimer(cfg.disclaimer),
+    hidePoweredBy: Boolean(cfg.hidePoweredBy),
     draggableFab: cfg.draggableFab ?? DEFAULTS.draggableFab,
     respectReducedMotion: cfg.respectReducedMotion ?? DEFAULTS.respectReducedMotion,
     hideOnPrint: cfg.hideOnPrint ?? DEFAULTS.hideOnPrint,
@@ -171,6 +175,12 @@ function resolveDisabledFeatures(
     result.add(id);
   }
   return result;
+}
+
+function resolveDisclaimer(requested: WidgetConfig['disclaimer']): string | null {
+  if (requested === undefined || requested === null) return null;
+  const trimmed = String(requested).trim();
+  return trimmed || null;
 }
 
 function resolveStatementUrl(

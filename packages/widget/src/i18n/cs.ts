@@ -43,7 +43,6 @@ export const cs: Translation = {
     language: 'Jazyk',
     info: 'O této funkci',
   },
-  disclaimer:
-    'Tento widget doplňuje, ale nenahrazuje skutečnou přístupnost samotného webu. Zpětnou vazbu posílejte provozovateli webu.',
+  poweredBy: 'Poháněno',
   statementLink: 'Prohlášení o přístupnosti',
 };

@@ -151,6 +151,32 @@ describe('resolveConfig — statementUrl', () => {
   });
 });
 
+describe('resolveConfig — disclaimer / hidePoweredBy', () => {
+  it('disclaimer defaults to null (no footer paragraph)', () => {
+    expect(resolveConfig(undefined, 'de').disclaimer).toBeNull();
+    expect(resolveConfig({}, 'de').disclaimer).toBeNull();
+  });
+
+  it('disclaimer trims whitespace and drops empty strings', () => {
+    expect(resolveConfig({ disclaimer: '   ' }, 'de').disclaimer).toBeNull();
+    expect(resolveConfig({ disclaimer: '  hello  ' }, 'de').disclaimer).toBe('hello');
+  });
+
+  it('disclaimer passes non-empty text through verbatim', () => {
+    const text = 'Feedback an barrierefreiheit@example.com';
+    expect(resolveConfig({ disclaimer: text }, 'de').disclaimer).toBe(text);
+  });
+
+  it('hidePoweredBy defaults to false', () => {
+    expect(resolveConfig(undefined, 'de').hidePoweredBy).toBe(false);
+    expect(resolveConfig({}, 'de').hidePoweredBy).toBe(false);
+  });
+
+  it('hidePoweredBy coerces truthy values to true', () => {
+    expect(resolveConfig({ hidePoweredBy: true }, 'de').hidePoweredBy).toBe(true);
+  });
+});
+
 describe('resolveConfig — draggableFab', () => {
   it('defaults to false', () => {
     expect(resolveConfig(undefined, 'de').draggableFab).toBe(false);

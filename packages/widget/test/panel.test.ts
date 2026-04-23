@@ -233,6 +233,50 @@ describe('profile auto-application', () => {
   });
 });
 
+describe('footer: disclaimer + powered-by', () => {
+  it('renders no disclaimer paragraph when config.disclaimer is unset', () => {
+    mounted = mount().handle;
+    expect(document.querySelector('.aw-disclaimer')).toBeNull();
+  });
+
+  it('renders the host-supplied disclaimer as plain text (no HTML injection)', () => {
+    mounted = mount(undefined, { disclaimer: 'Feedback an a11y@example.com' }).handle;
+    const p = document.querySelector<HTMLParagraphElement>('.aw-disclaimer');
+    expect(p?.textContent).toBe('Feedback an a11y@example.com');
+  });
+
+  it('does NOT render HTML inside disclaimer — tags appear as literal text', () => {
+    mounted = mount(undefined, { disclaimer: '<script>alert(1)</script>' }).handle;
+    const p = document.querySelector<HTMLParagraphElement>('.aw-disclaimer');
+    expect(p?.querySelector('script')).toBeNull();
+    expect(p?.textContent).toBe('<script>alert(1)</script>');
+  });
+
+  it('shows the powered-by line by default, linking to the product page', () => {
+    mounted = mount().handle;
+    const p = document.querySelector<HTMLParagraphElement>('.aw-poweredby');
+    expect(p).not.toBeNull();
+    const a = p?.querySelector<HTMLAnchorElement>('a');
+    expect(a?.getAttribute('href')).toBe('https://accessibility-widget.app.bauer-group.com');
+    expect(a?.getAttribute('target')).toBe('_blank');
+    expect(a?.getAttribute('rel')).toBe('noopener noreferrer');
+    expect(a?.textContent).toBe('BAUER GROUP Accessibility-Widget');
+  });
+
+  it('uses the localised connector phrase ("Powered by" in en, "Bereitgestellt von" in de)', () => {
+    mounted = mount(undefined, {}, 'en').handle;
+    expect(document.querySelector('.aw-poweredby')?.textContent).toContain('Powered by');
+    mounted.destroy();
+    mounted = mount(undefined, {}, 'de').handle;
+    expect(document.querySelector('.aw-poweredby')?.textContent).toContain('Bereitgestellt von');
+  });
+
+  it('hides the powered-by line when config.hidePoweredBy=true (white-label)', () => {
+    mounted = mount(undefined, { hidePoweredBy: true }).handle;
+    expect(document.querySelector('.aw-poweredby')).toBeNull();
+  });
+});
+
 describe('accessibility statement link (statementUrl)', () => {
   function mountWithStatement(statementUrl?: string): PanelHandle {
     const handle = openPanel({

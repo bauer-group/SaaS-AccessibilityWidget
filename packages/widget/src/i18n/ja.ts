@@ -43,7 +43,6 @@ export const ja: Translation = {
     language: '言語',
     info: 'この機能について',
   },
-  disclaimer:
-    'このウィジェットはウェブサイト自体のアクセシビリティを補完するものであり、代替するものではありません。ご意見はサイト運営者までお寄せください。',
+  poweredBy: '提供',
   statementLink: 'アクセシビリティ声明',
 };

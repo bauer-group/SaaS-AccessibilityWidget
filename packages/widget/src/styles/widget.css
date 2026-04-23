@@ -436,6 +436,24 @@
   margin: 12px 0 0;
   line-height: 1.4;
 }
+.aw-poweredby {
+  font-size: 0.68rem;
+  color: #888;
+  margin: 8px 0 0;
+  text-align: center;
+  line-height: 1.3;
+}
+.aw-poweredby a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: #bbb;
+  text-underline-offset: 2px;
+}
+.aw-poweredby a:hover,
+.aw-poweredby a:focus-visible {
+  color: #0058a3;
+  text-decoration-color: currentColor;
+}
 .aw-live {
   position: absolute;
   width: 1px;
@@ -643,6 +661,16 @@
   }
   .aw-disclaimer {
     color: #aaa;
+  }
+  .aw-poweredby {
+    color: #888;
+  }
+  .aw-poweredby a {
+    text-decoration-color: #555;
+  }
+  .aw-poweredby a:hover,
+  .aw-poweredby a:focus-visible {
+    color: #6ea8e6;
   }
   #aw-struct-nav {
     background: #1b1b1b;

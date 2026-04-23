@@ -43,7 +43,6 @@ export const ko: Translation = {
     language: '언어',
     info: '이 기능 정보',
   },
-  disclaimer:
-    '이 위젯은 웹사이트 자체의 접근성을 보완할 뿐, 대체하지 않습니다. 의견은 사이트 운영자에게 연락해 주세요.',
+  poweredBy: '제공',
   statementLink: '접근성 선언문',
 };

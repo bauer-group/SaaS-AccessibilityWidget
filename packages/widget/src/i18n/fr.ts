@@ -43,7 +43,6 @@ export const fr: Translation = {
     language: 'Langue',
     info: 'À propos de cette fonction',
   },
-  disclaimer:
-    'Ce widget complète (sans la remplacer) l’accessibilité réelle du site. Merci de contacter l’exploitant du site pour tout retour.',
+  poweredBy: 'Propulsé par',
   statementLink: 'Déclaration d’accessibilité',
 };

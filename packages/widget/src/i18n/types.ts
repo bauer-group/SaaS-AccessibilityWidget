@@ -25,6 +25,12 @@ export interface Translation {
     language: string;
     info: string;
   };
-  disclaimer: string;
+  /**
+   * Connector phrase for the "Powered by BAUER GROUP Accessibility-Widget"
+   * footer line. Localised per language; the brand name is never translated.
+   * The panel concatenates this with the untranslated brand + link, e.g.
+   * `"Bereitgestellt von BAUER GROUP Accessibility-Widget"`.
+   */
+  poweredBy: string;
   statementLink: string;
 }

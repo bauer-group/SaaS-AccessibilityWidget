@@ -60,7 +60,6 @@ export const en: Translation = {
     language: 'Language',
     info: 'About this feature',
   },
-  disclaimer:
-    'This widget complements (but does not replace) genuine accessibility of the underlying site. Feedback per EAA: please contact the site operator.',
+  poweredBy: 'Powered by',
   statementLink: 'Accessibility statement',
 };

@@ -43,7 +43,6 @@ export const ro: Translation = {
     language: 'Limbă',
     info: 'Despre această funcție',
   },
-  disclaimer:
-    'Acest widget completează, dar nu înlocuiește accesibilitatea reală a site-ului. Feedback conform EAA: contactați operatorul site-ului.',
+  poweredBy: 'Oferit de',
   statementLink: 'Declarație de accesibilitate',
 };

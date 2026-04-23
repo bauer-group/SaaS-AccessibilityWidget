@@ -366,10 +366,38 @@ export function openPanel(ctx: PanelContext): PanelHandle {
         }),
       );
     }
-    footerChildren.push(
-      make('p', { class: 'aw-disclaimer', text: T.disclaimer }),
-      liveEl,
-    );
+    // Host-supplied disclaimer, no default. Kept as plain text so an
+    // accidental HTML string doesn't become a markup injection vector.
+    if (ctx.config.disclaimer) {
+      footerChildren.push(
+        make('p', { class: 'aw-disclaimer', text: ctx.config.disclaimer }),
+      );
+    }
+
+    // "Powered by BAUER GROUP Accessibility-Widget" — localised connector +
+    // untranslated brand + link back to the product page. Opens in a new tab
+    // (external origin) with the usual rel-hardening. Hosts can suppress the
+    // whole line via `config.hidePoweredBy: true` for white-label deployments.
+    if (!ctx.config.hidePoweredBy) {
+      footerChildren.push(
+        make('p', {
+          class: 'aw-poweredby',
+          children: [
+            make('span', { text: `${T.poweredBy} ` }),
+            make('a', {
+              attrs: {
+                href: 'https://accessibility-widget.app.bauer-group.com',
+                target: '_blank',
+                rel: 'noopener noreferrer',
+              },
+              text: 'BAUER GROUP Accessibility-Widget',
+            }),
+          ],
+        }),
+      );
+    }
+
+    footerChildren.push(liveEl);
     const footer = make('footer', { class: 'aw-footer', children: footerChildren });
 
     root.appendChild(header);
