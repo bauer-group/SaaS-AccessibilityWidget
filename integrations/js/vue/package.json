@@ -23,7 +23,7 @@
     "vue": ">=3.3"
   },
   "dependencies": {
-    "@bauer-group/accessibility-widget": "workspace:*"
+    "@bauer-group/accessibility-widget": "workspace:^"
   },
   "devDependencies": {
     "rimraf": "^6.0.1",

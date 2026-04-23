@@ -42,6 +42,44 @@ pnpm --filter @bauer-group/accessibility-widget test
 pnpm --filter @bauer-group/accessibility-widget-demo dev
 ```
 
+## Monorepo-Layout & Scope der Root-Scripts
+
+Das Repo ist in drei Zonen aufgeteilt mit bewusst **unterschiedlichen Entwicklungspfaden**:
+
+| Zone | Inhalt | Workspace? | Released? |
+| --- | --- | --- | --- |
+| **Core** (`packages/widget`) | Das eigentliche Widget | ✅ | ✅ npm |
+| **Demo** (`apps/demo`) | Live-Demo + Scanner-Zielscheibe | ✅ | ❌ privat |
+| **JS-Integrationen** (`integrations/js/*`) | React / Vue / Angular / Svelte / Next / Nuxt / Astro | ✅ | ✅ npm (individuell) |
+| **CMS-Integrationen** (`integrations/cms/*`) | Drupal (PHP), TYPO3 (PHP), WordPress (PHP) | ❌ Composer / WP-Plugin-Repo | ✅ extern |
+| **Shop-Integrationen** (`integrations/shops/*`) | Magento (PHP), Shopware (PHP), Shopify (Liquid) | ❌ Composer / Shopify-CLI | ✅ extern |
+
+**Wichtig:** Die Root-Scripts (`pnpm build`, `pnpm dev`, `pnpm test`, `pnpm typecheck`) sind bewusst auf **Core + Demo** beschränkt. Alltägliche Arbeit am Widget oder an der Demo berührt die Integrationen **nicht** — weder in Compile-Zeit, noch in der Test-Suite.
+
+Wenn du Integrationen gezielt bearbeiten willst, gibt es separate Scripts:
+
+```bash
+pnpm integrations:build       # alle 7 JS-Integrationen bauen
+pnpm integrations:test        # deren Tests laufen
+pnpm integrations:typecheck   # TypeScript-Check
+pnpm integrations:dev         # Watch-Modus für alle
+
+# Einzelne Integration:
+pnpm --filter @bauer-group/accessibility-widget-react build
+pnpm --filter @bauer-group/accessibility-widget-react test
+```
+
+Die CMS- und Shop-Integrationen sind **gar nicht** Teil des pnpm-Workspace — sie leben in eigenen Ökosystemen (Composer, Shopify-CLI, WordPress-Plugin-Repo) und haben ihre eigenen Build/Deploy-Flows, die in ihren jeweiligen README-Dateien beschrieben sind.
+
+### Warum die JS-Integrationen trotzdem im Workspace?
+
+Zwei konkrete Vorteile, die lokale Arbeit deutlich beschleunigen:
+
+1. **Sofort-Linking:** Ändert sich das Widget, sehen alle Integrationen die Änderung sofort (`workspace:^`-Protokoll → Symlinks in `node_modules/`). Kein `pnpm publish` im Kreis nötig, um ein Widget-Fix in einem React-Integration-Test zu prüfen.
+2. **Ein `pnpm install` für alles:** Deduplizierte Deps im Root-`node_modules/.pnpm/` statt 7 separate Installs. Faster CI, weniger Disk-Space.
+
+Die Kopplung ist trotzdem lose: jede Integration hat eigene `package.json`, eigene `tsconfig.json`, eigene Tests, und wird **unabhängig** versioniert / released (siehe [Release](#release-changesets-pro-paket-unabhängig)).
+
 ## Bundle-Size-Budget
 
 Das Widget hat **harte Größen-Ziele**:
@@ -76,9 +114,11 @@ Dieses Widget muss sich **an den eigenen Standards messen lassen**. Vor jedem Re
 
 Der automatisierte WCAG-Scan läuft außerhalb dieses Repos und ist nicht Teil der CI dieses Widget-Repos.
 
-## Release (Changesets, zentral)
+## Release (Changesets, pro Paket unabhängig)
 
-Alle acht publizierbaren Pakete — Widget + die sieben JS-Integrationen — werden als **fixed-Gruppe** versioniert: eine Änderung → alle bumpen synchron. Die Demo und der Monorepo-Root bleiben privat (`"private": true`) und werden nie publiziert.
+Die acht publizierbaren Pakete — Widget + die sieben JS-Integrationen — werden **unabhängig** versioniert und released. Jedes folgt seinem eigenen Cadence; ein Angular-19-Kompat-Fix muss nicht warten, bis das Widget eine Änderung bekommt, und ein Widget-Patch bumpt nicht unnötig alle sieben Wrapper. Demo und Monorepo-Root bleiben privat (`"private": true`).
+
+Die Kompatibilität zwischen Widget und Integration wird stattdessen über **Caret-Ranges im `workspace:^`-Protokoll** ausgedrückt: wird eine Integration publiziert, ersetzt pnpm `workspace:^` durch `^<widget-version-zum-publish-zeitpunkt>`. So zieht ein User, der `@bauer-group/accessibility-widget-react@0.1.0` installiert, automatisch ein kompatibles Widget.
 
 ### Beitrag mit Versionseffekt
 
@@ -90,17 +130,17 @@ pnpm changeset
 
 Das fragt interaktiv:
 
-- Welche Pakete sind betroffen? → meist **alle** (fixed-Gruppe bumpt sowieso gemeinsam)
-- `major` / `minor` / `patch`? → nach SemVer
-- Summary → kurzer Satz, landet in jedem CHANGELOG.md
+- Welche Pakete sind betroffen? → nur die, die du wirklich geändert hast (im Gegensatz zu einer fixed-Gruppe)
+- `major` / `minor` / `patch`? → nach SemVer pro Paket
+- Summary → kurzer Satz, landet im CHANGELOG des jeweiligen Pakets
 
 Die Datei `.changeset/<random-name>.md` wird committet **zusammen mit** deinem Code-Change.
 
 ### Release auslösen (Maintainer)
 
 ```bash
-# 1. Wendet alle offenen Changesets an: bumpt Versionen in allen 8 package.json,
-#    aktualisiert CHANGELOG.md pro Paket, löscht die Changeset-Dateien.
+# 1. Wendet alle offenen Changesets an: bumpt nur die betroffenen package.json,
+#    aktualisiert deren CHANGELOG.md, löscht die Changeset-Dateien.
 pnpm changeset:version
 
 # 2. Commit der Versions-Bumps (konventionell auf einem "release/*"-Branch oder
@@ -111,11 +151,14 @@ git add . && git commit -m "chore(release): bumped versions"
 pnpm release
 ```
 
-`pnpm release` ist ein Wrapper um `build → test → changeset publish` und publiziert alle 8 Pakete synchron auf npm mit `--access public`.
+`pnpm release` baut, testet und ruft `changeset publish` auf. Changesets publiziert **nur** die Pakete, deren Version sich seit dem letzten npm-Release erhöht hat — die anderen bleiben unberührt.
 
-### Warum „fixed" statt „linked"?
+### Warum nicht „fixed"?
 
-- **fixed**: Pakete tragen immer dieselbe Version — selbst wenn nur eines geändert wurde. Für Nutzer maximal vorhersagbar: `@bauer-group/accessibility-widget@0.1.0` passt garantiert zu `@bauer-group/accessibility-widget-react@0.1.0`.
-- **linked** würde nur gemeinsam bumpen, wenn mehrere gleichzeitig geändert werden. Eignet sich eher für lose gekoppelte Monorepo-Pakete.
+Eine fixed-Gruppe (alle bumpen immer gemeinsam) wäre vorhersagbarer für Nutzer, zwingt aber:
 
-Wir wählen **fixed**, weil Integrationen nur sinnvoll mit passendem Widget-Core funktionieren.
+- jedes Widget-Patch → alle 7 Integrationen mitbumpen, obwohl unverändert
+- jedes Angular-spezifische Refactoring → Widget + 6 andere Integrationen bumpen mit
+- keine Möglichkeit, einen Framework-Bump (Next 15 → Next 16) isoliert in der Next-Integration zu shippen
+
+Da die Integrationen in **unterschiedlichen Frameworks mit eigenem Release-Cadence** leben und mittelfristig auch divergieren werden, ist unabhängige Versionierung + Caret-Range-Kompat die ehrlichere Lösung.

@@ -64,7 +64,7 @@ importers:
   integrations/js/angular:
     dependencies:
       '@bauer-group/accessibility-widget':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../../packages/widget
     devDependencies:
       '@angular/common':
@@ -95,10 +95,10 @@ importers:
   integrations/js/nextjs:
     dependencies:
       '@bauer-group/accessibility-widget':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../../packages/widget
       '@bauer-group/accessibility-widget-react':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../react
     devDependencies:
       '@types/react':
@@ -120,7 +120,7 @@ importers:
   integrations/js/nuxt:
     dependencies:
       '@bauer-group/accessibility-widget':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../../packages/widget
       nuxt:
         specifier: '>=3.10'
@@ -133,7 +133,7 @@ importers:
   integrations/js/react:
     dependencies:
       '@bauer-group/accessibility-widget':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../../packages/widget
     devDependencies:
       '@testing-library/react':
@@ -167,7 +167,7 @@ importers:
   integrations/js/svelte:
     dependencies:
       '@bauer-group/accessibility-widget':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../../packages/widget
     devDependencies:
       rimraf:
@@ -183,7 +183,7 @@ importers:
   integrations/js/vue:
     dependencies:
       '@bauer-group/accessibility-widget':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../../packages/widget
     devDependencies:
       rimraf:

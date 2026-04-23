@@ -24,8 +24,8 @@
     "react": ">=18"
   },
   "dependencies": {
-    "@bauer-group/accessibility-widget": "workspace:*",
-    "@bauer-group/accessibility-widget-react": "workspace:*"
+    "@bauer-group/accessibility-widget": "workspace:^",
+    "@bauer-group/accessibility-widget-react": "workspace:^"
   },
   "devDependencies": {
     "@types/react": "^19.1.0",

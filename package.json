@@ -20,12 +20,12 @@
   },
   "packageManager": "pnpm@10.0.0",
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
-    "test": "turbo run test",
+    "build": "turbo run build --filter=./packages/* --filter=./apps/*",
+    "dev": "turbo run dev --parallel --filter=./packages/* --filter=./apps/*",
+    "test": "turbo run test --filter=./packages/* --filter=./apps/*",
+    "typecheck": "turbo run typecheck --filter=./packages/* --filter=./apps/*",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "typecheck": "turbo run typecheck",
     "clean": "turbo run clean && rimraf node_modules",
     "size": "turbo run size",
     "changeset": "changeset",
@@ -37,7 +37,11 @@
     "widget:build": "pnpm --filter @bauer-group/accessibility-widget build",
     "demo:dev": "pnpm --filter @bauer-group/accessibility-widget build && pnpm --parallel --filter=@bauer-group/accessibility-widget --filter=@bauer-group/accessibility-widget-demo run dev",
     "demo:build": "pnpm --filter @bauer-group/accessibility-widget-demo build",
-    "demo:preview": "pnpm --filter @bauer-group/accessibility-widget-demo preview"
+    "demo:preview": "pnpm --filter @bauer-group/accessibility-widget-demo preview",
+    "integrations:build": "turbo run build --filter=./integrations/js/*",
+    "integrations:test": "turbo run test --filter=./integrations/js/*",
+    "integrations:typecheck": "turbo run typecheck --filter=./integrations/js/*",
+    "integrations:dev": "turbo run dev --parallel --filter=./integrations/js/*"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
