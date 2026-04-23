@@ -42,7 +42,33 @@ const cfg = {
   cssIntegrity: userCfg.cssIntegrity ?? null,
   buttonLabel: userCfg.buttonLabel ?? null,
   initialFeatures: userCfg.initialFeatures ?? null,
+  keyboardShortcut:
+    userCfg.keyboardShortcut === undefined ? 'alt+shift+a' : userCfg.keyboardShortcut,
 };
+
+interface ShortcutSpec {
+  alt: boolean;
+  ctrl: boolean;
+  shift: boolean;
+  meta: boolean;
+  key: string;
+}
+
+/**
+ * Parse an `alt+shift+a`-style shortcut spec into a matchable structure.
+ * Returns `null` for `false`, empty specs, duplicate non-modifier keys,
+ * or specs missing a non-modifier key. Tokens are case-insensitive.
+ */
+function parseShortcut(spec: string | false | undefined): ShortcutSpec | null {
+  if (!spec) return null;
+  const out: ShortcutSpec = { alt: false, ctrl: false, shift: false, meta: false, key: '' };
+  for (const p of spec.toLowerCase().split('+')) {
+    if (p === 'alt' || p === 'ctrl' || p === 'shift' || p === 'meta') out[p] = true;
+    else if (p && !out.key) out.key = p;
+    else if (p) return null;
+  }
+  return out.key ? out : null;
+}
 
 const LABELS: Record<Locale, string> = {
   de: 'Barrierefreiheit einstellen',
@@ -273,12 +299,24 @@ function renderFab(): void {
     btn.setAttribute('aria-expanded', 'true');
   });
 
-  document.addEventListener('keydown', (e) => {
-    if (e.altKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
-      e.preventDefault();
-      btn.click();
-    }
-  });
+  const shortcut = parseShortcut(cfg.keyboardShortcut);
+  if (!shortcut && cfg.debug && cfg.keyboardShortcut !== false) {
+    console.warn(`[aw] invalid keyboardShortcut: ${cfg.keyboardShortcut}`);
+  }
+  if (shortcut) {
+    document.addEventListener('keydown', (e) => {
+      if (
+        e.altKey === shortcut.alt &&
+        e.ctrlKey === shortcut.ctrl &&
+        e.shiftKey === shortcut.shift &&
+        e.metaKey === shortcut.meta &&
+        e.key.toLowerCase() === shortcut.key
+      ) {
+        e.preventDefault();
+        btn.click();
+      }
+    });
+  }
 
   if (cfg.draggableFab) {
     attachDragHandlers(btn);

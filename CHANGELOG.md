@@ -19,6 +19,7 @@ Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/), die V
 
 ### Added
 
+- **Keyboard-Shortcut konfigurierbar + deaktivierbar.** Neue Config-Option `keyboardShortcut`: Default bleibt `'alt+shift+a'`, kann auf einen beliebigen Combo (`'ctrl+alt+w'`, `'f2'`, …) umgestellt oder mit `false` komplett abgeschaltet werden. Hintergrund: Alt+Shift+A kollidiert in manchen Browsern / Extensions (z.B. Chrome Lens in bestimmten Locales), und Hosts mit eigenem A11y-Hotkey sollten den Loader-Shortcut deaktivieren können. Invalid-Combos emittieren `console.warn` bei `debug: true` und fallen still aus.
 - **Runtime-API vervollständigt — alle Gaps geschlossen.** `window.AccessibilityWidget` bekommt vier neue Methoden und einen Event-Bus, damit Hosts das Widget vollständig programmatisch fernsteuern können:
   - `applyProfile(id)` — wendet eines der 6 Profil-Presets an; respektiert `disabledFeatures`
   - `setLocale(locale)` — Sprachwechsel zur Laufzeit, persistiert in `WidgetState.locale`, Panel rerendert live (vorher nur in-Panel möglich und transient)

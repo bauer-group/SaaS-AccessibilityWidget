@@ -350,3 +350,82 @@ describe('public API — AccessibilityWidget global', () => {
     expect(window.AccessibilityWidget!.getState()?.features.grayscale).toBe(true);
   });
 });
+
+describe('keyboard shortcut (configurable, disableable)', () => {
+  /**
+   * We drive the handler with a synthetic KeyboardEvent on `document` —
+   * the loader registers a document-level listener so the shortcut works
+   * from anywhere on the page, not just when focus is on the FAB.
+   */
+  function press(key: string, mods: { alt?: boolean; ctrl?: boolean; shift?: boolean; meta?: boolean } = {}): KeyboardEvent {
+    const ev = new KeyboardEvent('keydown', {
+      key,
+      altKey: mods.alt ?? false,
+      ctrlKey: mods.ctrl ?? false,
+      shiftKey: mods.shift ?? false,
+      metaKey: mods.meta ?? false,
+      bubbles: true,
+      cancelable: true,
+    });
+    document.dispatchEvent(ev);
+    return ev;
+  }
+
+  it('fires the default Alt+Shift+A combo and preventDefault()s the event', async () => {
+    const fab = await bootLoader();
+    const spy = vi.spyOn(fab, 'click');
+    const ev = press('a', { alt: true, shift: true });
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(ev.defaultPrevented).toBe(true);
+  });
+
+  it('ignores plain a (no modifiers)', async () => {
+    const fab = await bootLoader();
+    const spy = vi.spyOn(fab, 'click');
+    press('a');
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('requires exact modifier match — Ctrl+Alt+Shift+A does NOT trigger alt+shift+a', async () => {
+    const fab = await bootLoader();
+    const spy = vi.spyOn(fab, 'click');
+    press('a', { alt: true, shift: true, ctrl: true });
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('respects a custom shortcut string', async () => {
+    const fab = await bootLoader({ keyboardShortcut: 'ctrl+alt+w' });
+    const spy = vi.spyOn(fab, 'click');
+    // Default combo must NOT work anymore.
+    press('a', { alt: true, shift: true });
+    expect(spy).not.toHaveBeenCalled();
+    // Custom combo DOES work.
+    press('w', { ctrl: true, alt: true });
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('accepts an F-key with no modifiers', async () => {
+    const fab = await bootLoader({ keyboardShortcut: 'F2' });
+    const spy = vi.spyOn(fab, 'click');
+    press('F2');
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('disables the shortcut when keyboardShortcut is false', async () => {
+    const fab = await bootLoader({ keyboardShortcut: false });
+    const spy = vi.spyOn(fab, 'click');
+    press('a', { alt: true, shift: true });
+    press('F2');
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('falls back to no-shortcut on invalid strings and warns when debug=true', async () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const fab = await bootLoader({ keyboardShortcut: 'alt+', debug: true });
+    const spy = vi.spyOn(fab, 'click');
+    press('a', { alt: true, shift: true });
+    expect(spy).not.toHaveBeenCalled();
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('keyboardShortcut'));
+    warn.mockRestore();
+  });
+});
