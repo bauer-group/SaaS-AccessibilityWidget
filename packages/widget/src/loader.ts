@@ -43,7 +43,7 @@ const cfg = {
   buttonLabel: userCfg.buttonLabel ?? null,
   initialFeatures: userCfg.initialFeatures ?? null,
   keyboardShortcut:
-    userCfg.keyboardShortcut === undefined ? 'alt+shift+a' : userCfg.keyboardShortcut,
+    userCfg.keyboardShortcut === undefined ? 'ctrl+alt+a' : userCfg.keyboardShortcut,
 };
 
 interface ShortcutSpec {

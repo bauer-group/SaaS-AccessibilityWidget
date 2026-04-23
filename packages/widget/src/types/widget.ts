@@ -178,17 +178,19 @@ export interface WidgetConfig {
   /**
    * Keyboard shortcut that opens the widget from anywhere on the page.
    *
-   * - `string` — a combo like `'alt+shift+a'`, `'ctrl+alt+w'`, `'f2'`. Tokens
+   * - `string` — a combo like `'ctrl+alt+a'`, `'alt+shift+a'`, `'f2'`. Tokens
    *   are case-insensitive and joined with `+`. Supported modifiers:
    *   `alt`, `ctrl`, `shift`, `meta`. Exactly one non-modifier key is required.
    * - `false` — disable the shortcut entirely. Useful when the default clashes
-   *   with a browser / OS / extension binding (e.g. Chrome Lens on some
-   *   locales also uses Alt+Shift+A).
+   *   with a host's own A11y hotkey or a browser / extension binding.
    *
-   * Invalid strings fall back to the default and emit a `console.warn` when
-   * `debug: true`. Default: `'alt+shift+a'`.
+   * Invalid strings emit a `console.warn` when `debug: true` and the shortcut
+   * is disabled (no fallback to another combo — the host's choice is respected).
    *
-   * @example Quake-style
+   * Default: `'ctrl+alt+a'` — aligned with the prevailing convention among
+   * A11y widgets (Userway and others), rarely clashes with browser chrome.
+   *
+   * @example Function-key style
    * ```ts
    * { keyboardShortcut: 'f2' }
    * ```

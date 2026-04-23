@@ -371,10 +371,10 @@ describe('keyboard shortcut (configurable, disableable)', () => {
     return ev;
   }
 
-  it('fires the default Alt+Shift+A combo and preventDefault()s the event', async () => {
+  it('fires the default Ctrl+Alt+A combo and preventDefault()s the event', async () => {
     const fab = await bootLoader();
     const spy = vi.spyOn(fab, 'click');
-    const ev = press('a', { alt: true, shift: true });
+    const ev = press('a', { ctrl: true, alt: true });
     expect(spy).toHaveBeenCalledTimes(1);
     expect(ev.defaultPrevented).toBe(true);
   });
@@ -386,21 +386,30 @@ describe('keyboard shortcut (configurable, disableable)', () => {
     expect(spy).not.toHaveBeenCalled();
   });
 
-  it('requires exact modifier match — Ctrl+Alt+Shift+A does NOT trigger alt+shift+a', async () => {
+  it('ignores the old default (Alt+Shift+A) — new default is exclusive', async () => {
+    // Regression guard: when we moved the default away from Alt+Shift+A,
+    // that combo must no longer activate the FAB under the default config.
     const fab = await bootLoader();
     const spy = vi.spyOn(fab, 'click');
-    press('a', { alt: true, shift: true, ctrl: true });
+    press('a', { alt: true, shift: true });
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('requires exact modifier match — Ctrl+Alt+Shift+A does NOT trigger ctrl+alt+a', async () => {
+    const fab = await bootLoader();
+    const spy = vi.spyOn(fab, 'click');
+    press('a', { ctrl: true, alt: true, shift: true });
     expect(spy).not.toHaveBeenCalled();
   });
 
   it('respects a custom shortcut string', async () => {
-    const fab = await bootLoader({ keyboardShortcut: 'ctrl+alt+w' });
+    const fab = await bootLoader({ keyboardShortcut: 'alt+shift+a' });
     const spy = vi.spyOn(fab, 'click');
-    // Default combo must NOT work anymore.
-    press('a', { alt: true, shift: true });
+    // Default (ctrl+alt+a) must NOT work anymore.
+    press('a', { ctrl: true, alt: true });
     expect(spy).not.toHaveBeenCalled();
     // Custom combo DOES work.
-    press('w', { ctrl: true, alt: true });
+    press('a', { alt: true, shift: true });
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
@@ -414,7 +423,7 @@ describe('keyboard shortcut (configurable, disableable)', () => {
   it('disables the shortcut when keyboardShortcut is false', async () => {
     const fab = await bootLoader({ keyboardShortcut: false });
     const spy = vi.spyOn(fab, 'click');
-    press('a', { alt: true, shift: true });
+    press('a', { ctrl: true, alt: true });
     press('F2');
     expect(spy).not.toHaveBeenCalled();
   });
@@ -423,7 +432,7 @@ describe('keyboard shortcut (configurable, disableable)', () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     const fab = await bootLoader({ keyboardShortcut: 'alt+', debug: true });
     const spy = vi.spyOn(fab, 'click');
-    press('a', { alt: true, shift: true });
+    press('a', { ctrl: true, alt: true });
     expect(spy).not.toHaveBeenCalled();
     expect(warn).toHaveBeenCalledWith(expect.stringContaining('keyboardShortcut'));
     warn.mockRestore();
