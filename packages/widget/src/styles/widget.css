@@ -10,6 +10,11 @@
   max-width: 95vw;
   max-height: 85vh;
   overflow-y: auto;
+  /* `overflow-y: auto` silently forces `overflow-x: auto` — which would
+     expose a horizontal scrollbar the moment any tooltip peeks over the
+     right edge, causing the widget to "jump" as the scrollbar appears.
+     `hidden` blocks horizontal scroll while keeping vertical intact. */
+  overflow-x: hidden;
   background: #fff;
   color: #111;
   border-radius: 12px;
@@ -340,6 +345,9 @@
 .aw-feat-tooltip {
   position: absolute;
   top: calc(100% + 6px);
+  /* Default: centered on card (middle column in 3-col layout). Left/right
+     columns get their tooltip pinned to the corresponding edge via the
+     nth-child rules below, so the overlay never escapes the panel. */
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
@@ -364,6 +372,33 @@
 .aw-feat-wrap:hover > .aw-feat-tooltip,
 .aw-feat-wrap:focus-within > .aw-feat-tooltip {
   display: block;
+}
+/* 3-column grid: left-column tiles anchor their tooltip to the card's
+   left edge, right-column tiles to the right edge. Middle column keeps
+   the default centered position. Without these rules, edge tooltips slid
+   past the panel boundary and triggered a horizontal scroll. */
+.aw-feat-grid > .aw-feat-wrap:nth-child(3n + 1) > .aw-feat-tooltip {
+  left: 0;
+  right: auto;
+  transform: none;
+}
+.aw-feat-grid > .aw-feat-wrap:nth-child(3n) > .aw-feat-tooltip {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+@media (max-width: 380px) {
+  /* 2-column fallback: odd columns anchor-left, even anchor-right. */
+  .aw-feat-grid > .aw-feat-wrap:nth-child(odd) > .aw-feat-tooltip {
+    left: 0;
+    right: auto;
+    transform: none;
+  }
+  .aw-feat-grid > .aw-feat-wrap:nth-child(even) > .aw-feat-tooltip {
+    left: auto;
+    right: 0;
+    transform: none;
+  }
 }
 
 .aw-summary {
@@ -437,11 +472,13 @@
   line-height: 1.4;
 }
 .aw-poweredby {
-  font-size: 0.68rem;
+  font-size: 10px;
+  font-weight: 400;
   color: #888;
-  margin: 8px 0 0;
+  margin: 10px 0 0;
   text-align: center;
   line-height: 1.3;
+  letter-spacing: 0.01em;
 }
 .aw-poweredby a {
   color: inherit;
