@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "rimraf": "^6.0.1",
-    "svelte": "^5.20.0",
-    "typescript": "^5.8.0"
+    "svelte": "^5.55.5",
+    "typescript": "^6.0.3"
   }
 }
