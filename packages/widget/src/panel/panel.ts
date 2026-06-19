@@ -386,7 +386,7 @@ export function openPanel(ctx: PanelContext): PanelHandle {
             make('span', { text: `${T.poweredBy} ` }),
             make('a', {
               attrs: {
-                href: 'https://accessibility-widget.app.bauer-group.com',
+                href: 'https://accessibility-widget.app.professional-hosting.com',
                 target: '_blank',
                 rel: 'noopener noreferrer',
               },
