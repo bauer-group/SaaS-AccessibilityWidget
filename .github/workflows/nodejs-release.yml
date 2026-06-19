@@ -8,9 +8,11 @@
 #
 # semantic-release is configured (.github/config/release/semantic-release.json)
 # with pkgRoot: packages/widget and npmPublish: false — it bumps + commits
-# packages/widget/package.json and cuts the vX.Y.Z tag, but the actual npm
-# publish runs in the publish-npm job below (which can correctly target the
-# workspace sub-package and pin the freshly released version).
+# packages/widget/package.json and cuts the vX.Y.Z tag. The actual npm publish
+# runs in the publish-npm job below, TOKENLESS via OIDC Trusted Publishing
+# (see docs/npm-publishing.md). The first-ever publish is a one-time local
+# bootstrap (`pnpm publish:bootstrap`) — npm only enables Trusted Publishing
+# for a package that already exists.
 #
 # The CDN deploy (deploy-cdn.yml) keys off THIS workflow completing.
 # =============================================================================
@@ -69,14 +71,18 @@ jobs:
     secrets: inherit
 
   publish-npm:
-    name: 📤 Publish core to npm
+    name: 📤 Publish core to npm (OIDC)
     needs: release
     if: needs.release.outputs.release-created == 'true'
+    # OIDC Trusted Publishing — tokenless. A publish hiccup stays a visible red
+    # job but must NOT block the CDN deploy (deploy-cdn.yml keys off this
+    # workflow's overall success).
+    continue-on-error: true
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
       contents: read
-      id-token: write # npm provenance
+      id-token: write # OIDC trusted publishing + provenance
     steps:
       - name: 📥 Checkout
         uses: actions/checkout@v7
@@ -96,18 +102,17 @@ jobs:
       - name: 📚 Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: 🔖 Pin released version
-        # The release commit semantic-release just pushed is not the SHA this
-        # job checked out, so set packages/widget/package.json to the released
-        # version explicitly before publishing.
+      - name: 🔖 Sync released version
+        # The release commit semantic-release pushed isn't this job's checkout,
+        # so set packages/widget/package.json to the released version explicitly.
         run: npm version "${{ needs.release.outputs.version }}" --no-git-tag-version --allow-same-version
         working-directory: packages/widget
 
+      - name: 🏗️ Build at released version
+        run: pnpm --filter @bauer-group/accessibility-widget build
+
       - name: 📤 Publish @bauer-group/accessibility-widget
-        # `npm publish` runs the package's prepublishOnly (pnpm build); the
-        # AW_WIDGET_VERSION env makes the built integrity.json match the release.
+        # OIDC (id-token: write) authenticates — no NODE_AUTH_TOKEN. Requires a
+        # Trusted Publisher on npmjs (repo + this workflow file: nodejs-release.yml).
         run: npm publish --provenance --access public
         working-directory: packages/widget
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          AW_WIDGET_VERSION: ${{ needs.release.outputs.version }}

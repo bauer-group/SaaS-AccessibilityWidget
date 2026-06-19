@@ -34,6 +34,7 @@
     "secrets:push": "node scripts/secrets/sync.mjs --push-only",
     "secrets:sync": "node scripts/secrets/sync.mjs",
     "secrets:sync:dry": "node scripts/secrets/sync.mjs --dry-run",
+    "publish:bootstrap": "node scripts/publish-bootstrap.mjs",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml,css}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml,css}\"",
     "widget:build": "pnpm --filter @bauer-group/accessibility-widget build",
