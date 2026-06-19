@@ -1,0 +1,69 @@
+# =============================================================================
+# Node.js PR Validation Workflow
+# =============================================================================
+# Runs build, tests, lint, audit, typecheck and the widget size budget on
+# pull requests to main. Mirrors the house pattern (n8n-httpThrottled) but for
+# this pnpm monorepo, with an extra job for the gzip size gate the reusable
+# workflow does not cover.
+# =============================================================================
+
+name: 🔍 PR Validation
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate:
+    name: 🧪 Build & Test
+    uses: bauer-group/automation-templates/.github/workflows/nodejs-build.yml@main
+    with:
+      node-version: '24.x'
+      package-manager: 'pnpm'
+      frozen-lockfile: true
+      run-lint: true
+      lint-command: 'pnpm lint'
+      build-command: 'pnpm build'
+      run-tests: true
+      test-coverage: true
+      coverage-threshold: 80
+      run-audit: true
+      audit-level: 'high'
+      upload-artifacts: false
+    secrets: inherit
+
+  quality:
+    name: 🔎 Typecheck & Size budget
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v7
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: 📚 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🔎 Typecheck
+        run: pnpm typecheck
+
+      - name: 🏗️ Build widget
+        run: pnpm --filter @bauer-group/accessibility-widget build
+
+      - name: 📏 Widget size budget
+        run: pnpm --filter @bauer-group/accessibility-widget size

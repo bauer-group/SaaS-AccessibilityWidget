@@ -78,7 +78,7 @@ Zwei konkrete Vorteile, die lokale Arbeit deutlich beschleunigen:
 1. **Sofort-Linking:** Ändert sich das Widget, sehen alle Integrationen die Änderung sofort (`workspace:^`-Protokoll → Symlinks in `node_modules/`). Kein `pnpm publish` im Kreis nötig, um ein Widget-Fix in einem React-Integration-Test zu prüfen.
 2. **Ein `pnpm install` für alles:** Deduplizierte Deps im Root-`node_modules/.pnpm/` statt 7 separate Installs. Faster CI, weniger Disk-Space.
 
-Die Kopplung ist trotzdem lose: jede Integration hat eigene `package.json`, eigene `tsconfig.json`, eigene Tests, und wird **unabhängig** versioniert / released (siehe [Release](#release-changesets-pro-paket-unabhängig)).
+Die Kopplung ist trotzdem lose: jede Integration hat eigene `package.json`, eigene `tsconfig.json`, eigene Tests. Das Core-Widget wird via semantic-release publiziert; die Integrationen ziehen in ein eigenes Repo mit eigener Release-Pipeline um (siehe [Release](#release-semantic-release-conventional-commits)).
 
 ## Bundle-Size-Budget
 
@@ -114,51 +114,23 @@ Dieses Widget muss sich **an den eigenen Standards messen lassen**. Vor jedem Re
 
 Der automatisierte WCAG-Scan läuft außerhalb dieses Repos und ist nicht Teil der CI dieses Widget-Repos.
 
-## Release (Changesets, pro Paket unabhängig)
+## Release (semantic-release, Conventional Commits)
 
-Die acht publizierbaren Pakete — Widget + die sieben JS-Integrationen — werden **unabhängig** versioniert und released. Jedes folgt seinem eigenen Cadence; ein Angular-19-Kompat-Fix muss nicht warten, bis das Widget eine Änderung bekommt, und ein Widget-Patch bumpt nicht unnötig alle sieben Wrapper. Demo und Monorepo-Root bleiben privat (`"private": true`).
+Das **Core-Widget** `@bauer-group/accessibility-widget` wird automatisiert via [semantic-release](https://semantic-release.gitbook.io/) released — gesteuert durch [Conventional Commits](https://www.conventionalcommits.org/). Demo und Monorepo-Root bleiben privat (`"private": true`).
 
-Die Kompatibilität zwischen Widget und Integration wird stattdessen über **Caret-Ranges im `workspace:^`-Protokoll** ausgedrückt: wird eine Integration publiziert, ersetzt pnpm `workspace:^` durch `^<widget-version-zum-publish-zeitpunkt>`. So zieht ein User, der `@bauer-group/accessibility-widget-react@0.1.0` installiert, automatisch ein kompatibles Widget.
+Die sieben JS-Integrationen werden **nicht** aus diesem Repo publiziert. Sie ziehen in ein eigenes Integrations-Repo um und bekommen dort ihre eigene Release-Pipeline (npm, WordPress.org, Packagist, …). Bis dahin werden sie hier nur lokal im Workspace entwickelt (`workspace:^`).
 
-### Beitrag mit Versionseffekt
+### Ablauf
 
-Nach einer Änderung, die ein neues Release verdient, erstellst du einen Changeset:
+1. **Commits nach Conventional-Commits-Schema** auf `main` (bzw. via PR). Der Type bestimmt den SemVer-Bump: `fix:` → Patch, `feat:` → Minor, `feat!:` / `BREAKING CHANGE:` → Major. `docs:` / `chore:` / `refactor:` / `test:` / `style:` lösen kein Release aus.
+2. **CI übernimmt den Rest** ([.github/workflows/nodejs-release.yml](.github/workflows/nodejs-release.yml)): bei Push auf `main` laufen Build + Test, dann semantic-release. Es ermittelt die nächste Version aus den Commits, bumpt `packages/widget/package.json`, schreibt das CHANGELOG, committet, taggt `vX.Y.Z` und legt ein GitHub-Release an. Der `publish-npm`-Job publiziert anschließend das Core-Paket nach npm (mit Provenance).
+3. **CDN-Deploy** ([.github/workflows/deploy-cdn.yml](.github/workflows/deploy-cdn.yml)) startet automatisch nach erfolgreichem Release-Workflow: baut die getaggte Version und lädt sie in die unveränderlichen + floatenden CDN-Pfade (siehe [deploy/zones.json](deploy/zones.json)).
 
-```bash
-pnpm changeset
-```
+Kein manuelles Versionieren, keine `version`-Commits von Hand — nur saubere Conventional Commits.
 
-Das fragt interaktiv:
-
-- Welche Pakete sind betroffen? → nur die, die du wirklich geändert hast (im Gegensatz zu einer fixed-Gruppe)
-- `major` / `minor` / `patch`? → nach SemVer pro Paket
-- Summary → kurzer Satz, landet im CHANGELOG des jeweiligen Pakets
-
-Die Datei `.changeset/<random-name>.md` wird committet **zusammen mit** deinem Code-Change.
-
-### Release auslösen (Maintainer)
+### Lokaler Trockenlauf
 
 ```bash
-# 1. Wendet alle offenen Changesets an: bumpt nur die betroffenen package.json,
-#    aktualisiert deren CHANGELOG.md, löscht die Changeset-Dateien.
-pnpm changeset:version
-
-# 2. Commit der Versions-Bumps (konventionell auf einem "release/*"-Branch oder
-#    via GitHub-Action-PR "Version Packages").
-git add . && git commit -m "chore(release): bumped versions"
-
-# 3. Nach Merge in main: bauen, testen, publizieren.
-pnpm release
+pnpm cdn:build        # baut das Widget inkl. dist/integrity.json
+pnpm cdn:deploy:dry   # zeigt, was in die CDN-Pfade hochgeladen würde (keine Writes)
 ```
-
-`pnpm release` baut, testet und ruft `changeset publish` auf. Changesets publiziert **nur** die Pakete, deren Version sich seit dem letzten npm-Release erhöht hat — die anderen bleiben unberührt.
-
-### Warum nicht „fixed"?
-
-Eine fixed-Gruppe (alle bumpen immer gemeinsam) wäre vorhersagbarer für Nutzer, zwingt aber:
-
-- jedes Widget-Patch → alle 7 Integrationen mitbumpen, obwohl unverändert
-- jedes Angular-spezifische Refactoring → Widget + 6 andere Integrationen bumpen mit
-- keine Möglichkeit, einen Framework-Bump (Next 15 → Next 16) isoliert in der Next-Integration zu shippen
-
-Da die Integrationen in **unterschiedlichen Frameworks mit eigenem Release-Cadence** leben und mittelfristig auch divergieren werden, ist unabhängige Versionierung + Caret-Range-Kompat die ehrlichere Lösung.

@@ -1,0 +1,113 @@
+# =============================================================================
+# Release & NPM Publish Workflow
+# =============================================================================
+# Builds + tests, runs semantic-release (conventional commits → version bump,
+# CHANGELOG, git tag, GitHub release) and publishes the CORE package
+# @bauer-group/accessibility-widget to npm. The 7 framework wrappers are NOT
+# published here — they move to a dedicated integrations repo (Step 2).
+#
+# semantic-release is configured (.github/config/release/semantic-release.json)
+# with pkgRoot: packages/widget and npmPublish: false — it bumps + commits
+# packages/widget/package.json and cuts the vX.Y.Z tag, but the actual npm
+# publish runs in the publish-npm job below (which can correctly target the
+# workspace sub-package and pin the freshly released version).
+#
+# The CDN deploy (deploy-cdn.yml) keys off THIS workflow completing.
+# =============================================================================
+
+name: 🚀 Release & NPM Publish
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '.github/**'
+      - '*.md'
+      - 'docs/**'
+  workflow_dispatch:
+    inputs:
+      force-release:
+        description: 'force create release'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  test-and-build:
+    name: 🧪 Build & Test
+    uses: bauer-group/automation-templates/.github/workflows/nodejs-build.yml@main
+    with:
+      node-version: '24.x'
+      package-manager: 'pnpm'
+      frozen-lockfile: true
+      run-lint: true
+      lint-command: 'pnpm lint'
+      build-command: 'pnpm build'
+      run-tests: true
+      test-coverage: true
+      coverage-threshold: 80
+      run-audit: true
+      audit-level: 'high'
+      upload-artifacts: false
+    secrets: inherit
+
+  release:
+    name: 📦 Create Semantic Release
+    needs: [test-and-build]
+    if: needs.test-and-build.result == 'success'
+    uses: bauer-group/automation-templates/.github/workflows/modules-semantic-release.yml@main
+    with:
+      target-branch: 'main'
+      dry-run: false
+      force-release: ${{ inputs.force-release || false }}
+      extra-plugins: '@semantic-release/npm'
+    secrets: inherit
+
+  publish-npm:
+    name: 📤 Publish core to npm
+    needs: release
+    if: needs.release.outputs.release-created == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      id-token: write # npm provenance
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v7
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: 📚 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🔖 Pin released version
+        # The release commit semantic-release just pushed is not the SHA this
+        # job checked out, so set packages/widget/package.json to the released
+        # version explicitly before publishing.
+        run: npm version "${{ needs.release.outputs.version }}" --no-git-tag-version --allow-same-version
+        working-directory: packages/widget
+
+      - name: 📤 Publish @bauer-group/accessibility-widget
+        # `npm publish` runs the package's prepublishOnly (pnpm build); the
+        # AW_WIDGET_VERSION env makes the built integrity.json match the release.
+        run: npm publish --provenance --access public
+        working-directory: packages/widget
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          AW_WIDGET_VERSION: ${{ needs.release.outputs.version }}

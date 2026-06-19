@@ -29,10 +29,18 @@ It gives **end users** a lightweight preferences panel — font size, contrast, 
 ## 1-Line integration
 
 ```html
-<script src="https://cdn.example.com/accessibility-widget/accessibility-widget-loader.min.js" defer></script>
+<!-- Latest within a major — auto-applies patch/minor updates (no SRI pin): -->
+<script src="https://widgets.professional-hosting.com/accessibility-widget/v1/accessibility-widget-loader.min.js" defer></script>
 ```
 
-For optional configuration (pre-selected locale, branding, SRI, feature-gating, statement URL, draggable FAB, …) see the [full config reference](./packages/widget/README.md#vollständige-config-referenz) in the widget package README.
+For production, **pin an immutable version** and verify it with Subresource Integrity:
+
+```html
+<script src="https://widgets.professional-hosting.com/accessibility-widget/1.0.0/accessibility-widget-loader.min.js"
+        integrity="sha384-…" crossorigin="anonymous" defer></script>
+```
+
+The immutable `…/<version>/…` paths never change (safe to pin SRI); the floating `…/v<major>/…` alias always serves the latest release in that major. SRI hashes for each release are published at `…/<version>/integrity.json`. For optional configuration (pre-selected locale, branding, feature-gating, statement URL, draggable FAB, …) see the [full config reference](./packages/widget/README.md#vollständige-config-referenz) in the widget package README.
 
 ## Repository layout
 

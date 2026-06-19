@@ -41,7 +41,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['**/scripts/**/*.ts', '**/vite.config.ts', '**/vitest.config.ts'],
+    files: ['**/scripts/**/*.{ts,mjs,js}', '**/vite.config.ts', '**/vitest.config.ts'],
     rules: {
       'no-console': 'off',
     },

@@ -1,0 +1,30 @@
+{
+  "$schema": "./zones.schema.json",
+  "description": "CDN deployment zones for the Accessibility Widget. Assets live in the SHARED R2 bucket bg-widgets (fronted by widgets.professional-hosting.com), scoped to the accessibility-widget/ prefix with its OWN per-prefix manifests, so sync-delete only ever removes keys this repo wrote — it NEVER touches other projects' assets (e.g. console-banner/) in the same bucket.",
+  "zones": [
+    {
+      "name": "accessibility-widget-cf",
+      "description": "Cloudflare R2 + CDN. Dual-path: each release uploads the build to an immutable accessibility-widget/<x.y.z>/ root (cached forever, SRI-safe to pin) and a floating accessibility-widget/v<major>/ root (short edge TTL, purged each deploy). Only the floating URLs are purged.",
+      "source": "packages/widget/dist",
+      "provider": "cloudflare",
+      "enabled": true,
+      "config": {
+        "accountId": "1bd524dcd7193eb23ed910d24bb8e67e",
+        "endpoint": "https://1bd524dcd7193eb23ed910d24bb8e67e.eu.r2.cloudflarestorage.com",
+        "bucket": "bg-widgets",
+        "basePrefix": "accessibility-widget",
+        "include": [".min.js", ".min.js.map", ".min.css", ".min.css.map", "integrity.txt", "integrity.json"],
+        "accessKeyIdEnv": "R2_ACCESS_KEY_ID",
+        "secretAccessKeyEnv": "R2_SECRET_ACCESS_KEY",
+        "zoneIdEnv": "CF_ZONE_ID",
+        "apiTokenEnv": "CF_PURGE_TOKEN",
+        "publicOrigin": ["https://widgets.professional-hosting.com"],
+        "concurrency": 8,
+        "dualPath": {
+          "versioned": { "cacheControl": "public, max-age=31536000, immutable", "purge": false },
+          "floating": { "cacheControl": "public, max-age=300, s-maxage=31536000", "purge": true }
+        }
+      }
+    }
+  ]
+}

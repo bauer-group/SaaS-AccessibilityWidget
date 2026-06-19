@@ -6,10 +6,20 @@
 ## 1-Line-Integration
 
 ```html
-<script src="https://cdn.bauer-group.com/accessibility-widget/v1/accessibility-widget-loader.min.js" defer></script>
+<!-- Neueste Version eines Majors — automatische Patch/Minor-Updates (ohne SRI): -->
+<script src="https://widgets.professional-hosting.com/accessibility-widget/v1/accessibility-widget-loader.min.js" defer></script>
 ```
 
 Das reicht in 95 % der Fälle. Das Widget erkennt die Sprache automatisch, rendert den FAB unten rechts und persistiert alle User-Präferenzen im `localStorage`.
+
+Für Produktion eine **unveränderliche Version pinnen** und per Subresource Integrity absichern:
+
+```html
+<script src="https://widgets.professional-hosting.com/accessibility-widget/1.0.0/accessibility-widget-loader.min.js"
+        integrity="sha384-…" crossorigin="anonymous" defer></script>
+```
+
+Die `…/<version>/…`-Pfade ändern sich nie (SRI-sicher zu pinnen); der `…/v<major>/…`-Alias liefert stets das neueste Release dieses Majors. SRI-Hashes je Release liegen unter `…/<version>/integrity.json` (sowie in `dist/integrity.txt` / `dist/integrity.json`).
 
 ## Konfiguration (optional)
 

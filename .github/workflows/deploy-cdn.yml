@@ -1,0 +1,156 @@
+name: 🚚 Deploy CDN Zones
+
+# Builds the widget once and fans out to every enabled zone in deploy/zones.json
+# via a matrix job. New zones or providers drop in by editing the manifest and
+# adding the matching secret — no workflow changes needed.
+#
+# Triggered by the Release workflow completing (not raw pushes): semantic-release
+# cuts the new tag first, then this runs and `git describe` resolves the freshly
+# released version. The release commit is pushed with GITHUB_TOKEN, which cannot
+# re-trigger workflows, so we key off the Release run instead. workflow_dispatch
+# stays as a manual fallback (with a dry-run option).
+
+on:
+  workflow_run:
+    workflows: ['🚀 Release & NPM Publish']
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      zone:
+        description: 'Deploy only this zone (leave empty for all enabled)'
+        required: false
+        type: string
+      dry-run:
+        description: 'Run without uploading'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-cdn
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: 🏗️ Build
+    # Only deploy when the release actually succeeded (or on a manual run).
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # need tags so `git describe` can resolve the version
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: 📚 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🔖 Resolve version
+        run: |
+          # Latest release tag (clean semver) → build version. No tag yet
+          # (pre-first-release) leaves it empty, so the build falls back to
+          # packages/widget/package.json.
+          v=$(git describe --tags --abbrev=0 2>/dev/null || true)
+          echo "AW_WIDGET_VERSION=${v#v}" >> "$GITHUB_ENV"
+          echo "Resolved build version: ${v:-(package.json fallback)}"
+
+      - name: 🏗️ Build widget
+        run: pnpm --filter @bauer-group/accessibility-widget build
+
+      - name: 📤 Upload dist
+        uses: actions/upload-artifact@v7
+        with:
+          name: widget-dist
+          path: packages/widget/dist/
+          retention-days: 1
+          if-no-files-found: error
+
+  plan:
+    name: 🗺️ Plan zones
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    outputs:
+      zones: ${{ steps.plan.outputs.zones }}
+      count: ${{ steps.plan.outputs.count }}
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v7
+
+      - name: 🗺️ Derive zone matrix
+        id: plan
+        env:
+          INPUT_ZONE: ${{ inputs.zone }}
+        run: |
+          set -euo pipefail
+          filter='.zones[] | select(.enabled != false) | {name, provider}'
+          zones=$(jq -c "[${filter}]" deploy/zones.json)
+          if [ -n "${INPUT_ZONE:-}" ]; then
+            zones=$(echo "$zones" | jq -c --arg n "$INPUT_ZONE" '[.[] | select(.name == $n)]')
+          fi
+          count=$(echo "$zones" | jq 'length')
+          echo "zones=$zones" >> "$GITHUB_OUTPUT"
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          echo "Planning $count zone(s): $zones"
+
+  deploy:
+    name: 🚚 ${{ matrix.zone.name }} (${{ matrix.zone.provider }})
+    needs: [build, plan]
+    if: needs.plan.outputs.count != '0'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        zone: ${{ fromJson(needs.plan.outputs.zones) }}
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v7
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: 📚 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 📥 Download dist
+        uses: actions/download-artifact@v8
+        with:
+          name: widget-dist
+          path: packages/widget/dist/
+
+      - name: 🚚 Deploy ${{ matrix.zone.name }}
+        env:
+          # Every potential zone secret is forwarded here. The deploy script
+          # reads only the one referenced by the zone's config.
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          CF_PURGE_TOKEN: ${{ secrets.CF_PURGE_TOKEN }}
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+        run: |
+          pnpm run cdn:deploy -- \
+            --zone "${{ matrix.zone.name }}" \
+            ${{ inputs.dry-run && '--dry-run' || '' }}

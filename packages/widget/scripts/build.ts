@@ -72,26 +72,51 @@ async function buildCss(): Promise<void> {
   await build(opts);
 }
 
-async function writeIntegrity(): Promise<void> {
+/**
+ * Emit SRI digests for the three shipped artifacts in two forms:
+ *   - integrity.txt  — human-readable (raw + gzip sizes), referenced by docs/plugins.
+ *   - integrity.json — machine-readable { version, algorithm, files } that the CDN
+ *     deploy reads (`.version` → the immutable + floating path roots) and that
+ *     Step-2 plugin sync reads (SRI + version baked into wrapper/plugin defaults).
+ */
+async function writeIntegrity(version: string): Promise<void> {
   const files = ['accessibility-widget-loader.min.js', 'accessibility-widget-core.min.js', 'accessibility-widget.min.css'];
-  const lines: string[] = ['BAUER GROUP Accessibility Widget — SRI Hashes (sha384, base64)', `Built: ${new Date().toISOString()}`, ''];
+  const lines: string[] = [
+    'BAUER GROUP Accessibility Widget — SRI Hashes (sha384, base64)',
+    `Version: ${version}`,
+    `Built: ${new Date().toISOString()}`,
+    '',
+  ];
+  const json: { version: string; algorithm: string; files: Record<string, string> } = {
+    version,
+    algorithm: 'sha384',
+    files: {},
+  };
   for (const f of files) {
     const buf = await readFile(resolve(dist, f));
-    const hash = createHash('sha384').update(buf).digest('base64');
+    const sri = `sha384-${createHash('sha384').update(buf).digest('base64')}`;
     const gz = gzipSync(buf).length;
     lines.push(`${f}  (raw ${buf.length} B, gzip ${gz} B)`);
-    lines.push(`  sha384-${hash}`);
+    lines.push(`  ${sri}`);
     lines.push('');
+    json.files[f] = sri;
   }
   await writeFile(resolve(dist, 'integrity.txt'), lines.join('\n'));
+  await writeFile(resolve(dist, 'integrity.json'), JSON.stringify(json, null, 2) + '\n');
   console.log(lines.join('\n'));
 }
 
 async function main(): Promise<void> {
+  // Version source: AW_WIDGET_VERSION (set by CI from the semantic-release git
+  // tag) → packages/widget/package.json (semantic-release keeps it in sync via
+  // pkgRoot; also the local-build fallback). The leading "v" of a tag is stripped.
+  const pkg: { version: string } = JSON.parse(await readFile(resolve(root, 'package.json'), 'utf8'));
+  const version = (process.env.AW_WIDGET_VERSION || pkg.version).replace(/^v/, '');
+
   await mkdir(dist, { recursive: true });
   await Promise.all(BUNDLES.map(buildOne));
   await buildCss();
-  if (!watch) await writeIntegrity();
+  if (!watch) await writeIntegrity(version);
 }
 
 main().catch((err) => {

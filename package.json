@@ -1,18 +1,18 @@
 {
-  "name": "@bauer-group/saas-accessibility-widget",
+  "name": "@bauer-group/accessibility-widget-workspace",
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "BFSG / EN 301 549 / WCAG 2.2 AA Accessibility Widget — lazy-loading, CDN-ready, plus framework integrations (React, Vue, Angular, Svelte, Next.js, Nuxt, Astro, WordPress, TYPO3, Drupal, Shopify, Shopware, Magento).",
+  "description": "Monorepo for @bauer-group/accessibility-widget — the BFSG / EN 301 549 / WCAG 2.2 AA Accessibility Widget (lazy-loading, CDN-ready) plus framework, CMS and shop integrations (React, Vue, Angular, Svelte, Next.js, Nuxt, Astro, WordPress, TYPO3, Drupal, Shopify, Shopware, Magento).",
   "license": "MIT",
   "author": "BAUER GROUP <info@bauer-group.com>",
-  "homepage": "https://github.com/bauer-group/SaaS-AccessibilityWidget",
+  "homepage": "https://github.com/bauer-group/AccessibilityWidget",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bauer-group/SaaS-AccessibilityWidget.git"
+    "url": "https://github.com/bauer-group/AccessibilityWidget.git"
   },
   "bugs": {
-    "url": "https://github.com/bauer-group/SaaS-AccessibilityWidget/issues"
+    "url": "https://github.com/bauer-group/AccessibilityWidget/issues"
   },
   "engines": {
     "node": ">=24",
@@ -28,10 +28,12 @@
     "lint:fix": "eslint . --fix",
     "clean": "turbo run clean && rimraf node_modules",
     "size": "turbo run size",
-    "changeset": "changeset",
-    "changeset:version": "changeset version",
-    "changeset:publish": "changeset publish",
-    "release": "pnpm run build && pnpm run test && pnpm run changeset:publish",
+    "cdn:build": "pnpm --filter @bauer-group/accessibility-widget build",
+    "cdn:deploy": "node scripts/deploy/index.mjs",
+    "cdn:deploy:dry": "node scripts/deploy/index.mjs --dry-run",
+    "secrets:push": "node scripts/secrets/sync.mjs --push-only",
+    "secrets:sync": "node scripts/secrets/sync.mjs",
+    "secrets:sync:dry": "node scripts/secrets/sync.mjs --dry-run",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml,css}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml,css}\"",
     "widget:build": "pnpm --filter @bauer-group/accessibility-widget build",
@@ -44,9 +46,10 @@
     "integrations:dev": "turbo run dev --parallel --filter=./integrations/js/*"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.31.0",
+    "@aws-sdk/client-s3": "^3.1072.0",
     "@eslint/js": "^9.20.0",
     "@types/node": "^24.0.0",
+    "cloudflare": "^6.4.0",
     "eslint": "^9.20.0",
     "globals": "^15.14.0",
     "prettier": "^3.4.2",
