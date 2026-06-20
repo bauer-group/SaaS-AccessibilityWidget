@@ -2,7 +2,7 @@
   "name": "@bauer-group/accessibility-widget-svelte",
   "version": "0.1.0",
   "description": "Svelte 5 Component + Action für das BAUER GROUP Accessibility Widget.",
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "author": "BAUER GROUP <info@bauer-group.com>",
   "type": "module",
   "main": "./src/index.js",

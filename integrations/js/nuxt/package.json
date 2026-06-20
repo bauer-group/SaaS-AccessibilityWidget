@@ -2,7 +2,7 @@
   "name": "@bauer-group/accessibility-widget-nuxt",
   "version": "0.1.0",
   "description": "Nuxt Plugin für das BAUER GROUP Accessibility Widget.",
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "author": "BAUER GROUP <info@bauer-group.com>",
   "type": "module",
   "main": "./src/plugin.client.ts",

@@ -1,6 +1,7 @@
 /*!
  * BAUER GROUP Accessibility Widget — Core (on-demand bundle)
- * License: MIT — © BAUER GROUP
+ * SPDX-License-Identifier: AGPL-3.0-only · © 2026 BAUER GROUP
+ * AGPL-3.0-only or commercial (info@bauer-group.com) — see LICENSE / LICENSING.md
  */
 import {
   isLocale,

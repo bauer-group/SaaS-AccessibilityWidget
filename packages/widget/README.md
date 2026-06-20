@@ -250,4 +250,10 @@ pnpm --filter @bauer-group/accessibility-widget test     # Vitest (40 Tests)
 
 ## Lizenz
 
-MIT © BAUER GROUP
+`@bauer-group/accessibility-widget` ist **dual lizenziert**:
+
+- **GNU AGPL-3.0-only** für Open-Source-Nutzung — siehe [LICENSE](../../LICENSE).
+- **Kommerzielle Lizenz** für geschlossene/proprietäre Produkte oder ohne
+  AGPL-Offenlegungspflichten — `info@bauer-group.com`.
+
+Details: [LICENSING.md](../../LICENSING.md).

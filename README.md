@@ -3,7 +3,7 @@
 > **BFSG · EN 301 549 · WCAG 2.2 AA** — lazy-loading, CDN-ready, zero-tracking Accessibility-Widget.
 > Loader ≤ 5.5 KB gzip, Core ≤ 30 KB gzip (28 Locales embedded). No cookies, no DOM/ARIA overrides of the host page.
 
-Built by [BAUER GROUP](https://bauer-group.com) · MIT License
+Built by [BAUER GROUP](https://bauer-group.com) · AGPL-3.0-only or commercial ([LICENSING.md](./LICENSING.md))
 
 ---
 
@@ -128,4 +128,13 @@ Report vulnerabilities via the process in [SECURITY.md](./SECURITY.md).
 
 ## License
 
-MIT — see [LICENSE](./LICENSE).
+`Accessibility Widget` is **dual-licensed**:
+
+- **GNU AGPL-3.0-only** for open-source use — see [LICENSE](./LICENSE).
+- **Commercial license** for use in closed/proprietary products or without the
+  AGPL network-disclosure obligations — available at `info@bauer-group.com`.
+
+Details: [LICENSING.md](./LICENSING.md). Contributions require a signed [CLA](./CLA.md).
+
+> **No conformance guarantee:** this widget is a technical aid; it does not by
+> itself establish legal conformance with the BFSG, EN 301 549 or WCAG 2.2.

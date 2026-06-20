@@ -1,0 +1,31 @@
+SPDX-License-Identifier: AGPL-3.0-only
+SPDX-FileCopyrightText: © 2026 BAUER GROUP <info@bauer-group.com>
+
+This file is part of Accessibility Widget.
+
+Accessibility Widget is dual-licensed:
+  (1) under the GNU Affero General Public License v3.0 only (see the LICENSE file
+      in the project root), and
+  (2) under a separate commercial license available from the copyright holder.
+
+Under the AGPL-3.0, if you run a modified version of this program on a server and
+let others interact with it there, you must also make the source code of your
+modified version available to those users. See the LICENSE file for the full terms.
+
+For commercial licensing (use in proprietary/closed products without the AGPL
+obligations), contact info@bauer-group.com. See LICENSING.md for details.
+
+--------------------------------------------------------------------------------
+Beispiel-Header für JS/TS/C-artige Dateien (oben in jede Quelldatei einfügen):
+
+/*
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: © 2026 BAUER GROUP <info@bauer-group.com>
+ *
+ * Part of Accessibility Widget. Dual-licensed under AGPL-3.0-only (see LICENSE) or a
+ * commercial license (contact info@bauer-group.com; see LICENSING.md).
+ */
+
+Kurzform (für eng begrenzte Header / minifizierte Bundles, Banner beibehalten!):
+
+/*! Accessibility Widget © 2026 BAUER GROUP — AGPL-3.0-only or commercial. https://accessibility-widget.app.professional-hosting.com */

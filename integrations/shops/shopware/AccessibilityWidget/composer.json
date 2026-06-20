@@ -2,7 +2,7 @@
   "name": "bauer-group/accessibility-widget-shopware",
   "description": "BAUER GROUP Accessibility Widget für Shopware 6.6+.",
   "type": "shopware-platform-plugin",
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "authors": [
     {
       "name": "BAUER GROUP",
