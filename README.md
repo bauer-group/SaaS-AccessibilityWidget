@@ -1,9 +1,17 @@
 # @bauer-group/accessibility-widget
 
 > **BFSG · EN 301 549 · WCAG 2.2 AA** — lazy-loading, CDN-ready, zero-tracking Accessibility-Widget.
-> Loader ≤ 5.5 KB gzip, Core ≤ 30 KB gzip (28 Locales embedded). No cookies, no DOM/ARIA overrides of the host page.
+> Loader ~5.7 KB gzip, Core ~26 KB gzip (28 locales embedded). No cookies, no DOM/ARIA overrides of the host page.
 
 Built by [BAUER GROUP](https://bauer-group.com) · AGPL-3.0-only or commercial ([LICENSING.md](./LICENSING.md))
+
+[![npm version](https://img.shields.io/npm/v/@bauer-group/accessibility-widget?logo=npm&color=cb3837)](https://www.npmjs.com/package/@bauer-group/accessibility-widget)
+[![license](https://img.shields.io/badge/license-AGPL--3.0--only%20or%20commercial-0058a3)](./LICENSING.md)
+![loader size](https://img.shields.io/badge/loader-~5.7%20KB%20gzip-success)
+![locales](https://img.shields.io/badge/locales-28-success)
+![runtime deps](https://img.shields.io/badge/runtime%20deps-0-success)
+
+📖 **[Documentation](./docs/)** &nbsp;·&nbsp; 🧩 **[Integrations repo](https://github.com/bauer-group/SaaS-AccessibilityWidgetIntegrations)** (React, Vue, … · WordPress, Shopify, …)
 
 ---
 
@@ -15,16 +23,18 @@ It gives **end users** a lightweight preferences panel — font size, contrast, 
 
 ## At a glance
 
-|                          |                                                                       |
-| ------------------------ | --------------------------------------------------------------------- |
-| **Compliance targets**   | BFSG (§ 14 BAnfrE), EN 301 549 § 9.1–9.4, WCAG 2.2 AA                 |
-| **Bundle sizes**         | Loader 5.5 KB gzip · Core 30 KB gzip · CSS 3 KB gzip                  |
-| **Locales**              | 28 — all languages with ≥ 8 M speakers + RTL support (ar, fa, ur, he) |
-| **Runtime dependencies** | 0                                                                     |
-| **Tracking**             | none — no cookies, no network requests beyond core/CSS fetch          |
-| **Persistence**          | localStorage only, single key (configurable)                          |
-| **Framework wrappers**   | React, Vue, Angular, Svelte, Next.js, Nuxt, Astro                     |
-| **CMS/Shop plugins**     | WordPress, TYPO3, Drupal · Shopify, Shopware, Magento                 |
+|                          |                                                                          |
+| ------------------------ | ------------------------------------------------------------------------ |
+| **Compliance targets**   | BFSG (§ 14 BAnfrE), EN 301 549 § 9.1–9.4, WCAG 2.2 AA                    |
+| **Bundle sizes**         | Loader ~5.7 KB · Core ~26 KB · CSS ~3 KB (gzip)                          |
+| **Locales**              | 28 — all languages with ≥ 8 M speakers + RTL support (ar, fa, ur, he)    |
+| **Runtime dependencies** | 0                                                                        |
+| **Tracking**             | none — no cookies, no network requests beyond core/CSS fetch             |
+| **Persistence**          | localStorage only, single key (configurable)                             |
+| **Framework wrappers**   | React, Vue, Angular, Svelte, Next.js, Nuxt, Astro — [separate repo][int] |
+| **CMS/Shop plugins**     | WordPress, TYPO3, Drupal · Shopify, Shopware, Magento — [same repo][int] |
+
+[int]: https://github.com/bauer-group/SaaS-AccessibilityWidgetIntegrations
 
 ## 1-Line integration
 
@@ -49,20 +59,26 @@ For production, **pin an immutable version** and verify it with Subresource Inte
 
 The immutable `…/<version>/…` paths never change (safe to pin SRI); the floating `…/v<major>/…` alias always serves the latest release in that major. SRI hashes for each release are published at `…/<version>/integrity.json`. For optional configuration (pre-selected locale, branding, feature-gating, statement URL, draggable FAB, …) see the [full config reference](./packages/widget/README.md#vollständige-config-referenz) in the widget package README.
 
+## Documentation
+
+In-depth guides live in [`docs/`](./docs/):
+
+- [**Usage**](./docs/usage.md) — CDN (preferred) and npm / self-hosted
+- [**Versioning**](./docs/versioning.md) — the immutable/floating CDN path scheme + SRI
+- [**Configuration**](./docs/configuration.md) — `window.AccessibilityWidgetConfig` + the runtime API
+- [**Authoring integrations**](./docs/authoring-integrations.md) — the contract for building a wrapper / plugin
+
 ## Repository layout
 
 ```text
 packages/
-  widget/          Core widget (loader + core IIFE bundles, types, docs)
+  widget/          Core widget (loader + core IIFE bundles, types)
 apps/
   demo/            Interactive demo + Scanner-Testziel (Vite)
-integrations/
-  js/              React, Vue, Angular, Svelte, Next.js, Nuxt, Astro
-  cms/             WordPress, TYPO3, Drupal (PHP)
-  shops/           Shopify, Shopware, Magento (Liquid / PHP / XML)
+docs/              Usage (CDN/npm), versioning, SRI, config, integration-authoring
 ```
 
-`packages/` + `apps/` are managed by pnpm + Turbo. `integrations/` is intentionally **outside the workspace** — each integration is a standalone publishable artifact with its own dependency tree and release cadence.
+This repo holds the **core + demo** (pnpm + Turbo). The framework wrappers and CMS/shop plugins live in a dedicated repository — **[bauer-group/SaaS-AccessibilityWidgetIntegrations][int]** — so each ecosystem keeps its own dependency tree and release cadence.
 
 ## Quick start
 
@@ -100,23 +116,15 @@ AccessibilityWidget.on('profileApplied', ({ profile }) => analytics.track('a11y'
 
 Full reference: [`packages/widget/README.md`](./packages/widget/README.md).
 
-## Framework integrations
+## Integrations
 
-| Framework          | Package                                                      | Status         |
-| ------------------ | ------------------------------------------------------------ | -------------- |
-| React (≥ 18)       | `@bauer-group/accessibility-widget-react`                    | ✅ smoke-tests |
-| Vue (≥ 3.3)        | `@bauer-group/accessibility-widget-vue`                      | ✅             |
-| Angular (≥ 19)     | `@bauer-group/accessibility-widget-angular`                  | ✅             |
-| Svelte (≥ 5)       | `@bauer-group/accessibility-widget-svelte`                   | ✅             |
-| Next.js App Router | `@bauer-group/accessibility-widget-nextjs`                   | ✅             |
-| Nuxt 3             | `@bauer-group/accessibility-widget-nuxt`                     | ✅             |
-| Astro (≥ 5)        | `@bauer-group/accessibility-widget-astro`                    | ✅             |
-| WordPress (6.5+)   | `integrations/cms/wordpress/accessibility-widget/`           | ✅             |
-| TYPO3 (13)         | `integrations/cms/typo3/accessibility_widget/`               | ✅             |
-| Drupal (10/11)     | `integrations/cms/drupal/accessibility_widget/`              | ✅             |
-| Shopify (OS 2.0)   | `integrations/shops/shopify/`                                | ✅             |
-| Shopware (6.6+)    | `integrations/shops/shopware/AccessibilityWidget/`           | ✅             |
-| Magento (2.4+)     | `integrations/shops/magento/BauerGroup_AccessibilityWidget/` | ✅             |
+Ready-made wrappers and plugins live in **[bauer-group/SaaS-AccessibilityWidgetIntegrations][int]**:
+
+- **JS frameworks** — React, Vue, Angular, Svelte, Next.js, Nuxt, Astro (published as `@bauer-group/accessibility-widget-<framework>`)
+- **CMS** — WordPress, TYPO3, Drupal
+- **Shops** — Shopify, Shopware, Magento
+
+To build a new integration, see [docs/authoring-integrations.md](./docs/authoring-integrations.md).
 
 ## Contributing
 
