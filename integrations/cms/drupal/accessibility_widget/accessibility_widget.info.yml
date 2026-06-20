@@ -1,7 +1,0 @@
-name: 'Accessibility Widget'
-type: module
-description: 'Lazy-loading Accessibility-Widget (BFSG / EN 301 549 / WCAG 2.2 AA) von BAUER GROUP.'
-core_version_requirement: ^10 || ^11
-package: 'Accessibility'
-version: '1.0.0-alpha.1'
-configure: accessibility_widget.settings

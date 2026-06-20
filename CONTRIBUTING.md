@@ -50,43 +50,18 @@ pnpm --filter @bauer-group/accessibility-widget test
 pnpm --filter @bauer-group/accessibility-widget-demo dev
 ```
 
-## Monorepo-Layout & Scope der Root-Scripts
+## Monorepo-Layout
 
-Das Repo ist in drei Zonen aufgeteilt mit bewusst **unterschiedlichen Entwicklungspfaden**:
+Dieses Repo enthält **nur den Core + die Demo**:
 
-| Zone                                            | Inhalt                                               | Workspace?                   | Released?            |
-| ----------------------------------------------- | ---------------------------------------------------- | ---------------------------- | -------------------- |
-| **Core** (`packages/widget`)                    | Das eigentliche Widget                               | ✅                           | ✅ npm               |
-| **Demo** (`apps/demo`)                          | Live-Demo + Scanner-Zielscheibe                      | ✅                           | ❌ privat            |
-| **JS-Integrationen** (`integrations/js/*`)      | React / Vue / Angular / Svelte / Next / Nuxt / Astro | ✅                           | ✅ npm (individuell) |
-| **CMS-Integrationen** (`integrations/cms/*`)    | Drupal (PHP), TYPO3 (PHP), WordPress (PHP)           | ❌ Composer / WP-Plugin-Repo | ✅ extern            |
-| **Shop-Integrationen** (`integrations/shops/*`) | Magento (PHP), Shopware (PHP), Shopify (Liquid)      | ❌ Composer / Shopify-CLI    | ✅ extern            |
+| Zone                         | Inhalt                          | Workspace? | Released?                |
+| ---------------------------- | ------------------------------- | ---------- | ------------------------ |
+| **Core** (`packages/widget`) | Das eigentliche Widget          | ✅         | ✅ npm + CDN             |
+| **Demo** (`apps/demo`)       | Live-Demo + Scanner-Zielscheibe | ✅         | ❌ privat (GitHub Pages) |
 
-**Wichtig:** Die Root-Scripts (`pnpm build`, `pnpm dev`, `pnpm test`, `pnpm typecheck`) sind bewusst auf **Core + Demo** beschränkt. Alltägliche Arbeit am Widget oder an der Demo berührt die Integrationen **nicht** — weder in Compile-Zeit, noch in der Test-Suite.
+Die Root-Scripts (`pnpm build`, `pnpm dev`, `pnpm test`, `pnpm typecheck`) laufen über **Core + Demo**.
 
-Wenn du Integrationen gezielt bearbeiten willst, gibt es separate Scripts:
-
-```bash
-pnpm integrations:build       # alle 7 JS-Integrationen bauen
-pnpm integrations:test        # deren Tests laufen
-pnpm integrations:typecheck   # TypeScript-Check
-pnpm integrations:dev         # Watch-Modus für alle
-
-# Einzelne Integration:
-pnpm --filter @bauer-group/accessibility-widget-react build
-pnpm --filter @bauer-group/accessibility-widget-react test
-```
-
-Die CMS- und Shop-Integrationen sind **gar nicht** Teil des pnpm-Workspace — sie leben in eigenen Ökosystemen (Composer, Shopify-CLI, WordPress-Plugin-Repo) und haben ihre eigenen Build/Deploy-Flows, die in ihren jeweiligen README-Dateien beschrieben sind.
-
-### Warum die JS-Integrationen trotzdem im Workspace?
-
-Zwei konkrete Vorteile, die lokale Arbeit deutlich beschleunigen:
-
-1. **Sofort-Linking:** Ändert sich das Widget, sehen alle Integrationen die Änderung sofort (`workspace:^`-Protokoll → Symlinks in `node_modules/`). Kein `pnpm publish` im Kreis nötig, um ein Widget-Fix in einem React-Integration-Test zu prüfen.
-2. **Ein `pnpm install` für alles:** Deduplizierte Deps im Root-`node_modules/.pnpm/` statt 7 separate Installs. Faster CI, weniger Disk-Space.
-
-Die Kopplung ist trotzdem lose: jede Integration hat eigene `package.json`, eigene `tsconfig.json`, eigene Tests. Das Core-Widget wird via semantic-release publiziert; die Integrationen ziehen in ein eigenes Repo mit eigener Release-Pipeline um (siehe [Release](#release-semantic-release-conventional-commits)).
+> **Integrationen sind umgezogen.** Die Framework-Wrapper (React/Vue/Angular/Svelte/Next/Nuxt/Astro) und die CMS-/Shop-Plugins (WordPress, TYPO3, Drupal, Shopify, Shopware, Magento) leben jetzt in einem eigenen Repo: **[bauer-group/SaaS-AccessibilityWidgetIntegrations](https://github.com/bauer-group/SaaS-AccessibilityWidgetIntegrations)**. Wer eine Integration bauen oder ändern will, arbeitet dort — Vertrag + Anleitung in [docs/authoring-integrations.md](./docs/authoring-integrations.md).
 
 ## Bundle-Size-Budget
 
@@ -126,7 +101,7 @@ Der automatisierte WCAG-Scan läuft außerhalb dieses Repos und ist nicht Teil d
 
 Das **Core-Widget** `@bauer-group/accessibility-widget` wird automatisiert via [semantic-release](https://semantic-release.gitbook.io/) released — gesteuert durch [Conventional Commits](https://www.conventionalcommits.org/). Demo und Monorepo-Root bleiben privat (`"private": true`).
 
-Die sieben JS-Integrationen werden **nicht** aus diesem Repo publiziert. Sie ziehen in ein eigenes Integrations-Repo um und bekommen dort ihre eigene Release-Pipeline (npm, WordPress.org, Packagist, …). Bis dahin werden sie hier nur lokal im Workspace entwickelt (`workspace:^`).
+Die sieben JS-Integrationen werden **nicht** aus diesem Repo publiziert — sie sind in [ein eigenes Repo](https://github.com/bauer-group/SaaS-AccessibilityWidgetIntegrations) umgezogen und bekommen dort ihre eigene Release-Pipeline (npm, WordPress.org, Packagist, …).
 
 ### Ablauf
 

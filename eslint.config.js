@@ -15,7 +15,6 @@ export default tseslint.config(
       '**/*.min.js',
       '**/*.min.css',
       'apps/demo/public/accessibility-widget/**',
-      'integrations/**',
     ],
   },
   js.configs.recommended,

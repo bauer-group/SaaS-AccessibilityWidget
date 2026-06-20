@@ -1,20 +1,13 @@
 # Testing-Strategie
 
-## Aktueller Stand (Stand 2026-04)
+## Aktueller Stand (Stand 2026-06)
 
-| Paket                     | Test-Runner        | Abdeckung                                                                                                      |
-| ------------------------- | ------------------ | -------------------------------------------------------------------------------------------------------------- |
-| `packages/widget`         | Vitest (happy-dom) | 13/18 passing — 5 preexistierende happy-dom-Fehler in `state.test.ts` (`localStorage.clear is not a function`) |
-| `apps/demo`               | —                  | Kein Test (nur Testziel für Widget selbst)                                                                     |
-| `integrations/js/react`   | —                  | Kein Test (Wrapper-Logik trivial)                                                                              |
-| `integrations/js/vue`     | —                  | Kein Test                                                                                                      |
-| `integrations/js/angular` | —                  | Kein Test                                                                                                      |
-| `integrations/js/svelte`  | —                  | Kein Test                                                                                                      |
-| `integrations/js/nextjs`  | —                  | Kein Test                                                                                                      |
-| `integrations/js/nuxt`    | —                  | Kein Test                                                                                                      |
-| `integrations/js/astro`   | —                  | Kein Test (Astro-Komponente, kein Build nötig)                                                                 |
-| `integrations/cms/*`      | —                  | Kein Test (PHP-Pakete)                                                                                         |
-| `integrations/shops/*`    | —                  | Kein Test (Liquid/PHP-Pakete)                                                                                  |
+| Paket             | Test-Runner        | Abdeckung                                                 |
+| ----------------- | ------------------ | --------------------------------------------------------- |
+| `packages/widget` | Vitest (happy-dom) | Unit-Tests (State, i18n, Config, Loader) — `pnpm test`    |
+| `apps/demo`       | —                  | Kein Test (ist selbst Scanner-Zielscheibe für das Widget) |
+
+> Die Integrationen (Framework-Wrapper, CMS-/Shop-Plugins) werden in ihrem [eigenen Repo](https://github.com/bauer-group/SaaS-AccessibilityWidgetIntegrations) getestet (z. B. Vitest-Smoke-Tests im React-Wrapper).
 
 ## Bekannte Lücken — mit Begründung
 
@@ -34,14 +27,9 @@
 
 Ein Ticket dazu ist ein guter Einstiegs-PR für Beitragende.
 
-### 2. Integration-Pakete haben keine Tests
+### 2. Integrationen liegen im eigenen Repo
 
-**Begründung**: Die Wrapper-Logik ist 10-20 Zeilen pro Integration und im Wesentlichen identisch (Window-Property setzen, Script-Tag einfügen). Integration-Tests auf **echten** Framework-Setups (Storybook + Browser) würden deutlich mehr Wert bringen als Unit-Tests der Wrapper.
-
-**Geplant für v1.1**:
-
-- Playwright-E2E gegen jedes Integration in einer minimalen Host-App
-- Snapshot-Tests für die SSR-Rendering-Pfade (Next.js, Nuxt, Astro)
+Die Framework-Wrapper und CMS-/Shop-Plugins sind in das [Integrations-Repo](https://github.com/bauer-group/SaaS-AccessibilityWidgetIntegrations) umgezogen und werden **dort** getestet (Vitest-Smoke-Tests je Wrapper; E2E gegen echte Host-Apps ist dort geplant). Dieses Repo testet nur den Core.
 
 ### 3. Demo-App hat keine automatisierten Tests
 
@@ -74,7 +62,7 @@ Aus `CONTRIBUTING.md`:
 - Neue Feature: **Tests erforderlich**, Coverage ≥ 80 % für kritische Module
 - Bug-Fix: **Regressionstest erforderlich**
 - i18n-Locale: **mindestens ein `i18n.test.ts`-Case** für das neue Locale
-- Neues Integration: **README mit Code-Beispiel** genügt (Test kommt mit v1.1-E2E)
+- Neue Integration: im [Integrations-Repo](https://github.com/bauer-group/SaaS-AccessibilityWidgetIntegrations) (mit eigenen Tests dort)
 
 ## Manuelle Tests vor Release
 

@@ -39,7 +39,7 @@ Registrieren in `i18n/index.ts`, Test-Case in `test/i18n.test.ts`.
 
 ## 🟢 Beitrag 2 — Neues Framework-/Plattform-Integration
 
-**Verzeichnis**: `integrations/js/` oder `integrations/cms/` oder `integrations/shops/`
+**Repo**: [bauer-group/SaaS-AccessibilityWidgetIntegrations](https://github.com/bauer-group/SaaS-AccessibilityWidgetIntegrations) (`js/`, `cms/`, `shops/`) — Anleitung in [docs/authoring-integrations.md](./docs/authoring-integrations.md)
 
 **Aktuell vorhanden**:
 
@@ -60,7 +60,7 @@ Registrieren in `i18n/index.ts`, Test-Case in `test/i18n.test.ts`.
 | **Hugo** / **Eleventy** / **Jekyll** Shortcode | Static-Site-Generators sind oft übersehen  | 20 min                      |
 | **Joomla** / **Craft CMS**                     | Traditionelle CMS-Nischen                  | 60 min                      |
 
-**Muster** (JS): React/Vue sind identisch bis auf 20 Zeilen — schauen Sie `integrations/js/react/src/AccessibilityWidget.tsx` an und portieren Sie das Pattern.
+**Muster** (JS): React/Vue sind identisch bis auf 20 Zeilen — schauen Sie `js/react/src/AccessibilityWidget.tsx` im [Integrations-Repo](https://github.com/bauer-group/SaaS-AccessibilityWidgetIntegrations) an und portieren Sie das Pattern.
 
 **Trade-offs**:
 
