@@ -96,4 +96,4 @@ apps/demo/
 
 ## Lizenz
 
-MIT © BAUER GROUP
+AGPL-3.0-only oder kommerziell · © 2026 BAUER GROUP — siehe [LICENSE](../../LICENSE) / [LICENSING.md](../../LICENSING.md)

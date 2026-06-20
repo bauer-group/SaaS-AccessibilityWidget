@@ -1,7 +1,7 @@
 /**
  * Lucide-based pictograms for widget features and UI controls.
  *
- * All paths are taken from Lucide (https://lucide.dev, MIT license) and
+ * All paths are taken from Lucide (https://lucide.dev, ISC license) and
  * rendered via our programmatic buildIcon() — never innerHTML — so there is
  * no XSS surface. Only the raw `d` data is shipped, no runtime dependency.
  *

@@ -50,7 +50,7 @@ Hinweise dürfen unter der AGPL nicht entfernt werden — auch nicht von Reselle
 
 ## SPDX / `package.json`
 
-In jeder Quelldatei steht der Kurz-Header (siehe `license-header.txt`):
+Die ausgelieferten Bundles tragen den SPDX-Lizenz-Banner; das Header-Template für neue Quelldateien steht in `license-header.txt`:
 
 ```
 SPDX-License-Identifier: AGPL-3.0-only
