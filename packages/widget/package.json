@@ -6,10 +6,10 @@
   "author": "BAUER GROUP <info@de.bauer-group.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bauer-group/AccessibilityWidget.git",
+    "url": "https://github.com/bauer-group/SaaS-AccessibilityWidget.git",
     "directory": "packages/widget"
   },
-  "homepage": "https://github.com/bauer-group/AccessibilityWidget/tree/main/packages/widget",
+  "homepage": "https://github.com/bauer-group/SaaS-AccessibilityWidget/tree/main/packages/widget",
   "type": "module",
   "main": "./dist/accessibility-widget-loader.min.js",
   "types": "./dist/index.d.ts",

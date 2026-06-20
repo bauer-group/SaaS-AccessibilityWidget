@@ -6,13 +6,13 @@
   "description": "Monorepo for @bauer-group/accessibility-widget — the BFSG / EN 301 549 / WCAG 2.2 AA Accessibility Widget (lazy-loading, CDN-ready) plus framework, CMS and shop integrations (React, Vue, Angular, Svelte, Next.js, Nuxt, Astro, WordPress, TYPO3, Drupal, Shopify, Shopware, Magento).",
   "license": "MIT",
   "author": "BAUER GROUP <info@bauer-group.com>",
-  "homepage": "https://github.com/bauer-group/AccessibilityWidget",
+  "homepage": "https://github.com/bauer-group/SaaS-AccessibilityWidget",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bauer-group/AccessibilityWidget.git"
+    "url": "https://github.com/bauer-group/SaaS-AccessibilityWidget.git"
   },
   "bugs": {
-    "url": "https://github.com/bauer-group/AccessibilityWidget/issues"
+    "url": "https://github.com/bauer-group/SaaS-AccessibilityWidget/issues"
   },
   "engines": {
     "node": ">=24",

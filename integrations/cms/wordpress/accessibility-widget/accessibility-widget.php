@@ -10,7 +10,7 @@
  * License:           MIT
  * License URI:       https://opensource.org/licenses/MIT
  * Text Domain:       accessibility-widget
- * Update URI:        https://github.com/bauer-group/AccessibilityWidget
+ * Update URI:        https://github.com/bauer-group/SaaS-AccessibilityWidget
  */
 
 if (!defined('ABSPATH')) {
@@ -134,7 +134,7 @@ function accessibility_widget_render_settings(): void {
     ?>
     <div class="wrap">
       <h1>Accessibility Widget</h1>
-      <p>Konfiguration des lazy-loading Widgets. Details: <a href="https://github.com/bauer-group/AccessibilityWidget" target="_blank" rel="noopener">GitHub</a>.</p>
+      <p>Konfiguration des lazy-loading Widgets. Details: <a href="https://github.com/bauer-group/SaaS-AccessibilityWidget" target="_blank" rel="noopener">GitHub</a>.</p>
       <form method="post" action="options.php">
         <?php settings_fields('accessibility_widget'); ?>
         <table class="form-table" role="presentation">

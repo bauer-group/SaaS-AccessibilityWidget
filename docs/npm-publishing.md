@@ -40,7 +40,7 @@ workspace package.
 Open the package page → **Settings → Trusted Publisher** → add a GitHub Actions
 publisher:
 
-- **Repository:** `bauer-group/AccessibilityWidget`
+- **Repository:** `bauer-group/SaaS-AccessibilityWidget`
 - **Workflow filename:** `nodejs-release.yml`
 - **Environment:** _(leave empty)_
 
