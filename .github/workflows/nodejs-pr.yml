@@ -1,10 +1,14 @@
 # =============================================================================
 # Node.js PR Validation Workflow
 # =============================================================================
-# Lint, typecheck, build, test, size budget and a (non-blocking) audit on PRs
-# to main. Self-contained rather than the reusable nodejs-build.yml, which sets
-# up `setup-node` with `cache: pnpm` BEFORE installing pnpm (fails on pnpm
-# repos). Correct order here: pnpm → node(cache) → install.
+# Lint, typecheck, build (+ size budget), test and audit on PRs to main, via
+# the shared bauer-group/automation-templates reusable.
+#
+# cache-dependencies: false — the reusable runs setup-node with `cache: pnpm`
+# BEFORE installing pnpm, which only works when the package manager is
+# preinstalled (npm). pnpm isn't on the runner yet at that point, so the cache
+# step would fail; disabling the node-level cache avoids it (pnpm is installed
+# by the reusable's own Setup pnpm step right after).
 # =============================================================================
 
 name: 🔍 PR Validation
@@ -16,42 +20,24 @@ on:
 
 permissions:
   contents: read
+  pull-requests: write
 
 jobs:
   validate:
-    name: 🧪 Validate (lint · typecheck · build · test · size)
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - name: 📥 Checkout
-        uses: actions/checkout@v7
-
-      - name: 📦 Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: 📦 Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version-file: .nvmrc
-          cache: pnpm
-
-      - name: 📚 Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: 🎨 Lint
-        run: pnpm lint
-
-      - name: 🔎 Typecheck
-        run: pnpm typecheck
-
-      - name: 🏗️ Build
-        run: pnpm build
-
-      - name: 🧪 Test
-        run: pnpm test
-
-      - name: 📏 Widget size budget
-        run: pnpm --filter @bauer-group/accessibility-widget size
-
-      - name: 🔒 Security audit (non-blocking)
-        run: pnpm audit --audit-level high || true
+    name: 🧪 Build & Test
+    uses: bauer-group/automation-templates/.github/workflows/nodejs-build.yml@main
+    with:
+      node-version-file: '.nvmrc'
+      package-manager: 'pnpm'
+      cache-dependencies: false
+      frozen-lockfile: true
+      run-lint: true
+      lint-command: 'pnpm typecheck && pnpm lint'
+      build-command: 'pnpm build && pnpm --filter @bauer-group/accessibility-widget size'
+      run-tests: true
+      test-command: 'pnpm test'
+      run-audit: true
+      audit-level: 'high'
+      audit-production-only: true
+      upload-artifacts: false
+    secrets: inherit

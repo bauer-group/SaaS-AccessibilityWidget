@@ -1,21 +1,19 @@
 # =============================================================================
 # Release & NPM Publish Workflow
 # =============================================================================
-# Builds + tests, runs semantic-release (conventional commits → version bump,
-# CHANGELOG, git tag, GitHub release) and publishes the CORE package
-# @bauer-group/accessibility-widget to npm. The 7 framework wrappers are NOT
-# published here — they move to a dedicated integrations repo (Step 2).
+# Builds + tests (reusable), runs semantic-release (reusable) and publishes the
+# CORE package @bauer-group/accessibility-widget to npm. The 7 framework
+# wrappers are NOT published here — they move to a dedicated integrations repo.
 #
 # semantic-release is configured (.github/config/release/semantic-release.json)
 # with pkgRoot: packages/widget and npmPublish: false — it bumps + commits
 # packages/widget/package.json and cuts the vX.Y.Z tag. The actual npm publish
 # runs in the publish-npm job below, TOKENLESS via OIDC Trusted Publishing
 # (see docs/npm-publishing.md). The first-ever publish is a one-time local
-# bootstrap (`pnpm publish:bootstrap`) — npm only enables Trusted Publishing
-# for a package that already exists.
+# bootstrap (`pnpm publish:bootstrap`).
 #
-# test-and-build is self-contained (not the reusable nodejs-build.yml, which
-# sets up node's pnpm cache before installing pnpm and fails on pnpm repos).
+# cache-dependencies: false on the build reusable — it caches pnpm before
+# installing it (works for the preinstalled npm, not pnpm).
 #
 # The CDN deploy (deploy-cdn.yml) keys off THIS workflow completing.
 # =============================================================================
@@ -45,35 +43,22 @@ permissions:
 jobs:
   test-and-build:
     name: 🧪 Build & Test
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - name: 📥 Checkout
-        uses: actions/checkout@v7
-
-      - name: 📦 Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: 📦 Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version-file: .nvmrc
-          cache: pnpm
-
-      - name: 📚 Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: 🎨 Lint
-        run: pnpm lint
-
-      - name: 🔎 Typecheck
-        run: pnpm typecheck
-
-      - name: 🏗️ Build
-        run: pnpm build
-
-      - name: 🧪 Test
-        run: pnpm test
+    uses: bauer-group/automation-templates/.github/workflows/nodejs-build.yml@main
+    with:
+      node-version-file: '.nvmrc'
+      package-manager: 'pnpm'
+      cache-dependencies: false
+      frozen-lockfile: true
+      run-lint: true
+      lint-command: 'pnpm typecheck && pnpm lint'
+      build-command: 'pnpm build && pnpm --filter @bauer-group/accessibility-widget size'
+      run-tests: true
+      test-command: 'pnpm test'
+      run-audit: true
+      audit-level: 'high'
+      audit-production-only: true
+      upload-artifacts: false
+    secrets: inherit
 
   release:
     name: 📦 Create Semantic Release
@@ -91,9 +76,11 @@ jobs:
     name: 📤 Publish core to npm (OIDC)
     needs: release
     if: needs.release.outputs.release-created == 'true'
-    # OIDC Trusted Publishing — tokenless. A publish hiccup stays a visible red
-    # job but must NOT block the CDN deploy (deploy-cdn.yml keys off this
-    # workflow's overall success).
+    # OIDC Trusted Publishing — tokenless. continue-on-error so an npm hiccup
+    # never blocks the CDN deploy (which keys off this workflow's success).
+    # No reusable exists for a workspace sub-package OIDC publish (the Banner
+    # self-hosts this too), so this job is intentionally custom — with the
+    # correct order: pnpm → node(cache) → install.
     continue-on-error: true
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -118,8 +105,6 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: 🔖 Sync released version
-        # The release commit semantic-release pushed isn't this job's checkout,
-        # so set packages/widget/package.json to the released version explicitly.
         run: npm version "${{ needs.release.outputs.version }}" --no-git-tag-version --allow-same-version
         working-directory: packages/widget
 
