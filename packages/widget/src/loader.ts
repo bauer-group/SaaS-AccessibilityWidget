@@ -531,7 +531,7 @@ const publicApi = {
   ): () => void {
     return onWidgetEvent(name, handler);
   },
-  version: '0.1.0',
+  version: __AW_VERSION__,
 };
 
 window.AccessibilityWidget = publicApi;

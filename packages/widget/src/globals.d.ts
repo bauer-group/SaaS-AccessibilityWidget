@@ -4,6 +4,12 @@ import type { WidgetEventMap, WidgetEventName } from './util/events.js';
 export {};
 
 declare global {
+  /**
+   * The package version, injected at build time via esbuild `define`
+   * (and by vitest's `define` in tests). Never a literal in source.
+   */
+  const __AW_VERSION__: string;
+
   interface Window {
     /** Public API — set by the loader. */
     AccessibilityWidget?: {

@@ -1,6 +1,10 @@
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
+  // Mirror the build's esbuild `define` so `__AW_VERSION__` resolves in tests.
+  define: {
+    __AW_VERSION__: JSON.stringify('0.0.0-dev'),
+  },
   test: {
     environment: 'jsdom',
     environmentOptions: {

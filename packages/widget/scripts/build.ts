@@ -33,7 +33,7 @@ const BUNDLES: BundleSpec[] = [
   },
 ];
 
-async function buildOne(spec: BundleSpec): Promise<void> {
+async function buildOne(spec: BundleSpec, version: string): Promise<void> {
   const opts: BuildOptions = {
     entryPoints: [resolve(root, spec.entry)],
     outfile: resolve(dist, spec.out),
@@ -46,6 +46,8 @@ async function buildOne(spec: BundleSpec): Promise<void> {
     logLevel: 'info',
     treeShaking: true,
     platform: 'browser',
+    // Replace the __AW_VERSION__ identifier in source with the build version.
+    define: { __AW_VERSION__: JSON.stringify(version) },
   };
   if (watch) {
     const ctx = await context(opts);
@@ -114,7 +116,7 @@ async function main(): Promise<void> {
   const version = (process.env.AW_WIDGET_VERSION || pkg.version).replace(/^v/, '');
 
   await mkdir(dist, { recursive: true });
-  await Promise.all(BUNDLES.map(buildOne));
+  await Promise.all(BUNDLES.map((spec) => buildOne(spec, version)));
   await buildCss();
   if (!watch) await writeIntegrity(version);
 }

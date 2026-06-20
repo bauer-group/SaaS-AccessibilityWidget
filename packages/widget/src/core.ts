@@ -157,7 +157,7 @@ const api = {
   setLocale,
   reset,
   getState,
-  version: '0.1.0',
+  version: __AW_VERSION__,
 };
 
 if (typeof window !== 'undefined') {
