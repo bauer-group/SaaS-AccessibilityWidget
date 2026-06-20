@@ -115,5 +115,6 @@ Plus PROFILE_IDS in `widget.ts` erweitern und Übersetzungen in `i18n/*.ts`.
 2. Code ergänzen, Tests/Snapshot schreiben
 3. Bundle-Size-Budget prüfen (`pnpm --filter @bauer-group/accessibility-widget size`)
 4. PR mit kurzem Kontext: **Warum** diese Locale/Integration/dieses Profil?
+5. Beim ersten PR das **[CLA](./CLA.md)** signieren (der Bot fordert automatisch auf) — nötig wegen der Dual-Lizenzierung (AGPL-3.0 / kommerziell).
 
 Jeder dieser Beiträge macht das Widget für reale Nutzer:innen besser — und genau das ist der Unterschied zwischen "1-Klick-Compliance-Overlay" und **echtem** Accessibility-Tool.

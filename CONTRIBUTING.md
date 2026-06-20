@@ -2,6 +2,14 @@
 
 Danke, dass Sie zum Accessibility Widget beitragen wollen.
 
+## Lizenz & Contributor License Agreement (CLA)
+
+Das Widget ist **dual-lizenziert** — GNU **AGPL-3.0-only** ODER eine kommerzielle Lizenz (siehe [LICENSING.md](./LICENSING.md)). Damit BAUER GROUP Beiträge auch unter der kommerziellen Lizenz anbieten kann, muss **jede:r Mitwirkende einmalig das [CLA](./CLA.md) signieren**. Beim ersten Pull Request kommentiert der CLA-Bot automatisch; signiert wird direkt im PR per Kommentar:
+
+> `I have read the CLA Document and I hereby sign the CLA`
+
+Ohne Signatur kann der PR nicht gemergt werden. Der Grant ist eine **Lizenz, keine** Copyright-Übertragung — du behältst alle Rechte an deinem Beitrag.
+
 ## Setup
 
 ```bash
@@ -123,7 +131,7 @@ Die sieben JS-Integrationen werden **nicht** aus diesem Repo publiziert. Sie zie
 ### Ablauf
 
 1. **Commits nach Conventional-Commits-Schema** auf `main` (bzw. via PR). Der Type bestimmt den SemVer-Bump: `fix:` → Patch, `feat:` → Minor, `feat!:` / `BREAKING CHANGE:` → Major. `docs:` / `chore:` / `refactor:` / `test:` / `style:` lösen kein Release aus.
-2. **CI übernimmt den Rest** ([.github/workflows/nodejs-release.yml](.github/workflows/nodejs-release.yml)): bei Push auf `main` laufen Build + Test, dann semantic-release. Es ermittelt die nächste Version aus den Commits, bumpt `packages/widget/package.json`, schreibt das CHANGELOG, committet, taggt `vX.Y.Z` und legt ein GitHub-Release an. Der `publish-npm`-Job publiziert anschließend das Core-Paket nach npm (mit Provenance).
+2. **CI übernimmt den Rest** ([.github/workflows/nodejs-release.yml](.github/workflows/nodejs-release.yml)): bei Push auf `main` laufen Build + Test, dann semantic-release. Es ermittelt die nächste Version aus den Commits, bumpt `packages/widget/package.json`, schreibt das CHANGELOG, committet, taggt `vX.Y.Z` und legt ein GitHub-Release an. Der `publish-npm`-Job publiziert anschließend das Core-Paket **tokenlos via OIDC Trusted Publishing** nach npm (keine Provenance, da der Quell-Repo privat ist).
 3. **CDN-Deploy** ([.github/workflows/deploy-cdn.yml](.github/workflows/deploy-cdn.yml)) startet automatisch nach erfolgreichem Release-Workflow: baut die getaggte Version und lädt sie in die unveränderlichen + floatenden CDN-Pfade (siehe [deploy/zones.json](deploy/zones.json)).
 
 Kein manuelles Versionieren, keine `version`-Commits von Hand — nur saubere Conventional Commits.
