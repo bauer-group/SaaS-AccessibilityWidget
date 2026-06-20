@@ -29,6 +29,7 @@ jobs:
     with:
       node-version-file: '.nvmrc'
       package-manager: 'pnpm'
+      package-manager-version: '10'
       cache-dependencies: false
       frozen-lockfile: true
       run-lint: true
