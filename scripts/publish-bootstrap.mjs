@@ -19,7 +19,7 @@
 // This repo is a pnpm workspace, so the package is built with pnpm and
 // published from its own directory (npm has no workspace view here).
 
-import { execFileSync } from 'node:child_process';
+import { execSync } from 'node:child_process';
 import { readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -55,6 +55,9 @@ Options:
 if (values.version && !/^\d+\.\d+\.\d+(?:-[\w.]+)?$/.test(values.version)) {
   throw new Error(`Invalid --version "${values.version}" (expected semver, e.g. 1.0.0)`);
 }
+if (!/^[a-z0-9][a-z0-9._-]*$/i.test(values.tag)) {
+  throw new Error(`Invalid --tag "${values.tag}" (alphanumeric, dot, dash, underscore)`);
+}
 
 // Resolve the workspace directory whose package.json name matches --package.
 const root = process.cwd();
@@ -76,11 +79,15 @@ if (!pkgDir) {
 }
 
 const absPkgDir = resolve(root, pkgDir);
-const isWin = process.platform === 'win32';
-const npm = isWin ? 'npm.cmd' : 'npm';
-const pnpm = isWin ? 'pnpm.cmd' : 'pnpm';
-const inDir = (cmd, args) => execFileSync(cmd, args, { stdio: 'inherit', cwd: absPkgDir });
-const atRoot = (cmd, args) => execFileSync(cmd, args, { stdio: 'inherit', cwd: root });
+
+// Run a command through the shell (execSync uses a string, so the shell resolves
+// the .cmd shims on Windows). We use a string rather than execFileSync(file,
+// args, {shell:true}) on purpose: Node 24 refuses to execFile a .cmd without a
+// shell (EINVAL), and the args-array-with-shell form is deprecated (DEP0190).
+// All pieces are controlled (validated package / version / tag, repo-local
+// paths) and contain no spaces.
+const inDir = (parts) => execSync(parts.join(' '), { stdio: 'inherit', cwd: absPkgDir });
+const atRoot = (parts) => execSync(parts.join(' '), { stdio: 'inherit', cwd: root });
 
 const version =
   values.version || JSON.parse(readFileSync(resolve(absPkgDir, 'package.json'), 'utf8')).version;
@@ -88,12 +95,12 @@ process.stdout.write(`\n▶ Bootstrap publish ${values.package}@${version} (${pk
 
 try {
   if (values.version) {
-    inDir(npm, ['version', values.version, '--no-git-tag-version', '--allow-same-version']);
+    inDir(['npm', 'version', values.version, '--no-git-tag-version', '--allow-same-version']);
   }
   // Build the package explicitly (pnpm workspace), then publish from its dir.
-  atRoot(pnpm, ['--filter', values.package, 'build']);
+  atRoot(['pnpm', '--filter', values.package, 'build']);
   // Interactive — completes npm 2FA (passkey/OTP) in the browser.
-  inDir(npm, ['publish', '--access', 'public', '--tag', values.tag]);
+  inDir(['npm', 'publish', '--access', 'public', '--tag', values.tag]);
   process.stdout.write(`\n✓ Listed ${values.package}@${version}\n`);
   process.stdout.write(
     `Next: add the Trusted Publisher on npmjs (repo + nodejs-release.yml). Ongoing\n` +
@@ -103,7 +110,7 @@ try {
   if (values.version) {
     // Restore the placeholder version so the working tree stays clean.
     try {
-      atRoot('git', ['checkout', '--', `${pkgDir}/package.json`]);
+      execSync(`git checkout -- ${pkgDir}/package.json`, { stdio: 'inherit', cwd: root });
     } catch {
       /* git unavailable / nothing to restore — ignore */
     }
