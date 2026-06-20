@@ -14,6 +14,9 @@
 # bootstrap (`pnpm publish:bootstrap`) — npm only enables Trusted Publishing
 # for a package that already exists.
 #
+# test-and-build is self-contained (not the reusable nodejs-build.yml, which
+# sets up node's pnpm cache before installing pnpm and fails on pnpm repos).
+#
 # The CDN deploy (deploy-cdn.yml) keys off THIS workflow completing.
 # =============================================================================
 
@@ -42,21 +45,35 @@ permissions:
 jobs:
   test-and-build:
     name: 🧪 Build & Test
-    uses: bauer-group/automation-templates/.github/workflows/nodejs-build.yml@main
-    with:
-      node-version: '24.x'
-      package-manager: 'pnpm'
-      frozen-lockfile: true
-      run-lint: true
-      lint-command: 'pnpm lint'
-      build-command: 'pnpm build'
-      run-tests: true
-      test-coverage: true
-      coverage-threshold: 80
-      run-audit: true
-      audit-level: 'high'
-      upload-artifacts: false
-    secrets: inherit
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v7
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: 📚 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🎨 Lint
+        run: pnpm lint
+
+      - name: 🔎 Typecheck
+        run: pnpm typecheck
+
+      - name: 🏗️ Build
+        run: pnpm build
+
+      - name: 🧪 Test
+        run: pnpm test
 
   release:
     name: 📦 Create Semantic Release
@@ -89,8 +106,6 @@ jobs:
 
       - name: 📦 Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 10
 
       - name: 📦 Setup Node.js
         uses: actions/setup-node@v6

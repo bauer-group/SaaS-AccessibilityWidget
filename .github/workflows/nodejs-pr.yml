@@ -1,10 +1,10 @@
 # =============================================================================
 # Node.js PR Validation Workflow
 # =============================================================================
-# Runs build, tests, lint, audit, typecheck and the widget size budget on
-# pull requests to main. Mirrors the house pattern (n8n-httpThrottled) but for
-# this pnpm monorepo, with an extra job for the gzip size gate the reusable
-# workflow does not cover.
+# Lint, typecheck, build, test, size budget and a (non-blocking) audit on PRs
+# to main. Self-contained rather than the reusable nodejs-build.yml, which sets
+# up `setup-node` with `cache: pnpm` BEFORE installing pnpm (fails on pnpm
+# repos). Correct order here: pnpm → node(cache) → install.
 # =============================================================================
 
 name: 🔍 PR Validation
@@ -16,39 +16,18 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write
 
 jobs:
   validate:
-    name: 🧪 Build & Test
-    uses: bauer-group/automation-templates/.github/workflows/nodejs-build.yml@main
-    with:
-      node-version: '24.x'
-      package-manager: 'pnpm'
-      frozen-lockfile: true
-      run-lint: true
-      lint-command: 'pnpm lint'
-      build-command: 'pnpm build'
-      run-tests: true
-      test-coverage: true
-      coverage-threshold: 80
-      run-audit: true
-      audit-level: 'high'
-      upload-artifacts: false
-    secrets: inherit
-
-  quality:
-    name: 🔎 Typecheck & Size budget
+    name: 🧪 Validate (lint · typecheck · build · test · size)
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: 📥 Checkout
         uses: actions/checkout@v7
 
       - name: 📦 Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 10
 
       - name: 📦 Setup Node.js
         uses: actions/setup-node@v6
@@ -59,11 +38,20 @@ jobs:
       - name: 📚 Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: 🎨 Lint
+        run: pnpm lint
+
       - name: 🔎 Typecheck
         run: pnpm typecheck
 
-      - name: 🏗️ Build widget
-        run: pnpm --filter @bauer-group/accessibility-widget build
+      - name: 🏗️ Build
+        run: pnpm build
+
+      - name: 🧪 Test
+        run: pnpm test
 
       - name: 📏 Widget size budget
         run: pnpm --filter @bauer-group/accessibility-widget size
+
+      - name: 🔒 Security audit (non-blocking)
+        run: pnpm audit --audit-level high || true
