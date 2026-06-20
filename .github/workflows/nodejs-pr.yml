@@ -37,8 +37,10 @@ jobs:
       build-command: 'pnpm build && pnpm --filter @bauer-group/accessibility-widget size'
       run-tests: true
       test-command: 'pnpm test'
-      run-audit: true
-      audit-level: 'high'
-      audit-production-only: true
+      # No workspace audit: the published core ships ZERO runtime deps (no
+      # supply-chain surface). A workspace audit only flags build tooling in the
+      # framework integrations (shell-quote/devalue/ws), which move to their own
+      # repo and are audited there.
+      run-audit: false
       upload-artifacts: false
     secrets: inherit
