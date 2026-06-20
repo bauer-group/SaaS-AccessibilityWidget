@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Lazy-loading Accessibility-Widget nach BFSG/EN 301 549/WCAG 2.2 AA. Loader ~4 KB gzip, Core ~14 KB gzip. Kein Tracking, kein Cookie, kein DOM-/ARIA-Override.",
   "license": "MIT",
-  "author": "BAUER GROUP <info@de.bauer-group.com>",
+  "author": "BAUER GROUP <info@bauer-group.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/bauer-group/SaaS-AccessibilityWidget.git",

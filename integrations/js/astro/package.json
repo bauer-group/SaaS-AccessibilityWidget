@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Astro Component für das BAUER GROUP Accessibility Widget.",
   "license": "MIT",
-  "author": "BAUER GROUP <info@de.bauer-group.com>",
+  "author": "BAUER GROUP <info@bauer-group.com>",
   "type": "module",
   "main": "./src/AccessibilityWidget.astro",
   "files": [

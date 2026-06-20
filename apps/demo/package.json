@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Interaktive Demo + Scanner-Testziel für das BAUER GROUP Accessibility Widget.",
   "license": "MIT",
-  "author": "BAUER GROUP <info@de.bauer-group.com>",
+  "author": "BAUER GROUP <info@bauer-group.com>",
   "private": true,
   "type": "module",
   "engines": {

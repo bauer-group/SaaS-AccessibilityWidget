@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Svelte 5 Component + Action für das BAUER GROUP Accessibility Widget.",
   "license": "MIT",
-  "author": "BAUER GROUP <info@de.bauer-group.com>",
+  "author": "BAUER GROUP <info@bauer-group.com>",
   "type": "module",
   "main": "./src/index.js",
   "svelte": "./src/index.js",
