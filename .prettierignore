@@ -8,3 +8,9 @@ pnpm-lock.yaml
 draft
 *.min.js
 *.min.css
+
+# Tool-managed / auto-generated — semantic-release rewrites these on each
+# release in its own (non-prettier) format, which would otherwise fail the
+# format-check gate every release.
+CHANGELOG.md
+packages/widget/package.json
