@@ -20,7 +20,11 @@ function buildConfig(overrides: WidgetConfig = {}): ResolvedConfig {
   return resolveConfig({ storageKey: STORAGE, ...overrides }, 'en-US');
 }
 
-function mount(state?: WidgetState, cfgOverride?: WidgetConfig, locale: 'de' | 'en' = 'en'): {
+function mount(
+  state?: WidgetState,
+  cfgOverride?: WidgetConfig,
+  locale: 'de' | 'en' = 'en',
+): {
   handle: PanelHandle;
   onClose: ReturnType<typeof vi.fn>;
   onStateChange: ReturnType<typeof vi.fn>;
@@ -107,7 +111,9 @@ describe('feature toggling', () => {
 
     btn?.click(); // → step 1
     expect(
-      document.querySelector<HTMLButtonElement>('[data-feature="fontSize"]')?.getAttribute('aria-valuenow'),
+      document
+        .querySelector<HTMLButtonElement>('[data-feature="fontSize"]')
+        ?.getAttribute('aria-valuenow'),
     ).toBe('1');
   });
 
@@ -151,7 +157,9 @@ describe('locale switching', () => {
 describe('drag attachment across rerenders', () => {
   it('the header carries the drag-handle attribute immediately', () => {
     mounted = mount().handle;
-    expect(document.querySelector('header.aw-header')?.getAttribute('data-aw-drag-handle')).toBe('1');
+    expect(document.querySelector('header.aw-header')?.getAttribute('data-aw-drag-handle')).toBe(
+      '1',
+    );
   });
 
   it('after a feature toggle, the re-rendered header still has the drag handle', () => {
@@ -161,9 +169,9 @@ describe('drag attachment across rerenders', () => {
     const { handle } = mount();
     mounted = handle;
     document.querySelector<HTMLButtonElement>('[data-feature="grayscale"]')?.click();
-    expect(
-      document.querySelector('header.aw-header')?.getAttribute('data-aw-drag-handle'),
-    ).toBe('1');
+    expect(document.querySelector('header.aw-header')?.getAttribute('data-aw-drag-handle')).toBe(
+      '1',
+    );
   });
 });
 
@@ -210,7 +218,9 @@ describe('oversized toggle', () => {
     mounted = handle;
     const btn = document.querySelector<HTMLButtonElement>('[data-aw-action="oversized"]');
     btn?.click();
-    expect(document.querySelector('[data-aw-panel]')?.classList.contains('aw-panel--xl')).toBe(true);
+    expect(document.querySelector('[data-aw-panel]')?.classList.contains('aw-panel--xl')).toBe(
+      true,
+    );
     expect(loadState(STORAGE).oversized).toBe(true);
   });
 });
@@ -257,7 +267,9 @@ describe('footer: disclaimer + powered-by', () => {
     const p = document.querySelector<HTMLParagraphElement>('.aw-poweredby');
     expect(p).not.toBeNull();
     const a = p?.querySelector<HTMLAnchorElement>('a');
-    expect(a?.getAttribute('href')).toBe('https://accessibility-widget.app.professional-hosting.com');
+    expect(a?.getAttribute('href')).toBe(
+      'https://accessibility-widget.app.professional-hosting.com',
+    );
     expect(a?.getAttribute('target')).toBe('_blank');
     expect(a?.getAttribute('rel')).toBe('noopener noreferrer');
     expect(a?.textContent).toBe('BAUER GROUP Accessibility-Widget');

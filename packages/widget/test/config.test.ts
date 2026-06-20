@@ -50,7 +50,10 @@ describe('resolveConfig — offset + zIndex', () => {
   });
 
   it('falls back to default offset when non-finite', () => {
-    expect(resolveConfig({ offset: { x: NaN, y: Infinity } }, 'de').offset).toEqual({ x: 20, y: 20 });
+    expect(resolveConfig({ offset: { x: NaN, y: Infinity } }, 'de').offset).toEqual({
+      x: 20,
+      y: 20,
+    });
   });
 
   it('keeps user-supplied zIndex', () => {
@@ -68,8 +71,12 @@ describe('resolveConfig — color', () => {
   });
 
   it('accepts CSS functional forms', () => {
-    expect(resolveConfig({ primaryColor: 'rgb(10, 20, 30)' }, 'de').primaryColor).toBe('rgb(10, 20, 30)');
-    expect(resolveConfig({ primaryColor: 'oklch(0.7 0.2 250)' }, 'de').primaryColor).toBe('oklch(0.7 0.2 250)');
+    expect(resolveConfig({ primaryColor: 'rgb(10, 20, 30)' }, 'de').primaryColor).toBe(
+      'rgb(10, 20, 30)',
+    );
+    expect(resolveConfig({ primaryColor: 'oklch(0.7 0.2 250)' }, 'de').primaryColor).toBe(
+      'oklch(0.7 0.2 250)',
+    );
   });
 
   it('falls back when empty', () => {
@@ -100,10 +107,7 @@ describe('resolveConfig — disabledFeatures', () => {
   });
 
   it('silently drops unknown feature ids', () => {
-    const cfg = resolveConfig(
-      { disabledFeatures: ['tts', 'not-a-real-feature' as never] },
-      'de',
-    );
+    const cfg = resolveConfig({ disabledFeatures: ['tts', 'not-a-real-feature' as never] }, 'de');
     expect(cfg.disabledFeatures.has('tts')).toBe(true);
     expect(cfg.disabledFeatures.size).toBe(1);
   });
@@ -134,8 +138,12 @@ describe('resolveConfig — initialFeatures', () => {
 
 describe('resolveConfig — statementUrl', () => {
   it('passes through normal URLs', () => {
-    expect(resolveConfig({ statementUrl: '/accessibility' }, 'de').statementUrl).toBe('/accessibility');
-    expect(resolveConfig({ statementUrl: 'https://example.com/a11y' }, 'de').statementUrl).toBe('https://example.com/a11y');
+    expect(resolveConfig({ statementUrl: '/accessibility' }, 'de').statementUrl).toBe(
+      '/accessibility',
+    );
+    expect(resolveConfig({ statementUrl: 'https://example.com/a11y' }, 'de').statementUrl).toBe(
+      'https://example.com/a11y',
+    );
   });
 
   it('blocks javascript: scheme', () => {
@@ -143,7 +151,9 @@ describe('resolveConfig — statementUrl', () => {
   });
 
   it('blocks data: scheme', () => {
-    expect(resolveConfig({ statementUrl: 'data:text/html,<script>' }, 'de').statementUrl).toBeNull();
+    expect(
+      resolveConfig({ statementUrl: 'data:text/html,<script>' }, 'de').statementUrl,
+    ).toBeNull();
   });
 
   it('treats empty / whitespace as not set', () => {
@@ -196,10 +206,7 @@ describe('resolveConfig — draggableFab', () => {
 
 describe('resolveConfig — SRI', () => {
   it('keeps user-supplied coreIntegrity + cssIntegrity', () => {
-    const cfg = resolveConfig(
-      { coreIntegrity: 'sha384-CORE', cssIntegrity: 'sha384-CSS' },
-      'de',
-    );
+    const cfg = resolveConfig({ coreIntegrity: 'sha384-CORE', cssIntegrity: 'sha384-CSS' }, 'de');
     expect(cfg.coreIntegrity).toBe('sha384-CORE');
     expect(cfg.cssIntegrity).toBe('sha384-CSS');
   });

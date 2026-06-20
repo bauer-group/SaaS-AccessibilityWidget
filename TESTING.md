@@ -2,19 +2,19 @@
 
 ## Aktueller Stand (Stand 2026-04)
 
-| Paket | Test-Runner | Abdeckung |
-|---|---|---|
-| `packages/widget` | Vitest (happy-dom) | 13/18 passing — 5 preexistierende happy-dom-Fehler in `state.test.ts` (`localStorage.clear is not a function`) |
-| `apps/demo` | — | Kein Test (nur Testziel für Widget selbst) |
-| `integrations/js/react` | — | Kein Test (Wrapper-Logik trivial) |
-| `integrations/js/vue` | — | Kein Test |
-| `integrations/js/angular` | — | Kein Test |
-| `integrations/js/svelte` | — | Kein Test |
-| `integrations/js/nextjs` | — | Kein Test |
-| `integrations/js/nuxt` | — | Kein Test |
-| `integrations/js/astro` | — | Kein Test (Astro-Komponente, kein Build nötig) |
-| `integrations/cms/*` | — | Kein Test (PHP-Pakete) |
-| `integrations/shops/*` | — | Kein Test (Liquid/PHP-Pakete) |
+| Paket                     | Test-Runner        | Abdeckung                                                                                                      |
+| ------------------------- | ------------------ | -------------------------------------------------------------------------------------------------------------- |
+| `packages/widget`         | Vitest (happy-dom) | 13/18 passing — 5 preexistierende happy-dom-Fehler in `state.test.ts` (`localStorage.clear is not a function`) |
+| `apps/demo`               | —                  | Kein Test (nur Testziel für Widget selbst)                                                                     |
+| `integrations/js/react`   | —                  | Kein Test (Wrapper-Logik trivial)                                                                              |
+| `integrations/js/vue`     | —                  | Kein Test                                                                                                      |
+| `integrations/js/angular` | —                  | Kein Test                                                                                                      |
+| `integrations/js/svelte`  | —                  | Kein Test                                                                                                      |
+| `integrations/js/nextjs`  | —                  | Kein Test                                                                                                      |
+| `integrations/js/nuxt`    | —                  | Kein Test                                                                                                      |
+| `integrations/js/astro`   | —                  | Kein Test (Astro-Komponente, kein Build nötig)                                                                 |
+| `integrations/cms/*`      | —                  | Kein Test (PHP-Pakete)                                                                                         |
+| `integrations/shops/*`    | —                  | Kein Test (Liquid/PHP-Pakete)                                                                                  |
 
 ## Bekannte Lücken — mit Begründung
 
@@ -27,6 +27,7 @@
 **Workaround**: Tests laufen lassen, bekannt ignorieren. Upgrade auf jsdom hätte andere Trade-offs (langsamer, andere Rendering-Quirks).
 
 **Mögliche Fixes**:
+
 - `happy-dom` auf eine Version mit gefixtem localStorage updaten (prüfen, ob jemand das gefixt hat)
 - Eigener `beforeEach` mit manuellem Reset: `Object.keys(localStorage).forEach(k => delete localStorage[k])`
 - Migration zu jsdom
@@ -38,6 +39,7 @@ Ein Ticket dazu ist ein guter Einstiegs-PR für Beitragende.
 **Begründung**: Die Wrapper-Logik ist 10-20 Zeilen pro Integration und im Wesentlichen identisch (Window-Property setzen, Script-Tag einfügen). Integration-Tests auf **echten** Framework-Setups (Storybook + Browser) würden deutlich mehr Wert bringen als Unit-Tests der Wrapper.
 
 **Geplant für v1.1**:
+
 - Playwright-E2E gegen jedes Integration in einer minimalen Host-App
 - Snapshot-Tests für die SSR-Rendering-Pfade (Next.js, Nuxt, Astro)
 

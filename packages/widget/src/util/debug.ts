@@ -7,6 +7,6 @@
 export function warnIfDebug(message: string, error?: unknown): void {
   if (typeof window === 'undefined') return;
   if (!window.AccessibilityWidgetConfig?.debug) return;
-  // eslint-disable-next-line no-console
+
   console.warn(`[aw] ${message}`, error);
 }

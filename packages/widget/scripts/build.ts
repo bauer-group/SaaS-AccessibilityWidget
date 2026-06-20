@@ -82,7 +82,11 @@ async function buildCss(): Promise<void> {
  *     Step-2 plugin sync reads (SRI + version baked into wrapper/plugin defaults).
  */
 async function writeIntegrity(version: string): Promise<void> {
-  const files = ['accessibility-widget-loader.min.js', 'accessibility-widget-core.min.js', 'accessibility-widget.min.css'];
+  const files = [
+    'accessibility-widget-loader.min.js',
+    'accessibility-widget-core.min.js',
+    'accessibility-widget.min.css',
+  ];
   const lines: string[] = [
     'BAUER GROUP Accessibility Widget — SRI Hashes (sha384, base64)',
     `Version: ${version}`,
@@ -112,7 +116,9 @@ async function main(): Promise<void> {
   // Version source: AW_WIDGET_VERSION (set by CI from the semantic-release git
   // tag) → packages/widget/package.json (semantic-release keeps it in sync via
   // pkgRoot; also the local-build fallback). The leading "v" of a tag is stripped.
-  const pkg: { version: string } = JSON.parse(await readFile(resolve(root, 'package.json'), 'utf8'));
+  const pkg: { version: string } = JSON.parse(
+    await readFile(resolve(root, 'package.json'), 'utf8'),
+  );
   const version = (process.env.AW_WIDGET_VERSION || pkg.version).replace(/^v/, '');
 
   await mkdir(dist, { recursive: true });

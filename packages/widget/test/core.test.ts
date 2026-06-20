@@ -9,7 +9,6 @@
  * `window.AccessibilityWidgetConfig` before each suite.
  */
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
-import type { WidgetConfig, WidgetState } from '../src/types/index.js';
 import { onWidgetEvent } from '../src/util/events.js';
 import { loadState, saveState } from '../src/state.js';
 
@@ -85,7 +84,10 @@ describe('core.applyProfile', () => {
   });
 
   it('strips features the host has disabled, even if the profile requests them', () => {
-    window.AccessibilityWidgetConfig = { storageKey: STORAGE, disabledFeatures: ['tts', 'fontSize'] };
+    window.AccessibilityWidgetConfig = {
+      storageKey: STORAGE,
+      disabledFeatures: ['tts', 'fontSize'],
+    };
     api().applyProfile('visionImpaired');
     const saved = loadState(STORAGE);
     // Profile wants fontSize: true, but config.disabledFeatures forbids it.

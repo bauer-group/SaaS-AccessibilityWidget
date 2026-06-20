@@ -33,8 +33,34 @@ import { ro } from './ro.js';
 import { uk } from './uk.js';
 
 export const translations: Record<Locale, Translation> = {
-  de, en, fr, es, it, pl, tr, ar,
-  zh, hi, pt, bn, ru, ja, ko, vi, fa, ur, th, id, he, nl, sv, cs, el, hu, ro, uk,
+  de,
+  en,
+  fr,
+  es,
+  it,
+  pl,
+  tr,
+  ar,
+  zh,
+  hi,
+  pt,
+  bn,
+  ru,
+  ja,
+  ko,
+  vi,
+  fa,
+  ur,
+  th,
+  id,
+  he,
+  nl,
+  sv,
+  cs,
+  el,
+  hu,
+  ro,
+  uk,
 };
 
 export function t(locale: Locale): Translation {

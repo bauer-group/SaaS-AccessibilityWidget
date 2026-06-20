@@ -82,7 +82,11 @@ export function makeDraggable(opts: DraggableOptions): DraggableHandle {
     if (ev.button !== 0 && ev.pointerType === 'mouse') return;
     // Don't steal clicks from interactive controls within the handle.
     const target = ev.target as Element | null;
-    if (target && target.closest('button, a, input, select, [role="button"]') && target !== handle) {
+    if (
+      target &&
+      target.closest('button, a, input, select, [role="button"]') &&
+      target !== handle
+    ) {
       return;
     }
     const rect = root.getBoundingClientRect();

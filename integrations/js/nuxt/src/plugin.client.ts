@@ -38,7 +38,8 @@ export default defineNuxtPlugin(() => {
   const sri = cfg.sri ?? {};
 
   (window as unknown as { AccessibilityWidgetConfig?: WidgetConfig }).AccessibilityWidgetConfig = {
-    ...((window as unknown as { AccessibilityWidgetConfig?: WidgetConfig }).AccessibilityWidgetConfig ?? {}),
+    ...((window as unknown as { AccessibilityWidgetConfig?: WidgetConfig })
+      .AccessibilityWidgetConfig ?? {}),
     ...(cfg.config ?? {}),
   };
 

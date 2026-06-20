@@ -1,5 +1,8 @@
 'use client';
-import { AccessibilityWidget, type AccessibilityWidgetProps } from '@bauer-group/accessibility-widget-react';
+import {
+  AccessibilityWidget,
+  type AccessibilityWidgetProps,
+} from '@bauer-group/accessibility-widget-react';
 
 /**
  * Drop into app/layout.tsx:

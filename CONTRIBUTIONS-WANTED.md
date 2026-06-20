@@ -42,26 +42,28 @@ Registrieren in `i18n/index.ts`, Test-Case in `test/i18n.test.ts`.
 **Verzeichnis**: `integrations/js/` oder `integrations/cms/` oder `integrations/shops/`
 
 **Aktuell vorhanden**:
+
 - **JS-Frameworks** (7): React, Vue, Angular, Svelte, Next.js, Nuxt, Astro
 - **CMS** (3): WordPress, TYPO3, Drupal
 - **Shops** (3): Shopify, Shopware, Magento
 
 **Mögliche Ergänzungen**:
 
-| Target | Warum sinnvoll | Aufwand |
-|---|---|---|
-| **Remix** / **SolidStart** / **Qwik** | Wachsende Meta-Frameworks | 30 min (Vorlage: React) |
-| **SvelteKit** (separate von Svelte) | SSR-Routing unterscheidet sich | 30 min |
-| **Laravel** Blade-Component | Größte PHP-Framework-Community | 60 min (Vorlage: TYPO3-PHP) |
-| **Symfony** Twig-Extension | Enterprise-PHP | 60 min |
-| **Rails** Engine / Hotwire Stimulus | Rails-Community hat A11y-Lücke | 90 min |
-| **Django** Template-Tag | Python-Webdev, überraschend großes Segment | 60 min |
-| **Hugo** / **Eleventy** / **Jekyll** Shortcode | Static-Site-Generators sind oft übersehen | 20 min |
-| **Joomla** / **Craft CMS** | Traditionelle CMS-Nischen | 60 min |
+| Target                                         | Warum sinnvoll                             | Aufwand                     |
+| ---------------------------------------------- | ------------------------------------------ | --------------------------- |
+| **Remix** / **SolidStart** / **Qwik**          | Wachsende Meta-Frameworks                  | 30 min (Vorlage: React)     |
+| **SvelteKit** (separate von Svelte)            | SSR-Routing unterscheidet sich             | 30 min                      |
+| **Laravel** Blade-Component                    | Größte PHP-Framework-Community             | 60 min (Vorlage: TYPO3-PHP) |
+| **Symfony** Twig-Extension                     | Enterprise-PHP                             | 60 min                      |
+| **Rails** Engine / Hotwire Stimulus            | Rails-Community hat A11y-Lücke             | 90 min                      |
+| **Django** Template-Tag                        | Python-Webdev, überraschend großes Segment | 60 min                      |
+| **Hugo** / **Eleventy** / **Jekyll** Shortcode | Static-Site-Generators sind oft übersehen  | 20 min                      |
+| **Joomla** / **Craft CMS**                     | Traditionelle CMS-Nischen                  | 60 min                      |
 
 **Muster** (JS): React/Vue sind identisch bis auf 20 Zeilen — schauen Sie `integrations/js/react/src/AccessibilityWidget.tsx` an und portieren Sie das Pattern.
 
 **Trade-offs**:
+
 - Peer-Dependency vs. gebündelt: Wir peeren die Host-Framework-Deps (kleiner Bundle)
 - SSR-Safety: Das Widget ist clientseitig — immer `typeof window`-Guards nutzen
 

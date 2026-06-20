@@ -13,7 +13,14 @@
         "endpoint": "https://1bd524dcd7193eb23ed910d24bb8e67e.eu.r2.cloudflarestorage.com",
         "bucket": "bg-widgets",
         "basePrefix": "accessibility-widget",
-        "include": [".min.js", ".min.js.map", ".min.css", ".min.css.map", "integrity.txt", "integrity.json"],
+        "include": [
+          ".min.js",
+          ".min.js.map",
+          ".min.css",
+          ".min.css.map",
+          "integrity.txt",
+          "integrity.json"
+        ],
         "accessKeyIdEnv": "R2_ACCESS_KEY_ID",
         "secretAccessKeyEnv": "R2_SECRET_ACCESS_KEY",
         "zoneIdEnv": "CF_ZONE_ID",

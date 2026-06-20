@@ -1,9 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import {
-  loadPanelPosition,
-  savePanelPosition,
-  makeDraggable,
-} from '../src/panel/drag.js';
+import { loadPanelPosition, savePanelPosition, makeDraggable } from '../src/panel/drag.js';
 
 const KEY = 'aw-test';
 
@@ -55,9 +51,8 @@ function installRoot(width = 420, height = 300): { root: HTMLDivElement; handle:
   root.getBoundingClientRect = () => rectFor(root);
   handle.getBoundingClientRect = () => rectFor(handle);
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   handle.setPointerCapture = () => {};
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+
   handle.releasePointerCapture = () => {};
   handle.hasPointerCapture = () => true;
 
@@ -136,7 +131,12 @@ describe('makeDraggable', () => {
     handle.appendChild(closeBtn);
     makeDraggable({ root, handle, storageKey: KEY });
 
-    dispatchPointer(closeBtn, 'pointerdown', { pointerId: 1, clientX: 150, clientY: 150, button: 0 });
+    dispatchPointer(closeBtn, 'pointerdown', {
+      pointerId: 1,
+      clientX: 150,
+      clientY: 150,
+      button: 0,
+    });
     dispatchPointer(handle, 'pointermove', { pointerId: 1, clientX: 300, clientY: 300 });
 
     // No drag should have happened — style.left stays empty (CSS rules apply)

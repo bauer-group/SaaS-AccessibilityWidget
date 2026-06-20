@@ -10,7 +10,10 @@ import { AccessibilityWidgetComponent } from '@bauer-group/accessibility-widget-
   selector: 'app-root',
   standalone: true,
   imports: [AccessibilityWidgetComponent],
-  template: `<accessibility-widget loaderSrc="/accessibility-widget/accessibility-widget-loader.min.js" [config]="{ locale: 'de' }" />`,
+  template: `<accessibility-widget
+    loaderSrc="/accessibility-widget/accessibility-widget-loader.min.js"
+    [config]="{ locale: 'de' }"
+  />`,
 })
 export class AppComponent {}
 ```

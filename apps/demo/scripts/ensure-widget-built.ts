@@ -23,9 +23,8 @@ if (existsSync(widgetLoader)) {
 }
 
 console.log('[ensure-widget-built] widget/dist missing — building…');
-const r = spawnSync(
-  'pnpm',
-  ['--filter', '@bauer-group/accessibility-widget', 'build'],
-  { stdio: 'inherit', shell: true },
-);
+const r = spawnSync('pnpm', ['--filter', '@bauer-group/accessibility-widget', 'build'], {
+  stdio: 'inherit',
+  shell: true,
+});
 process.exit(r.status ?? 1);

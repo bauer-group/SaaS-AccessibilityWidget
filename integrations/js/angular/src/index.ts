@@ -35,7 +35,10 @@ export class AccessibilityWidgetComponent implements OnInit {
 
   ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-    window.AccessibilityWidgetConfig = { ...(window.AccessibilityWidgetConfig ?? {}), ...this.config };
+    window.AccessibilityWidgetConfig = {
+      ...(window.AccessibilityWidgetConfig ?? {}),
+      ...this.config,
+    };
 
     if (this.cssHref && !document.querySelector('link[data-aw-css]')) {
       const link = document.createElement('link');
@@ -62,6 +65,7 @@ export class AccessibilityWidgetComponent implements OnInit {
   }
 }
 
-export const openAccessibilityWidget = (): Promise<void> | undefined => window.AccessibilityWidget?.open();
+export const openAccessibilityWidget = (): Promise<void> | undefined =>
+  window.AccessibilityWidget?.open();
 export const closeAccessibilityWidget = (): void => window.AccessibilityWidget?.close();
 export const resetAccessibilityWidget = (): void => window.AccessibilityWidget?.reset();

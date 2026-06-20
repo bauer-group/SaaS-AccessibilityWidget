@@ -30,7 +30,10 @@ export const AccessibilityWidget = defineComponent({
   setup(props) {
     onMounted(() => {
       if (typeof window === 'undefined') return;
-      window.AccessibilityWidgetConfig = { ...(window.AccessibilityWidgetConfig ?? {}), ...props.config };
+      window.AccessibilityWidgetConfig = {
+        ...(window.AccessibilityWidgetConfig ?? {}),
+        ...props.config,
+      };
 
       if (props.cssHref && !document.querySelector('link[data-aw-css]')) {
         const link = document.createElement('link');
@@ -59,6 +62,7 @@ export const AccessibilityWidget = defineComponent({
   },
 });
 
-export const openAccessibilityWidget = (): Promise<void> | undefined => window.AccessibilityWidget?.open();
+export const openAccessibilityWidget = (): Promise<void> | undefined =>
+  window.AccessibilityWidget?.open();
 export const closeAccessibilityWidget = (): void => window.AccessibilityWidget?.close();
 export const resetAccessibilityWidget = (): void => window.AccessibilityWidget?.reset();

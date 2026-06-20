@@ -6,7 +6,10 @@
   "author": "BAUER GROUP <info@de.bauer-group.com>",
   "type": "module",
   "main": "./src/AccessibilityWidget.astro",
-  "files": ["src", "README.md"],
+  "files": [
+    "src",
+    "README.md"
+  ],
   "peerDependencies": {
     "astro": ">=5"
   }

@@ -12,11 +12,7 @@
  */
 import type { FeatureId, WidgetConfig, WidgetState, Locale } from './types/index.js';
 import { buildCriticalCss } from './styles/critical.js';
-import {
-  onWidgetEvent,
-  type WidgetEventMap,
-  type WidgetEventName,
-} from './util/events.js';
+import { onWidgetEvent, type WidgetEventMap, type WidgetEventName } from './util/events.js';
 
 type CoreApi = NonNullable<Window['AccessibilityWidgetCore']>;
 
@@ -120,7 +116,9 @@ function boot(): void {
   if (hasPersistedSettings()) {
     // user has settings → warm core in idle time so next open is instant
     const idle = (cb: () => void) => {
-      const w = window as unknown as { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number };
+      const w = window as unknown as {
+        requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number;
+      };
       if (typeof w.requestIdleCallback === 'function') w.requestIdleCallback(cb, { timeout: 2000 });
       else setTimeout(cb, 1000);
     };
@@ -525,10 +523,7 @@ const publicApi = {
    * Events dispatch as CustomEvent on document — consumers can also use
    * `document.addEventListener('accessibility-widget:<name>', …)` directly.
    */
-  on<K extends WidgetEventName>(
-    name: K,
-    handler: (detail: WidgetEventMap[K]) => void,
-  ): () => void {
+  on<K extends WidgetEventName>(name: K, handler: (detail: WidgetEventMap[K]) => void): () => void {
     return onWidgetEvent(name, handler);
   },
   version: __AW_VERSION__,

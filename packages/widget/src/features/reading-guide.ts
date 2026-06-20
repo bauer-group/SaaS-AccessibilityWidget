@@ -8,7 +8,7 @@ export function readingGuideApply(on: boolean): void {
     guideEl.setAttribute('aria-hidden', 'true');
     document.body.appendChild(guideEl);
     handler = (e) => {
-      const y = 'clientY' in e ? e.clientY : e.touches[0]?.clientY ?? 0;
+      const y = 'clientY' in e ? e.clientY : (e.touches[0]?.clientY ?? 0);
       guideEl!.style.top = `${y - 16}px`;
     };
     document.addEventListener('mousemove', handler as EventListener, { passive: true });

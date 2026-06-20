@@ -4,18 +4,18 @@ Interaktive Landing-Page, Runtime-API-Playground, Integration-Showcase und Scann
 
 ## Was die Demo zeigt
 
-| Sektion | Zweck |
-|---|---|
-| Hero + Status-Karte | 1-Line-Integration + Bundle-Sizes auf einen Blick |
+| Sektion               | Zweck                                                                                                                    |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Hero + Status-Karte   | 1-Line-Integration + Bundle-Sizes auf einen Blick                                                                        |
 | Profile Quick-Actions | 6 Buttons, die via `AccessibilityWidget.applyProfile()` direkt auf der Demo-Seite feuern — ohne erst das Panel zu öffnen |
-| Live-Beispielinhalt | Text, Links, Animation, die sofort auf aktive Features reagieren |
-| Runtime-API-Explorer | Interaktive Buttons für jede der 9 `window.AccessibilityWidget.*`-Methoden mit Live-Feedback |
-| Event-Stream | Live-Log der 6 CustomEvent-Typen, die das Widget dispatch't (`stateChange`, `profileApplied`, …) |
-| Locale-Switcher | Dropdown mit allen 28 Locales in nativem Namen; nutzt die neue `setLocale()`-API (kein Reload) |
-| Integration-Tabs | Copy-Buttons für HTML, React, Vue, WordPress, Shopify Snippets |
-| Live-State-Panel | JSON-Dump von `getState()` mit 500 ms Polling |
-| Compliance-Karten | BFSG · EN 301 549 · WCAG 2.2 AA mit Deep-Links |
-| Scanner-Testzone | Collapsible, enthält **bewusst** WCAG-Violations für axe/pa11y/Lighthouse |
+| Live-Beispielinhalt   | Text, Links, Animation, die sofort auf aktive Features reagieren                                                         |
+| Runtime-API-Explorer  | Interaktive Buttons für jede der 9 `window.AccessibilityWidget.*`-Methoden mit Live-Feedback                             |
+| Event-Stream          | Live-Log der 6 CustomEvent-Typen, die das Widget dispatch't (`stateChange`, `profileApplied`, …)                         |
+| Locale-Switcher       | Dropdown mit allen 28 Locales in nativem Namen; nutzt die neue `setLocale()`-API (kein Reload)                           |
+| Integration-Tabs      | Copy-Buttons für HTML, React, Vue, WordPress, Shopify Snippets                                                           |
+| Live-State-Panel      | JSON-Dump von `getState()` mit 500 ms Polling                                                                            |
+| Compliance-Karten     | BFSG · EN 301 549 · WCAG 2.2 AA mit Deep-Links                                                                           |
+| Scanner-Testzone      | Collapsible, enthält **bewusst** WCAG-Violations für axe/pa11y/Lighthouse                                                |
 
 ## Dev-Workflow
 

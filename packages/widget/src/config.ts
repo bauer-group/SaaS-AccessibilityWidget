@@ -53,7 +53,8 @@ const DEFAULTS = {
 // Accepts #rgb, #rrggbb, #rrggbbaa, rgb/rgba/hsl/hsla/color() functional forms,
 // and named colors (anything CSS accepts). For the primaryColor field we
 // want ANY valid CSS color, so the regex is permissive — just not empty.
-const NON_TRIVIAL_COLOR_RE = /^(?:#[0-9a-f]{3,8}|(?:rgb|rgba|hsl|hsla|color|lab|lch|oklab|oklch)\s*\(.+\)|[a-z]+)$/i;
+const NON_TRIVIAL_COLOR_RE =
+  /^(?:#[0-9a-f]{3,8}|(?:rgb|rgba|hsl|hsla|color|lab|lch|oklab|oklch)\s*\(.+\)|[a-z]+)$/i;
 
 export function resolveConfig(input: WidgetConfig | undefined, navLang: string): ResolvedConfig {
   const cfg = input ?? {};
@@ -85,21 +86,23 @@ export function resolveConfig(input: WidgetConfig | undefined, navLang: string):
 
 // ─── individual field resolvers ──────────────────────────────────────
 
-function resolveLocale(
-  requested: WidgetConfig['locale'],
-  navLang: string,
-  debug: boolean,
-): Locale {
+function resolveLocale(requested: WidgetConfig['locale'], navLang: string, debug: boolean): Locale {
   if (!requested || requested === 'auto') return normalizeLocale(navLang, 'de');
   if (isLocale(requested)) return requested;
-  if (debug) warnIfDebug(`config.locale "${String(requested)}" is not supported; falling back to auto-detect`);
+  if (debug)
+    warnIfDebug(
+      `config.locale "${String(requested)}" is not supported; falling back to auto-detect`,
+    );
   return normalizeLocale(navLang, 'de');
 }
 
 function resolvePosition(requested: WidgetConfig['position'], debug: boolean): Position {
   if (!requested) return DEFAULTS.position;
   if ((POSITIONS as readonly string[]).includes(requested)) return requested;
-  if (debug) warnIfDebug(`config.position "${String(requested)}" is not one of ${POSITIONS.join(', ')}; using default`);
+  if (debug)
+    warnIfDebug(
+      `config.position "${String(requested)}" is not one of ${POSITIONS.join(', ')}; using default`,
+    );
   return DEFAULTS.position;
 }
 
@@ -117,10 +120,7 @@ function resolveZIndex(requested: WidgetConfig['zIndex'], debug: boolean): numbe
   return finiteOr(requested, DEFAULTS.zIndex, 'config.zIndex', debug);
 }
 
-function resolvePrimaryColor(
-  requested: WidgetConfig['primaryColor'],
-  debug: boolean,
-): string {
+function resolvePrimaryColor(requested: WidgetConfig['primaryColor'], debug: boolean): string {
   if (requested === undefined) return DEFAULTS.primaryColor;
   const trimmed = String(requested).trim();
   if (!trimmed) {
@@ -128,7 +128,10 @@ function resolvePrimaryColor(
     return DEFAULTS.primaryColor;
   }
   if (!NON_TRIVIAL_COLOR_RE.test(trimmed)) {
-    if (debug) warnIfDebug(`config.primaryColor "${trimmed}" does not look like a CSS color; browsers may reject it`);
+    if (debug)
+      warnIfDebug(
+        `config.primaryColor "${trimmed}" does not look like a CSS color; browsers may reject it`,
+      );
   }
   return trimmed;
 }

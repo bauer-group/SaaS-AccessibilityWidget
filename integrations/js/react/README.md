@@ -13,7 +13,10 @@ Und die Widget-Assets (`accessibility-widget-loader.min.js`, `accessibility-widg
 ## Nutzung
 
 ```tsx
-import { AccessibilityWidget, openAccessibilityWidget } from '@bauer-group/accessibility-widget-react';
+import {
+  AccessibilityWidget,
+  openAccessibilityWidget,
+} from '@bauer-group/accessibility-widget-react';
 
 export function App() {
   return (

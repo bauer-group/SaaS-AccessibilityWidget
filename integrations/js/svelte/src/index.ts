@@ -35,7 +35,10 @@ export function accessibilityWidget(
   const sri = opts.sri ?? {};
 
   if (opts.config) {
-    window.AccessibilityWidgetConfig = { ...(window.AccessibilityWidgetConfig ?? {}), ...opts.config };
+    window.AccessibilityWidgetConfig = {
+      ...(window.AccessibilityWidgetConfig ?? {}),
+      ...opts.config,
+    };
   }
   if (cssHref && !document.querySelector('link[data-aw-css]')) {
     const link = document.createElement('link');
@@ -62,6 +65,7 @@ export function accessibilityWidget(
   return { destroy() {} };
 }
 
-export const openAccessibilityWidget = (): Promise<void> | undefined => window.AccessibilityWidget?.open();
+export const openAccessibilityWidget = (): Promise<void> | undefined =>
+  window.AccessibilityWidget?.open();
 export const closeAccessibilityWidget = (): void => window.AccessibilityWidget?.close();
 export const resetAccessibilityWidget = (): void => window.AccessibilityWidget?.reset();

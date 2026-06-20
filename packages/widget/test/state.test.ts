@@ -1,5 +1,12 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { createDefaultState, loadState, saveState, cycleStep, STEPS, hasAnyFeatureOn } from '../src/state.js';
+import {
+  createDefaultState,
+  loadState,
+  saveState,
+  cycleStep,
+  STEPS,
+  hasAnyFeatureOn,
+} from '../src/state.js';
 
 describe('state module', () => {
   beforeEach(() => localStorage.clear());

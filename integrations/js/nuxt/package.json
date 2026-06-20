@@ -6,7 +6,10 @@
   "author": "BAUER GROUP <info@de.bauer-group.com>",
   "type": "module",
   "main": "./src/plugin.client.ts",
-  "files": ["src", "README.md"],
+  "files": [
+    "src",
+    "README.md"
+  ],
   "scripts": {
     "typecheck": "tsc --noEmit"
   },

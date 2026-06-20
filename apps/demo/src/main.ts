@@ -282,8 +282,7 @@ function wireApiExplorer(): void {
 
   const render = (label: string, value: unknown): void => {
     const ts = new Date().toLocaleTimeString(undefined, { hour12: false });
-    const serialized =
-      typeof value === 'object' ? JSON.stringify(value, null, 2) : String(value);
+    const serialized = typeof value === 'object' ? JSON.stringify(value, null, 2) : String(value);
     output.textContent = `[${ts}] ${label}\n\n${serialized}`;
   };
 
@@ -325,7 +324,14 @@ function wireApiExplorer(): void {
 // ---------------------------------------------------------------------------
 // Event-Stream — subscribes to all 6 widget events + renders live log
 // ---------------------------------------------------------------------------
-const EVENT_NAMES = ['stateChange', 'open', 'close', 'profileApplied', 'localeChanged', 'reset'] as const;
+const EVENT_NAMES = [
+  'stateChange',
+  'open',
+  'close',
+  'profileApplied',
+  'localeChanged',
+  'reset',
+] as const;
 type EventName = (typeof EVENT_NAMES)[number];
 
 function wireEventStream(): void {

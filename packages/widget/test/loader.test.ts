@@ -22,7 +22,10 @@ declare global {
   }
 }
 
-async function bootLoader(config?: WidgetConfig, initialState?: WidgetState): Promise<HTMLButtonElement> {
+async function bootLoader(
+  config?: WidgetConfig,
+  initialState?: WidgetState,
+): Promise<HTMLButtonElement> {
   document.body.replaceChildren();
   document.head.querySelectorAll('[data-aw-css]').forEach((n) => n.remove());
   document.getElementById('aw-critical-css')?.remove();
@@ -70,33 +73,30 @@ describe('locale detection', () => {
   it('uses persisted state.locale as the highest-priority source', async () => {
     // State.locale wins over config.locale and html[lang] — this is the
     // runtime override path that setLocale() writes to.
-    const fab = await bootLoader(
-      { locale: 'en' },
-      {
-        features: {
-          fontSize: false,
-          lineHeight: false,
-          letterSpacing: false,
-          contrast: false,
-          grayscale: false,
-          invertColors: false,
-          dyslexiaFont: false,
-          highlightLinks: false,
-          pauseAnimations: false,
-          bigCursor: false,
-          focusOutline: false,
-          readingMask: false,
-          readingGuide: false,
-          tts: false,
-          structureNav: false,
-        },
-        fontSizeLevel: 1,
-        lineHeightLevel: 1.5,
-        letterSpacingLevel: 0,
-        contrastMode: 'off',
-        locale: 'ja',
-      } as WidgetState,
-    );
+    const fab = await bootLoader({ locale: 'en' }, {
+      features: {
+        fontSize: false,
+        lineHeight: false,
+        letterSpacing: false,
+        contrast: false,
+        grayscale: false,
+        invertColors: false,
+        dyslexiaFont: false,
+        highlightLinks: false,
+        pauseAnimations: false,
+        bigCursor: false,
+        focusOutline: false,
+        readingMask: false,
+        readingGuide: false,
+        tts: false,
+        structureNav: false,
+      },
+      fontSizeLevel: 1,
+      lineHeightLevel: 1.5,
+      letterSpacingLevel: 0,
+      contrastMode: 'off',
+      locale: 'ja',
+    } as WidgetState);
     // The FAB aria-label uses the localised LABEL — Japanese "アクセシビリティ設定".
     expect(fab.getAttribute('aria-label')).toContain('アクセシビリティ');
   });
@@ -107,10 +107,14 @@ describe('locale detection', () => {
   });
 
   it('rejects an invalid state.locale rather than trusting it blindly', async () => {
-    const fab = await bootLoader(
-      { locale: 'de' },
-      { features: {}, fontSizeLevel: 1, lineHeightLevel: 1.5, letterSpacingLevel: 0, contrastMode: 'off', locale: 'xx' as never } as unknown as WidgetState,
-    );
+    const fab = await bootLoader({ locale: 'de' }, {
+      features: {},
+      fontSizeLevel: 1,
+      lineHeightLevel: 1.5,
+      letterSpacingLevel: 0,
+      contrastMode: 'off',
+      locale: 'xx' as never,
+    } as unknown as WidgetState);
     // "xx" is not a supported locale — fall through to config.locale (de).
     expect(fab.getAttribute('aria-label')).toContain('Barrierefreiheit');
   });
@@ -167,16 +171,13 @@ describe('initialFeatures seeding', () => {
   });
 
   it('does NOT overwrite existing state', async () => {
-    await bootLoader(
-      { initialFeatures: { focusOutline: true } },
-      {
-        features: { grayscale: true },
-        fontSizeLevel: 1,
-        lineHeightLevel: 1.5,
-        letterSpacingLevel: 0,
-        contrastMode: 'off',
-      } as unknown as WidgetState,
-    );
+    await bootLoader({ initialFeatures: { focusOutline: true } }, {
+      features: { grayscale: true },
+      fontSizeLevel: 1,
+      lineHeightLevel: 1.5,
+      letterSpacingLevel: 0,
+      contrastMode: 'off',
+    } as unknown as WidgetState);
     const parsed = JSON.parse(localStorage.getItem('accessibility-widget')!) as {
       features: Record<string, boolean>;
     };
@@ -227,9 +228,9 @@ describe('FAB drag (config.draggableFab)', () => {
         toJSON: () => ({}),
       } as DOMRect;
     };
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+
     el.setPointerCapture = () => {};
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+
     el.releasePointerCapture = () => {};
   }
 
@@ -263,17 +264,14 @@ describe('FAB drag (config.draggableFab)', () => {
   });
 
   it('applies a persisted fabPosition on boot', async () => {
-    const fab = await bootLoader(
-      { draggableFab: true },
-      {
-        features: {},
-        fontSizeLevel: 1,
-        lineHeightLevel: 1.5,
-        letterSpacingLevel: 0,
-        contrastMode: 'off',
-        fabPosition: { x: 200, y: 150 },
-      } as unknown as WidgetState,
-    );
+    const fab = await bootLoader({ draggableFab: true }, {
+      features: {},
+      fontSizeLevel: 1,
+      lineHeightLevel: 1.5,
+      letterSpacingLevel: 0,
+      contrastMode: 'off',
+      fabPosition: { x: 200, y: 150 },
+    } as unknown as WidgetState);
     expect(fab.getAttribute('data-aw-fab-pos')).toBe('custom');
     expect(fab.style.getPropertyValue('--aw-fab-x')).toBe('200px');
     expect(fab.style.getPropertyValue('--aw-fab-y')).toBe('150px');
@@ -293,17 +291,14 @@ describe('FAB drag (config.draggableFab)', () => {
   });
 
   it('setPosition(null) resets to config-anchor and clears persisted state', async () => {
-    const fab = await bootLoader(
-      { draggableFab: true },
-      {
-        features: {},
-        fontSizeLevel: 1,
-        lineHeightLevel: 1.5,
-        letterSpacingLevel: 0,
-        contrastMode: 'off',
-        fabPosition: { x: 200, y: 150 },
-      } as unknown as WidgetState,
-    );
+    const fab = await bootLoader({ draggableFab: true }, {
+      features: {},
+      fontSizeLevel: 1,
+      lineHeightLevel: 1.5,
+      letterSpacingLevel: 0,
+      contrastMode: 'off',
+      fabPosition: { x: 200, y: 150 },
+    } as unknown as WidgetState);
     window.AccessibilityWidget!.setPosition(null);
     expect(fab.hasAttribute('data-aw-fab-pos')).toBe(false);
     expect(fab.style.getPropertyValue('--aw-fab-x')).toBe('');
@@ -357,7 +352,10 @@ describe('keyboard shortcut (configurable, disableable)', () => {
    * the loader registers a document-level listener so the shortcut works
    * from anywhere on the page, not just when focus is on the FAB.
    */
-  function press(key: string, mods: { alt?: boolean; ctrl?: boolean; shift?: boolean; meta?: boolean } = {}): KeyboardEvent {
+  function press(
+    key: string,
+    mods: { alt?: boolean; ctrl?: boolean; shift?: boolean; meta?: boolean } = {},
+  ): KeyboardEvent {
     const ev = new KeyboardEvent('keydown', {
       key,
       altKey: mods.alt ?? false,

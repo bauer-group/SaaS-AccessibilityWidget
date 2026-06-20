@@ -46,13 +46,13 @@ pnpm --filter @bauer-group/accessibility-widget-demo dev
 
 Das Repo ist in drei Zonen aufgeteilt mit bewusst **unterschiedlichen Entwicklungspfaden**:
 
-| Zone | Inhalt | Workspace? | Released? |
-| --- | --- | --- | --- |
-| **Core** (`packages/widget`) | Das eigentliche Widget | ✅ | ✅ npm |
-| **Demo** (`apps/demo`) | Live-Demo + Scanner-Zielscheibe | ✅ | ❌ privat |
-| **JS-Integrationen** (`integrations/js/*`) | React / Vue / Angular / Svelte / Next / Nuxt / Astro | ✅ | ✅ npm (individuell) |
-| **CMS-Integrationen** (`integrations/cms/*`) | Drupal (PHP), TYPO3 (PHP), WordPress (PHP) | ❌ Composer / WP-Plugin-Repo | ✅ extern |
-| **Shop-Integrationen** (`integrations/shops/*`) | Magento (PHP), Shopware (PHP), Shopify (Liquid) | ❌ Composer / Shopify-CLI | ✅ extern |
+| Zone                                            | Inhalt                                               | Workspace?                   | Released?            |
+| ----------------------------------------------- | ---------------------------------------------------- | ---------------------------- | -------------------- |
+| **Core** (`packages/widget`)                    | Das eigentliche Widget                               | ✅                           | ✅ npm               |
+| **Demo** (`apps/demo`)                          | Live-Demo + Scanner-Zielscheibe                      | ✅                           | ❌ privat            |
+| **JS-Integrationen** (`integrations/js/*`)      | React / Vue / Angular / Svelte / Next / Nuxt / Astro | ✅                           | ✅ npm (individuell) |
+| **CMS-Integrationen** (`integrations/cms/*`)    | Drupal (PHP), TYPO3 (PHP), WordPress (PHP)           | ❌ Composer / WP-Plugin-Repo | ✅ extern            |
+| **Shop-Integrationen** (`integrations/shops/*`) | Magento (PHP), Shopware (PHP), Shopify (Liquid)      | ❌ Composer / Shopify-CLI    | ✅ extern            |
 
 **Wichtig:** Die Root-Scripts (`pnpm build`, `pnpm dev`, `pnpm test`, `pnpm typecheck`) sind bewusst auf **Core + Demo** beschränkt. Alltägliche Arbeit am Widget oder an der Demo berührt die Integrationen **nicht** — weder in Compile-Zeit, noch in der Test-Suite.
 
@@ -85,8 +85,8 @@ Die Kopplung ist trotzdem lose: jede Integration hat eigene `package.json`, eige
 Das Widget hat **harte Größen-Ziele**:
 
 - Loader: ≤ 5 KB gzip
-- Core:   ≤ 24 KB gzip (28 Locales eingebettet — `accessibility-widget-core.min.js`)
-- CSS:    ≤ 3 KB gzip
+- Core: ≤ 24 KB gzip (28 Locales eingebettet — `accessibility-widget-core.min.js`)
+- CSS: ≤ 3 KB gzip
 
 Jeder Build zeigt die Größen am Ende (`scripts/measure-size.ts`). Wenn Sie einen Feature-PR machen, der das Budget überschreitet, ist eine Diskussion fällig, **bevor** Code gemergt wird.
 

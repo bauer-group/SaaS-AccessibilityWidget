@@ -37,7 +37,11 @@ function readUserConfig(): WidgetConfig {
   return window.AccessibilityWidgetConfig ?? {};
 }
 
-function resolveActiveLocale(config: ResolvedConfig, state: WidgetState, explicit?: Locale | 'auto'): Locale {
+function resolveActiveLocale(
+  config: ResolvedConfig,
+  state: WidgetState,
+  explicit?: Locale | 'auto',
+): Locale {
   if (explicit && explicit !== 'auto' && isLocale(explicit)) return explicit;
   if (state.locale && isLocale(state.locale)) return state.locale;
   return config.locale;
@@ -121,7 +125,8 @@ function applyProfileById(id: string): boolean {
 function setLocale(next: string): boolean {
   const cfg = resolveConfig(readUserConfig(), navigator.language);
   if (!isLocale(next)) {
-    if (cfg.debug) console.warn(`[aw] core.setLocale: "${next}" is not a supported locale; ignoring`);
+    if (cfg.debug)
+      console.warn(`[aw] core.setLocale: "${next}" is not a supported locale; ignoring`);
     return false;
   }
   const state = loadState(cfg.storageKey);

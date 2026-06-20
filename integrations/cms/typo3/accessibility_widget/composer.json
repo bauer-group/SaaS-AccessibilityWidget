@@ -3,7 +3,12 @@
   "type": "typo3-cms-extension",
   "description": "BAUER GROUP Accessibility Widget für TYPO3 13.",
   "license": "MIT",
-  "authors": [{ "name": "BAUER GROUP", "email": "info@de.bauer-group.com" }],
+  "authors": [
+    {
+      "name": "BAUER GROUP",
+      "email": "info@de.bauer-group.com"
+    }
+  ],
   "require": {
     "php": "^8.2",
     "typo3/cms-core": "^13.0"

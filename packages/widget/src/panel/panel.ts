@@ -243,10 +243,7 @@ export function openPanel(ctx: PanelContext): PanelHandle {
     });
     const langWrap = make('label', {
       class: 'aw-tool aw-tool--lang',
-      children: [
-        buildIcon({ ...ICON_GLOBE, width: 18, height: 18 }),
-        langSelect,
-      ],
+      children: [buildIcon({ ...ICON_GLOBE, width: 18, height: 18 }), langSelect],
     });
 
     const oversizedBtn = make('button', {
@@ -302,9 +299,7 @@ export function openPanel(ctx: PanelContext): PanelHandle {
     });
 
     // Features -------------------------------------------------------
-    const visibleFeatures = FEATURE_IDS.filter(
-      (id) => !ctx.config.disabledFeatures.has(id),
-    );
+    const visibleFeatures = FEATURE_IDS.filter((id) => !ctx.config.disabledFeatures.has(id));
     const featGrid = make('div', {
       class: 'aw-feat-grid',
       attrs: { role: 'group', 'aria-label': T.features.h },
@@ -331,7 +326,9 @@ export function openPanel(ctx: PanelContext): PanelHandle {
             fab.style.removeProperty('--aw-fab-y');
           }
           const fresh: WidgetState = {
-            features: Object.fromEntries(FEATURE_IDS.map((id) => [id, false])) as WidgetState['features'],
+            features: Object.fromEntries(
+              FEATURE_IDS.map((id) => [id, false]),
+            ) as WidgetState['features'],
             fontSizeLevel: 1,
             lineHeightLevel: 1.5,
             letterSpacingLevel: 0,
@@ -344,7 +341,10 @@ export function openPanel(ctx: PanelContext): PanelHandle {
       },
     });
 
-    liveEl = make('div', { class: 'aw-live', attrs: { 'aria-live': 'polite', 'aria-atomic': 'true' } });
+    liveEl = make('div', {
+      class: 'aw-live',
+      attrs: { 'aria-live': 'polite', 'aria-atomic': 'true' },
+    });
 
     const footerChildren: HTMLElement[] = [resetBtn];
     if (ctx.statementUrl) {
@@ -369,9 +369,7 @@ export function openPanel(ctx: PanelContext): PanelHandle {
     // Host-supplied disclaimer, no default. Kept as plain text so an
     // accidental HTML string doesn't become a markup injection vector.
     if (ctx.config.disclaimer) {
-      footerChildren.push(
-        make('p', { class: 'aw-disclaimer', text: ctx.config.disclaimer }),
-      );
+      footerChildren.push(make('p', { class: 'aw-disclaimer', text: ctx.config.disclaimer }));
     }
 
     // "Powered by BAUER GROUP Accessibility-Widget" — localised connector +

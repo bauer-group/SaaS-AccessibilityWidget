@@ -74,6 +74,7 @@ export function AccessibilityWidget({
   return null;
 }
 
-export const openAccessibilityWidget = (): Promise<void> | undefined => window.AccessibilityWidget?.open();
+export const openAccessibilityWidget = (): Promise<void> | undefined =>
+  window.AccessibilityWidget?.open();
 export const closeAccessibilityWidget = (): void => window.AccessibilityWidget?.close();
 export const resetAccessibilityWidget = (): void => window.AccessibilityWidget?.reset();

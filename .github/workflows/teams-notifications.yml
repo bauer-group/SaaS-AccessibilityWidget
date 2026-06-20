@@ -14,28 +14,28 @@ on:
   issues:
     types: [opened, closed, reopened]
   workflow_run:
-    workflows: ["*"]
+    workflows: ['*']
     types: [completed]
 
   workflow_dispatch:
     inputs:
       message:
-        description: "Custom message to send"
+        description: 'Custom message to send'
         required: true
         type: string
       channel:
-        description: "Teams channel (webhook name)"
+        description: 'Teams channel (webhook name)'
         required: false
         type: string
-        default: "general"
+        default: 'general'
 
   workflow_call:
     inputs:
       notification-level:
-        description: "Notification level (all or errors-only)"
+        description: 'Notification level (all or errors-only)'
         required: false
         type: string
-        default: "errors-only"
+        default: 'errors-only'
 
 jobs:
   notify-teams:

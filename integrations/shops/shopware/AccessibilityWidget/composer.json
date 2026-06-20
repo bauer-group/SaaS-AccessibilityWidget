@@ -3,7 +3,12 @@
   "description": "BAUER GROUP Accessibility Widget für Shopware 6.6+.",
   "type": "shopware-platform-plugin",
   "license": "MIT",
-  "authors": [{ "name": "BAUER GROUP", "email": "info@de.bauer-group.com" }],
+  "authors": [
+    {
+      "name": "BAUER GROUP",
+      "email": "info@de.bauer-group.com"
+    }
+  ],
   "require": {
     "php": "^8.2",
     "shopware/core": "^6.6"

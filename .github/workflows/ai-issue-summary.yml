@@ -19,7 +19,7 @@ jobs:
     if: github.event_name == 'issues' || github.event_name == 'pull_request_target'
     uses: bauer-group/automation-templates/.github/workflows/modules-ai-issue-summary.yml@main
     with:
-      summary-type: "technical"
+      summary-type: 'technical'
       add-labels: true
       add-priority: true
       comment-template: |

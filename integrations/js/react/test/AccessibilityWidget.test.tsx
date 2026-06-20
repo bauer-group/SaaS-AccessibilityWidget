@@ -26,15 +26,15 @@ describe('<AccessibilityWidget /> — smoke', () => {
     expect(document.querySelectorAll('link[data-aw-css]')).toHaveLength(1);
 
     // A rerender must be idempotent — dedupe relies on data-aw-* markers.
-    rerender(
-      <AccessibilityWidget loaderSrc="/a/loader.min.js" cssHref="/a/widget.min.css" />,
-    );
+    rerender(<AccessibilityWidget loaderSrc="/a/loader.min.js" cssHref="/a/widget.min.css" />);
     expect(document.querySelectorAll('script[data-aw-loader]')).toHaveLength(1);
     expect(document.querySelectorAll('link[data-aw-css]')).toHaveLength(1);
   });
 
   it('merges config onto window.AccessibilityWidgetConfig without clobbering existing keys', () => {
-    (window as unknown as { AccessibilityWidgetConfig?: Record<string, unknown> }).AccessibilityWidgetConfig = {
+    (
+      window as unknown as { AccessibilityWidgetConfig?: Record<string, unknown> }
+    ).AccessibilityWidgetConfig = {
       debug: true,
     };
 
