@@ -1,10 +1,12 @@
 ## [1.0.3](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.0.2...v1.0.3) (2026-06-20)
 
-### 🐛 Bug Fixes
+### ⚖️ License
 
-* revert version to 0.0.0 in package.json ([bef37c7](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/bef37c74dcc0abb707b11fa971f26e946e6c5c7f))
+* **Relicensed from MIT to GNU AGPL-3.0-only (dual-licensed).** Open-source use under the [GNU AGPL-3.0](./LICENSE); a separate commercial license is available via `info@bauer-group.com` (see [LICENSING.md](./LICENSING.md)). Contributions now require a signed [CLA](./CLA.md). No runtime or behavior change.
 
 ## [1.0.2](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.0.1...v1.0.2) (2026-06-20)
+
+_Wartungs-Release (erzwungen) — keine Code-Änderungen._
 
 ## [1.0.1](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.0.0...v1.0.1) (2026-06-20)
 
@@ -71,71 +73,4 @@ wird über Caret-Version referenziert statt workspace:*.
 
 # Changelog
 
-Alle nennenswerten Änderungen an diesem Projekt werden in dieser Datei dokumentiert.
-Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/), die Versionierung [SemVer](https://semver.org/lang/de/).
-
-## [Unreleased]
-
-### Changed
-
-- **Integrations-Pakete zurück in den pnpm-Workspace aufgenommen.** `pnpm-workspace.yaml` listet jetzt `packages/*`, `apps/*` und `integrations/js/*`. Lokale Cross-Package-Entwicklung ist dadurch reibungslos — Änderungen am Widget sind sofort in den Integration-Tests sichtbar, kein Zwischen-Publish nötig. Dependency-Referenzen verwenden `workspace:*` und werden beim Publish via pnpm durch die aktuelle Version ersetzt.
-- **CDN-Hosting + automatisierte Release-Pipeline.** Das Core-Widget wird via [semantic-release](https://semantic-release.gitbook.io/) (Conventional Commits) nach npm publiziert und über Cloudflare R2 ausgeliefert — unveränderliche `accessibility-widget/<version>/`-Pfade (SRI-pinbar) plus floatender `accessibility-widget/v<major>/`-Alias. Deploy-Tooling unter [scripts/deploy/](scripts/deploy/) + [deploy/zones.json](deploy/zones.json), Workflows unter [.github/workflows/](.github/workflows/). Die frühere Changesets-Konfiguration wurde zugunsten von semantic-release entfernt; die sieben JS-Integrationen ziehen in ein eigenes Repo um und werden dort released (nicht mehr aus diesem Repo).
-- **Rebrand des Paketnamens auf den kanonischen `@bauer-group/accessibility-widget`.** Der private Monorepo-Root heißt jetzt `@bauer-group/accessibility-widget-workspace` (vorher `@bauer-group/saas-accessibility-widget`). Die GitHub-Repo-URL bleibt `bauer-group/SaaS-AccessibilityWidget`.
-- **Laufzeit-Version aus dem Build.** `AccessibilityWidget.version` / `AccessibilityWidgetCore.version` werden beim Build via esbuild `define` aus der Paketversion gesetzt (vorher hartkodiert), sodass semantic-release-Releases überall konsistent dieselbe Version tragen.
-- **Abschluss BFSG → AccessibilityWidget-Rename.** Rest-Vorkommen, die beim initialen Rename übersehen wurden, sind konsolidiert — betraf sowohl Laufzeit-kritische als auch kosmetische Stellen:
-  - **Laufzeit-kritisch (war vorher tatsächlich gebrochen):** `window.BFSGWidgetConfig` → `window.AccessibilityWidgetConfig` in Shopware-Twig und Magento-Phtml; `data-bfsg="loader"`/`"css"` → `data-aw-loader`/`data-aw-css` in allen JS-, CMS- und Shop-Integrationen; `bfsg-widget-*.min.js`-Pfade → `accessibility-widget-*.min.js` in Shopware/Magento
-  - **Magento-Modul-Namespace:** `BauerGroup_BFSGWidget` → `BauerGroup_AccessibilityWidget` in `module.xml` und `view/frontend/layout/default.xml` (synchron mit `registration.php`); scopeConfig-Namespace `bfsg_widget` → `accessibility_widget`
-  - **TYPO3-TypoScript-Prefix:** `plugin.tx_bfsgwidget` → `plugin.tx_accessibilitywidget`; header-/footer-Keys `bfsgConfig`/`bfsgLoader` → `accessibilityWidgetConfig`/`accessibilityWidgetLoader`; PSR-4 `BauerGroup\BfsgWidget\\` → `BauerGroup\AccessibilityWidget\\`
-  - **Svelte Action umbenannt:** `bfsgWidget` → `accessibilityWidget`; Nuxt-runtimeConfig-Key `bfsgWidget` → `accessibilityWidget`
-  - **Shopware/Shopify/Drupal:** composer-Beschreibungen, Plugin-Titel und Modul-Kommentare konsolidiert
-- **Abhängigkeiten auf aktuelle Stable-Versionen.** Integration-Peer- und devDependencies gebumpt (React 19.1, Angular 19.2, Svelte 5.20, Next 15.2, Astro 5, Nuxt ≥3.10). TypeScript-Caret `^5.8`, Vite 7, Vitest 3 im Haupt-Workspace bleiben.
-
-### Added
-
-- **Footer-Disclaimer konfigurierbar, Gesetzes-Referenz entfernt, Powered-by-Zeile hinzugefügt.** Die bisherige Default-Zeile referenzierte `§ 14 BFSG` — das ist deutsches Recht und passt für die 27 anderen EU-Mitgliedstaaten nicht. Der Text ist jetzt host-konfigurierbar via `WidgetConfig.disclaimer` (Default: nichts anzeigen; Host setzt eigenen Text falls gewünscht — Plain-Text, keine HTML-Injection). Darunter erscheint eine kleinere lokalisierte `"Powered by BAUER GROUP Accessibility-Widget"`-Zeile mit Link auf `https://accessibility-widget.app.professional-hosting.com`, unterdrückbar via `WidgetConfig.hidePoweredBy: true` für White-Label-Deployments. Translation-Feld `disclaimer` wurde durch kürzeres `poweredBy` ersetzt (Connector-Phrase in allen 28 Locales); das spart netto ~2 KB gzip im Core-Bundle.
-- **Keyboard-Shortcut konfigurierbar + deaktivierbar, neuer Default `Ctrl+Alt+A`.** Neue Config-Option `keyboardShortcut`: Default ist `'ctrl+alt+a'` (branchenüblich für A11y-Widgets, seltenere Browser-/Extension-Kollision als Alt+Shift+A), kann auf einen beliebigen Combo (`'alt+shift+a'`, `'f2'`, …) umgestellt oder mit `false` komplett abgeschaltet werden. Invalid-Combos emittieren `console.warn` bei `debug: true` und fallen still aus. **Breaking** für Hosts, die sich auf den alten Alt+Shift+A-Default verlassen — explizit `keyboardShortcut: 'alt+shift+a'` setzen, um das alte Verhalten wiederherzustellen.
-- **Runtime-API vervollständigt — alle Gaps geschlossen.** `window.AccessibilityWidget` bekommt vier neue Methoden und einen Event-Bus, damit Hosts das Widget vollständig programmatisch fernsteuern können:
-  - `applyProfile(id)` — wendet eines der 6 Profil-Presets an; respektiert `disabledFeatures`
-  - `setLocale(locale)` — Sprachwechsel zur Laufzeit, persistiert in `WidgetState.locale`, Panel rerendert live (vorher nur in-Panel möglich und transient)
-  - `setPosition({ x, y } | null)` — FAB programmatisch positionieren oder auf Config-Anker zurück; funktioniert unabhängig von `draggableFab`
-  - `on(event, handler)` — Event-Subscription via CustomEvent auf `document`. 6 Events: `stateChange`, `open`, `close`, `profileApplied`, `localeChanged`, `reset`. Rückgabewert ist Unsubscribe. Alternative: `document.addEventListener('accessibility-widget:*', …)` ohne Helper.
-- **WidgetState erweitert** um `locale?: string` (persistierter User-Locale-Override). Panel-Dropdown speichert jetzt ebenfalls diese Locale — vorher war die In-Panel-Sprachumschaltung transient und ging bei Reload verloren.
-- **Opt-in draggable FAB.** Neue Config-Option `draggableFab: true` erlaubt End-Usern, den FAB per Maus / Touch / Shift+Arrow zu verschieben. Position persistiert in `WidgetState.fabPosition` unter dem konfigurierten `storageKey` — beim nächsten Besuch lädt der Loader-IIFE sie **vor First Paint** via inline CSS custom properties (`--aw-fab-x/y`). Viewport-Clamp verhindert Off-Screen-Dragging; Panel-Reset löscht auch die custom Position. Loader-Budget von 5 KB auf 5.5 KB gzip gebumpt (Begründung in `scripts/measure-size.ts`).
-- **Professionelle `WidgetConfig`-API.** Die 1-Line-Integration bleibt der Default-Pfad; die Config ist optional, aber jetzt umfassend dokumentiert und validiert. Alle Felder haben JSDoc-Kommentare für IDE-Autocomplete. Neu hinzugekommen:
-  - `cssIntegrity` — SRI-Hash für die CSS-Datei (Parität zu `coreIntegrity`)
-  - `offset: { x, y }` — Pixel-Abstand des FAB zur Ankerecke (für Chat-Widget/Cookie-Banner-Kollisionen)
-  - `zIndex` — überschreibt den Default-z-index des FAB
-  - `statementUrl` — URL zur Barrierefreiheitserklärung; rendert als Panel-Footer-Link, blockiert `javascript:` / `data:` Schemes
-  - `disabledFeatures` — Feature-IDs, die komplett aus dem Panel entfernt und auch via Profil-Preset nicht aktiviert werden (z.B. `['tts']` auf Seiten ohne Text-Content)
-  - `initialFeatures` — Features, die für **Erstbesucher** (ohne persistierten State) an sind. Wird einmalig in den localStorage geseed, ab dann übernimmt das Persistierte
-- **Runtime-Validation.** `resolveConfig` validiert alle Felder (ungültige Locale/Position/Color → Fallback, non-finite zIndex/offset → Fallback, unbekannte FeatureIds in disabledFeatures/initialFeatures → Drop). Mit `debug: true` erscheinen die Validation-Ergebnisse als `console.warn`. Full-shape `ResolvedConfig`-Interface für alle Call-Sites.
-- **Storage-Key-Bug in core.ts gefixt.** `core.set()`, `core.reset()`, `core.getState()` resolvten Config vorher aus leerem Input und ignorierten damit den User-supplied `storageKey` — bei Custom-Storage-Keys wurde auf der Default-Location gelesen/geschrieben. Jetzt lesen alle drei durch `readUserConfig()` aus `window.AccessibilityWidgetConfig`.
-- **Demo-App professionalisiert.** [apps/demo/](./apps/demo/) komplett überarbeitet: Hero mit Status-Karte (≤5 KB Loader, ≤24 KB Core, 28 Locales, 0 Dependencies), sticky Topbar, Try-Karten mit Locale-Switcher (persistiert in `localStorage`), Integration-Tabs mit Copy-Buttons und ARIA-Keyboard-Navigation, Live-State-Panel (Poll alle 500 ms), Compliance-Karten (BFSG / EN 301 549 / WCAG 2.2 AA), Scanner-Testzone (collapsible). Design-System mit CSS-Variablen, Light/Dark, `clamp()`-basierter responsiver Typografie.
-- **Live-Dev-Kopplung Demo ↔ Widget.** Neue Vite-Middleware in [apps/demo/vite.config.ts](./apps/demo/vite.config.ts) serviert `/accessibility-widget/*` direkt aus `packages/widget/dist/*` — kein Copy-on-predev mehr, Widget-Rebuilds sind nach Browser-Reload sofort sichtbar. Root-Script `pnpm demo:dev` startet Widget-Watch + Vite parallel.
-- **Sauberer Demo-Build-Pipeline.** `pnpm demo:build` = Widget bauen → Files in `public/` kopieren → `tsc --noEmit` Typecheck → `vite build` mit Sourcemaps und gehashed Assets. `demo:preview` auf Port 4173 strict.
-- `packages/widget/src/util/debug.ts` — `warnIfDebug()`-Helper. Alle bisher **silent-failenden** catch-Blöcke in `state.ts` + `loader.ts` emittieren jetzt `console.warn`, wenn `AccessibilityWidgetConfig.debug === true` gesetzt ist. Produktion bleibt rauschfrei.
-- Smoke-Test-Scaffold für React-Integration (`integrations/js/react/test/AccessibilityWidget.test.tsx` + Vitest-Config). Verifiziert: idempotente Script-/Link-Injektion, Config-Merge ohne Clobbering, SRI-Propagation. Referenz-Pattern für analoge Tests in Vue/Svelte/Angular.
-- **20 neue i18n-Locales** (alle Sprachen mit ≥ 8 Mio Sprechern, die mit Standard-Fonts sauber rendern):
-  `zh`, `hi`, `pt`, `bn`, `ru`, `ja`, `ko`, `vi`, `fa`, `ur`, `th`, `id`, `he`, `nl`, `sv`, `cs`, `el`, `hu`, `ro`, `uk`.
-  Total jetzt **28 Locales**. `fa`, `ur`, `he` sind RTL (wie `ar`) und werden im Panel via `dir="rtl"` automatisch gelayoutet.
-  ⚠ Fachterminologie (Screenreader, Fokusrahmen, Kontrastmodus) braucht pro Locale Review durch Muttersprachler:innen mit A11y-Erfahrung — siehe [CONTRIBUTIONS-WANTED.md](./CONTRIBUTIONS-WANTED.md).
-
-### Fixed
-
-- `state.test.ts` — `localStorage.clear is not a function` unter happy-dom. Ersetzt durch manuelle Iterator-Variante, die unter happy-dom + jsdom + realen Browsern identisch arbeitet. 18/18 Tests grün.
-- React-Wrapper deduplizierte injizierte Assets über `data-bfsg`-Attribute — die tatsächliche Laufzeit des IIFE-Loaders sucht aber nach `data-aw-css`. Wrapper und Loader sind jetzt auf dieselben `data-aw-*`-Marker harmonisiert, damit SSR-Inject + IIFE-Re-Check korrekt dedupen.
-
-### Changed (vor diesem Release)
-
-- **Shared-Types integriert**: Statt eines separaten Packages leben Widget-Types jetzt direkt in `packages/widget/src/types/` und werden über den Public-Entry-Point exportiert.
-- **DTS-Build hinzugefügt**: Der Widget-Build emittiert zusätzlich kompilierte `.d.ts`-Files. Integrationen konsumieren Types über Node-Resolution statt per Source-Alias.
-
-## [0.1.0]
-
-Initiales Release:
-
-- `packages/widget` — Lazy-Loading Accessibility-Widget (Loader + Core), Vanilla TS, 8 Locales
-- `apps/demo` — Interaktive Vite-Demo mit eingebauten A11y-Barrieren als Scanner-Zielscheibe
-- `integrations/js/*` — React, Vue, Angular, Svelte, Next.js, Nuxt, Astro
-- `integrations/cms/*` — WordPress, TYPO3, Drupal
-- `integrations/shops/*` — Shopify, Shopware, Magento
+Alle nennenswerten Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Das Format basiert auf [Conventional Commits](https://www.conventionalcommits.org/); die Einträge ab v1.0.0 werden automatisch von [semantic-release](https://semantic-release.gitbook.io/) gepflegt, die Versionierung folgt [SemVer](https://semver.org/lang/de/).
