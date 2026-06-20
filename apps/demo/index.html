@@ -11,7 +11,16 @@
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#0058a3" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0a0e14" media="(prefers-color-scheme: dark)" />
-    <link rel="icon" href="/accessibility-widget-assets/sample.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="mask-icon" href="/favicon.svg" color="#0058a3" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Accessibility Widget — BFSG · EN 301 549 · WCAG 2.2 AA" />
+    <meta
+      property="og:description"
+      content="A lazy-loading, CDN-ready accessibility widget. 28 locales, ~4 KB loader, zero tracking, no DOM/ARIA overrides of the host page."
+    />
+    <meta property="og:image" content="/logo.svg" />
+    <meta name="twitter:card" content="summary" />
     <link rel="stylesheet" href="/src/styles.css" />
 
     <!--
@@ -72,17 +81,27 @@
         <a class="topbar__brand" href="/" aria-label="Startseite">
           <svg
             class="topbar__logo"
-            viewBox="0 0 32 32"
+            viewBox="-4 -4 32 32"
             aria-hidden="true"
             focusable="false"
             width="28"
             height="28"
           >
-            <rect width="32" height="32" rx="8" fill="currentColor" />
-            <path
-              d="M16 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm-8 6.5 8 2.5 8-2.5.6 2.4L17 17v4l4 8.5-2 1L16 22l-3 8.5-2-1L15 21v-4L7 14.9l.6-2.4z"
-              fill="#fff"
-            />
+            <!-- Mark uses the Lucide "accessibility" icon (https://lucide.dev) — ISC License -->
+            <rect x="-4" y="-4" width="32" height="32" rx="7" fill="#0058a3" />
+            <g
+              fill="none"
+              stroke="#fff"
+              stroke-width="2.25"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="16" cy="4" r="1" />
+              <path d="m18 19 1-7-6 1" />
+              <path d="m5 8 3-3 5.5 3-2.36 3.5" />
+              <path d="M4.24 14.5a5 5 0 0 0 6.88 6" />
+              <path d="M13.76 17.5a5 5 0 0 0-6.88-6" />
+            </g>
           </svg>
           <span class="topbar__title">
             <strong>Accessibility Widget</strong>
@@ -384,8 +403,13 @@
           <header class="section__header">
             <h2 id="h-int">Integration</h2>
             <p>
-              Ein <code>&lt;script&gt;</code>-Tag reicht. Für Frameworks und CMS/Shop-Systeme
-              gibt es fertige Wrapper.
+              Ein <code>&lt;script&gt;</code>-Tag reicht. Für 7 Frameworks und 6 CMS-/Shop-Systeme
+              gibt es fertige Wrapper — gepflegt im eigenen Repo
+              <a
+                href="https://github.com/bauer-group/SaaS-AccessibilityWidgetIntegrations"
+                rel="noopener"
+                >SaaS-AccessibilityWidgetIntegrations</a
+              >.
             </p>
           </header>
 
@@ -427,7 +451,7 @@
               <div class="code-block">
                 <button class="copy-btn" data-copy aria-label="Code kopieren">Kopieren</button>
                 <pre><code>&lt;script
-  src="https://cdn.example.com/accessibility-widget/accessibility-widget-loader.min.js"
+  src="https://widgets.professional-hosting.com/accessibility-widget/v1/accessibility-widget-loader.min.js"
   defer
 &gt;&lt;/script&gt;</code></pre>
               </div>
@@ -491,15 +515,15 @@ import { AccessibilityWidget } from '@bauer-group/accessibility-widget-vue';
             >
               <div class="code-block">
                 <button class="copy-btn" data-copy aria-label="Code kopieren">Kopieren</button>
-                <pre><code># 1. Plugin-Ordner nach wp-content/plugins/
-cp -r integrations/cms/wordpress/accessibility-widget \
-      wp-content/plugins/
+                <pre><code># Plugin aus dem Integrations-Repo holen:
+# github.com/bauer-group/SaaS-AccessibilityWidgetIntegrations
+#   → cms/wordpress/accessibility-widget/
 
-# 2. Assets einkopieren
-cp packages/widget/dist/accessibility-widget-*.min.{js,css} \
-   wp-content/plugins/accessibility-widget/assets/
+# 1. Plugin-Ordner nach wp-content/plugins/ kopieren
+cp -r cms/wordpress/accessibility-widget wp-content/plugins/
 
-# 3. Im WP-Admin: Plugins → aktivieren → Einstellungen → Accessibility Widget</code></pre>
+# 2. Im WP-Admin: Plugins → aktivieren → Einstellungen → Accessibility Widget
+#    (der Core wird per CDN geladen — kein Asset-Copy nötig)</code></pre>
               </div>
             </div>
 
@@ -520,6 +544,15 @@ cp packages/widget/dist/accessibility-widget-*.min.{js,css} \
               </div>
             </div>
           </div>
+          <p class="muted">
+            React · Vue · Angular · Svelte · Next.js · Nuxt · Astro · WordPress · TYPO3 ·
+            Drupal · Shopify · Shopware · Magento —
+            <a
+              href="https://github.com/bauer-group/SaaS-AccessibilityWidgetIntegrations"
+              rel="noopener"
+              >alle 13 Integrationen im eigenen Repo →</a
+            >
+          </p>
         </div>
       </section>
 
