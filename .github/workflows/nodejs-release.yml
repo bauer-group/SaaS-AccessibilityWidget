@@ -1,19 +1,17 @@
 # =============================================================================
 # Release & NPM Publish Workflow
 # =============================================================================
-# Builds + tests (reusable), runs semantic-release (reusable) and publishes the
-# CORE package @bauer-group/accessibility-widget to npm. The framework
-# wrappers are NOT published here — they move to a dedicated integrations repo.
+# Self-hosted build/test (the reusable nodejs-build.yml can't be used: its
+# pnpm/action-setup passes a `version`, which conflicts with the package.json
+# `packageManager` field that Turborepo requires). Release + notifications
+# still use the shared reusables; the npm publish (OIDC, workspace sub-package)
+# and CDN/Pages deploys have no reusable and are custom (as in the Banner repo).
 #
-# semantic-release is configured (.github/config/release/semantic-release.json)
-# with pkgRoot: packages/widget and npmPublish: false — it bumps + commits
-# packages/widget/package.json and cuts the vX.Y.Z tag. The actual npm publish
-# runs in the publish-npm job below, TOKENLESS via OIDC Trusted Publishing
-# (see docs/npm-publishing.md). The first-ever publish is a one-time local
-# bootstrap (`pnpm publish:bootstrap`).
-#
-# cache-dependencies: false on the build reusable — it caches pnpm before
-# installing it (works for the preinstalled npm, not pnpm).
+# semantic-release config: .github/config/release/semantic-release.json
+# (pkgRoot: packages/widget, npmPublish: false) bumps + commits the widget
+# package.json and cuts the vX.Y.Z tag; the publish-npm job below publishes
+# TOKENLESS via OIDC Trusted Publishing (docs/npm-publishing.md). The first
+# publish was a one-time local bootstrap (`pnpm publish:bootstrap`).
 #
 # The CDN deploy (deploy-cdn.yml) keys off THIS workflow completing.
 # =============================================================================
@@ -43,25 +41,38 @@ permissions:
 jobs:
   test-and-build:
     name: 🧪 Build & Test
-    uses: bauer-group/automation-templates/.github/workflows/nodejs-build.yml@main
-    with:
-      node-version-file: '.nvmrc'
-      package-manager: 'pnpm'
-      package-manager-version: '10'
-      cache-dependencies: false
-      frozen-lockfile: true
-      run-lint: true
-      lint-command: 'pnpm typecheck && pnpm lint'
-      build-command: 'pnpm build && pnpm --filter @bauer-group/accessibility-widget size'
-      run-tests: true
-      test-command: 'pnpm test'
-      # No workspace audit: the published core ships ZERO runtime deps (no
-      # supply-chain surface). A workspace audit only flags build tooling in the
-      # framework integrations (shell-quote/devalue/ws), which move to their own
-      # repo and are audited there.
-      run-audit: false
-      upload-artifacts: false
-    secrets: inherit
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v7
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4 # no version → reads packageManager
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: 📚 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🎨 Lint
+        run: pnpm lint
+
+      - name: 💅 Format check
+        run: pnpm format:check
+
+      - name: 🔎 Typecheck
+        run: pnpm typecheck
+
+      - name: 🏗️ Build
+        run: pnpm build
+
+      - name: 🧪 Test
+        run: pnpm test
 
   release:
     name: 📦 Create Semantic Release
@@ -81,9 +92,6 @@ jobs:
     if: needs.release.outputs.release-created == 'true'
     # OIDC Trusted Publishing — tokenless. continue-on-error so an npm hiccup
     # never blocks the CDN deploy (which keys off this workflow's success).
-    # No reusable exists for a workspace sub-package OIDC publish (the Banner
-    # self-hosts this too), so this job is intentionally custom — with the
-    # correct order: pnpm → node(cache) → install.
     continue-on-error: true
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -96,8 +104,6 @@ jobs:
 
       - name: 📦 Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 10
 
       - name: 📦 Setup Node.js
         uses: actions/setup-node@v6

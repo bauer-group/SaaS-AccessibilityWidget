@@ -18,6 +18,7 @@
     "node": ">=24",
     "pnpm": ">=10"
   },
+  "packageManager": "pnpm@10.0.0",
   "scripts": {
     "build": "turbo run build --filter=./packages/* --filter=./apps/*",
     "dev": "turbo run dev --parallel --filter=./packages/* --filter=./apps/*",
