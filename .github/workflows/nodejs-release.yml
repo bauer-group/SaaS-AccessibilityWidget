@@ -2,7 +2,7 @@
 # Release & NPM Publish Workflow
 # =============================================================================
 # Builds + tests (reusable), runs semantic-release (reusable) and publishes the
-# CORE package @bauer-group/accessibility-widget to npm. The 7 framework
+# CORE package @bauer-group/accessibility-widget to npm. The framework
 # wrappers are NOT published here — they move to a dedicated integrations repo.
 #
 # semantic-release is configured (.github/config/release/semantic-release.json)
