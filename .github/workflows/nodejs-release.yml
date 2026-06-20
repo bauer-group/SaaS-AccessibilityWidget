@@ -125,5 +125,7 @@ jobs:
       - name: 📤 Publish @bauer-group/accessibility-widget
         # OIDC (id-token: write) authenticates — no NODE_AUTH_TOKEN. Requires a
         # Trusted Publisher on npmjs (repo + this workflow file: nodejs-release.yml).
-        run: npm publish --provenance --access public
+        # No --provenance: npm provenance requires a PUBLIC source repo, and this
+        # repo is private. Re-add --provenance if the repo is ever made public.
+        run: npm publish --access public
         working-directory: packages/widget
