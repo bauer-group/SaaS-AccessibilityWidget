@@ -1,3 +1,9 @@
+## [1.0.3](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.0.2...v1.0.3) (2026-06-20)
+
+### 🐛 Bug Fixes
+
+* revert version to 0.0.0 in package.json ([bef37c7](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/bef37c74dcc0abb707b11fa971f26e946e6c5c7f))
+
 ## [1.0.2](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.0.1...v1.0.2) (2026-06-20)
 
 ## [1.0.1](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.0.0...v1.0.1) (2026-06-20)
