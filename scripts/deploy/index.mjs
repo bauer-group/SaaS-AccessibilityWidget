@@ -43,7 +43,11 @@ try {
   if (err.code !== 'ENOENT') throw err;
 }
 
+// pnpm forwards the `--` separator literally to the script (npm strips it);
+// drop a leading `--` so the flags parse whether invoked via pnpm or node.
+const rawArgs = process.argv.slice(2);
 const { values } = parseArgs({
+  args: rawArgs[0] === '--' ? rawArgs.slice(1) : rawArgs,
   options: {
     zone: { type: 'string' },
     manifest: { type: 'string', default: 'deploy/zones.json' },

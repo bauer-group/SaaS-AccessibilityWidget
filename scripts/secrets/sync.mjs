@@ -27,7 +27,11 @@ import { parseArgs } from 'node:util';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, '..', '..');
 
+// pnpm forwards the `--` separator literally to the script (npm strips it);
+// drop a leading `--` so the flags parse whether invoked via pnpm or node.
+const rawArgs = process.argv.slice(2);
 const { values } = parseArgs({
+  args: rawArgs[0] === '--' ? rawArgs.slice(1) : rawArgs,
   options: {
     'dry-run': { type: 'boolean', default: false },
     'push-only': { type: 'boolean', default: false },
