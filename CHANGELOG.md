@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.0.0...v1.0.1) (2026-06-20)
+
+### 🐛 Bug Fixes
+
+* **ci:** dropped --provenance (private repo) ([cfba96a](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/cfba96afd2cbc5dbc42e7bc364bacb1ca7c5c51d))
+
 ## [1.0.0](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v0.0.0...v1.0.0) (2026-06-20)
 
 ### ⚠ BREAKING CHANGES
