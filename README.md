@@ -40,7 +40,7 @@ For production, **pin an immutable version** and verify it with Subresource Inte
 
 ```html
 <script
-  src="https://widgets.professional-hosting.com/accessibility-widget/1.0.0/accessibility-widget-loader.min.js"
+  src="https://widgets.professional-hosting.com/accessibility-widget/1.0.3/accessibility-widget-loader.min.js"
   integrity="sha384-…"
   crossorigin="anonymous"
   defer

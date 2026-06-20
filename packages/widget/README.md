@@ -19,7 +19,7 @@ Für Produktion eine **unveränderliche Version pinnen** und per Subresource Int
 
 ```html
 <script
-  src="https://widgets.professional-hosting.com/accessibility-widget/1.0.0/accessibility-widget-loader.min.js"
+  src="https://widgets.professional-hosting.com/accessibility-widget/1.0.3/accessibility-widget-loader.min.js"
   integrity="sha384-…"
   crossorigin="anonymous"
   defer
