@@ -1,3 +1,9 @@
+## [1.0.4](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.0.3...v1.0.4) (2026-06-20)
+
+### ♻️ Refactoring
+
+* **repo:** split integrations into a dedicated repo ([9fe8fd0](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/9fe8fd014570deed6e6279629e5180c08e284292))
+
 ## [1.0.3](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.0.2...v1.0.3) (2026-06-20)
 
 ### ⚖️ License
