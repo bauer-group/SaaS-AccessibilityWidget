@@ -21,7 +21,8 @@ const dist = resolve(here, '..', 'dist');
  * first widget interaction.
  */
 const BUDGETS: Record<string, { gzip: number }> = {
-  'accessibility-widget-loader.min.js': { gzip: Math.round(5.5 * 1024) },
+  // 5.5 → 6 KB to carry the inline AGPL-3.0 license banner (legalComments: 'inline').
+  'accessibility-widget-loader.min.js': { gzip: 6 * 1024 },
   'accessibility-widget-core.min.js': { gzip: 30 * 1024 },
   'accessibility-widget.min.css': { gzip: 3 * 1024 },
 };
