@@ -129,3 +129,47 @@ jobs:
         # repo is private. Re-add --provenance if the repo is ever made public.
         run: npm publish --access public
         working-directory: packages/widget
+
+  publish-github:
+    name: 📤 Publish core to GitHub Packages
+    needs: release
+    if: needs.release.outputs.release-created == 'true'
+    # Best-effort mirror so the package shows in the repo's Packages sidebar
+    # (npm.pkg.github.com). Uses GITHUB_TOKEN (packages: write) — no OIDC.
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v7
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: 📚 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🔖 Sync released version
+        run: npm version "${{ needs.release.outputs.version }}" --no-git-tag-version --allow-same-version
+        working-directory: packages/widget
+
+      - name: 🏗️ Build at released version
+        run: pnpm --filter @bauer-group/accessibility-widget build
+
+      - name: 📤 Publish to GitHub Packages
+        # setup-node's registry-url (npm.pkg.github.com) routes the scoped
+        # package here; publishConfig carries no registry so it doesn't override.
+        run: npm publish --access public
+        working-directory: packages/widget
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
