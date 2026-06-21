@@ -80,6 +80,8 @@ export const en = {
     lightT: 'Lightweight by design',
     lightB:
       'A ~6 KB loader — smaller than most analytics snippets. The heavier core is lazy-loaded on demand and budget-enforced at build time.',
+    explore:
+      'Explore the widget: <a href="/configuration.html">Configuration</a> · <a href="/api.html">API</a> · <a href="/events.html">Events</a> · <a href="/playground.html">Playground</a>.',
   },
 
   profiles: {
@@ -192,7 +194,9 @@ export const en = {
     lead: 'Live log of all <code>AccessibilityWidget</code> events (CustomEvents on <code>document</code> under <code>accessibility-widget:*</code>). Privacy-friendly: payloads stay here, never sent anywhere.',
     clear: 'Clear log',
     cleared: 'Log cleared. New events appear here.',
-    empty: 'No events yet. Click in the API explorer above or in the panel.',
+    empty: 'No events yet. Click in the API explorer or in the panel.',
+    refLead:
+      'Subscribe with <code>AccessibilityWidget.on(name, cb)</code> — it returns an unsubscribe function.',
   },
 
   state: {

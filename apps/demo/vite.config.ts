@@ -91,6 +91,9 @@ export default defineConfig({
       input: {
         index: resolve(here, 'index.html'),
         configuration: resolve(here, 'configuration.html'),
+        api: resolve(here, 'api.html'),
+        events: resolve(here, 'events.html'),
+        playground: resolve(here, 'playground.html'),
         barrierefreiheit: resolve(here, 'barrierefreiheit.html'),
         impressum: resolve(here, 'impressum.html'),
       },

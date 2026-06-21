@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en" class="i18n-cloak">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- i18n bootstrap — see index.html for the rationale (English = fallback, German cloaked). -->
+    <script>
+      (() => {
+        let lang = 'en';
+        try {
+          const stored = localStorage.getItem('aw-page-lang');
+          if (stored === 'de' || stored === 'en') lang = stored;
+          else if ((navigator.language || '').toLowerCase().split('-')[0] === 'de') lang = 'de';
+        } catch {
+          /* ignore */
+        }
+        document.documentElement.lang = lang;
+        if (lang === 'en') document.documentElement.classList.remove('i18n-cloak');
+      })();
+    </script>
+
+    <title>Events — Accessibility Widget</title>
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#0058a3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0e14" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/src/styles.css" />
+
+    <!-- Widget bootstrap (sessionStorage override merged in — set on the Configuration page). -->
+    <script>
+      (() => {
+        const readJson = (storage, key) => {
+          try {
+            const raw = storage.getItem(key);
+            return raw ? JSON.parse(raw) : null;
+          } catch {
+            return null;
+          }
+        };
+        const storedLocale = (() => {
+          try {
+            return localStorage.getItem('aw-demo-locale');
+          } catch {
+            return null;
+          }
+        })();
+        const base = {
+          corePath: '/accessibility-widget/accessibility-widget-core.min.js',
+          cssPath: '/accessibility-widget/accessibility-widget.min.css',
+          locale: storedLocale ?? 'auto',
+          position: 'bottom-right',
+          primaryColor: '#0058a3',
+          statementUrl: '/barrierefreiheit.html',
+          draggableFab: true,
+          respectReducedMotion: true,
+          hideOnPrint: true,
+          debug: true,
+        };
+        const override = readJson(sessionStorage, 'aw-demo-config') ?? {};
+        window.AccessibilityWidgetConfig = { ...base, ...override };
+      })();
+    </script>
+    <script src="/accessibility-widget/accessibility-widget-loader.min.js" defer></script>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body data-page="events">
+    <a class="skip-link" href="#main" data-i18n="nav.skip">Skip to main content</a>
+
+    <header class="topbar" role="banner">
+      <div class="container topbar__inner">
+        <a class="topbar__brand" href="/" data-i18n-attr="aria-label:nav.home">
+          <svg
+            class="topbar__logo"
+            viewBox="-4 -4 32 32"
+            aria-hidden="true"
+            focusable="false"
+            width="28"
+            height="28"
+          >
+            <rect x="-4" y="-4" width="32" height="32" rx="7" fill="#0058a3" />
+            <g
+              fill="none"
+              stroke="#fff"
+              stroke-width="2.25"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="16" cy="4" r="1" />
+              <path d="m18 19 1-7-6 1" />
+              <path d="m5 8 3-3 5.5 3-2.36 3.5" />
+              <path d="M4.24 14.5a5 5 0 0 0 6.88 6" />
+              <path d="M13.76 17.5a5 5 0 0 0-6.88-6" />
+            </g>
+          </svg>
+          <span class="topbar__title">
+            <strong>Accessibility Widget</strong>
+            <em>BAUER GROUP</em>
+          </span>
+        </a>
+        <nav class="topbar__nav" aria-label="Main navigation">
+          <a href="/" data-i18n="nav.home">Home</a>
+          <a href="/configuration.html" data-i18n="nav.configuration">Configuration</a>
+          <a href="/api.html" data-i18n="nav.api">API</a>
+          <a href="/events.html" aria-current="page" data-i18n="nav.events">Events</a>
+          <a href="/playground.html" data-i18n="nav.playground">Playground</a>
+          <div
+            class="lang-toggle"
+            role="group"
+            data-i18n-attr="aria-label:nav.langLabel"
+            aria-label="Page language"
+          >
+            <button
+              type="button"
+              data-lang="de"
+              aria-pressed="false"
+              data-i18n-attr="aria-label:nav.langDe"
+            >
+              DE
+            </button>
+            <button
+              type="button"
+              data-lang="en"
+              aria-pressed="true"
+              data-i18n-attr="aria-label:nav.langEn"
+            >
+              EN
+            </button>
+          </div>
+          <a
+            class="topbar__github"
+            href="https://github.com/bauer-group/SaaS-AccessibilityWidget"
+            rel="noopener"
+            data-i18n="nav.github"
+          >
+            GitHub
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- EVENT STREAM -->
+      <section id="events" class="section" aria-labelledby="h-events">
+        <div class="container">
+          <header class="section__header">
+            <h2 id="h-events" data-i18n="events.heading">Event stream</h2>
+            <p data-i18n-html="events.lead">
+              Live log of all <code>AccessibilityWidget</code> events. Privacy-friendly: payloads
+              stay here.
+            </p>
+          </header>
+
+          <div class="event-stream">
+            <div class="event-stream__toolbar">
+              <button
+                type="button"
+                class="btn btn-ghost btn-sm"
+                id="events-clear"
+                data-i18n="events.clear"
+              >
+                Clear log
+              </button>
+              <span class="muted event-stream__count" id="events-count">0 Events</span>
+            </div>
+            <ol class="event-stream__log" id="events-log" aria-live="polite">
+              <li class="event-stream__empty" data-i18n="events.empty">
+                No events yet. Click in the API explorer or in the panel.
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- EVENT REFERENCE -->
+      <section class="section section--alt" aria-labelledby="h-events-ref">
+        <div class="container">
+          <header class="section__header">
+            <h2 id="h-events-ref" data-i18n="api.eventsTitle">Events</h2>
+            <p data-i18n-html="events.refLead">
+              Subscribe with <code>AccessibilityWidget.on(name, cb)</code> — it returns an
+              unsubscribe function.
+            </p>
+          </header>
+          <div class="api-tables">
+            <div class="api-table-wrap">
+              <table class="api-table">
+                <thead>
+                  <tr>
+                    <th data-i18n="api.colEvent">Event</th>
+                    <th data-i18n="api.colPayload">Payload</th>
+                    <th data-i18n="api.colFires">Fires on</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>stateChange</code></td>
+                    <td><code>{ state }</code></td>
+                    <td data-i18n="api.eStateChange">Every state change</td>
+                  </tr>
+                  <tr>
+                    <td><code>open</code></td>
+                    <td><code>{ trigger }</code></td>
+                    <td data-i18n="api.eOpen">The panel opens</td>
+                  </tr>
+                  <tr>
+                    <td><code>close</code></td>
+                    <td><code>{}</code></td>
+                    <td data-i18n="api.eClose">The panel closes</td>
+                  </tr>
+                  <tr>
+                    <td><code>profileApplied</code></td>
+                    <td><code>{ profile, state }</code></td>
+                    <td data-i18n="api.eProfile">A profile is applied</td>
+                  </tr>
+                  <tr>
+                    <td><code>localeChanged</code></td>
+                    <td><code>{ locale }</code></td>
+                    <td data-i18n="api.eLocale">The locale changes</td>
+                  </tr>
+                  <tr>
+                    <td><code>reset</code></td>
+                    <td><code>{}</code></td>
+                    <td data-i18n="api.eReset">All preferences cleared</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+      <div class="container footer__inner">
+        <div class="footer__brand">
+          <strong>BAUER GROUP</strong> ·
+          <span data-i18n="footer.license">AGPL-3.0-only / commercial</span>
+        </div>
+        <div class="footer__meta">
+          <p>
+            <a href="/barrierefreiheit.html" data-i18n="footer.statement"
+              >Accessibility statement</a
+            >
+            ·
+            <a href="/impressum.html" data-i18n="footer.impressum">Legal notice</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

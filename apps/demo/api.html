@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en" class="i18n-cloak">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- i18n bootstrap — see index.html for the rationale (English = fallback, German cloaked). -->
+    <script>
+      (() => {
+        let lang = 'en';
+        try {
+          const stored = localStorage.getItem('aw-page-lang');
+          if (stored === 'de' || stored === 'en') lang = stored;
+          else if ((navigator.language || '').toLowerCase().split('-')[0] === 'de') lang = 'de';
+        } catch {
+          /* ignore */
+        }
+        document.documentElement.lang = lang;
+        if (lang === 'en') document.documentElement.classList.remove('i18n-cloak');
+      })();
+    </script>
+
+    <title>Runtime API — Accessibility Widget</title>
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#0058a3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0e14" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/src/styles.css" />
+
+    <!-- Widget bootstrap (sessionStorage override merged in — set on the Configuration page). -->
+    <script>
+      (() => {
+        const readJson = (storage, key) => {
+          try {
+            const raw = storage.getItem(key);
+            return raw ? JSON.parse(raw) : null;
+          } catch {
+            return null;
+          }
+        };
+        const storedLocale = (() => {
+          try {
+            return localStorage.getItem('aw-demo-locale');
+          } catch {
+            return null;
+          }
+        })();
+        const base = {
+          corePath: '/accessibility-widget/accessibility-widget-core.min.js',
+          cssPath: '/accessibility-widget/accessibility-widget.min.css',
+          locale: storedLocale ?? 'auto',
+          position: 'bottom-right',
+          primaryColor: '#0058a3',
+          statementUrl: '/barrierefreiheit.html',
+          draggableFab: true,
+          respectReducedMotion: true,
+          hideOnPrint: true,
+          debug: true,
+        };
+        const override = readJson(sessionStorage, 'aw-demo-config') ?? {};
+        window.AccessibilityWidgetConfig = { ...base, ...override };
+      })();
+    </script>
+    <script src="/accessibility-widget/accessibility-widget-loader.min.js" defer></script>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body data-page="api">
+    <a class="skip-link" href="#main" data-i18n="nav.skip">Skip to main content</a>
+
+    <header class="topbar" role="banner">
+      <div class="container topbar__inner">
+        <a class="topbar__brand" href="/" data-i18n-attr="aria-label:nav.home">
+          <svg
+            class="topbar__logo"
+            viewBox="-4 -4 32 32"
+            aria-hidden="true"
+            focusable="false"
+            width="28"
+            height="28"
+          >
+            <rect x="-4" y="-4" width="32" height="32" rx="7" fill="#0058a3" />
+            <g
+              fill="none"
+              stroke="#fff"
+              stroke-width="2.25"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="16" cy="4" r="1" />
+              <path d="m18 19 1-7-6 1" />
+              <path d="m5 8 3-3 5.5 3-2.36 3.5" />
+              <path d="M4.24 14.5a5 5 0 0 0 6.88 6" />
+              <path d="M13.76 17.5a5 5 0 0 0-6.88-6" />
+            </g>
+          </svg>
+          <span class="topbar__title">
+            <strong>Accessibility Widget</strong>
+            <em>BAUER GROUP</em>
+          </span>
+        </a>
+        <nav class="topbar__nav" aria-label="Main navigation">
+          <a href="/" data-i18n="nav.home">Home</a>
+          <a href="/configuration.html" data-i18n="nav.configuration">Configuration</a>
+          <a href="/api.html" aria-current="page" data-i18n="nav.api">API</a>
+          <a href="/events.html" data-i18n="nav.events">Events</a>
+          <a href="/playground.html" data-i18n="nav.playground">Playground</a>
+          <div
+            class="lang-toggle"
+            role="group"
+            data-i18n-attr="aria-label:nav.langLabel"
+            aria-label="Page language"
+          >
+            <button
+              type="button"
+              data-lang="de"
+              aria-pressed="false"
+              data-i18n-attr="aria-label:nav.langDe"
+            >
+              DE
+            </button>
+            <button
+              type="button"
+              data-lang="en"
+              aria-pressed="true"
+              data-i18n-attr="aria-label:nav.langEn"
+            >
+              EN
+            </button>
+          </div>
+          <a
+            class="topbar__github"
+            href="https://github.com/bauer-group/SaaS-AccessibilityWidget"
+            rel="noopener"
+            data-i18n="nav.github"
+          >
+            GitHub
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- RUNTIME API EXPLORER -->
+      <section id="api" class="section" aria-labelledby="h-api">
+        <div class="container">
+          <header class="section__header">
+            <h2 id="h-api" data-i18n="api.heading">Runtime API — live</h2>
+            <p data-i18n-html="api.lead">
+              Every method on <code>window.AccessibilityWidget</code>, one click away.
+            </p>
+          </header>
+
+          <div class="api-grid">
+            <div class="api-actions">
+              <h3 class="api-actions__heading" data-i18n="api.controlHeading">Control</h3>
+              <div class="api-actions__row">
+                <button type="button" class="btn btn-primary" data-api="open">open()</button>
+                <button type="button" class="btn btn-ghost" data-api="close">close()</button>
+                <button type="button" class="btn btn-ghost" data-api="reset">reset()</button>
+              </div>
+
+              <h3 class="api-actions__heading" data-i18n="api.featuresHeading">
+                Features &amp; profiles
+              </h3>
+              <div class="api-actions__row">
+                <button
+                  type="button"
+                  class="btn btn-ghost"
+                  data-api="set"
+                  data-args='["fontSize",true]'
+                >
+                  set('fontSize', true)
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-ghost"
+                  data-api="set"
+                  data-args='["contrast",true]'
+                >
+                  set('contrast', true)
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-ghost"
+                  data-api="set"
+                  data-args='["focusOutline",true]'
+                >
+                  set('focusOutline', true)
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-ghost"
+                  data-api="applyProfile"
+                  data-args='["blind"]'
+                >
+                  applyProfile('blind')
+                </button>
+              </div>
+
+              <h3 class="api-actions__heading" data-i18n="api.langHeading">Language</h3>
+              <div class="api-actions__row">
+                <button type="button" class="btn btn-ghost" data-api="setLocale" data-args='["de"]'>
+                  setLocale('de')
+                </button>
+                <button type="button" class="btn btn-ghost" data-api="setLocale" data-args='["en"]'>
+                  setLocale('en')
+                </button>
+                <button type="button" class="btn btn-ghost" data-api="setLocale" data-args='["ja"]'>
+                  setLocale('ja')
+                </button>
+                <button type="button" class="btn btn-ghost" data-api="setLocale" data-args='["ar"]'>
+                  setLocale('ar')
+                </button>
+              </div>
+
+              <h3 class="api-actions__heading" data-i18n="api.posHeading">FAB position</h3>
+              <div class="api-actions__row">
+                <button
+                  type="button"
+                  class="btn btn-ghost"
+                  data-api="setPosition"
+                  data-args='[{"x":40,"y":200}]'
+                >
+                  setPosition({40, 200})
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-ghost"
+                  data-api="setPosition"
+                  data-args='[{"x":400,"y":80}]'
+                >
+                  setPosition({400, 80})
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-ghost"
+                  data-api="setPosition"
+                  data-args="[null]"
+                >
+                  setPosition(null)
+                </button>
+              </div>
+
+              <h3 class="api-actions__heading" data-i18n="api.inspectHeading">Inspection</h3>
+              <div class="api-actions__row">
+                <button type="button" class="btn btn-ghost" data-api="getState">getState()</button>
+              </div>
+            </div>
+
+            <aside class="api-result" aria-labelledby="api-result-heading">
+              <h3 id="api-result-heading" class="api-result__heading" data-i18n="api.resultHeading">
+                Result
+              </h3>
+              <div class="code-block code-block--compact">
+                <button
+                  type="button"
+                  class="copy-btn"
+                  data-copy
+                  data-i18n="hero.copy"
+                  aria-label="Copy"
+                >
+                  Copy
+                </button>
+                <pre><code id="api-result-output" data-i18n="api.resultPlaceholder">Click an API method on the left to see its result and return value.</code></pre>
+              </div>
+            </aside>
+          </div>
+
+          <!-- API reference: methods -->
+          <div class="api-tables">
+            <div class="api-table-wrap">
+              <h3 data-i18n="api.methodsTitle">Methods</h3>
+              <table class="api-table">
+                <thead>
+                  <tr>
+                    <th data-i18n="api.colMethod">Method</th>
+                    <th data-i18n="api.colSignature">Signature</th>
+                    <th data-i18n="api.colPurpose">Purpose</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>open(opts?)</code></td>
+                    <td><code>Promise&lt;void&gt;</code></td>
+                    <td data-i18n="api.mOpen">Open the panel</td>
+                  </tr>
+                  <tr>
+                    <td><code>close()</code></td>
+                    <td><code>void</code></td>
+                    <td data-i18n="api.mClose">Close the panel</td>
+                  </tr>
+                  <tr>
+                    <td><code>reset()</code></td>
+                    <td><code>void</code></td>
+                    <td data-i18n="api.mReset">Clear all preferences + reload</td>
+                  </tr>
+                  <tr>
+                    <td><code>set(id, value)</code></td>
+                    <td><code>Promise&lt;void&gt;</code></td>
+                    <td data-i18n="api.mSet">Toggle a single feature</td>
+                  </tr>
+                  <tr>
+                    <td><code>applyProfile(id)</code></td>
+                    <td><code>Promise&lt;boolean&gt;</code></td>
+                    <td data-i18n="api.mApply">Apply a profile preset</td>
+                  </tr>
+                  <tr>
+                    <td><code>setLocale(locale)</code></td>
+                    <td><code>Promise&lt;boolean&gt;</code></td>
+                    <td data-i18n="api.mLocale">Switch language at runtime</td>
+                  </tr>
+                  <tr>
+                    <td><code>setPosition(pos)</code></td>
+                    <td><code>void</code></td>
+                    <td data-i18n="api.mPosition">Move the FAB or reset to anchor</td>
+                  </tr>
+                  <tr>
+                    <td><code>getState()</code></td>
+                    <td><code>WidgetState | null</code></td>
+                    <td data-i18n="api.mState">Read the persisted state</td>
+                  </tr>
+                  <tr>
+                    <td><code>on(event, cb)</code></td>
+                    <td><code>() =&gt; void</code></td>
+                    <td data-i18n="api.mOn">Subscribe to an event</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- LIVE STATE -->
+      <section id="state" class="section section--alt" aria-labelledby="h-state">
+        <div class="container">
+          <details class="state-panel">
+            <summary>
+              <h2 id="h-state" data-i18n="state.heading">Live state</h2>
+              <span class="state-panel__hint" data-i18n="state.hint">
+                JSON dump of the persisted widget state — updates live
+              </span>
+            </summary>
+            <div class="code-block">
+              <button
+                type="button"
+                class="copy-btn"
+                data-copy
+                data-i18n="hero.copy"
+                aria-label="Copy"
+              >
+                Copy
+              </button>
+              <pre><code id="state-output">Initialising …</code></pre>
+            </div>
+            <p class="muted" data-i18n-html="state.note">
+              Source: <code>window.AccessibilityWidget.getState()</code> — poll interval 500 ms.
+            </p>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+      <div class="container footer__inner">
+        <div class="footer__brand">
+          <strong>BAUER GROUP</strong> ·
+          <span data-i18n="footer.license">AGPL-3.0-only / commercial</span>
+        </div>
+        <div class="footer__meta">
+          <p>
+            <a href="/barrierefreiheit.html" data-i18n="footer.statement"
+              >Accessibility statement</a
+            >
+            ·
+            <a href="/impressum.html" data-i18n="footer.impressum">Legal notice</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

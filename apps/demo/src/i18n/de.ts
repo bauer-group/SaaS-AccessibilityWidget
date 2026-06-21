@@ -78,6 +78,8 @@ export const de: Dict = {
     lightT: 'Leichtgewichtig per Design',
     lightB:
       'Ein ~6 KB Loader — kleiner als die meisten Analytics-Snippets. Der schwerere Core wird bei Bedarf nachgeladen und ist beim Build budget-gedeckelt.',
+    explore:
+      'Entdecke das Widget: <a href="/configuration.html">Konfiguration</a> · <a href="/api.html">API</a> · <a href="/events.html">Events</a> · <a href="/playground.html">Playground</a>.',
   },
 
   profiles: {
@@ -190,7 +192,9 @@ export const de: Dict = {
     lead: 'Live-Log aller <code>AccessibilityWidget</code>-Events (CustomEvents auf <code>document</code> unter <code>accessibility-widget:*</code>). Privacy-friendly: die Payloads bleiben hier, werden nirgends gesendet.',
     clear: 'Log leeren',
     cleared: 'Log geleert. Neue Events erscheinen hier.',
-    empty: 'Noch keine Events. Klicke im API-Explorer oben oder im Panel.',
+    empty: 'Noch keine Events. Klicke im API-Explorer oder im Panel.',
+    refLead:
+      'Abonniere mit <code>AccessibilityWidget.on(name, cb)</code> — es gibt eine Unsubscribe-Funktion zurück.',
   },
 
   state: {

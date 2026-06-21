@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en" class="i18n-cloak">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- i18n bootstrap — see index.html for the rationale (English = fallback, German cloaked). -->
+    <script>
+      (() => {
+        let lang = 'en';
+        try {
+          const stored = localStorage.getItem('aw-page-lang');
+          if (stored === 'de' || stored === 'en') lang = stored;
+          else if ((navigator.language || '').toLowerCase().split('-')[0] === 'de') lang = 'de';
+        } catch {
+          /* ignore */
+        }
+        document.documentElement.lang = lang;
+        if (lang === 'en') document.documentElement.classList.remove('i18n-cloak');
+      })();
+    </script>
+
+    <title>Playground — Accessibility Widget</title>
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#0058a3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0e14" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/src/styles.css" />
+
+    <!-- Widget bootstrap (sessionStorage override merged in — set on the Configuration page). -->
+    <script>
+      (() => {
+        const readJson = (storage, key) => {
+          try {
+            const raw = storage.getItem(key);
+            return raw ? JSON.parse(raw) : null;
+          } catch {
+            return null;
+          }
+        };
+        const storedLocale = (() => {
+          try {
+            return localStorage.getItem('aw-demo-locale');
+          } catch {
+            return null;
+          }
+        })();
+        const base = {
+          corePath: '/accessibility-widget/accessibility-widget-core.min.js',
+          cssPath: '/accessibility-widget/accessibility-widget.min.css',
+          locale: storedLocale ?? 'auto',
+          position: 'bottom-right',
+          primaryColor: '#0058a3',
+          statementUrl: '/barrierefreiheit.html',
+          draggableFab: true,
+          respectReducedMotion: true,
+          hideOnPrint: true,
+          debug: true,
+        };
+        const override = readJson(sessionStorage, 'aw-demo-config') ?? {};
+        window.AccessibilityWidgetConfig = { ...base, ...override };
+      })();
+    </script>
+    <script src="/accessibility-widget/accessibility-widget-loader.min.js" defer></script>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body data-page="playground">
+    <a class="skip-link" href="#main" data-i18n="nav.skip">Skip to main content</a>
+
+    <header class="topbar" role="banner">
+      <div class="container topbar__inner">
+        <a class="topbar__brand" href="/" data-i18n-attr="aria-label:nav.home">
+          <svg
+            class="topbar__logo"
+            viewBox="-4 -4 32 32"
+            aria-hidden="true"
+            focusable="false"
+            width="28"
+            height="28"
+          >
+            <rect x="-4" y="-4" width="32" height="32" rx="7" fill="#0058a3" />
+            <g
+              fill="none"
+              stroke="#fff"
+              stroke-width="2.25"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="16" cy="4" r="1" />
+              <path d="m18 19 1-7-6 1" />
+              <path d="m5 8 3-3 5.5 3-2.36 3.5" />
+              <path d="M4.24 14.5a5 5 0 0 0 6.88 6" />
+              <path d="M13.76 17.5a5 5 0 0 0-6.88-6" />
+            </g>
+          </svg>
+          <span class="topbar__title">
+            <strong>Accessibility Widget</strong>
+            <em>BAUER GROUP</em>
+          </span>
+        </a>
+        <nav class="topbar__nav" aria-label="Main navigation">
+          <a href="/" data-i18n="nav.home">Home</a>
+          <a href="/configuration.html" data-i18n="nav.configuration">Configuration</a>
+          <a href="/api.html" data-i18n="nav.api">API</a>
+          <a href="/events.html" data-i18n="nav.events">Events</a>
+          <a href="/playground.html" aria-current="page" data-i18n="nav.playground">Playground</a>
+          <div
+            class="lang-toggle"
+            role="group"
+            data-i18n-attr="aria-label:nav.langLabel"
+            aria-label="Page language"
+          >
+            <button
+              type="button"
+              data-lang="de"
+              aria-pressed="false"
+              data-i18n-attr="aria-label:nav.langDe"
+            >
+              DE
+            </button>
+            <button
+              type="button"
+              data-lang="en"
+              aria-pressed="true"
+              data-i18n-attr="aria-label:nav.langEn"
+            >
+              EN
+            </button>
+          </div>
+          <a
+            class="topbar__github"
+            href="https://github.com/bauer-group/SaaS-AccessibilityWidget"
+            rel="noopener"
+            data-i18n="nav.github"
+          >
+            GitHub
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- PROFILES QUICK-ACTIONS -->
+      <section id="profiles" class="section" aria-labelledby="h-profiles">
+        <div class="container">
+          <header class="section__header">
+            <h2 id="h-profiles" data-i18n="profiles.heading">Try a profile</h2>
+            <p data-i18n-html="profiles.lead">
+              One click activates a curated set of features via
+              <code>AccessibilityWidget.applyProfile()</code>.
+            </p>
+          </header>
+          <div class="profile-grid" role="group" aria-label="Profile presets">
+            <button type="button" class="profile-chip" data-profile="visionImpaired">
+              <span class="profile-chip__icon" aria-hidden="true">👁️</span>
+              <span class="profile-chip__label" data-i18n="profiles.visionLabel">Low vision</span>
+              <span class="profile-chip__hint" data-i18n="profiles.visionHint"
+                >Larger text · High contrast · Highlight links</span
+              >
+            </button>
+            <button type="button" class="profile-chip" data-profile="motor">
+              <span class="profile-chip__icon" aria-hidden="true">✋</span>
+              <span class="profile-chip__label" data-i18n="profiles.motorLabel">Motor</span>
+              <span class="profile-chip__hint" data-i18n="profiles.motorHint"
+                >Big cursor · Animations paused · Thick focus</span
+              >
+            </button>
+            <button type="button" class="profile-chip" data-profile="cognitive">
+              <span class="profile-chip__icon" aria-hidden="true">🧠</span>
+              <span class="profile-chip__label" data-i18n="profiles.cognitiveLabel">Cognitive</span>
+              <span class="profile-chip__hint" data-i18n="profiles.cognitiveHint"
+                >Dyslexia font · Line spacing · Reading guide</span
+              >
+            </button>
+            <button type="button" class="profile-chip" data-profile="seizureSafe">
+              <span class="profile-chip__icon" aria-hidden="true">⚡</span>
+              <span class="profile-chip__label" data-i18n="profiles.seizureLabel"
+                >Seizure-safe</span
+              >
+              <span class="profile-chip__hint" data-i18n="profiles.seizureHint"
+                >Animations paused · Grayscale</span
+              >
+            </button>
+            <button type="button" class="profile-chip" data-profile="adhd">
+              <span class="profile-chip__icon" aria-hidden="true">🎯</span>
+              <span class="profile-chip__label" data-i18n="profiles.adhdLabel">ADHD</span>
+              <span class="profile-chip__hint" data-i18n="profiles.adhdHint"
+                >Reading mask · Animations paused · Focus ring</span
+              >
+            </button>
+            <button type="button" class="profile-chip" data-profile="blind">
+              <span class="profile-chip__icon" aria-hidden="true">♿</span>
+              <span class="profile-chip__label" data-i18n="profiles.blindLabel"
+                >Blind (screen reader)</span
+              >
+              <span class="profile-chip__hint" data-i18n="profiles.blindHint"
+                >Structure navigation · Highlight links · Focus ring</span
+              >
+            </button>
+          </div>
+          <p class="profile-grid__footnote muted" data-i18n-html="profiles.footnote">
+            No matching profile?
+            <button type="button" class="link-btn" data-action="open">
+              Pick every feature individually →
+            </button>
+          </p>
+        </div>
+      </section>
+
+      <!-- LOCALE + RESET TRY SECTION -->
+      <section id="try" class="section section--alt" aria-labelledby="h-try">
+        <div class="container">
+          <header class="section__header">
+            <h2 id="h-try" data-i18n="trial.heading">Language &amp; reset</h2>
+            <p data-i18n-html="trial.lead">
+              Every change is persisted in <code>localStorage</code> and applied before the first
+              render — no FOUC.
+            </p>
+          </header>
+
+          <div class="grid-2">
+            <article class="try-card">
+              <h3>
+                <span class="try-card__kicker" data-i18n="trial.localeKicker">Live, no reload</span>
+                <span data-i18n="trial.localeTitle">Switch language</span>
+              </h3>
+              <p data-i18n-html="trial.localeBody">
+                28 languages available. The panel re-renders live via
+                <code>AccessibilityWidget.setLocale()</code>.
+              </p>
+              <label class="field">
+                <span class="field__label" data-i18n="trial.localeLabel">Widget language</span>
+                <select id="locale-select" aria-label="Widget language"></select>
+              </label>
+            </article>
+
+            <article class="try-card">
+              <h3>
+                <span class="try-card__kicker" data-i18n="trial.resetKicker">Back to zero</span>
+                <span data-i18n="trial.resetTitle">Clear preferences</span>
+              </h3>
+              <p data-i18n-html="trial.resetBody">
+                Clears the <code>localStorage</code> key and reloads the page.
+              </p>
+              <button
+                type="button"
+                class="btn btn-ghost"
+                id="hard-reset"
+                data-i18n="trial.resetBtn"
+              >
+                Reset &amp; reload
+              </button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- SAMPLE CONTENT -->
+      <section id="sample" class="section" aria-labelledby="h-sample">
+        <div class="container">
+          <header class="section__header">
+            <h2 id="h-sample" data-i18n="sample.heading">Sample content</h2>
+            <p data-i18n="sample.lead">
+              This text reacts to every widget setting. Toggle font size, contrast or reading aids
+              and watch it change here.
+            </p>
+          </header>
+
+          <article class="prose-card">
+            <h3 data-i18n="sample.legalTitle">Legal background</h3>
+            <p data-i18n-html="sample.legalBody1">
+              Since 28 June 2025, the German
+              <a href="https://www.gesetze-im-internet.de/bfsg/" rel="noopener">
+                Accessibility Strengthening Act (BFSG)
+              </a>
+              requires nearly all B2C providers to make their digital offerings accessible.
+            </p>
+            <p data-i18n="sample.legalBody2">
+              A widget never replaces clean code. But a well-built preference layer is a real win
+              for users — and a visible commitment from the operator.
+            </p>
+          </article>
+
+          <article class="prose-card">
+            <h3 data-i18n="sample.animTitle">Animation test</h3>
+            <p data-i18n-html="sample.animBody">
+              This dot pulses until you enable <em>pause animations</em> in the widget.
+            </p>
+            <div class="pulse" aria-hidden="true"></div>
+          </article>
+        </div>
+      </section>
+
+      <!-- SCANNER TEST ZONE -->
+      <section id="scanner" class="section section--alt" aria-labelledby="h-scanner">
+        <div class="container">
+          <details class="scanner-panel">
+            <summary>
+              <h2 id="h-scanner" data-i18n="scanner.heading">Scanner test zone</h2>
+              <span class="scanner-panel__hint" data-i18n-html="scanner.hint"
+                >Contains <strong>intentional</strong> WCAG violations</span
+              >
+            </summary>
+            <p data-i18n="scanner.lead">
+              This page serves automated scanners (axe-core, pa11y, Lighthouse, Playwright-AxE) as a
+              target. In a real product these barriers would be fixed — here they exist as stable
+              test cases:
+            </p>
+            <ul class="violations-list">
+              <li data-i18n-html="scanner.v1">
+                <code>&lt;img&gt;</code> without an <code>alt</code> attribute
+              </li>
+              <li data-i18n-html="scanner.v2">Link text “click here” (not contextual)</li>
+              <li data-i18n-html="scanner.v3">Button with contrast &lt; 4.5:1</li>
+              <li data-i18n-html="scanner.v4">Form <code>&lt;input&gt;</code> without a label</li>
+            </ul>
+            <div class="violations" aria-label="Intentional WCAG violations — test content only">
+              <img src="/accessibility-widget-assets/sample.svg" />
+              <p>
+                <a href="#" data-i18n="scanner.imgMore">click here</a
+                ><span data-i18n="scanner.imgMoreSuffix"> for more.</span>
+              </p>
+              <button class="low-contrast" type="button" data-i18n="scanner.grayBtn">
+                Gray action
+              </button>
+              <form>
+                <input
+                  type="text"
+                  data-i18n-attr="placeholder:scanner.inputPh"
+                  placeholder="Name"
+                />
+                <button type="submit" data-i18n="scanner.submit">Submit</button>
+              </form>
+            </div>
+            <p class="muted" data-i18n-html="scanner.note">
+              Preview port for the scanner: <code>http://localhost:4173</code>.
+            </p>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+      <div class="container footer__inner">
+        <div class="footer__brand">
+          <strong>BAUER GROUP</strong> ·
+          <span data-i18n="footer.license">AGPL-3.0-only / commercial</span>
+        </div>
+        <div class="footer__meta">
+          <p>
+            <a href="/barrierefreiheit.html" data-i18n="footer.statement"
+              >Accessibility statement</a
+            >
+            ·
+            <a href="/impressum.html" data-i18n="footer.impressum">Legal notice</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

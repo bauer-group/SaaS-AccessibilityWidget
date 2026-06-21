@@ -48,51 +48,51 @@
     <link rel="stylesheet" href="/src/styles.css" />
 
     <!--
-      Widget-Config: set BEFORE the loader script so the IIFE loader can read it
-      at boot. All fields optional; see packages/widget/README.md for the full
-      reference. NOTE: `locale` is the WIDGET language (28 locales) — independent
-      of the page-chrome language toggle (DE/EN) handled by src/i18n.
+      Widget-Config: set BEFORE the loader so the IIFE loader reads it at boot.
+      All fields optional; the full reference + an interactive playground live on
+      /configuration.html. The playground can stash an override in sessionStorage
+      ("Apply & reload"); we merge it over the base here so it applies site-wide.
+      NOTE: `locale` is the WIDGET language (28 locales) — independent of the
+      page-chrome language toggle (DE/EN) handled by src/i18n.
     -->
     <script>
       (() => {
-        const stored = (() => {
+        const readJson = (storage, key) => {
+          try {
+            const raw = storage.getItem(key);
+            return raw ? JSON.parse(raw) : null;
+          } catch {
+            return null;
+          }
+        };
+        const storedLocale = (() => {
           try {
             return localStorage.getItem('aw-demo-locale');
           } catch {
             return null;
           }
         })();
-
-        window.AccessibilityWidgetConfig = {
-          // ─── Asset-Loading ────────────────────────────────────────
+        const base = {
           corePath: '/accessibility-widget/accessibility-widget-core.min.js',
           cssPath: '/accessibility-widget/accessibility-widget.min.css',
-          // coreIntegrity: 'sha384-…',   // SRI-Pinning für CDN-Deploys
-          // cssIntegrity:  'sha384-…',
-
-          // ─── Lokalisierung ────────────────────────────────────────
-          locale: stored ?? 'auto', // 'auto' | de/en/fr/es/it/pl/tr/ar/zh/hi/pt/bn/ru/ja/ko/vi/fa/ur/th/id/he/nl/sv/cs/el/hu/ro/uk
-
-          // ─── Branding / Position ──────────────────────────────────
-          position: 'bottom-right', // bottom-right | bottom-left | top-right | top-left
-          offset: { x: 20, y: 20 }, // Pixel-Abstand zur Ankerecke
+          locale: storedLocale ?? 'auto',
+          position: 'bottom-right',
+          offset: { x: 20, y: 20 },
           primaryColor: '#0058a3',
-
-          // ─── Legal / Compliance ───────────────────────────────────
           statementUrl: '/barrierefreiheit.html',
-
-          // ─── Verhalten ────────────────────────────────────────────
-          draggableFab: true, // End-User kann FAB per Drag oder Shift+Arrow verschieben
+          draggableFab: true,
           respectReducedMotion: true,
           hideOnPrint: true,
-          debug: true, // Silent-Failures werden console.warn'd
+          debug: true,
         };
+        const override = readJson(sessionStorage, 'aw-demo-config') ?? {};
+        window.AccessibilityWidgetConfig = { ...base, ...override };
       })();
     </script>
     <script src="/accessibility-widget/accessibility-widget-loader.min.js" defer></script>
   </head>
-  <body>
-    <a class="skip-link" href="#main" data-i18n="nav.home">Skip to main content</a>
+  <body data-page="home">
+    <a class="skip-link" href="#main" data-i18n="nav.skip">Skip to main content</a>
 
     <header class="topbar" role="banner">
       <div class="container topbar__inner">
@@ -127,13 +127,11 @@
           </span>
         </a>
         <nav class="topbar__nav" aria-label="Main navigation">
-          <a href="#features" data-i18n="nav.features">Features</a>
-          <a href="#profiles" data-i18n="nav.profiles">Profiles</a>
-          <a href="#install" data-i18n="nav.install">Install</a>
+          <a href="/" aria-current="page" data-i18n="nav.home">Home</a>
           <a href="/configuration.html" data-i18n="nav.configuration">Configuration</a>
-          <a href="#api" data-i18n="nav.api">API</a>
-          <a href="#compliance" data-i18n="nav.compliance">Compliance</a>
-          <a href="#faq" data-i18n="nav.faq">FAQ</a>
+          <a href="/api.html" data-i18n="nav.api">API</a>
+          <a href="/events.html" data-i18n="nav.events">Events</a>
+          <a href="/playground.html" data-i18n="nav.playground">Playground</a>
           <div
             class="lang-toggle"
             role="group"
@@ -193,7 +191,13 @@
                 Add this one line — that is it:
               </figcaption>
               <div class="code-block code-block--hero">
-                <button class="copy-btn" data-copy data-i18n="hero.copy" aria-label="Copy">
+                <button
+                  type="button"
+                  class="copy-btn"
+                  data-copy
+                  data-i18n="hero.copy"
+                  aria-label="Copy"
+                >
                   Copy
                 </button>
                 <pre><code>&lt;script
@@ -300,162 +304,16 @@
               <p data-i18n-html="features.lightB">A ~6 KB loader.</p>
             </article>
           </div>
-        </div>
-      </section>
-
-      <!-- PROFILES QUICK-ACTIONS -->
-      <section id="profiles" class="section section--alt" aria-labelledby="h-profiles">
-        <div class="container">
-          <header class="section__header">
-            <h2 id="h-profiles" data-i18n="profiles.heading">Try a profile</h2>
-            <p data-i18n-html="profiles.lead">
-              One click activates a curated set of features via
-              <code>AccessibilityWidget.applyProfile()</code>.
-            </p>
-          </header>
-          <div class="profile-grid" role="group" aria-label="Profile presets">
-            <button type="button" class="profile-chip" data-profile="visionImpaired">
-              <span class="profile-chip__icon" aria-hidden="true">👁️</span>
-              <span class="profile-chip__label" data-i18n="profiles.visionLabel">Low vision</span>
-              <span class="profile-chip__hint" data-i18n="profiles.visionHint"
-                >Larger text · High contrast · Highlight links</span
-              >
-            </button>
-            <button type="button" class="profile-chip" data-profile="motor">
-              <span class="profile-chip__icon" aria-hidden="true">✋</span>
-              <span class="profile-chip__label" data-i18n="profiles.motorLabel">Motor</span>
-              <span class="profile-chip__hint" data-i18n="profiles.motorHint"
-                >Big cursor · Animations paused · Thick focus</span
-              >
-            </button>
-            <button type="button" class="profile-chip" data-profile="cognitive">
-              <span class="profile-chip__icon" aria-hidden="true">🧠</span>
-              <span class="profile-chip__label" data-i18n="profiles.cognitiveLabel">Cognitive</span>
-              <span class="profile-chip__hint" data-i18n="profiles.cognitiveHint"
-                >Dyslexia font · Line spacing · Reading guide</span
-              >
-            </button>
-            <button type="button" class="profile-chip" data-profile="seizureSafe">
-              <span class="profile-chip__icon" aria-hidden="true">⚡</span>
-              <span class="profile-chip__label" data-i18n="profiles.seizureLabel"
-                >Seizure-safe</span
-              >
-              <span class="profile-chip__hint" data-i18n="profiles.seizureHint"
-                >Animations paused · Grayscale</span
-              >
-            </button>
-            <button type="button" class="profile-chip" data-profile="adhd">
-              <span class="profile-chip__icon" aria-hidden="true">🎯</span>
-              <span class="profile-chip__label" data-i18n="profiles.adhdLabel">ADHD</span>
-              <span class="profile-chip__hint" data-i18n="profiles.adhdHint"
-                >Reading mask · Animations paused · Focus ring</span
-              >
-            </button>
-            <button type="button" class="profile-chip" data-profile="blind">
-              <span class="profile-chip__icon" aria-hidden="true">♿</span>
-              <span class="profile-chip__label" data-i18n="profiles.blindLabel"
-                >Blind (screen reader)</span
-              >
-              <span class="profile-chip__hint" data-i18n="profiles.blindHint"
-                >Structure navigation · Highlight links · Focus ring</span
-              >
-            </button>
-          </div>
-          <p class="profile-grid__footnote muted" data-i18n-html="profiles.footnote">
-            No matching profile?
-            <button type="button" class="link-btn" data-action="open">
-              Pick every feature individually →
-            </button>
+          <p class="section__cta muted" data-i18n-html="features.explore">
+            Explore the widget: <a href="/configuration.html">Configuration</a> ·
+            <a href="/api.html">API</a> · <a href="/events.html">Events</a> ·
+            <a href="/playground.html">Playground</a>.
           </p>
         </div>
       </section>
 
-      <!-- LOCALE + RESET TRY SECTION -->
-      <section id="try" class="section" aria-labelledby="h-try">
-        <div class="container">
-          <header class="section__header">
-            <h2 id="h-try" data-i18n="trial.heading">Language &amp; reset</h2>
-            <p data-i18n-html="trial.lead">
-              Every change is persisted in <code>localStorage</code> and applied before the first
-              render — no FOUC.
-            </p>
-          </header>
-
-          <div class="grid-2">
-            <article class="try-card">
-              <h3>
-                <span class="try-card__kicker" data-i18n="trial.localeKicker">Live, no reload</span>
-                <span data-i18n="trial.localeTitle">Switch language</span>
-              </h3>
-              <p data-i18n-html="trial.localeBody">
-                28 languages available. The panel re-renders live via
-                <code>AccessibilityWidget.setLocale()</code>.
-              </p>
-              <label class="field">
-                <span class="field__label" data-i18n="trial.localeLabel">Widget language</span>
-                <select id="locale-select" aria-label="Widget language"></select>
-              </label>
-            </article>
-
-            <article class="try-card">
-              <h3>
-                <span class="try-card__kicker" data-i18n="trial.resetKicker">Back to zero</span>
-                <span data-i18n="trial.resetTitle">Clear preferences</span>
-              </h3>
-              <p data-i18n-html="trial.resetBody">
-                Clears the <code>localStorage</code> key and reloads the page.
-              </p>
-              <button
-                type="button"
-                class="btn btn-ghost"
-                id="hard-reset"
-                data-i18n="trial.resetBtn"
-              >
-                Reset &amp; reload
-              </button>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- SAMPLE CONTENT -->
-      <section id="sample" class="section section--alt" aria-labelledby="h-sample">
-        <div class="container">
-          <header class="section__header">
-            <h2 id="h-sample" data-i18n="sample.heading">Sample content</h2>
-            <p data-i18n="sample.lead">
-              This text reacts to every widget setting. Toggle font size, contrast or reading aids
-              and watch it change here.
-            </p>
-          </header>
-
-          <article class="prose-card">
-            <h3 data-i18n="sample.legalTitle">Legal background</h3>
-            <p data-i18n-html="sample.legalBody1">
-              Since 28 June 2025, the German
-              <a href="https://www.gesetze-im-internet.de/bfsg/" rel="noopener">
-                Accessibility Strengthening Act (BFSG)
-              </a>
-              requires nearly all B2C providers to make their digital offerings accessible.
-            </p>
-            <p data-i18n="sample.legalBody2">
-              A widget never replaces clean code. But a well-built preference layer is a real win
-              for users — and a visible commitment from the operator.
-            </p>
-          </article>
-
-          <article class="prose-card">
-            <h3 data-i18n="sample.animTitle">Animation test</h3>
-            <p data-i18n-html="sample.animBody">
-              This dot pulses until you enable <em>pause animations</em> in the widget.
-            </p>
-            <div class="pulse" aria-hidden="true"></div>
-          </article>
-        </div>
-      </section>
-
       <!-- INSTALL / QUICKSTART HUB -->
-      <section id="install" class="section" aria-labelledby="h-install">
+      <section id="install" class="section section--alt" aria-labelledby="h-install">
         <div class="container">
           <header class="section__header">
             <h2 id="h-install" data-i18n="quickstart.heading">Install</h2>
@@ -474,7 +332,13 @@
                 The <code>v1</code> alias always serves the latest release in that major.
               </p>
               <div class="code-block">
-                <button class="copy-btn" data-copy data-i18n="hero.copy" aria-label="Copy">
+                <button
+                  type="button"
+                  class="copy-btn"
+                  data-copy
+                  data-i18n="hero.copy"
+                  aria-label="Copy"
+                >
                   Copy
                 </button>
                 <pre><code>&lt;script
@@ -489,7 +353,13 @@
                   Subresource Integrity.
                 </p>
                 <div class="code-block">
-                  <button class="copy-btn" data-copy data-i18n="hero.copy" aria-label="Copy">
+                  <button
+                    type="button"
+                    class="copy-btn"
+                    data-copy
+                    data-i18n="hero.copy"
+                    aria-label="Copy"
+                  >
                     Copy
                   </button>
                   <pre><code>&lt;script
@@ -510,7 +380,13 @@
                 Install <code>@bauer-group/accessibility-widget</code> for typed config.
               </p>
               <div class="code-block">
-                <button class="copy-btn" data-copy data-i18n="hero.copy" aria-label="Copy">
+                <button
+                  type="button"
+                  class="copy-btn"
+                  data-copy
+                  data-i18n="hero.copy"
+                  aria-label="Copy"
+                >
                   Copy
                 </button>
                 <pre><code>npm i @bauer-group/accessibility-widget</code></pre>
@@ -555,8 +431,11 @@
               data-i18n-attr="aria-label:quickstart.tabsLabel"
               aria-label="Integration examples"
             >
-              <button role="tab" aria-selected="true" id="tab-html" data-tab="html">HTML</button>
+              <button type="button" role="tab" aria-selected="true" id="tab-html" data-tab="html">
+                HTML
+              </button>
               <button
+                type="button"
                 role="tab"
                 aria-selected="false"
                 id="tab-react"
@@ -565,10 +444,18 @@
               >
                 React
               </button>
-              <button role="tab" aria-selected="false" id="tab-vue" data-tab="vue" tabindex="-1">
+              <button
+                type="button"
+                role="tab"
+                aria-selected="false"
+                id="tab-vue"
+                data-tab="vue"
+                tabindex="-1"
+              >
                 Vue
               </button>
               <button
+                type="button"
                 role="tab"
                 aria-selected="false"
                 id="tab-wordpress"
@@ -578,6 +465,7 @@
                 WordPress
               </button>
               <button
+                type="button"
                 role="tab"
                 aria-selected="false"
                 id="tab-shopify"
@@ -590,7 +478,13 @@
 
             <div class="tabs__panel" role="tabpanel" aria-labelledby="tab-html" data-panel="html">
               <div class="code-block">
-                <button class="copy-btn" data-copy data-i18n="hero.copy" aria-label="Copy">
+                <button
+                  type="button"
+                  class="copy-btn"
+                  data-copy
+                  data-i18n="hero.copy"
+                  aria-label="Copy"
+                >
                   Copy
                 </button>
                 <pre><code>&lt;script
@@ -608,7 +502,13 @@
               hidden
             >
               <div class="code-block">
-                <button class="copy-btn" data-copy data-i18n="hero.copy" aria-label="Copy">
+                <button
+                  type="button"
+                  class="copy-btn"
+                  data-copy
+                  data-i18n="hero.copy"
+                  aria-label="Copy"
+                >
                   Copy
                 </button>
                 <pre><code>import { AccessibilityWidget } from '@bauer-group/accessibility-widget-react';
@@ -636,7 +536,13 @@ export default function Layout({ children }) {
               hidden
             >
               <div class="code-block">
-                <button class="copy-btn" data-copy data-i18n="hero.copy" aria-label="Copy">
+                <button
+                  type="button"
+                  class="copy-btn"
+                  data-copy
+                  data-i18n="hero.copy"
+                  aria-label="Copy"
+                >
                   Copy
                 </button>
                 <pre><code>&lt;script setup lang="ts"&gt;
@@ -661,7 +567,13 @@ import { AccessibilityWidget } from '@bauer-group/accessibility-widget-vue';
               hidden
             >
               <div class="code-block">
-                <button class="copy-btn" data-copy data-i18n="hero.copy" aria-label="Copy">
+                <button
+                  type="button"
+                  class="copy-btn"
+                  data-copy
+                  data-i18n="hero.copy"
+                  aria-label="Copy"
+                >
                   Copy
                 </button>
                 <pre><code># Plugin from the integrations repo:
@@ -684,7 +596,13 @@ cp -r cms/wordpress/accessibility-widget wp-content/plugins/
               hidden
             >
               <div class="code-block">
-                <button class="copy-btn" data-copy data-i18n="hero.copy" aria-label="Copy">
+                <button
+                  type="button"
+                  class="copy-btn"
+                  data-copy
+                  data-i18n="hero.copy"
+                  aria-label="Copy"
+                >
                   Copy
                 </button>
                 <pre><code>{%- comment -%} In theme.liquid {%- endcomment -%}
@@ -699,291 +617,6 @@ cp -r cms/wordpress/accessibility-widget wp-content/plugins/
             A single <code>&lt;script&gt;</code> tag is enough — the wrappers above are
             conveniences.
           </p>
-        </div>
-      </section>
-
-      <!-- RUNTIME API EXPLORER -->
-      <section id="api" class="section section--alt" aria-labelledby="h-api">
-        <div class="container">
-          <header class="section__header">
-            <h2 id="h-api" data-i18n="api.heading">Runtime API — live</h2>
-            <p data-i18n-html="api.lead">
-              Every method on <code>window.AccessibilityWidget</code>, one click away.
-            </p>
-          </header>
-
-          <div class="api-grid">
-            <div class="api-actions">
-              <h3 class="api-actions__heading" data-i18n="api.controlHeading">Control</h3>
-              <div class="api-actions__row">
-                <button type="button" class="btn btn-primary" data-api="open">open()</button>
-                <button type="button" class="btn btn-ghost" data-api="close">close()</button>
-                <button type="button" class="btn btn-ghost" data-api="reset">reset()</button>
-              </div>
-
-              <h3 class="api-actions__heading" data-i18n="api.featuresHeading">
-                Features &amp; profiles
-              </h3>
-              <div class="api-actions__row">
-                <button
-                  type="button"
-                  class="btn btn-ghost"
-                  data-api="set"
-                  data-args='["fontSize",true]'
-                >
-                  set('fontSize', true)
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-ghost"
-                  data-api="set"
-                  data-args='["contrast",true]'
-                >
-                  set('contrast', true)
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-ghost"
-                  data-api="set"
-                  data-args='["focusOutline",true]'
-                >
-                  set('focusOutline', true)
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-ghost"
-                  data-api="applyProfile"
-                  data-args='["blind"]'
-                >
-                  applyProfile('blind')
-                </button>
-              </div>
-
-              <h3 class="api-actions__heading" data-i18n="api.langHeading">Language</h3>
-              <div class="api-actions__row">
-                <button type="button" class="btn btn-ghost" data-api="setLocale" data-args='["de"]'>
-                  setLocale('de')
-                </button>
-                <button type="button" class="btn btn-ghost" data-api="setLocale" data-args='["en"]'>
-                  setLocale('en')
-                </button>
-                <button type="button" class="btn btn-ghost" data-api="setLocale" data-args='["ja"]'>
-                  setLocale('ja')
-                </button>
-                <button type="button" class="btn btn-ghost" data-api="setLocale" data-args='["ar"]'>
-                  setLocale('ar')
-                </button>
-              </div>
-
-              <h3 class="api-actions__heading" data-i18n="api.posHeading">FAB position</h3>
-              <div class="api-actions__row">
-                <button
-                  type="button"
-                  class="btn btn-ghost"
-                  data-api="setPosition"
-                  data-args='[{"x":40,"y":200}]'
-                >
-                  setPosition({40, 200})
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-ghost"
-                  data-api="setPosition"
-                  data-args='[{"x":400,"y":80}]'
-                >
-                  setPosition({400, 80})
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-ghost"
-                  data-api="setPosition"
-                  data-args="[null]"
-                >
-                  setPosition(null)
-                </button>
-              </div>
-
-              <h3 class="api-actions__heading" data-i18n="api.inspectHeading">Inspection</h3>
-              <div class="api-actions__row">
-                <button type="button" class="btn btn-ghost" data-api="getState">getState()</button>
-              </div>
-            </div>
-
-            <aside class="api-result" aria-labelledby="api-result-heading">
-              <h3 id="api-result-heading" class="api-result__heading" data-i18n="api.resultHeading">
-                Result
-              </h3>
-              <div class="code-block code-block--compact">
-                <button class="copy-btn" data-copy data-i18n="hero.copy" aria-label="Copy">
-                  Copy
-                </button>
-                <pre><code id="api-result-output" data-i18n="api.resultPlaceholder">Click an API method on the left to see its result and return value.</code></pre>
-              </div>
-            </aside>
-          </div>
-
-          <!-- API reference tables -->
-          <div class="api-tables">
-            <div class="api-table-wrap">
-              <h3 data-i18n="api.methodsTitle">Methods</h3>
-              <table class="api-table">
-                <thead>
-                  <tr>
-                    <th data-i18n="api.colMethod">Method</th>
-                    <th data-i18n="api.colSignature">Signature</th>
-                    <th data-i18n="api.colPurpose">Purpose</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><code>open(opts?)</code></td>
-                    <td><code>Promise&lt;void&gt;</code></td>
-                    <td data-i18n="api.mOpen">Open the panel</td>
-                  </tr>
-                  <tr>
-                    <td><code>close()</code></td>
-                    <td><code>void</code></td>
-                    <td data-i18n="api.mClose">Close the panel</td>
-                  </tr>
-                  <tr>
-                    <td><code>reset()</code></td>
-                    <td><code>void</code></td>
-                    <td data-i18n="api.mReset">Clear all preferences + reload</td>
-                  </tr>
-                  <tr>
-                    <td><code>set(id, value)</code></td>
-                    <td><code>Promise&lt;void&gt;</code></td>
-                    <td data-i18n="api.mSet">Toggle a single feature</td>
-                  </tr>
-                  <tr>
-                    <td><code>applyProfile(id)</code></td>
-                    <td><code>Promise&lt;boolean&gt;</code></td>
-                    <td data-i18n="api.mApply">Apply a profile preset</td>
-                  </tr>
-                  <tr>
-                    <td><code>setLocale(locale)</code></td>
-                    <td><code>Promise&lt;boolean&gt;</code></td>
-                    <td data-i18n="api.mLocale">Switch language at runtime</td>
-                  </tr>
-                  <tr>
-                    <td><code>setPosition(pos)</code></td>
-                    <td><code>void</code></td>
-                    <td data-i18n="api.mPosition">Move the FAB or reset to anchor</td>
-                  </tr>
-                  <tr>
-                    <td><code>getState()</code></td>
-                    <td><code>WidgetState | null</code></td>
-                    <td data-i18n="api.mState">Read the persisted state</td>
-                  </tr>
-                  <tr>
-                    <td><code>on(event, cb)</code></td>
-                    <td><code>() =&gt; void</code></td>
-                    <td data-i18n="api.mOn">Subscribe to an event</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="api-table-wrap">
-              <h3 data-i18n="api.eventsTitle">Events</h3>
-              <table class="api-table">
-                <thead>
-                  <tr>
-                    <th data-i18n="api.colEvent">Event</th>
-                    <th data-i18n="api.colPayload">Payload</th>
-                    <th data-i18n="api.colFires">Fires on</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><code>stateChange</code></td>
-                    <td><code>{ state }</code></td>
-                    <td data-i18n="api.eStateChange">Every state change</td>
-                  </tr>
-                  <tr>
-                    <td><code>open</code></td>
-                    <td><code>{ trigger }</code></td>
-                    <td data-i18n="api.eOpen">The panel opens</td>
-                  </tr>
-                  <tr>
-                    <td><code>close</code></td>
-                    <td><code>{}</code></td>
-                    <td data-i18n="api.eClose">The panel closes</td>
-                  </tr>
-                  <tr>
-                    <td><code>profileApplied</code></td>
-                    <td><code>{ profile, state }</code></td>
-                    <td data-i18n="api.eProfile">A profile is applied</td>
-                  </tr>
-                  <tr>
-                    <td><code>localeChanged</code></td>
-                    <td><code>{ locale }</code></td>
-                    <td data-i18n="api.eLocale">The locale changes</td>
-                  </tr>
-                  <tr>
-                    <td><code>reset</code></td>
-                    <td><code>{}</code></td>
-                    <td data-i18n="api.eReset">All preferences cleared</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- EVENT STREAM -->
-      <section id="events" class="section" aria-labelledby="h-events">
-        <div class="container">
-          <header class="section__header">
-            <h2 id="h-events" data-i18n="events.heading">Event stream</h2>
-            <p data-i18n-html="events.lead">
-              Live log of all <code>AccessibilityWidget</code> events. Privacy-friendly: payloads
-              stay here.
-            </p>
-          </header>
-
-          <div class="event-stream">
-            <div class="event-stream__toolbar">
-              <button
-                type="button"
-                class="btn btn-ghost btn-sm"
-                id="events-clear"
-                data-i18n="events.clear"
-              >
-                Clear log
-              </button>
-              <span class="muted event-stream__count" id="events-count">0 Events</span>
-            </div>
-            <ol class="event-stream__log" id="events-log" aria-live="polite">
-              <li class="event-stream__empty" data-i18n="events.empty">
-                No events yet. Click in the API explorer above or in the panel.
-              </li>
-            </ol>
-          </div>
-        </div>
-      </section>
-
-      <!-- LIVE STATE -->
-      <section id="state" class="section section--alt" aria-labelledby="h-state">
-        <div class="container">
-          <details class="state-panel">
-            <summary>
-              <h2 id="h-state" data-i18n="state.heading">Live state</h2>
-              <span class="state-panel__hint" data-i18n="state.hint">
-                JSON dump of the persisted widget state — updates live
-              </span>
-            </summary>
-            <div class="code-block">
-              <button class="copy-btn" data-copy data-i18n="hero.copy" aria-label="Copy">
-                Copy
-              </button>
-              <pre><code id="state-output">Initialising …</code></pre>
-            </div>
-            <p class="muted" data-i18n-html="state.note">
-              Source: <code>window.AccessibilityWidget.getState()</code> — poll interval 500 ms.
-            </p>
-          </details>
         </div>
       </section>
 
@@ -1066,54 +699,6 @@ cp -r cms/wordpress/accessibility-widget wp-content/plugins/
               <p data-i18n="faq.a5">Dual-licensed: AGPL-3.0-only or a commercial license.</p>
             </details>
           </div>
-        </div>
-      </section>
-
-      <!-- SCANNER TEST ZONE -->
-      <section id="scanner" class="section" aria-labelledby="h-scanner">
-        <div class="container">
-          <details class="scanner-panel">
-            <summary>
-              <h2 id="h-scanner" data-i18n="scanner.heading">Scanner test zone</h2>
-              <span class="scanner-panel__hint" data-i18n-html="scanner.hint"
-                >Contains <strong>intentional</strong> WCAG violations</span
-              >
-            </summary>
-            <p data-i18n="scanner.lead">
-              This page serves automated scanners (axe-core, pa11y, Lighthouse, Playwright-AxE) as a
-              target. In a real product these barriers would be fixed — here they exist as stable
-              test cases:
-            </p>
-            <ul class="violations-list">
-              <li data-i18n-html="scanner.v1">
-                <code>&lt;img&gt;</code> without an <code>alt</code> attribute
-              </li>
-              <li data-i18n-html="scanner.v2">Link text “click here” (not contextual)</li>
-              <li data-i18n-html="scanner.v3">Button with contrast &lt; 4.5:1</li>
-              <li data-i18n-html="scanner.v4">Form <code>&lt;input&gt;</code> without a label</li>
-            </ul>
-            <div class="violations" aria-label="Intentional WCAG violations — test content only">
-              <img src="/accessibility-widget-assets/sample.svg" />
-              <p>
-                <a href="#" data-i18n="scanner.imgMore">click here</a
-                ><span data-i18n="scanner.imgMoreSuffix"> for more.</span>
-              </p>
-              <button class="low-contrast" type="button" data-i18n="scanner.grayBtn">
-                Gray action
-              </button>
-              <form>
-                <input
-                  type="text"
-                  data-i18n-attr="placeholder:scanner.inputPh"
-                  placeholder="Name"
-                />
-                <button type="submit" data-i18n="scanner.submit">Submit</button>
-              </form>
-            </div>
-            <p class="muted" data-i18n-html="scanner.note">
-              Preview port for the scanner: <code>http://localhost:4173</code>.
-            </p>
-          </details>
         </div>
       </section>
     </main>
