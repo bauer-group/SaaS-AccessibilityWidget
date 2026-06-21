@@ -90,6 +90,7 @@ export default defineConfig({
       // module instead of carrying inline styles.
       input: {
         index: resolve(here, 'index.html'),
+        configuration: resolve(here, 'configuration.html'),
         barrierefreiheit: resolve(here, 'barrierefreiheit.html'),
         impressum: resolve(here, 'impressum.html'),
       },

@@ -1,5 +1,6 @@
 import type { WidgetConfig, WidgetState } from '@bauer-group/accessibility-widget';
 import { applyI18n, detectLang, wireLangToggle, t } from './i18n';
+import { wireConfigPlayground } from './config-playground';
 
 declare global {
   interface Window {
@@ -429,4 +430,5 @@ document.addEventListener('DOMContentLoaded', () => {
   wireCopyButtons();
   wireApiExplorer();
   wireEventStream();
+  wireConfigPlayground(t);
 });

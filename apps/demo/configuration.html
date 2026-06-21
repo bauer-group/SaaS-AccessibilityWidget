@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="en" class="i18n-cloak">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- i18n bootstrap — see index.html for the rationale (English = fallback, German cloaked). -->
+    <script>
+      (() => {
+        let lang = 'en';
+        try {
+          const stored = localStorage.getItem('aw-page-lang');
+          if (stored === 'de' || stored === 'en') lang = stored;
+          else if ((navigator.language || '').toLowerCase().split('-')[0] === 'de') lang = 'de';
+        } catch {
+          /* ignore */
+        }
+        document.documentElement.lang = lang;
+        if (lang === 'en') document.documentElement.classList.remove('i18n-cloak');
+      })();
+    </script>
+
+    <title>Configuration — Accessibility Widget</title>
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#0058a3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0e14" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/src/styles.css" />
+
+    <!--
+      Widget bootstrap. Same base config as the rest of the site, but the
+      configuration playground can stash an override in sessionStorage
+      ("Apply & reload"); we merge it over the base here, before the loader
+      boots, so every option — even load-time ones — becomes interactive.
+    -->
+    <script>
+      (() => {
+        const readJson = (storage, key) => {
+          try {
+            const raw = storage.getItem(key);
+            return raw ? JSON.parse(raw) : null;
+          } catch {
+            return null;
+          }
+        };
+        const storedLocale = (() => {
+          try {
+            return localStorage.getItem('aw-demo-locale');
+          } catch {
+            return null;
+          }
+        })();
+        const base = {
+          corePath: '/accessibility-widget/accessibility-widget-core.min.js',
+          cssPath: '/accessibility-widget/accessibility-widget.min.css',
+          locale: storedLocale ?? 'auto',
+          position: 'bottom-right',
+          primaryColor: '#0058a3',
+          statementUrl: '/barrierefreiheit.html',
+          draggableFab: true,
+          respectReducedMotion: true,
+          hideOnPrint: true,
+          debug: true,
+        };
+        const override = readJson(sessionStorage, 'aw-demo-config') ?? {};
+        window.AccessibilityWidgetConfig = { ...base, ...override };
+      })();
+    </script>
+    <script src="/accessibility-widget/accessibility-widget-loader.min.js" defer></script>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body data-page="configuration">
+    <a class="skip-link" href="#main" data-i18n="nav.skip">Skip to main content</a>
+
+    <header class="topbar" role="banner">
+      <div class="container topbar__inner">
+        <a class="topbar__brand" href="/" data-i18n-attr="aria-label:nav.home">
+          <svg
+            class="topbar__logo"
+            viewBox="-4 -4 32 32"
+            aria-hidden="true"
+            focusable="false"
+            width="28"
+            height="28"
+          >
+            <rect x="-4" y="-4" width="32" height="32" rx="7" fill="#0058a3" />
+            <g
+              fill="none"
+              stroke="#fff"
+              stroke-width="2.25"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="16" cy="4" r="1" />
+              <path d="m18 19 1-7-6 1" />
+              <path d="m5 8 3-3 5.5 3-2.36 3.5" />
+              <path d="M4.24 14.5a5 5 0 0 0 6.88 6" />
+              <path d="M13.76 17.5a5 5 0 0 0-6.88-6" />
+            </g>
+          </svg>
+          <span class="topbar__title">
+            <strong>Accessibility Widget</strong>
+            <em>BAUER GROUP</em>
+          </span>
+        </a>
+        <nav class="topbar__nav" aria-label="Main navigation">
+          <a href="/" data-i18n="nav.home">Home</a>
+          <a href="/configuration.html" aria-current="page" data-i18n="nav.configuration"
+            >Configuration</a
+          >
+          <a href="/#api" data-i18n="nav.api">API</a>
+          <a href="/#events" data-i18n="nav.events">Events</a>
+          <a href="/#profiles" data-i18n="nav.playground">Playground</a>
+          <div
+            class="lang-toggle"
+            role="group"
+            data-i18n-attr="aria-label:nav.langLabel"
+            aria-label="Page language"
+          >
+            <button
+              type="button"
+              data-lang="de"
+              aria-pressed="false"
+              data-i18n-attr="aria-label:nav.langDe"
+            >
+              DE
+            </button>
+            <button
+              type="button"
+              data-lang="en"
+              aria-pressed="true"
+              data-i18n-attr="aria-label:nav.langEn"
+            >
+              EN
+            </button>
+          </div>
+          <a
+            class="topbar__github"
+            href="https://github.com/bauer-group/SaaS-AccessibilityWidget"
+            rel="noopener"
+            data-i18n="nav.github"
+          >
+            GitHub
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="docs-main">
+      <div class="container">
+        <header class="docs-head">
+          <p class="docs-head__kicker" data-i18n="config.kicker">Reference · interactive</p>
+          <h1 data-i18n="config.heading">Configuration</h1>
+          <p class="docs-head__lead" data-i18n-html="config.lead">
+            Every option of <code>window.AccessibilityWidgetConfig</code>, end to end. Change a
+            control to build the snippet live, preview panel-affecting options instantly, or
+            <strong>Apply &amp; reload</strong> to see load-time options take effect.
+          </p>
+          <p class="docs-legend">
+            <span class="cfg-badge cfg-badge--live" data-i18n="config.badgeLive">live</span>
+            <span data-i18n="config.legendLive">applies instantly</span>
+            <span class="cfg-badge cfg-badge--reload" data-i18n="config.badgeReload">reload</span>
+            <span data-i18n="config.legendReload">applies after “Apply &amp; reload”</span>
+          </p>
+        </header>
+
+        <div class="cfg-layout">
+          <form id="cfg-form" class="cfg-form" novalidate>
+            <!-- Asset loading -->
+            <fieldset class="cfg-group">
+              <legend data-i18n="config.grp.assets">Asset loading</legend>
+
+              <div class="cfg-row">
+                <label class="cfg-label" for="cfg-corePath" data-i18n="config.f.corePath.l"
+                  >Core path</label
+                >
+                <span class="cfg-badge cfg-badge--reload">reload</span>
+                <p class="cfg-desc" data-i18n="config.f.corePath.d">
+                  URL of the on-demand core bundle.
+                </p>
+                <input
+                  id="cfg-corePath"
+                  type="text"
+                  data-cfg="corePath"
+                  data-cfg-type="string"
+                  data-cfg-default="/accessibility-widget/accessibility-widget-core.min.js"
+                  placeholder="/accessibility-widget/accessibility-widget-core.min.js"
+                />
+              </div>
+
+              <div class="cfg-row">
+                <label class="cfg-label" for="cfg-cssPath" data-i18n="config.f.cssPath.l"
+                  >CSS path</label
+                >
+                <span class="cfg-badge cfg-badge--reload">reload</span>
+                <p class="cfg-desc" data-i18n="config.f.cssPath.d">URL of the widget stylesheet.</p>
+                <input
+                  id="cfg-cssPath"
+                  type="text"
+                  data-cfg="cssPath"
+                  data-cfg-type="string"
+                  data-cfg-default="/accessibility-widget/accessibility-widget.min.css"
+                  placeholder="/accessibility-widget/accessibility-widget.min.css"
+                />
+              </div>
+
+              <div class="cfg-row">
+                <label
+                  class="cfg-label"
+                  for="cfg-coreIntegrity"
+                  data-i18n="config.f.coreIntegrity.l"
+                  >Core SRI hash</label
+                >
+                <span class="cfg-badge cfg-badge--reload">reload</span>
+                <p class="cfg-desc" data-i18n="config.f.coreIntegrity.d">
+                  Subresource-Integrity hash for the core bundle (<code>sha384-…</code>).
+                </p>
+                <input
+                  id="cfg-coreIntegrity"
+                  type="text"
+                  data-cfg="coreIntegrity"
+                  data-cfg-type="string"
+                  placeholder="sha384-…"
+                />
+              </div>
+
+              <div class="cfg-row">
+                <label class="cfg-label" for="cfg-cssIntegrity" data-i18n="config.f.cssIntegrity.l"
+                  >CSS SRI hash</label
+                >
+                <span class="cfg-badge cfg-badge--reload">reload</span>
+                <p class="cfg-desc" data-i18n="config.f.cssIntegrity.d">
+                  Subresource-Integrity hash for the stylesheet.
+                </p>
+                <input
+                  id="cfg-cssIntegrity"
+                  type="text"
+                  data-cfg="cssIntegrity"
+                  data-cfg-type="string"
+                  placeholder="sha384-…"
+                />
+              </div>
+            </fieldset>
+
+            <!-- Localization -->
+            <fieldset class="cfg-group">
+              <legend data-i18n="config.grp.locale">Localization</legend>
+              <div class="cfg-row">
+                <label class="cfg-label" for="cfg-locale" data-i18n="config.f.locale.l"
+                  >Widget locale</label
+                >
+                <span class="cfg-badge cfg-badge--live">live</span>
+                <p class="cfg-desc" data-i18n="config.f.locale.d">
+                  Panel language. <code>auto</code> detects from the page/browser.
+                </p>
+                <select
+                  id="cfg-locale"
+                  data-cfg="locale"
+                  data-cfg-type="select"
+                  data-cfg-default="auto"
+                >
+                  <option value="auto">auto</option>
+                  <option value="de">de — Deutsch</option>
+                  <option value="en">en — English</option>
+                  <option value="fr">fr — Français</option>
+                  <option value="es">es — Español</option>
+                  <option value="it">it — Italiano</option>
+                  <option value="pl">pl — Polski</option>
+                  <option value="tr">tr — Türkçe</option>
+                  <option value="ar">ar — العربية</option>
+                  <option value="zh">zh — 中文</option>
+                  <option value="hi">hi — हिन्दी</option>
+                  <option value="pt">pt — Português</option>
+                  <option value="bn">bn — বাংলা</option>
+                  <option value="ru">ru — Русский</option>
+                  <option value="ja">ja — 日本語</option>
+                  <option value="ko">ko — 한국어</option>
+                  <option value="vi">vi — Tiếng Việt</option>
+                  <option value="fa">fa — فارسی</option>
+                  <option value="ur">ur — اردو</option>
+                  <option value="th">th — ไทย</option>
+                  <option value="id">id — Bahasa Indonesia</option>
+                  <option value="he">he — עברית</option>
+                  <option value="nl">nl — Nederlands</option>
+                  <option value="sv">sv — Svenska</option>
+                  <option value="cs">cs — Čeština</option>
+                  <option value="el">el — Ελληνικά</option>
+                  <option value="hu">hu — Magyar</option>
+                  <option value="ro">ro — Română</option>
+                  <option value="uk">uk — Українська</option>
+                </select>
+              </div>
+            </fieldset>
+
+            <!-- UI / branding -->
+            <fieldset class="cfg-group">
+              <legend data-i18n="config.grp.branding">UI &amp; branding</legend>
+
+              <div class="cfg-row">
+                <label class="cfg-label" for="cfg-position" data-i18n="config.f.position.l"
+                  >FAB position</label
+                >
+                <span class="cfg-badge cfg-badge--reload">reload</span>
+                <p class="cfg-desc" data-i18n="config.f.position.d">Anchor corner of the button.</p>
+                <select
+                  id="cfg-position"
+                  data-cfg="position"
+                  data-cfg-type="select"
+                  data-cfg-default="bottom-right"
+                >
+                  <option value="bottom-right">bottom-right</option>
+                  <option value="bottom-left">bottom-left</option>
+                  <option value="top-right">top-right</option>
+                  <option value="top-left">top-left</option>
+                </select>
+              </div>
+
+              <div class="cfg-row cfg-row--inline">
+                <label class="cfg-label" for="cfg-offsetX" data-i18n="config.f.offset.l"
+                  >Offset x / y (px)</label
+                >
+                <span class="cfg-badge cfg-badge--reload">reload</span>
+                <p class="cfg-desc" data-i18n="config.f.offset.d">
+                  Distance from the anchor corner.
+                </p>
+                <span class="cfg-inline-inputs">
+                  <input
+                    id="cfg-offsetX"
+                    type="number"
+                    data-cfg="offset.x"
+                    data-cfg-type="number"
+                    data-cfg-default="20"
+                    placeholder="20"
+                    aria-label="offset x"
+                  />
+                  <input
+                    id="cfg-offsetY"
+                    type="number"
+                    data-cfg="offset.y"
+                    data-cfg-type="number"
+                    data-cfg-default="20"
+                    placeholder="20"
+                    aria-label="offset y"
+                  />
+                </span>
+              </div>
+
+              <div class="cfg-row">
+                <label class="cfg-label" for="cfg-zIndex" data-i18n="config.f.zIndex.l"
+                  >z-index</label
+                >
+                <span class="cfg-badge cfg-badge--reload">reload</span>
+                <p class="cfg-desc" data-i18n="config.f.zIndex.d">
+                  Stacking order of the FAB. Default is one below max int32.
+                </p>
+                <input
+                  id="cfg-zIndex"
+                  type="number"
+                  data-cfg="zIndex"
+                  data-cfg-type="number"
+                  data-cfg-default="2147483646"
+                  placeholder="2147483646"
+                />
+              </div>
+
+              <div class="cfg-row">
+                <label class="cfg-label" for="cfg-primaryColor" data-i18n="config.f.primaryColor.l"
+                  >Primary colour</label
+                >
+                <span class="cfg-badge cfg-badge--reload">reload</span>
+                <p class="cfg-desc" data-i18n="config.f.primaryColor.d">FAB background colour.</p>
+                <input
+                  id="cfg-primaryColor"
+                  type="color"
+                  data-cfg="primaryColor"
+                  data-cfg-type="color"
+                  data-cfg-default="#0058a3"
+                  value="#0058a3"
+                />
+              </div>
+
+              <div class="cfg-row">
+                <label class="cfg-label" for="cfg-buttonLabel" data-i18n="config.f.buttonLabel.l"
+                  >Button label</label
+                >
+                <span class="cfg-badge cfg-badge--reload">reload</span>
+                <p class="cfg-desc" data-i18n="config.f.buttonLabel.d">
+                  Override the FAB <code>aria-label</code>. Empty → localized default.
+                </p>
+                <input
+                  id="cfg-buttonLabel"
+                  type="text"
+                  data-cfg="buttonLabel"
+                  data-cfg-type="string"
+                  placeholder="Accessibility settings"
+                />
+              </div>
+            </fieldset>
+
+            <!-- Persistence -->
+            <fieldset class="cfg-group">
+              <legend data-i18n="config.grp.persistence">Persistence</legend>
+              <div class="cfg-row">
+                <label class="cfg-label" for="cfg-storageKey" data-i18n="config.f.storageKey.l"
+                  >Storage key</label
+                >
+                <span class="cfg-badge cfg-badge--reload">reload</span>
+                <p class="cfg-desc" data-i18n="config.f.storageKey.d">
+                  localStorage key for user preferences.
+                </p>
+                <input
+                  id="cfg-storageKey"
+                  type="text"
+                  data-cfg="storageKey"
+                  data-cfg-type="string"
+                  data-cfg-default="accessibility-widget"
+                  placeholder="accessibility-widget"
+                />
+              </div>
+            </fieldset>
+
+            <!-- Feature gating -->
+            <fieldset class="cfg-group">
+              <legend data-i18n="config.grp.features">Feature gating</legend>
+
+              <div class="cfg-row">
+                <span class="cfg-label" data-i18n="config.f.initialFeatures.l"
+                  >Initial features</span
+                >
+                <span class="cfg-badge cfg-badge--reload">reload</span>
+                <p class="cfg-desc" data-i18n="config.f.initialFeatures.d">
+                  Enabled for first-time visitors (before any saved state).
+                </p>
+                <fieldset
+                  class="cfg-features"
+                  data-cfg="initialFeatures"
+                  data-cfg-type="features"
+                  aria-label="initialFeatures"
+                ></fieldset>
+              </div>
+
+              <div class="cfg-row">
+                <span class="cfg-label" data-i18n="config.f.disabledFeatures.l"
+                  >Disabled features</span
+                >
+                <span class="cfg-badge cfg-badge--reload">reload</span>
+                <p class="cfg-desc" data-i18n="config.f.disabledFeatures.d">
+                  Removed from the panel entirely (also blocked from profiles).
+                </p>
+                <fieldset
+                  class="cfg-features"
+                  data-cfg="disabledFeatures"
+                  data-cfg-type="features"
+                  aria-label="disabledFeatures"
+                ></fieldset>
+              </div>
+            </fieldset>
+
+            <!-- Legal -->
+            <fieldset class="cfg-group">
+              <legend data-i18n="config.grp.legal">Legal &amp; compliance</legend>
+
+              <div class="cfg-row">
+                <label class="cfg-label" for="cfg-statementUrl" data-i18n="config.f.statementUrl.l"
+                  >Statement URL</label
+                >
+                <span class="cfg-badge cfg-badge--reload">reload</span>
+                <p class="cfg-desc" data-i18n="config.f.statementUrl.d">
+                  Link to your accessibility statement (rendered in the footer). Default: no link.
+                  <code>javascript:</code>/<code>data:</code> are rejected.
+                </p>
+                <input
+                  id="cfg-statementUrl"
+                  type="text"
+                  data-cfg="statementUrl"
+                  data-cfg-type="string"
+                  placeholder="/barrierefreiheit.html"
+                />
+              </div>
+
+              <div class="cfg-row">
+                <label class="cfg-label" for="cfg-disclaimer" data-i18n="config.f.disclaimer.l"
+                  >Disclaimer</label
+                >
+                <span class="cfg-badge cfg-badge--reload">reload</span>
+                <p class="cfg-desc" data-i18n="config.f.disclaimer.d">
+                  Free-form footer text (plain text — no HTML).
+                </p>
+                <input
+                  id="cfg-disclaimer"
+                  type="text"
+                  data-cfg="disclaimer"
+                  data-cfg-type="string"
+                  placeholder="Feedback: a11y@example.com"
+                />
+              </div>
+
+              <div class="cfg-row cfg-row--switch">
+                <label
+                  class="cfg-label"
+                  for="cfg-hidePoweredBy"
+                  data-i18n="config.f.hidePoweredBy.l"
+                  >Hide “Powered by”</label
+                >
+                <span class="cfg-badge cfg-badge--reload">reload</span>
+                <p class="cfg-desc" data-i18n="config.f.hidePoweredBy.d">
+                  White-label: suppress the attribution line.
+                </p>
+                <input
+                  id="cfg-hidePoweredBy"
+                  type="checkbox"
+                  role="switch"
+                  data-cfg="hidePoweredBy"
+                  data-cfg-type="boolean"
+                  data-cfg-default="false"
+                />
+              </div>
+            </fieldset>
+
+            <!-- Behaviour -->
+            <fieldset class="cfg-group">
+              <legend data-i18n="config.grp.behavior">Behaviour</legend>
+
+              <div class="cfg-row cfg-row--switch">
+                <label class="cfg-label" for="cfg-draggableFab" data-i18n="config.f.draggableFab.l"
+                  >Draggable FAB</label
+                >
+                <span class="cfg-badge cfg-badge--reload">reload</span>
+                <p class="cfg-desc" data-i18n="config.f.draggableFab.d">
+                  Let end users move the button (pointer or Shift+Arrow).
+                </p>
+                <input
+                  id="cfg-draggableFab"
+                  type="checkbox"
+                  role="switch"
+                  data-cfg="draggableFab"
+                  data-cfg-type="boolean"
+                  data-cfg-default="false"
+                />
+              </div>
+
+              <div class="cfg-row">
+                <label
+                  class="cfg-label"
+                  for="cfg-keyboardShortcut"
+                  data-i18n="config.f.keyboardShortcut.l"
+                  >Keyboard shortcut</label
+                >
+                <span class="cfg-badge cfg-badge--reload">reload</span>
+                <p class="cfg-desc" data-i18n="config.f.keyboardShortcut.d">
+                  Combo to open the panel, e.g. <code>ctrl+alt+a</code>, <code>f2</code>. Empty
+                  string disables it.
+                </p>
+                <input
+                  id="cfg-keyboardShortcut"
+                  type="text"
+                  data-cfg="keyboardShortcut"
+                  data-cfg-type="string"
+                  data-cfg-default="ctrl+alt+a"
+                  placeholder="ctrl+alt+a"
+                />
+              </div>
+
+              <div class="cfg-row cfg-row--switch">
+                <label
+                  class="cfg-label"
+                  for="cfg-respectReducedMotion"
+                  data-i18n="config.f.respectReducedMotion.l"
+                  >Respect reduced motion</label
+                >
+                <span class="cfg-badge cfg-badge--reload">reload</span>
+                <p class="cfg-desc" data-i18n="config.f.respectReducedMotion.d">
+                  Honor <code>prefers-reduced-motion</code> for motion features.
+                </p>
+                <input
+                  id="cfg-respectReducedMotion"
+                  type="checkbox"
+                  role="switch"
+                  data-cfg="respectReducedMotion"
+                  data-cfg-type="boolean"
+                  data-cfg-default="true"
+                  checked
+                />
+              </div>
+
+              <div class="cfg-row cfg-row--switch">
+                <label class="cfg-label" for="cfg-hideOnPrint" data-i18n="config.f.hideOnPrint.l"
+                  >Hide on print</label
+                >
+                <span class="cfg-badge cfg-badge--reload">reload</span>
+                <p class="cfg-desc" data-i18n="config.f.hideOnPrint.d">
+                  Hide the FAB in <code>@media print</code>.
+                </p>
+                <input
+                  id="cfg-hideOnPrint"
+                  type="checkbox"
+                  role="switch"
+                  data-cfg="hideOnPrint"
+                  data-cfg-type="boolean"
+                  data-cfg-default="true"
+                  checked
+                />
+              </div>
+
+              <div class="cfg-row cfg-row--switch">
+                <label class="cfg-label" for="cfg-debug" data-i18n="config.f.debug.l">Debug</label>
+                <span class="cfg-badge cfg-badge--reload">reload</span>
+                <p class="cfg-desc" data-i18n="config.f.debug.d">
+                  <code>console.warn</code> normally-silent failures.
+                </p>
+                <input
+                  id="cfg-debug"
+                  type="checkbox"
+                  role="switch"
+                  data-cfg="debug"
+                  data-cfg-type="boolean"
+                  data-cfg-default="false"
+                />
+              </div>
+            </fieldset>
+          </form>
+
+          <!-- Live snippet + actions -->
+          <aside class="cfg-aside">
+            <div class="cfg-sticky">
+              <h2 class="cfg-aside__title" data-i18n="config.snippetTitle">Your config</h2>
+              <div class="code-block">
+                <button
+                  type="button"
+                  class="copy-btn"
+                  data-copy
+                  data-i18n="hero.copy"
+                  aria-label="Copy"
+                >
+                  Copy
+                </button>
+                <pre><code id="cfg-snippet"></code></pre>
+              </div>
+              <div class="cfg-actions">
+                <button type="button" id="cfg-preview" class="btn" data-i18n="config.preview">
+                  Preview in panel
+                </button>
+                <button
+                  type="button"
+                  id="cfg-apply"
+                  class="btn btn-primary"
+                  data-i18n="config.apply"
+                >
+                  Apply &amp; reload
+                </button>
+                <button type="button" id="cfg-reset" class="btn btn-ghost" data-i18n="config.reset">
+                  Reset
+                </button>
+              </div>
+              <p class="cfg-aside__note muted" data-i18n="config.note">
+                “Apply &amp; reload” stashes this config in sessionStorage and reloads, so even
+                load-time options take effect across the demo.
+              </p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+      <div class="container footer__inner">
+        <div class="footer__brand">
+          <strong>BAUER GROUP</strong> ·
+          <span data-i18n="footer.license">AGPL-3.0-only / commercial</span>
+        </div>
+        <div class="footer__meta">
+          <p>
+            <a href="/barrierefreiheit.html" data-i18n="footer.statement"
+              >Accessibility statement</a
+            >
+            ·
+            <a href="/impressum.html" data-i18n="footer.impressum">Legal notice</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
