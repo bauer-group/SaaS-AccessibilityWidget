@@ -1,5 +1,11 @@
 # Contributor License Agreement (Individual) — `Accessibility Widget`
 
+<a id="english"></a>
+
+> The relicensing grant required to contribute to the dual-licensed Accessibility Widget. **The English version is legally authoritative;** the German translation below is for convenience only.
+
+**🇬🇧 English** · [🇩🇪 Deutsch](#-deutsch)
+
 Thank you for your interest in contributing to `Accessibility Widget` (the "Project"),
 maintained by `BAUER GROUP` (the "Licensor").
 
@@ -85,10 +91,109 @@ Project.
 
 ---
 
-**Contributor**
+<a id="-deutsch"></a>
+
+## 🇩🇪 Deutsch
+
+> Der Relicensing-Grant, der zum Beitragen zum dual-lizenzierten Accessibility Widget nötig ist. **Rechtlich maßgeblich ist allein die englische Fassung;** diese Übersetzung dient nur dem Verständnis.
+
+[🇬🇧 English](#english) · **🇩🇪 Deutsch**
+
+Danke für Ihr Interesse, zum `Accessibility Widget` (das „Projekt") beizutragen,
+betreut von `BAUER GROUP` (der „Lizenzgeber").
+
+Dieses Contributor License Agreement („Vereinbarung") klärt die mit Beiträgen
+gewährte Lizenz an geistigem Eigentum jeder Person oder Organisation (der
+„Beitragende:r"). **Es ist erforderlich, weil das Projekt dual-lizenziert ist**
+(unter der GNU AGPL-3.0 und unter separaten kommerziellen Lizenzen); ohne den
+nachstehenden Relicensing-Grant könnte der Lizenzgeber Ihren Beitrag nicht unter
+der kommerziellen Lizenz anbieten.
+
+Mit dem Einreichen eines Beitrags (eines Pull Requests, Patches oder beliebigen
+anderen Codes, Dokumentation oder Materials) akzeptieren Sie die folgenden
+Bedingungen für Ihre gegenwärtigen und künftigen Beiträge und stimmen ihnen zu.
+
+### 1. Definitionen
+
+„Beitrag" bezeichnet jedes originäre Werk der Urheberschaft, einschließlich
+Änderungen oder Ergänzungen an einem bestehenden Werk, das Sie absichtlich beim
+Lizenzgeber zur Aufnahme in das Projekt einreichen.
+
+„Einreichen" bezeichnet jede Form elektronischer, mündlicher oder schriftlicher
+Kommunikation an den Lizenzgeber oder seine Vertreter (z. B. ein Pull Request oder
+Commit), ausgenommen Kommunikation, die von Ihnen deutlich sichtbar oder anderweitig
+schriftlich als „Not a Contribution" gekennzeichnet ist.
+
+### 2. Urheberrechtliche Lizenzgewährung
+
+Sie gewähren dem Lizenzgeber hiermit eine **unbefristete, weltweite, nicht
+exklusive, gebührenfreie, unwiderrufliche** Lizenz, Ihre Beiträge und davon
+abgeleitete Werke zu vervielfältigen, abgeleitete Werke zu erstellen, öffentlich
+zugänglich zu machen, öffentlich aufzuführen, zu sublizenzieren und zu verbreiten,
+**unter beliebigen vom Lizenzgeber gewählten Lizenzbedingungen, einschließlich (ohne
+Einschränkung) der GNU AGPL-3.0 und proprietärer/kommerzieller Lizenzbedingungen.**
+Sie autorisieren den Lizenzgeber ausdrücklich, Ihren Beitrag ganz oder teilweise
+unter solchen Bedingungen **neu zu lizenzieren und zu sublizenzieren**.
+
+Sie **behalten** alle Rechte, Titel und Anteile an Ihren Beiträgen. Diese Gewährung
+ist eine nicht-exklusive Lizenz, **keine** Übertragung des Urheberrechts.
+
+### 3. Patentlizenzgewährung
+
+Sie gewähren dem Lizenzgeber und den Empfängern der vom Lizenzgeber verbreiteten
+Software eine unbefristete, weltweite, nicht exklusive, gebührenfreie,
+unwiderrufliche (außer wie in diesem Abschnitt angegeben) Patentlizenz, den Beitrag
+herzustellen, herstellen zu lassen, zu nutzen, zum Verkauf anzubieten, zu verkaufen,
+zu importieren und anderweitig zu übertragen, wobei diese Lizenz nur für jene
+Patentansprüche gilt, die von Ihnen lizenzierbar sind und die durch Ihren Beitrag
+allein oder durch die Kombination Ihres Beitrags mit dem Projekt zwangsläufig
+verletzt werden.
+
+Falls eine Organisation einen Patentrechtsstreit gegen Sie oder eine andere
+Organisation anstrengt und behauptet, dass Ihr Beitrag oder das Projekt, zu dem Sie
+beigetragen haben, eine unmittelbare oder mitwirkende Patentverletzung darstellt,
+enden alle dieser Organisation im Rahmen dieser Vereinbarung für diesen Beitrag
+gewährten Patentlizenzen mit dem Datum, an dem ein solcher Rechtsstreit eingereicht
+wird.
+
+### 4. Ihre Zusicherungen
+
+Sie sichern zu, dass:
+
+(a) Sie rechtlich berechtigt sind, die obigen Lizenzen zu gewähren.
+
+(b) Jeder Ihrer Beiträge Ihre originäre Schöpfung ist, oder Sie über ausreichende
+Rechte verfügen, ihn einzureichen und die Lizenzen dieser Vereinbarung zu gewähren.
+
+(c) Falls Ihr Beitrag Werke enthält, die nicht Ihre originäre Schöpfung sind, Sie
+die Quelle und jede Lizenz oder sonstige Einschränkung (einschließlich zugehöriger
+Patente und Marken), von der Sie persönlich Kenntnis haben, angegeben und dieses
+Material deutlich gekennzeichnet haben.
+
+(d) Falls Sie im Namen eines Arbeitgebers oder einer anderen Organisation
+einreichen, Sie die Erlaubnis erhalten haben, den Beitrag in deren Namen zu
+leisten, oder diese Organisation ein separates Corporate CLA mit dem Lizenzgeber
+abgeschlossen hat.
+
+### 5. Haftungsausschluss
+
+Sofern nicht durch geltendes Recht vorgeschrieben oder schriftlich vereinbart,
+stellen Sie Ihre Beiträge **„WIE BESEHEN" („AS IS"), OHNE GEWÄHRLEISTUNGEN ODER
+BEDINGUNGEN JEGLICHER ART** bereit, weder ausdrücklich noch stillschweigend,
+einschließlich, ohne Einschränkung, jeglicher Gewährleistungen hinsichtlich Titel,
+Nichtverletzung, Marktgängigkeit oder Eignung für einen bestimmten Zweck.
+
+### 6. Keine Verpflichtung
+
+Der Lizenzgeber ist nicht verpflichtet, Ihren Beitrag zu verwenden oder in das
+Projekt aufzunehmen.
+
+---
+
+**Contributor / Beitragende:r**
 
 - Name: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
-- GitHub handle: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
-- Email: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
-- Date: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
-- Signature: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+- GitHub handle / GitHub-Handle: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+- Email / E-Mail: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+- Date / Datum: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+- Signature / Unterschrift: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
