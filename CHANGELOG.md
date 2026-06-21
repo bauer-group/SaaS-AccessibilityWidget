@@ -1,3 +1,9 @@
+## [1.1.0](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.0.5...v1.1.0) (2026-06-21)
+
+### 🚀 Features
+
+* **demo:** rebuilt demo as product landing page ([a8d048c](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/a8d048ca59148bd75583af4d8608b762afbe34ea))
+
 ## [1.0.5](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.0.4...v1.0.5) (2026-06-21)
 
 ### 🐛 Bug Fixes
