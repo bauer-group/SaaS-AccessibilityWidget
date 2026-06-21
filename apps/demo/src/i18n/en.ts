@@ -222,15 +222,17 @@ export const en = {
   faq: {
     heading: 'FAQ',
     q1: 'Does the widget make my site automatically compliant?',
-    a1: 'No — and any vendor claiming that is misleading you. A widget cannot fix broken markup. It adds a user-facing preference layer (contrast, font size, focus, TTS) that genuinely helps people, on top of code you still have to write accessibly.',
+    a1: 'No — and any vendor that promises automatic compliance is misleading you. No widget can repair broken markup or supply missing semantics. What it does add is a genuine, user-facing preference layer — contrast, text size, spacing, focus, reading aids and text-to-speech — on top of the accessible code you still own. Treat it as a complement to conformance work, never a replacement for it.',
     q2: 'Does it change my HTML or ARIA?',
-    a2: 'No. The widget never overrides your DOM or ARIA attributes. It applies preferences via its own layer, so it can never break an already-accessible page.',
+    a2: 'No. The widget never rewrites your DOM or your ARIA attributes. Every preference is applied through its own isolated layer — data attributes on the root element and a scoped stylesheet — so it cannot break an already-accessible page or interfere with assistive technology.',
     q3: 'How big is it really?',
-    a3: 'The loader is ≤ 6 KB gzip — smaller than most analytics snippets. The ≤ 30 KB core is lazy-loaded only when a visitor opens the panel. Both budgets are enforced at build time.',
+    a3: 'The loader is ≤ 6 KB gzip — smaller than most analytics snippets — and that is all that ships on first paint. The ≤ 30 KB core is fetched on demand, only once a visitor actually opens the panel. Both budgets are enforced automatically at build time, so they cannot regress unnoticed.',
     q4: 'Is there any tracking or cookies?',
-    a4: 'None. No analytics, no third-party requests, no cookies. All state lives in localStorage on the visitor’s device.',
-    q5: 'What does it cost / how is it licensed?',
-    a5: 'Dual-licensed: AGPL-3.0-only for open-source use, or a commercial license for closed-source deployments. Contact BAUER GROUP for commercial terms.',
+    a4: 'None whatsoever. No analytics, no third-party requests, no cookies, no fingerprinting. Every preference is stored locally in the visitor’s browser via localStorage and never leaves their device.',
+    q5: 'Is it GDPR-compliant? Do I need a consent banner?',
+    a5: 'Yes, and no banner is required. Because the widget processes no personal data and sets no cookies, it raises no GDPR/DSGVO consent obligations. Preferences stay on the visitor’s device and are never transmitted to us or any third party.',
+    q6: 'What does it cost and how is it licensed?',
+    a6: 'Dual-licensed: AGPL-3.0-only for open-source projects, or a commercial license for closed-source and proprietary deployments. Contact BAUER GROUP for commercial terms and support options.',
   },
 
   scanner: {

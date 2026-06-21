@@ -220,15 +220,17 @@ export const de: Dict = {
   faq: {
     heading: 'FAQ',
     q1: 'Macht das Widget meine Seite automatisch konform?',
-    a1: 'Nein — und wer das behauptet, führt dich in die Irre. Ein Widget kann kaputtes Markup nicht reparieren. Es ergänzt eine nutzerseitige Präferenz-Ebene (Kontrast, Schriftgröße, Fokus, TTS), die Menschen wirklich hilft — zusätzlich zu Code, den du weiterhin barrierefrei schreiben musst.',
+    a1: 'Nein — und wer automatische Konformität verspricht, ist unseriös. Kein Widget kann fehlerhaftes Markup reparieren oder fehlende Semantik ergänzen. Was es hinzufügt, ist eine echte nutzerseitige Präferenz-Ebene — Kontrast, Schriftgröße, Abstände, Fokus, Lesehilfen und Vorlesefunktion — zusätzlich zu dem barrierefreien Code, der weiterhin in deiner Verantwortung liegt. Verstehe es als Ergänzung zur Konformitätsarbeit, niemals als Ersatz.',
     q2: 'Verändert es mein HTML oder ARIA?',
-    a2: 'Nein. Das Widget überschreibt deinen DOM oder deine ARIA-Attribute nie. Es wendet Präferenzen über eine eigene Ebene an und kann so eine bereits barrierefreie Seite nicht kaputtmachen.',
+    a2: 'Nein. Das Widget schreibt weder deinen DOM noch deine ARIA-Attribute um. Jede Präferenz wird über eine eigene, isolierte Ebene angewendet — Daten-Attribute am Wurzelelement und ein gekapseltes Stylesheet. Eine bereits barrierefreie Seite kann es so nicht beschädigen und assistive Technologien nicht stören.',
     q3: 'Wie groß ist es wirklich?',
-    a3: 'Der Loader ist ≤ 6 KB gzip — kleiner als die meisten Analytics-Snippets. Der ≤ 30 KB große Core wird nur nachgeladen, wenn jemand das Panel öffnet. Beide Budgets werden beim Build erzwungen.',
+    a3: 'Der Loader ist ≤ 6 KB gzip — kleiner als die meisten Analytics-Snippets — und mehr wird beim ersten Laden nicht ausgeliefert. Der ≤ 30 KB große Core wird erst bei Bedarf nachgeladen, sobald jemand das Panel öffnet. Beide Budgets werden beim Build automatisch erzwungen und können nicht unbemerkt anwachsen.',
     q4: 'Gibt es Tracking oder Cookies?',
-    a4: 'Keine. Keine Analytics, keine Drittanbieter-Requests, keine Cookies. Der gesamte State liegt im localStorage auf dem Gerät der Besucher:innen.',
-    q5: 'Was kostet es / wie ist es lizenziert?',
-    a5: 'Dual-lizenziert: AGPL-3.0-only für Open-Source-Nutzung oder eine kommerzielle Lizenz für Closed-Source-Deployments. Für kommerzielle Konditionen die BAUER GROUP kontaktieren.',
+    a4: 'Keinerlei. Kein Tracking, keine Analytics, keine Drittanbieter-Requests, keine Cookies, kein Fingerprinting. Jede Präferenz wird lokal im Browser der Besucher:innen via localStorage gespeichert und verlässt das Gerät nie.',
+    q5: 'Ist es DSGVO-konform? Brauche ich ein Consent-Banner?',
+    a5: 'Ja, und ein Banner ist nicht erforderlich. Da das Widget keine personenbezogenen Daten verarbeitet und keine Cookies setzt, entstehen keine Einwilligungspflichten nach DSGVO. Präferenzen bleiben auf dem Gerät der Besucher:innen und werden weder an uns noch an Dritte übertragen.',
+    q6: 'Was kostet es und wie ist es lizenziert?',
+    a6: 'Dual-lizenziert: AGPL-3.0-only für Open-Source-Projekte oder eine kommerzielle Lizenz für Closed-Source- und proprietäre Deployments. Für kommerzielle Konditionen und Support-Optionen die BAUER GROUP kontaktieren.',
   },
 
   scanner: {
