@@ -1,3 +1,9 @@
+## [1.0.5](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.0.4...v1.0.5) (2026-06-21)
+
+### 🐛 Bug Fixes
+
+* **license:** corrected stale MIT notices to AGPL ([b85f99c](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/b85f99cb8b3e703a72adb7845a62ad50c22928dc))
+
 ## [1.0.4](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.0.3...v1.0.4) (2026-06-20)
 
 ### ♻️ Refactoring
