@@ -12,6 +12,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { openPanel, type PanelHandle } from '../src/panel/panel.js';
 import { resolveConfig, type ResolvedConfig } from '../src/config.js';
 import { createDefaultState, loadState, saveState } from '../src/state.js';
+import { ttsActive, ttsStart, ttsStop } from '../src/features/tts.js';
 import type { WidgetConfig, WidgetState } from '../src/types/index.js';
 
 const STORAGE = 'aw-panel-test';
@@ -335,5 +336,48 @@ describe('accessibility statement link (statementUrl)', () => {
     mounted = mountWithStatement('#a11y');
     const link = document.querySelector<HTMLAnchorElement>('.aw-statement-link');
     expect(link?.hasAttribute('target')).toBe(false);
+  });
+});
+
+describe('TTS lifecycle on panel destroy', () => {
+  // jsdom ships neither speechSynthesis nor SpeechSynthesisUtterance — stub the
+  // minimal surface tts.ts touches so ttsStart/ttsStop have something to drive.
+  let cancel: ReturnType<typeof vi.fn>;
+
+  beforeEach(() => {
+    cancel = vi.fn();
+    Object.defineProperty(globalThis, 'SpeechSynthesisUtterance', {
+      configurable: true,
+      writable: true,
+      value: class {
+        lang = '';
+        rate = 1;
+        onend: (() => void) | null = null;
+        onerror: (() => void) | null = null;
+        constructor(public text: string) {}
+      },
+    });
+    Object.defineProperty(window, 'speechSynthesis', {
+      configurable: true,
+      writable: true,
+      value: { speak: vi.fn(), cancel },
+    });
+  });
+
+  afterEach(() => {
+    ttsStop();
+    delete (globalThis as { SpeechSynthesisUtterance?: unknown }).SpeechSynthesisUtterance;
+    delete (window as { speechSynthesis?: unknown }).speechSynthesis;
+  });
+
+  it('destroying the panel cancels in-progress speech', () => {
+    const { handle } = mount();
+    expect(ttsStart('Some page text to read aloud.', 'en')).toBe(true);
+    expect(ttsActive()).toBe(true);
+
+    handle.destroy();
+
+    expect(cancel).toHaveBeenCalled();
+    expect(ttsActive()).toBe(false);
   });
 });

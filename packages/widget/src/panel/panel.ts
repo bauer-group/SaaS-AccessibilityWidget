@@ -605,6 +605,9 @@ export function openPanel(ctx: PanelContext): PanelHandle {
   return {
     root,
     destroy: () => {
+      // Closing the panel must silence any in-progress speech — otherwise TTS
+      // keeps reading after the only UI to stop it is gone.
+      ttsStop();
       trap?.deactivate();
       drag?.destroy();
       drag = null;
