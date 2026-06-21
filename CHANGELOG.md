@@ -1,3 +1,10 @@
+## [1.4.3](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.4.2...v1.4.3) (2026-06-21)
+
+### 🐛 Bug Fixes
+
+* update contact email to ge.bauer-group.com in various files ([553b4ce](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/553b4ce2e9dfe1b41d7da22dafb7a9d1a2dd5db6))
+* update contact information and review date in demo pages ([2754d01](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/2754d01de517c5a04f193075eaf01c46673652f2))
+
 ## [1.4.2](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.4.1...v1.4.2) (2026-06-21)
 
 ### 🐛 Bug Fixes
