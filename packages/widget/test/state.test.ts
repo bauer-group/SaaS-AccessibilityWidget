@@ -83,10 +83,7 @@ describe('state module', () => {
 
   describe('untrusted-payload validation', () => {
     it('clamps an out-of-domain contrastMode to the default', () => {
-      localStorage.setItem(
-        'aw-poison',
-        JSON.stringify({ contrastMode: '"] html{display:none}' }),
-      );
+      localStorage.setItem('aw-poison', JSON.stringify({ contrastMode: '"] html{display:none}' }));
       expect(loadState('aw-poison').contrastMode).toBe('off');
     });
 

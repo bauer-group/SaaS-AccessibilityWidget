@@ -15,7 +15,14 @@ import {
 import { resolveConfig, type ResolvedConfig } from './config.js';
 import { applyState } from './features/apply.js';
 import { applyProfile } from './features/profile.js';
-import { loadState, saveState, clearState, coerceStep, coerceContrastMode, STEPS } from './state.js';
+import {
+  loadState,
+  saveState,
+  clearState,
+  coerceStep,
+  coerceContrastMode,
+  STEPS,
+} from './state.js';
 import { openPanel, type PanelHandle } from './panel/panel.js';
 import { dispatchWidgetEvent } from './util/events.js';
 
