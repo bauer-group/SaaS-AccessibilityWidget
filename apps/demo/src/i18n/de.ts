@@ -230,7 +230,7 @@ export const de: Dict = {
     q5: 'Ist es DSGVO-konform? Brauche ich ein Consent-Banner?',
     a5: 'Ja, und ein Banner ist nicht erforderlich. Da das Widget keine personenbezogenen Daten verarbeitet und keine Cookies setzt, entstehen keine Einwilligungspflichten nach DSGVO. Präferenzen bleiben auf dem Gerät der Besucher:innen und werden weder an uns noch an Dritte übertragen.',
     q6: 'Was kostet es und wie ist es lizenziert?',
-    a6: 'Dual-lizenziert: AGPL-3.0-only für Open-Source-Projekte oder eine kommerzielle Lizenz für Closed-Source- und proprietäre Deployments. Für kommerzielle Konditionen und Support-Optionen die BAUER GROUP kontaktieren.',
+    a6: 'Die Nutzung ist kostenlos: Jede:r darf das Widget gratis auf jeder Website einbinden. Es ist dual-lizenziert. Solange du es nur einbindest oder Änderungen am Code selbst wieder offenlegst, gilt die AGPL-3.0-only (Copyleft — Anpassungen müssen unter derselben Lizenz veröffentlicht werden). Erst wenn du das Widget oder geänderten Code in ein eigenes Closed-Source- bzw. proprietäres Produkt einbauen willst, ohne den Quellcode offenzulegen, brauchst du eine kommerzielle Lizenz. Für kommerzielle Konditionen und Support die BAUER GROUP kontaktieren.',
   },
 
   scanner: {
@@ -267,7 +267,8 @@ export const de: Dict = {
     conformanceBody:
       'Diese Website ist <strong>teilweise konform</strong>. Die auf der <a href="/">Demo-Seite</a> aufgeführten Barrieren sind <em>absichtlich</em> eingebaut und dienen als Scanner-Testziel. In einem echten Produktivsystem wären sie behoben.',
     contactTitle: 'Kontakt / Feedback (§ 14 BFSG)',
-    contactBody: 'BAUER GROUP',
+    contactBody:
+      'Barrieren, Feedback oder Anfragen zur Barrierefreiheit richtest du bitte an:<br /><strong>BAUER GROUP</strong><br />3 Ana Politkovskaia Street<br />Building 6<br />0186 Tbilisi<br />Georgien<br /><br />Telefon: <a href="tel:+995322501220">+995 32 250 12 20</a><br />E-Mail: <a href="mailto:info@ge.bauer-group.com">info@ge.bauer-group.com</a>',
     enforcementTitle: 'Durchsetzungsverfahren',
     enforcementBody:
       'Erhältst du keine zufriedenstellende Antwort, kannst du dich an die Schlichtungsstelle des Bundes wenden:<br />Schlichtungsstelle des Bundes für Barrierefreiheit<br />Mauerstraße 53, 10117 Berlin<br />E-Mail: <a href="mailto:info@schlichtungsstelle-bfsg.de">info@schlichtungsstelle-bfsg.de</a>',

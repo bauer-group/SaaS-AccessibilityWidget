@@ -232,7 +232,7 @@ export const en = {
     q5: 'Is it GDPR-compliant? Do I need a consent banner?',
     a5: 'Yes, and no banner is required. Because the widget processes no personal data and sets no cookies, it raises no GDPR/DSGVO consent obligations. Preferences stay on the visitor’s device and are never transmitted to us or any third party.',
     q6: 'What does it cost and how is it licensed?',
-    a6: 'Dual-licensed: AGPL-3.0-only for open-source projects, or a commercial license for closed-source and proprietary deployments. Contact BAUER GROUP for commercial terms and support options.',
+    a6: 'It is free to use: anyone may embed the widget on any website at no cost. It is dual-licensed. As long as you just embed it — or publish any changes you make to the code — the AGPL-3.0-only applies (copyleft: modifications must be released under the same license). Only if you want to build the widget or modified code into your own closed-source or proprietary product without disclosing the source do you need a commercial license. Contact BAUER GROUP for commercial terms and support.',
   },
 
   scanner: {
@@ -269,7 +269,8 @@ export const en = {
     conformanceBody:
       'This website is <strong>partially conformant</strong>. The barriers listed on the <a href="/">demo page</a> are <em>intentional</em> and serve as a scanner test target. In a real production system they would be fixed.',
     contactTitle: 'Contact / feedback (§ 14 BFSG)',
-    contactBody: 'BAUER GROUP',
+    contactBody:
+      'Please report barriers, feedback or accessibility requests to:<br /><strong>BAUER GROUP</strong><br />3 Ana Politkovskaia Street<br />Building 6<br />0186 Tbilisi<br />Georgia<br /><br />Phone: <a href="tel:+995322501220">+995 32 250 12 20</a><br />E-Mail: <a href="mailto:info@ge.bauer-group.com">info@ge.bauer-group.com</a>',
     enforcementTitle: 'Enforcement procedure',
     enforcementBody:
       'If you do not receive a satisfactory response, you may contact the federal conciliation body:<br />Schlichtungsstelle des Bundes für Barrierefreiheit<br />Mauerstraße 53, 10117 Berlin, Germany<br />E-Mail: <a href="mailto:info@schlichtungsstelle-bfsg.de">info@schlichtungsstelle-bfsg.de</a>',
