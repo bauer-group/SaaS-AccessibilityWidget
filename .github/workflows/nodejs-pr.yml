@@ -29,7 +29,7 @@ jobs:
         uses: actions/checkout@v7
 
       - name: 📦 Setup pnpm
-        uses: pnpm/action-setup@v4 # no version → reads packageManager
+        uses: pnpm/action-setup@v6 # no version → reads packageManager
 
       - name: 📦 Setup Node.js
         uses: actions/setup-node@v6
