@@ -1,5 +1,6 @@
 let guideEl: HTMLDivElement | null = null;
-let handler: ((e: MouseEvent | TouchEvent) => void) | null = null;
+let controller: AbortController | null = null;
+let rafId: number | null = null;
 
 export function readingGuideApply(on: boolean): void {
   if (on && !guideEl) {
@@ -7,19 +8,30 @@ export function readingGuideApply(on: boolean): void {
     guideEl.className = 'aw-reading-guide';
     guideEl.setAttribute('aria-hidden', 'true');
     document.body.appendChild(guideEl);
-    handler = (e) => {
-      const y = 'clientY' in e ? e.clientY : (e.touches[0]?.clientY ?? 0);
-      guideEl!.style.top = `${y - 16}px`;
+
+    controller = new AbortController();
+    const { signal } = controller;
+    let latestY = 0;
+    const onMove = (e: MouseEvent | TouchEvent): void => {
+      latestY = 'clientY' in e ? e.clientY : (e.touches[0]?.clientY ?? 0);
+      // Coalesce a burst of pointer moves into one DOM write per frame, always
+      // painting the most recent position.
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        if (guideEl) guideEl.style.top = `${latestY - 16}px`;
+      });
     };
-    document.addEventListener('mousemove', handler as EventListener, { passive: true });
-    document.addEventListener('touchmove', handler as EventListener, { passive: true });
+    document.addEventListener('mousemove', onMove as EventListener, { passive: true, signal });
+    document.addEventListener('touchmove', onMove as EventListener, { passive: true, signal });
   } else if (!on && guideEl) {
-    if (handler) {
-      document.removeEventListener('mousemove', handler as EventListener);
-      document.removeEventListener('touchmove', handler as EventListener);
+    controller?.abort();
+    controller = null;
+    if (rafId !== null) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
     }
     guideEl.remove();
     guideEl = null;
-    handler = null;
   }
 }

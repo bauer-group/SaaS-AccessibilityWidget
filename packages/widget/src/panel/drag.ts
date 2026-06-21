@@ -69,6 +69,11 @@ export function makeDraggable(opts: DraggableOptions): DraggableHandle {
   let current: PanelPosition | null = loadPanelPosition(storageKey);
   applyPosition(root, current);
 
+  // One controller owns every listener this handle registers, so destroy() is
+  // a single abort() instead of a remove-per-listener checklist that can drift.
+  const ac = new AbortController();
+  const { signal } = ac;
+
   // --- Pointer drag --------------------------------------------------------
   let dragging = false;
   let startX = 0;
@@ -122,10 +127,10 @@ export function makeDraggable(opts: DraggableOptions): DraggableHandle {
     }
   }
 
-  handle.addEventListener('pointerdown', onPointerDown);
-  handle.addEventListener('pointermove', onPointerMove);
-  handle.addEventListener('pointerup', onPointerUp);
-  handle.addEventListener('pointercancel', onPointerUp);
+  handle.addEventListener('pointerdown', onPointerDown, { signal });
+  handle.addEventListener('pointermove', onPointerMove, { signal });
+  handle.addEventListener('pointerup', onPointerUp, { signal });
+  handle.addEventListener('pointercancel', onPointerUp, { signal });
 
   // --- Keyboard fallback ---------------------------------------------------
   function onKey(ev: KeyboardEvent): void {
@@ -159,7 +164,7 @@ export function makeDraggable(opts: DraggableOptions): DraggableHandle {
     savePanelPosition(storageKey, next);
     onChange?.(next);
   }
-  root.addEventListener('keydown', onKey);
+  root.addEventListener('keydown', onKey, { signal });
 
   return {
     restore: () => applyPosition(root, current),
@@ -169,13 +174,7 @@ export function makeDraggable(opts: DraggableOptions): DraggableHandle {
       clearPosition(root);
       onChange?.(null);
     },
-    destroy: () => {
-      handle.removeEventListener('pointerdown', onPointerDown);
-      handle.removeEventListener('pointermove', onPointerMove);
-      handle.removeEventListener('pointerup', onPointerUp);
-      handle.removeEventListener('pointercancel', onPointerUp);
-      root.removeEventListener('keydown', onKey);
-    },
+    destroy: () => ac.abort(),
   };
 }
 
