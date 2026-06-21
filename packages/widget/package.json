@@ -1,6 +1,6 @@
 {
   "name": "@bauer-group/accessibility-widget",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Lazy-loading Accessibility-Widget nach BFSG/EN 301 549/WCAG 2.2 AA. Loader ~4 KB gzip, Core ~14 KB gzip. Kein Tracking, kein Cookie, kein DOM-/ARIA-Override.",
   "license": "AGPL-3.0-only",
   "author": "BAUER GROUP <info@bauer-group.com>",

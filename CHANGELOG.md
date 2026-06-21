@@ -1,3 +1,18 @@
+## [1.4.0](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.3.0...v1.4.0) (2026-06-21)
+
+### 🚀 Features
+
+* **demo:** trimmed install + professionalized the FAQ ([1c1fc4c](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/1c1fc4cf630707f38893d5cfb4aa7eea34697486))
+
+### 🐛 Bug Fixes
+
+* **demo:** rehydrated config playground after "Apply & reload" ([770c065](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/770c065b4b2cce2966af5a50823a4115db9af26d))
+* **ui:** reduced the powered-by attribution to 8px ([db888db](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/db888dbfc58a45d75996b69b8c8849d61ef4d6ec))
+
+### ♻️ Refactoring
+
+* **demo:** centralized topbar + footer chrome ([33400b1](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/33400b18f9a819f7ff36ed0a824f195c1190078c))
+
 ## [1.3.0](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.2.0...v1.3.0) (2026-06-21)
 
 ### 🚀 Features
