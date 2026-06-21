@@ -268,9 +268,7 @@ describe('footer: disclaimer + powered-by', () => {
     const p = document.querySelector<HTMLParagraphElement>('.aw-poweredby');
     expect(p).not.toBeNull();
     const a = p?.querySelector<HTMLAnchorElement>('a');
-    expect(a?.getAttribute('href')).toBe(
-      'https://accessibility.widget.professional-hosting.com',
-    );
+    expect(a?.getAttribute('href')).toBe('https://accessibility.widget.professional-hosting.com');
     expect(a?.getAttribute('target')).toBe('_blank');
     expect(a?.getAttribute('rel')).toBe('noopener noreferrer');
     expect(a?.textContent).toBe('BAUER GROUP Accessibility-Widget');
