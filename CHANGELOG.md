@@ -1,3 +1,9 @@
+## [1.3.0](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.2.0...v1.3.0) (2026-06-21)
+
+### 🚀 Features
+
+* **demo:** split the demo into focused multi-page sections ([b407c9d](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/b407c9d503c426e133d578b6969b7363262eaac5))
+
 ## [1.2.0](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.1.2...v1.2.0) (2026-06-21)
 
 ### 🚀 Features
