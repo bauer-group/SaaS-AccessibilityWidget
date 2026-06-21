@@ -132,6 +132,43 @@ function setDeep(target: Record<string, unknown>, path: string[], value: unknown
   node[path[path.length - 1]!] = value;
 }
 
+function getDeep(obj: Record<string, unknown>, path: string[]): unknown {
+  let node: unknown = obj;
+  for (const part of path) {
+    if (node && typeof node === 'object' && part in (node as object)) {
+      node = (node as Record<string, unknown>)[part];
+    } else {
+      return undefined;
+    }
+  }
+  return node;
+}
+
+/**
+ * Reflect a stored config back into the form controls. Called on load so that
+ * after "Apply & reload" the form shows what the widget actually booted with —
+ * otherwise the fresh HTML loads at its defaults and looks like a reset.
+ */
+function applyConfigToForm(root: ParentNode, cfg: Record<string, unknown>): void {
+  for (const el of root.querySelectorAll<HTMLElement>('[data-cfg]')) {
+    const key = el.getAttribute('data-cfg');
+    const type = el.getAttribute('data-cfg-type');
+    if (!key || !type) continue;
+    const value = getDeep(cfg, key.split('.'));
+    if (value === undefined) continue;
+    if (type === 'features') {
+      const set = value as Record<string, unknown>;
+      for (const box of el.querySelectorAll<HTMLInputElement>('input[type="checkbox"]')) {
+        box.checked = Boolean(set[box.value]);
+      }
+    } else if (type === 'boolean') {
+      (el as HTMLInputElement).checked = Boolean(value);
+    } else {
+      (el as HTMLInputElement | HTMLSelectElement).value = String(value);
+    }
+  }
+}
+
 /** Build the *full* config (every set field) — used for apply + panel preview. */
 function collectConfig(root: ParentNode): Record<string, unknown> {
   const cfg: Record<string, unknown> = {};
@@ -176,6 +213,15 @@ export function wireConfigPlayground(t: (k: string) => string): void {
   if (!form || !snippetEl) return; // not on this page
 
   populateFeatureFieldsets(form);
+
+  // Rehydrate from a previously applied config so a reload reflects what the
+  // widget actually booted with, instead of snapping the controls to defaults.
+  try {
+    const raw = sessionStorage.getItem(DEMO_CONFIG_KEY);
+    if (raw) applyConfigToForm(form, JSON.parse(raw) as Record<string, unknown>);
+  } catch {
+    /* malformed or disabled storage — fall back to HTML defaults */
+  }
 
   const refresh = (): void => {
     snippetEl.textContent = renderSnippet(collectChanged(form), t('config.snippetEmpty'));
