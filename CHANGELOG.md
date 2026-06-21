@@ -1,3 +1,16 @@
+## [1.1.1](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.1.0...v1.1.1) (2026-06-21)
+
+### 🐛 Bug Fixes
+
+* **core:** whitelisted the keys core.set() may write ([73b6e82](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/73b6e825955a72e1204df5de5214a3d680a0134d))
+* **state:** validated persisted state on load ([bedf9fe](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/bedf9fe4ad97240284b178484f3eaf683138be9f))
+* **structure-nav:** handled pages without headings ([9e25cfb](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/9e25cfb062da1a28575efd54892d8a6bec267eef))
+* **tts:** stopped speech when the panel closes ([1a1bf54](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/1a1bf54fb15326c6c01745857dd0b28f1f4e2332))
+
+### ♻️ Refactoring
+
+* **panel:** adopted AbortController and rAF-throttling ([f140642](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/f140642e8e3c3b94ae655f419ca034233916e8b4))
+
 ## [1.1.0](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.0.5...v1.1.0) (2026-06-21)
 
 ### 🚀 Features
