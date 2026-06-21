@@ -7,10 +7,9 @@
 # prompt on each PR and records signatures in signatures/version1/cla.json;
 # contributors sign by commenting the exact phrase below on their PR.
 #
-# Required repository secret:
-#   CLA_SIGNATURES_TOKEN — a Personal Access Token (classic, `repo` scope, or
-#   fine-grained with Contents: read/write on this repo). Needed so the action
-#   can commit the signatures file. GITHUB_TOKEN alone can't be used here.
+# Auth: uses the built-in GITHUB_TOKEN (contents: write) to store signatures in
+# this repo — no extra secret/PAT needed. Bots (dependabot, renovate, …) are
+# allowlisted via prefix wildcards so they never have to sign.
 # =============================================================================
 
 name: ⚖️ CLA Assistant
@@ -42,12 +41,10 @@ jobs:
         uses: contributor-assistant/github-action@v2.6.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PERSONAL_ACCESS_TOKEN: ${{ secrets.CLA_SIGNATURES_TOKEN }}
         with:
           path-to-signatures: 'signatures/version1/cla.json'
           path-to-document: 'https://github.com/bauer-group/SaaS-AccessibilityWidget/blob/main/CLA.md'
           branch: 'main'
-          allowlist: 'dependabot[bot],renovate[bot],github-actions[bot]'
+          allowlist: 'dependabot*,renovate*,github-actions*,*-bot'
           custom-notsigned-prcomment: 'Thank you for your contribution! Because this project is **dual-licensed** (GNU AGPL-3.0 OR commercial), we first need your agreement to our [Contributor License Agreement](https://github.com/bauer-group/SaaS-AccessibilityWidget/blob/main/CLA.md) before we can merge. Please read it, then post exactly the following comment on this pull request:'
           custom-allsigned-prcomment: '✅ All contributors have signed the CLA — thank you!'
-          lock-pullrequest-aftermerge: true
