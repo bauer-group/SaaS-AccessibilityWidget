@@ -1,5 +1,6 @@
 import {
   DEFAULT_STATE,
+  FEATURE_IDS,
   isLocale,
   type WidgetState,
   type FeatureId,
@@ -14,6 +15,37 @@ export const STEPS = {
   contrast: ['off', 'high', 'dark', 'invert'] as const satisfies readonly ContrastMode[],
 };
 
+/** Keep a numeric step value only if it's one of the known steps, else fall back. */
+export function coerceStep(value: unknown, steps: readonly number[], fallback: number): number {
+  return typeof value === 'number' && steps.includes(value) ? value : fallback;
+}
+
+/** Keep a contrast mode only if it's one of the supported modes, else fall back. */
+export function coerceContrastMode(value: unknown, fallback: ContrastMode): ContrastMode {
+  return typeof value === 'string' && (STEPS.contrast as readonly string[]).includes(value)
+    ? (value as ContrastMode)
+    : fallback;
+}
+
+/**
+ * Rebuild the feature map from `fresh` (the canonical key set) and overlay only
+ * known feature ids, coercing each to a boolean. Unknown keys from a poisoned
+ * or stale localStorage payload are dropped rather than persisted forward.
+ */
+function sanitizeFeatures(
+  raw: unknown,
+  fresh: Record<FeatureId, boolean>,
+): Record<FeatureId, boolean> {
+  const out = { ...fresh };
+  if (raw && typeof raw === 'object') {
+    const src = raw as Record<string, unknown>;
+    for (const id of FEATURE_IDS) {
+      if (src[id] !== undefined) out[id] = Boolean(src[id]);
+    }
+  }
+  return out;
+}
+
 export function createDefaultState(): WidgetState {
   return {
     ...DEFAULT_STATE,
@@ -27,13 +59,22 @@ export function loadState(storageKey: string): WidgetState {
     if (!raw) return createDefaultState();
     const parsed = JSON.parse(raw) as Partial<WidgetState>;
     const fresh = createDefaultState();
+    // Re-validate every persisted field against its known domain. localStorage
+    // is same-origin-writable, so treat its contents as untrusted: clamp step
+    // values to the real steps, the contrast mode to a supported mode, and drop
+    // unknown feature keys — otherwise a poisoned payload flows straight into a
+    // `data-aw-*` attribute / CSS custom property.
     const next: WidgetState = {
-      features: { ...fresh.features, ...(parsed.features ?? {}) },
-      fontSizeLevel: parsed.fontSizeLevel ?? fresh.fontSizeLevel,
-      lineHeightLevel: parsed.lineHeightLevel ?? fresh.lineHeightLevel,
-      letterSpacingLevel: parsed.letterSpacingLevel ?? fresh.letterSpacingLevel,
-      contrastMode: parsed.contrastMode ?? fresh.contrastMode,
-      oversized: parsed.oversized ?? fresh.oversized,
+      features: sanitizeFeatures(parsed.features, fresh.features),
+      fontSizeLevel: coerceStep(parsed.fontSizeLevel, STEPS.fontSize, fresh.fontSizeLevel),
+      lineHeightLevel: coerceStep(parsed.lineHeightLevel, STEPS.lineHeight, fresh.lineHeightLevel),
+      letterSpacingLevel: coerceStep(
+        parsed.letterSpacingLevel,
+        STEPS.letterSpacing,
+        fresh.letterSpacingLevel,
+      ),
+      contrastMode: coerceContrastMode(parsed.contrastMode, fresh.contrastMode),
+      oversized: Boolean(parsed.oversized ?? fresh.oversized),
     };
     // Preserve optional runtime-override fields. Without these the next save
     // (triggered by any feature toggle) would wipe the user's language

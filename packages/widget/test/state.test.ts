@@ -80,4 +80,42 @@ describe('state module', () => {
     saveState('aw-fab', loaded);
     expect(loadState('aw-fab').fabPosition).toEqual({ x: 120, y: 340 });
   });
+
+  describe('untrusted-payload validation', () => {
+    it('clamps an out-of-domain contrastMode to the default', () => {
+      localStorage.setItem(
+        'aw-poison',
+        JSON.stringify({ contrastMode: '"] html{display:none}' }),
+      );
+      expect(loadState('aw-poison').contrastMode).toBe('off');
+    });
+
+    it('rejects a step value that is not one of the known steps', () => {
+      localStorage.setItem('aw-poison', JSON.stringify({ fontSizeLevel: 9999 }));
+      expect(loadState('aw-poison').fontSizeLevel).toBe(1);
+    });
+
+    it('keeps a valid non-default step value', () => {
+      localStorage.setItem('aw-ok', JSON.stringify({ lineHeightLevel: 1.8 }));
+      expect(loadState('aw-ok').lineHeightLevel).toBe(1.8);
+    });
+
+    it('drops unknown feature keys, coerces values to boolean, and resists proto pollution', () => {
+      // Raw JSON string — a literal "__proto__" key is the actual pollution
+      // vector (an object-literal __proto__ would set the prototype instead).
+      localStorage.setItem(
+        'aw-poison',
+        '{"features":{"grayscale":1,"bogus":true},"__proto__":{"polluted":true}}',
+      );
+      const loaded = loadState('aw-poison');
+      expect(loaded.features.grayscale).toBe(true);
+      expect((loaded.features as Record<string, unknown>).bogus).toBeUndefined();
+      expect(({} as Record<string, unknown>).polluted).toBeUndefined();
+    });
+
+    it('coerces a non-boolean oversized flag', () => {
+      localStorage.setItem('aw-poison', JSON.stringify({ oversized: 'yes' }));
+      expect(loadState('aw-poison').oversized).toBe(true);
+    });
+  });
 });
