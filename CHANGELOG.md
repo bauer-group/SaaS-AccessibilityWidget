@@ -1,3 +1,9 @@
+## [1.4.1](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.4.0...v1.4.1) (2026-06-21)
+
+### 🐛 Bug Fixes
+
+* **ui:** kept feature-tile labels clear of the icon and status ([8f2d709](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/8f2d709adce3e7dae285528d92c713d4d4f1e1af))
+
 ## [1.4.0](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.3.0...v1.4.0) (2026-06-21)
 
 ### 🚀 Features
