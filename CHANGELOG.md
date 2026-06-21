@@ -1,3 +1,9 @@
+## [1.2.0](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.1.2...v1.2.0) (2026-06-21)
+
+### 🚀 Features
+
+* **demo:** added interactive Configuration reference page ([7d3110d](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/7d3110d8daaaaaf9a29fa5d28581e175c72ce538))
+
 ## [1.1.2](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.1.1...v1.1.2) (2026-06-21)
 
 ### 🐛 Bug Fixes
