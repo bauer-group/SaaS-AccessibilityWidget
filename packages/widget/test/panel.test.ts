@@ -269,7 +269,7 @@ describe('footer: disclaimer + powered-by', () => {
     expect(p).not.toBeNull();
     const a = p?.querySelector<HTMLAnchorElement>('a');
     expect(a?.getAttribute('href')).toBe(
-      'https://accessibility-widget.app.professional-hosting.com',
+      'https://accessibility.widget.professional-hosting.com',
     );
     expect(a?.getAttribute('target')).toBe('_blank');
     expect(a?.getAttribute('rel')).toBe('noopener noreferrer');

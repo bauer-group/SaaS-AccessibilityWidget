@@ -28,4 +28,4 @@ Beispiel-Header für JS/TS/C-artige Dateien (oben in jede Quelldatei einfügen):
 
 Kurzform (für eng begrenzte Header / minifizierte Bundles, Banner beibehalten!):
 
-/*! Accessibility Widget © 2026 BAUER GROUP — AGPL-3.0-only or commercial. https://accessibility-widget.app.professional-hosting.com */
+/*! Accessibility Widget © 2026 BAUER GROUP — AGPL-3.0-only or commercial. https://accessibility.widget.professional-hosting.com */
