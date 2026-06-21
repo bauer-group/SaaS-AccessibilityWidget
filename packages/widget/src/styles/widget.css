@@ -212,9 +212,9 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   /* Every row is locked to the same height so cards look identical
-     regardless of label length / language. 136px fits 3-line labels plus
+     regardless of label length / language. 142px fits 3-line labels plus
      icon, stage-dots and status badge across every supported translation. */
-  grid-auto-rows: 136px;
+  grid-auto-rows: 142px;
   gap: 8px;
 }
 .aw-feat {
@@ -260,10 +260,18 @@
   color: #003c73;
 }
 .aw-feat-label {
-  font-size: 0.85rem;
+  align-self: stretch;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
   font-weight: 600;
-  line-height: 1.2;
-  overflow-wrap: anywhere;
+  line-height: 1.18;
+  /* Hyphenate long German compounds (Buchstabenabstand …) instead of breaking
+     mid-word anywhere; the panel root carries `lang`, so this is locale-aware. */
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 .aw-feat-badge {
   display: inline-block;
@@ -347,6 +355,10 @@
 }
 .aw-feat-wrap > .aw-feat {
   width: 100%;
+  /* Fill the fixed-height grid cell so the label gets a real middle track to
+     center in — otherwise the card is content-sized, the 1fr collapses, and
+     long labels crowd the icon above and the status badge below. */
+  height: 100%;
 }
 .aw-feat-tooltip {
   position: absolute;
