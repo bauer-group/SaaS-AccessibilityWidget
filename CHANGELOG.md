@@ -1,3 +1,9 @@
+## [1.1.2](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.1.1...v1.1.2) (2026-06-21)
+
+### 🐛 Bug Fixes
+
+* **ui:** toned down the powered-by attribution ([cf7f972](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/cf7f972b13f3b5c8a00e7af4c43041b985011bcd)), closes [#999](https://github.com/bauer-group/SaaS-AccessibilityWidget/issues/999)
+
 ## [1.1.1](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.1.0...v1.1.1) (2026-06-21)
 
 ### 🐛 Bug Fixes
