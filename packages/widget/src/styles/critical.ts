@@ -20,6 +20,12 @@ export function buildCriticalCss(opts: CriticalCssOptions): string {
     'html[data-aw-instant]{--aw-font-scale:1;--aw-line-height:1.5;--aw-letter-spacing:0em}' +
     // typography applied via rem-safe inheritance
     'html[data-aw-instant] body,html[data-aw-instant] p,html[data-aw-instant] li,html[data-aw-instant] td,html[data-aw-instant] span,html[data-aw-instant] a,html[data-aw-instant] button,html[data-aw-instant] input,html[data-aw-instant] textarea{font-size:calc(1em * var(--aw-font-scale));line-height:var(--aw-line-height);letter-spacing:var(--aw-letter-spacing)}' +
+    // The widget's own UI (panel + FAB) must stay immune to host-page
+    // typography scaling. Without this, the calc(1em * scale) rule above
+    // compounds the scale at every nesting level inside the panel and the
+    // control surface explodes. Resetting the custom properties on the widget
+    // roots makes every descendant resolve at scale 1 — no compounding.
+    '[data-aw-panel],.aw-fab{--aw-font-scale:1;--aw-line-height:1.5;--aw-letter-spacing:0em}' +
     // contrast modes (filter-only — no DOM mutation)
     'html[data-aw-contrast="high"]{filter:contrast(1.35)}' +
     'html[data-aw-contrast="dark"]{filter:invert(1) hue-rotate(180deg)}' +
