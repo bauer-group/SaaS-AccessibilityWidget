@@ -14,3 +14,6 @@ draft
 # format-check gate every release.
 CHANGELOG.md
 packages/widget/package.json
+
+# CLA Assistant bot-managed signature store (not prettier-formatted).
+signatures/
