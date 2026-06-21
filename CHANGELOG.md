@@ -1,3 +1,9 @@
+## [1.4.2](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.4.1...v1.4.2) (2026-06-21)
+
+### 🐛 Bug Fixes
+
+* **demo:** moved hero install snippet below the grid ([84ecbfc](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/84ecbfcd64812970b10ccffb866b86288ad8a53a))
+
 ## [1.4.1](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.4.0...v1.4.1) (2026-06-21)
 
 ### 🐛 Bug Fixes
