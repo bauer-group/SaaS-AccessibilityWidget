@@ -1,5 +1,6 @@
 import type { WidgetConfig, WidgetState } from '@bauer-group/accessibility-widget';
 import { applyI18n, detectLang, wireLangToggle, t } from './i18n';
+import { renderChrome } from './chrome';
 import { wireConfigPlayground } from './config-playground';
 
 declare global {
@@ -418,7 +419,9 @@ function replaceCircular(): (key: string, value: unknown) => unknown {
 // Boot
 // ---------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-  // i18n first: localize the (English-default) DOM and lift the cloak for DE.
+  // Chrome first: inject the canonical topbar + footer, then localize the
+  // (now-complete) DOM and lift the cloak for DE.
+  renderChrome();
   applyI18n(detectLang());
   wireLangToggle();
   wireActions();

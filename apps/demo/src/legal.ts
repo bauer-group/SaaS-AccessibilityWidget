@@ -4,8 +4,10 @@
  * i18n module, so the same DE/EN toggle and English fallback apply here.
  */
 import { applyI18n, detectLang, wireLangToggle } from './i18n';
+import { renderChrome } from './chrome';
 
 document.addEventListener('DOMContentLoaded', () => {
+  renderChrome();
   applyI18n(detectLang());
   wireLangToggle();
 });
