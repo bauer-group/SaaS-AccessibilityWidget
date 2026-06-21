@@ -12,6 +12,13 @@ on:
       - 'packages/widget/**'
       - 'apps/demo/**'
       - '.github/workflows/deploy-pages.yml'
+  # Re-publish after every release: semantic-release bumps the widget version and
+  # the demo embeds + reports it, so the Pages site goes stale otherwise. The
+  # release commit is pushed with GITHUB_TOKEN, which cannot re-trigger the push
+  # event above, so we key off the Release run completing (same as deploy-cdn).
+  workflow_run:
+    workflows: ['🚀 Release & NPM Publish']
+    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -28,6 +35,9 @@ jobs:
     name: 🏗️ Build demo
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    # On a workflow_run trigger, only publish when the Release actually
+    # succeeded; push and manual runs are unconditional.
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: 📥 Checkout
         uses: actions/checkout@v7
