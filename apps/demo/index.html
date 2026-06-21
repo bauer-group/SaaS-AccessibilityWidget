@@ -170,8 +170,9 @@
     <main id="main">
       <!-- HERO -->
       <section class="hero">
-        <div class="container hero__grid">
-          <div class="hero__content">
+        <div class="container">
+          <div class="hero__grid">
+            <div class="hero__content">
             <p class="eyebrow" data-i18n="hero.eyebrow">BFSG · EN 301 549 · WCAG 2.2 AA</p>
             <h1 class="hero__title">
               <span data-i18n="hero.title">Digital accessibility —</span>
@@ -184,28 +185,6 @@
               <strong>28 languages</strong>, no cookies, no tracking, and no DOM/ARIA override of
               your page.
             </p>
-
-            <!-- Primary CTA: the literal one line that ships the widget -->
-            <figure class="hero__code">
-              <figcaption class="hero__code-caption" data-i18n="hero.codeCaption">
-                Add this one line — that is it:
-              </figcaption>
-              <div class="code-block code-block--hero">
-                <button
-                  type="button"
-                  class="copy-btn"
-                  data-copy
-                  data-i18n="hero.copy"
-                  aria-label="Copy"
-                >
-                  Copy
-                </button>
-                <pre><code>&lt;script
-  src="https://widgets.professional-hosting.com/accessibility-widget/v1/accessibility-widget-loader.min.js"
-  defer
-&gt;&lt;/script&gt;</code></pre>
-              </div>
-            </figure>
 
             <div class="hero__actions">
               <button type="button" id="open-panel" class="btn btn-primary">
@@ -258,6 +237,31 @@
               </div>
             </dl>
           </aside>
+          </div>
+
+          <!-- Primary CTA: the literal one line that ships the widget — full
+               width below the grid so the two columns stay balanced and the
+               long script tag no longer scrolls inside a narrow column. -->
+          <figure class="hero__code">
+            <figcaption class="hero__code-caption" data-i18n="hero.codeCaption">
+              Add this one line — that is it:
+            </figcaption>
+            <div class="code-block code-block--hero">
+              <button
+                type="button"
+                class="copy-btn"
+                data-copy
+                data-i18n="hero.copy"
+                aria-label="Copy"
+              >
+                Copy
+              </button>
+              <pre><code>&lt;script
+  src="https://widgets.professional-hosting.com/accessibility-widget/v1/accessibility-widget-loader.min.js"
+  defer
+&gt;&lt;/script&gt;</code></pre>
+            </div>
+          </figure>
         </div>
       </section>
 
