@@ -1,3 +1,9 @@
+## [1.4.4](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.4.3...v1.4.4) (2026-06-21)
+
+### 🐛 Bug Fixes
+
+* **widget:** kept panel and FAB immune to font scaling ([7e4da3f](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/7e4da3ff9a9c3d634ee71b96c6ddbfbbb041abeb))
+
 ## [1.4.3](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.4.2...v1.4.3) (2026-06-21)
 
 ### 🐛 Bug Fixes
