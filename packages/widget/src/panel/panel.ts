@@ -522,7 +522,9 @@ export function openPanel(ctx: PanelContext): PanelHandle {
       return;
     }
     if (id === 'structureNav') {
-      const opened = structureNavToggle(T.aria.dialog);
+      // `en` is the complete reference locale, so its string always exists.
+      const emptyText = T.structureNavEmpty ?? translations.en.structureNavEmpty!;
+      const opened = structureNavToggle(T.aria.dialog, emptyText);
       commit({ ...state, features: { ...state.features, structureNav: opened } }, label);
       return;
     }

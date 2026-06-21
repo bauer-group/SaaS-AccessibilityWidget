@@ -572,6 +572,11 @@
   padding: 0;
   margin: 8px 0 0;
 }
+#aw-struct-nav .aw-struct-nav__empty {
+  margin: 8px 24px 0 0;
+  color: #666;
+  font-size: 14px;
+}
 #aw-struct-nav li {
   margin: 0;
 }
@@ -725,6 +730,9 @@
   }
   #aw-struct-nav a {
     color: #6ea8e6;
+  }
+  #aw-struct-nav .aw-struct-nav__empty {
+    color: #aaa;
   }
 }
 

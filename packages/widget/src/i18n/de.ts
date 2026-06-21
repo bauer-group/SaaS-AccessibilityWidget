@@ -62,4 +62,5 @@ export const de: Translation = {
   },
   poweredBy: 'Bereitgestellt von',
   statementLink: 'Barrierefreiheitserklärung',
+  structureNavEmpty: 'Auf dieser Seite wurden keine Überschriften gefunden.',
 };

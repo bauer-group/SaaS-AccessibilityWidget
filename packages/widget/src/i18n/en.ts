@@ -62,4 +62,5 @@ export const en: Translation = {
   },
   poweredBy: 'Powered by',
   statementLink: 'Accessibility statement',
+  structureNavEmpty: 'No headings found on this page.',
 };

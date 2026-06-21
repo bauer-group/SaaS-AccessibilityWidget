@@ -33,4 +33,10 @@ export interface Translation {
    */
   poweredBy: string;
   statementLink: string;
+  /**
+   * Shown inside the structure-navigation overlay when the page exposes no
+   * headings (`h1`–`h3`). Optional like {@link featureDescriptions}: locales
+   * that omit it fall back to the English string.
+   */
+  structureNavEmpty?: string;
 }
