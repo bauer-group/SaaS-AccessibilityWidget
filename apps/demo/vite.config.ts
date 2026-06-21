@@ -85,6 +85,14 @@ export default defineConfig({
     emptyOutDir: true,
     assetsInlineLimit: 4096,
     rollupOptions: {
+      // Multi-page build: the landing page plus the two (now first-class, no
+      // longer in public/) legal pages, so they share styles.css + the i18n
+      // module instead of carrying inline styles.
+      input: {
+        index: resolve(here, 'index.html'),
+        barrierefreiheit: resolve(here, 'barrierefreiheit.html'),
+        impressum: resolve(here, 'impressum.html'),
+      },
       output: {
         assetFileNames: 'assets/[name]-[hash][extname]',
         entryFileNames: 'assets/[name]-[hash].js',

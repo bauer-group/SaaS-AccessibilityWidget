@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en" class="i18n-cloak">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- i18n bootstrap — see index.html for the rationale (English = fallback, German cloaked). -->
+    <script>
+      (() => {
+        let lang = 'en';
+        try {
+          const stored = localStorage.getItem('aw-page-lang');
+          if (stored === 'de' || stored === 'en') lang = stored;
+          else if ((navigator.language || '').toLowerCase().split('-')[0] === 'de') lang = 'de';
+        } catch {
+          /* ignore */
+        }
+        document.documentElement.lang = lang;
+        if (lang === 'en') document.documentElement.classList.remove('i18n-cloak');
+      })();
+    </script>
+
+    <title>Accessibility statement — Accessibility Widget</title>
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#0058a3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0e14" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/src/styles.css" />
+
+    <!-- Widget bootstrap (same as the demo) so the FAB is present on the legal pages too. -->
+    <script>
+      (() => {
+        const stored = (() => {
+          try {
+            return localStorage.getItem('aw-demo-locale');
+          } catch {
+            return null;
+          }
+        })();
+        window.AccessibilityWidgetConfig = {
+          corePath: '/accessibility-widget/accessibility-widget-core.min.js',
+          cssPath: '/accessibility-widget/accessibility-widget.min.css',
+          locale: stored ?? 'auto',
+          position: 'bottom-right',
+          primaryColor: '#0058a3',
+          statementUrl: '/barrierefreiheit.html',
+          respectReducedMotion: true,
+          hideOnPrint: true,
+        };
+      })();
+    </script>
+    <script src="/accessibility-widget/accessibility-widget-loader.min.js" defer></script>
+    <script type="module" src="/src/legal.ts"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main" data-i18n="nav.home">Skip to main content</a>
+
+    <header class="topbar" role="banner">
+      <div class="container topbar__inner">
+        <a class="topbar__brand" href="/" data-i18n-attr="aria-label:nav.home">
+          <svg
+            class="topbar__logo"
+            viewBox="-4 -4 32 32"
+            aria-hidden="true"
+            focusable="false"
+            width="28"
+            height="28"
+          >
+            <rect x="-4" y="-4" width="32" height="32" rx="7" fill="#0058a3" />
+            <g
+              fill="none"
+              stroke="#fff"
+              stroke-width="2.25"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="16" cy="4" r="1" />
+              <path d="m18 19 1-7-6 1" />
+              <path d="m5 8 3-3 5.5 3-2.36 3.5" />
+              <path d="M4.24 14.5a5 5 0 0 0 6.88 6" />
+              <path d="M13.76 17.5a5 5 0 0 0-6.88-6" />
+            </g>
+          </svg>
+          <span class="topbar__title">
+            <strong>Accessibility Widget</strong>
+            <em>BAUER GROUP</em>
+          </span>
+        </a>
+        <nav class="topbar__nav" aria-label="Main navigation">
+          <a href="/" data-i18n="nav.home">Home</a>
+          <div
+            class="lang-toggle"
+            role="group"
+            data-i18n-attr="aria-label:nav.langLabel"
+            aria-label="Page language"
+          >
+            <button
+              type="button"
+              data-lang="de"
+              aria-pressed="false"
+              data-i18n-attr="aria-label:nav.langDe"
+            >
+              DE
+            </button>
+            <button
+              type="button"
+              data-lang="en"
+              aria-pressed="true"
+              data-i18n-attr="aria-label:nav.langEn"
+            >
+              EN
+            </button>
+          </div>
+          <a
+            class="topbar__github"
+            href="https://github.com/bauer-group/SaaS-AccessibilityWidget"
+            rel="noopener"
+            data-i18n="nav.github"
+            >GitHub</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="legal-page-main">
+      <div class="container">
+        <article class="legal-doc">
+          <h1 data-i18n="statement.title">Accessibility statement</h1>
+          <p data-i18n-html="statement.intro">
+            BAUER GROUP is committed to making the <strong>Accessibility Widget</strong> website
+            accessible in accordance with the German Accessibility Strengthening Act (BFSG) and EN
+            301 549 / WCAG 2.2 AA.
+          </p>
+
+          <h2 data-i18n="statement.conformanceTitle">Conformance status</h2>
+          <p data-i18n-html="statement.conformanceBody">
+            This website is <strong>partially conformant</strong>. The barriers listed on the
+            <a href="/">demo page</a> are <em>intentional</em> and serve as a scanner test target.
+          </p>
+
+          <h2 data-i18n="statement.contactTitle">Contact / feedback (§ 14 BFSG)</h2>
+          <address data-i18n-html="statement.contactBody">
+            BAUER GROUP<br />Web:
+            <a href="https://www.bauer-group.com" rel="noopener">www.bauer-group.com</a>
+          </address>
+
+          <h2 data-i18n="statement.enforcementTitle">Enforcement procedure</h2>
+          <address data-i18n-html="statement.enforcementBody">
+            Schlichtungsstelle des Bundes für Barrierefreiheit<br />Mauerstraße 53, 10117 Berlin,
+            Germany<br />E-Mail:
+            <a href="mailto:info@schlichtungsstelle-bfsg.de">info@schlichtungsstelle-bfsg.de</a>
+          </address>
+
+          <h2 data-i18n="statement.createdTitle">Preparation of this statement</h2>
+          <p data-i18n="statement.createdBody">
+            Created on 21 April 2026. Last reviewed: 21 April 2026.
+          </p>
+
+          <a class="back" href="/" data-i18n="statement.back">← Back to the demo</a>
+        </article>
+      </div>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+      <div class="container footer__inner">
+        <div class="footer__brand">
+          <strong>BAUER GROUP</strong> ·
+          <span data-i18n="footer.license">AGPL-3.0-only / commercial</span>
+        </div>
+        <div class="footer__meta">
+          <p>
+            <a href="/barrierefreiheit.html" data-i18n="footer.statement"
+              >Accessibility statement</a
+            >
+            ·
+            <a href="/impressum.html" data-i18n="footer.impressum">Legal notice</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

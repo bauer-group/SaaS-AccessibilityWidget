@@ -1,4 +1,5 @@
 import type { WidgetConfig, WidgetState } from '@bauer-group/accessibility-widget';
+import { applyI18n, detectLang, wireLangToggle, t } from './i18n';
 
 declare global {
   interface Window {
@@ -26,7 +27,7 @@ const MAX_EVENT_LOG = 30;
  * Keep in sync with `packages/widget/src/types/locale.ts`.
  */
 const LOCALES: Record<string, string> = {
-  auto: '🌐 Auto (Browser-Sprache)',
+  auto: '🌐 Auto',
   de: 'Deutsch',
   en: 'English',
   fr: 'Français',
@@ -264,7 +265,7 @@ function wireCopyButtons(): void {
       }
       const original = btn.textContent;
       btn.dataset.state = 'copied';
-      btn.textContent = 'Kopiert ✓';
+      btn.textContent = t('hero.copied');
       setTimeout(() => {
         btn.dataset.state = '';
         btn.textContent = original;
@@ -383,8 +384,10 @@ function wireEventStream(): void {
   }
 
   clearBtn?.addEventListener('click', () => {
-    log.innerHTML =
-      '<li class="event-stream__empty">Log geleert. Neue Events erscheinen hier.</li>';
+    const li = document.createElement('li');
+    li.className = 'event-stream__empty';
+    li.textContent = t('events.cleared');
+    log.replaceChildren(li);
     entries = [];
     count = 0;
     updateCount();
@@ -414,6 +417,9 @@ function replaceCircular(): (key: string, value: unknown) => unknown {
 // Boot
 // ---------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
+  // i18n first: localize the (English-default) DOM and lift the cloak for DE.
+  applyI18n(detectLang());
+  wireLangToggle();
   wireActions();
   wireProfileQuickActions();
   wireLocaleSwitcher();
