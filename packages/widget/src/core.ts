@@ -6,6 +6,7 @@
 import {
   isLocale,
   PROFILE_IDS,
+  type FeatureId,
   type Locale,
   type ProfileId,
   type WidgetConfig,
@@ -14,7 +15,7 @@ import {
 import { resolveConfig, type ResolvedConfig } from './config.js';
 import { applyState } from './features/apply.js';
 import { applyProfile } from './features/profile.js';
-import { loadState, saveState, clearState } from './state.js';
+import { loadState, saveState, clearState, coerceStep, coerceContrastMode, STEPS } from './state.js';
 import { openPanel, type PanelHandle } from './panel/panel.js';
 import { dispatchWidgetEvent } from './util/events.js';
 
@@ -92,10 +93,24 @@ function set(id: string, value: unknown): void {
     return;
   }
   const state = loadState(cfg.storageKey);
-  if (id in state.features) {
-    (state.features as Record<string, boolean>)[id] = Boolean(value);
+  // Whitelist what `set()` may write: a known feature toggle, or one of the
+  // settable scalar fields (range-checked the same way loadState validates
+  // persisted state). Anything else — including prototype keys — is ignored.
+  if (Object.prototype.hasOwnProperty.call(state.features, id)) {
+    state.features[id as FeatureId] = Boolean(value);
+  } else if (id === 'contrastMode') {
+    state.contrastMode = coerceContrastMode(value, state.contrastMode);
+  } else if (id === 'fontSizeLevel') {
+    state.fontSizeLevel = coerceStep(value, STEPS.fontSize, state.fontSizeLevel);
+  } else if (id === 'lineHeightLevel') {
+    state.lineHeightLevel = coerceStep(value, STEPS.lineHeight, state.lineHeightLevel);
+  } else if (id === 'letterSpacingLevel') {
+    state.letterSpacingLevel = coerceStep(value, STEPS.letterSpacing, state.letterSpacingLevel);
+  } else if (id === 'oversized') {
+    state.oversized = Boolean(value);
   } else {
-    (state as unknown as Record<string, unknown>)[id] = value;
+    if (cfg.debug) console.warn(`[aw] core.set: unknown id "${id}"; ignoring`);
+    return;
   }
   saveState(cfg.storageKey, state);
   applyState(state);

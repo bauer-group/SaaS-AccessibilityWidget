@@ -119,6 +119,22 @@ describe('core.set', () => {
     api().set('tts', true);
     expect(loadState(STORAGE).features.tts).toBe(false);
   });
+
+  it('writes a known scalar field, range-checked against the allowed steps', () => {
+    api().set('fontSizeLevel', 1.4);
+    expect(loadState(STORAGE).fontSizeLevel).toBe(1.4);
+    // An out-of-domain value is rejected, leaving the previous value intact.
+    api().set('fontSizeLevel', 9999);
+    expect(loadState(STORAGE).fontSizeLevel).toBe(1.4);
+  });
+
+  it('ignores unknown ids and never persists arbitrary or prototype keys', () => {
+    api().set('garbage', 'x');
+    api().set('__proto__', { polluted: true });
+    const saved = loadState(STORAGE) as unknown as Record<string, unknown>;
+    expect(saved.garbage).toBeUndefined();
+    expect(({} as Record<string, unknown>).polluted).toBeUndefined();
+  });
 });
 
 describe('core.reset', () => {
