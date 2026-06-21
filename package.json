@@ -5,7 +5,7 @@
   "type": "module",
   "description": "Monorepo for @bauer-group/accessibility-widget — the BFSG / EN 301 549 / WCAG 2.2 AA Accessibility Widget (lazy-loading, CDN-ready core). Framework, CMS and shop integrations live in a separate repo: bauer-group/SaaS-AccessibilityWidgetIntegrations.",
   "license": "AGPL-3.0-only",
-  "author": "BAUER GROUP <info@bauer-group.com>",
+  "author": "BAUER GROUP <info@ge.bauer-group.com>",
   "homepage": "https://github.com/bauer-group/SaaS-AccessibilityWidget",
   "repository": {
     "type": "git",

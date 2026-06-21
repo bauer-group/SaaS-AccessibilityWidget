@@ -1,7 +1,7 @@
 /*!
  * BAUER GROUP Accessibility Widget — Loader (IIFE, ~4 KB gzip)
  * SPDX-License-Identifier: AGPL-3.0-only · © 2026 BAUER GROUP
- * AGPL-3.0-only or commercial (info@bauer-group.com) — see LICENSE / LICENSING.md
+ * AGPL-3.0-only or commercial (info@ge.bauer-group.com) — see LICENSE / LICENSING.md
  *
  * Responsibilities:
  *   1. Read persisted preferences and apply them BEFORE first paint (no FOUAC).

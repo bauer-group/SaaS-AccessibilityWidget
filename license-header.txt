@@ -1,5 +1,5 @@
 SPDX-License-Identifier: AGPL-3.0-only
-SPDX-FileCopyrightText: © 2026 BAUER GROUP <info@bauer-group.com>
+SPDX-FileCopyrightText: © 2026 BAUER GROUP <info@ge.bauer-group.com>
 
 This file is part of Accessibility Widget.
 
@@ -13,17 +13,17 @@ let others interact with it there, you must also make the source code of your
 modified version available to those users. See the LICENSE file for the full terms.
 
 For commercial licensing (use in proprietary/closed products without the AGPL
-obligations), contact info@bauer-group.com. See LICENSING.md for details.
+obligations), contact info@ge.bauer-group.com. See LICENSING.md for details.
 
 --------------------------------------------------------------------------------
 Beispiel-Header für JS/TS/C-artige Dateien (oben in jede Quelldatei einfügen):
 
 /*
  * SPDX-License-Identifier: AGPL-3.0-only
- * SPDX-FileCopyrightText: © 2026 BAUER GROUP <info@bauer-group.com>
+ * SPDX-FileCopyrightText: © 2026 BAUER GROUP <info@ge.bauer-group.com>
  *
  * Part of Accessibility Widget. Dual-licensed under AGPL-3.0-only (see LICENSE) or a
- * commercial license (contact info@bauer-group.com; see LICENSING.md).
+ * commercial license (contact info@ge.bauer-group.com; see LICENSING.md).
  */
 
 Kurzform (für eng begrenzte Header / minifizierte Bundles, Banner beibehalten!):

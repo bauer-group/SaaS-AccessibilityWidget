@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Interaktive Demo + Scanner-Testziel für das BAUER GROUP Accessibility Widget.",
   "license": "AGPL-3.0-only",
-  "author": "BAUER GROUP <info@bauer-group.com>",
+  "author": "BAUER GROUP <info@ge.bauer-group.com>",
   "private": true,
   "type": "module",
   "engines": {

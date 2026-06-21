@@ -267,22 +267,19 @@ export const de: Dict = {
     conformanceBody:
       'Diese Website ist <strong>teilweise konform</strong>. Die auf der <a href="/">Demo-Seite</a> aufgeführten Barrieren sind <em>absichtlich</em> eingebaut und dienen als Scanner-Testziel. In einem echten Produktivsystem wären sie behoben.',
     contactTitle: 'Kontakt / Feedback (§ 14 BFSG)',
-    contactBody:
-      'BAUER GROUP<br />Web: <a href="https://www.bauer-group.com" rel="noopener">www.bauer-group.com</a>',
+    contactBody: 'BAUER GROUP',
     enforcementTitle: 'Durchsetzungsverfahren',
     enforcementBody:
       'Erhältst du keine zufriedenstellende Antwort, kannst du dich an die Schlichtungsstelle des Bundes wenden:<br />Schlichtungsstelle des Bundes für Barrierefreiheit<br />Mauerstraße 53, 10117 Berlin<br />E-Mail: <a href="mailto:info@schlichtungsstelle-bfsg.de">info@schlichtungsstelle-bfsg.de</a>',
     createdTitle: 'Erstellung dieser Erklärung',
-    createdBody: 'Erstellt am 21. April 2026. Letzte Bewertung: 21. April 2026.',
+    createdBody: 'Erstellt am 21. April 2026. Letzte Bewertung: 21. Juni 2026.',
   },
 
   impressum: {
     title: 'Impressum',
     back: '← Zurück zur Demo',
-    body: 'Dies ist eine Demo-Seite ohne produktiven Inhalt.',
-    addressName: 'BAUER GROUP',
-    addressLines: 'Demo-Adresse',
-    web: 'Web',
+    address:
+      '<strong>BAUER GROUP</strong><br />3 Ana Politkovskaia Street<br />Building 6<br />0186 Tbilisi<br />Georgien<br /><br />Telefon: <a href="tel:+995322501220">+995 32 250 12 20</a><br />E-Mail: <a href="mailto:info@ge.bauer-group.com">info@ge.bauer-group.com</a>',
   },
 
   config: {

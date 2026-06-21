@@ -142,7 +142,7 @@ Report vulnerabilities via the process in [SECURITY.md](./SECURITY.md).
 
 - **GNU AGPL-3.0-only** for open-source use — see [LICENSE](./LICENSE).
 - **Commercial license** for use in closed/proprietary products or without the
-  AGPL network-disclosure obligations — available at `info@bauer-group.com`.
+  AGPL network-disclosure obligations — available at `info@ge.bauer-group.com`.
 
 Details: [LICENSING.md](./LICENSING.md). Contributions require a signed [CLA](./CLA.md).
 
@@ -293,7 +293,7 @@ Schwachstellen über den Prozess in [SECURITY.md](./SECURITY.md) melden.
 
 - **GNU AGPL-3.0-only** für Open-Source-Nutzung — siehe [LICENSE](./LICENSE).
 - **Kommerzielle Lizenz** für die Nutzung in geschlossenen/proprietären Produkten oder ohne die
-  AGPL-Netzwerk-Offenlegungspflichten — verfügbar unter `info@bauer-group.com`.
+  AGPL-Netzwerk-Offenlegungspflichten — verfügbar unter `info@ge.bauer-group.com`.
 
 Details: [LICENSING.md](./LICENSING.md). Contributions erfordern eine signierte [CLA](./CLA.md).
 

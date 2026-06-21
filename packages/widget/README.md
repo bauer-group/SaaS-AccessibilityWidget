@@ -257,7 +257,7 @@ pnpm --filter @bauer-group/accessibility-widget test     # Vitest
 `@bauer-group/accessibility-widget` is **dual-licensed**:
 
 - **GNU AGPL-3.0-only** for open-source use — see [LICENSE](../../LICENSE).
-- **Commercial license** for closed/proprietary products or without the AGPL disclosure obligations — `info@bauer-group.com`.
+- **Commercial license** for closed/proprietary products or without the AGPL disclosure obligations — `info@ge.bauer-group.com`.
 
 Details: [LICENSING.md](../../LICENSING.md).
 
@@ -514,6 +514,6 @@ pnpm --filter @bauer-group/accessibility-widget test     # Vitest
 `@bauer-group/accessibility-widget` ist **dual lizenziert**:
 
 - **GNU AGPL-3.0-only** für Open-Source-Nutzung — siehe [LICENSE](../../LICENSE).
-- **Kommerzielle Lizenz** für geschlossene/proprietäre Produkte oder ohne AGPL-Offenlegungspflichten — `info@bauer-group.com`.
+- **Kommerzielle Lizenz** für geschlossene/proprietäre Produkte oder ohne AGPL-Offenlegungspflichten — `info@ge.bauer-group.com`.
 
 Details: [LICENSING.md](../../LICENSING.md).

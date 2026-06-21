@@ -78,7 +78,7 @@
 
 ### ⚖️ License
 
-* **Relicensed from MIT to GNU AGPL-3.0-only (dual-licensed).** Open-source use under the [GNU AGPL-3.0](./LICENSE); a separate commercial license is available via `info@bauer-group.com` (see [LICENSING.md](./LICENSING.md)). Contributions now require a signed [CLA](./CLA.md). No runtime or behavior change.
+* **Relicensed from MIT to GNU AGPL-3.0-only (dual-licensed).** Open-source use under the [GNU AGPL-3.0](./LICENSE); a separate commercial license is available via `info@ge.bauer-group.com` (see [LICENSING.md](./LICENSING.md)). Contributions now require a signed [CLA](./CLA.md). No runtime or behavior change.
 
 ## [1.0.2](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.0.1...v1.0.2) (2026-06-20)
 

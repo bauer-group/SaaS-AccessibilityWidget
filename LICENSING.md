@@ -22,7 +22,7 @@ If you want to integrate the widget into a **proprietary / closed product**, **r
 
 The commercial license lifts the AGPL's copyleft / disclosure obligations for you. It is paid and available directly from the rights holder.
 
-**Inquiries:** `info@bauer-group.com`
+**Inquiries:** `info@ge.bauer-group.com`
 
 ---
 
@@ -61,7 +61,7 @@ The commercial option cannot be expressed cleanly as an SPDX expression in npm; 
 > `Accessibility Widget` is dual-licensed:
 >
 > - **GNU AGPL-3.0-only** for open-source use (see [`LICENSE`](./LICENSE)).
-> - **Commercial license** for use in closed/proprietary products or without the AGPL disclosure obligations — available at `info@bauer-group.com`.
+> - **Commercial license** for use in closed/proprietary products or without the AGPL disclosure obligations — available at `info@ge.bauer-group.com`.
 >
 > Details: [`LICENSING.md`](./LICENSING.md). Contributions only with a signed [CLA](./CLA.md).
 >
@@ -93,7 +93,7 @@ Wenn du das Widget in ein **proprietäres / geschlossenes Produkt** integrieren,
 
 Die kommerzielle Lizenz hebt die Copyleft-/Offenlegungspflichten der AGPL für dich auf. Sie ist kostenpflichtig und direkt beim Rechteinhaber erhältlich.
 
-**Anfrage:** `info@bauer-group.com`
+**Anfrage:** `info@ge.bauer-group.com`
 
 ### Warum dual?
 
@@ -128,7 +128,7 @@ Die kommerzielle Option lässt sich in npm nicht sauber als SPDX-Ausdruck abbild
 > `Accessibility Widget` ist dual lizenziert:
 >
 > - **GNU AGPL-3.0-only** für Open-Source-Nutzung (siehe [`LICENSE`](./LICENSE)).
-> - **Kommerzielle Lizenz** für die Nutzung in geschlossenen/proprietären Produkten oder ohne AGPL-Offenlegungspflichten — erhältlich unter `info@bauer-group.com`.
+> - **Kommerzielle Lizenz** für die Nutzung in geschlossenen/proprietären Produkten oder ohne AGPL-Offenlegungspflichten — erhältlich unter `info@ge.bauer-group.com`.
 >
 > Details: [`LICENSING.md`](./LICENSING.md). Beiträge nur mit unterzeichnetem [CLA](./CLA.md).
 >
