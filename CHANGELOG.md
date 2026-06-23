@@ -1,3 +1,9 @@
+## [1.4.6](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.4.5...v1.4.6) (2026-06-23)
+
+### 🐛 Bug Fixes
+
+* **widget:** kept panel scroll steady on toggle ([94d37b0](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/94d37b03bf8b294e8645bbf8198aa0f8fd6584b1))
+
 ## [1.4.5](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.4.4...v1.4.5) (2026-06-23)
 
 ### 🐛 Bug Fixes
