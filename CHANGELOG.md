@@ -1,3 +1,9 @@
+## [1.4.5](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.4.4...v1.4.5) (2026-06-23)
+
+### 🐛 Bug Fixes
+
+* **widget:** anchored panel to moved FAB corner ([88ac2a4](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/88ac2a4bcbf708be9487f8e1e200baf2cf5696cf))
+
 ## [1.4.4](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.4.3...v1.4.4) (2026-06-21)
 
 ### 🐛 Bug Fixes
