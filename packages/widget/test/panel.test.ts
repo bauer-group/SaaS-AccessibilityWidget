@@ -127,6 +127,25 @@ describe('feature toggling', () => {
     const after = document.querySelector<HTMLButtonElement>('[data-feature="grayscale"]');
     expect(document.activeElement).toBe(after);
   });
+
+  it('preserves panel scroll offset and re-focuses with preventScroll on toggle', () => {
+    // Regression: rerender() empties the scroll container, which reset scrollTop
+    // to 0 (panel "jumped" to the top on every toggle), and the focus restore
+    // ran without preventScroll (could yank the page/panel into view).
+    const { handle } = mount();
+    mounted = handle;
+    const root = handle.root;
+    const btn = document.querySelector<HTMLButtonElement>('[data-feature="grayscale"]')!;
+    const focusSpy = vi.spyOn(HTMLElement.prototype, 'focus');
+
+    root.scrollTop = 120;
+    btn.focus();
+    btn.click(); // commit → rerender
+
+    expect(root.scrollTop).toBe(120);
+    expect(focusSpy).toHaveBeenCalledWith({ preventScroll: true });
+    focusSpy.mockRestore();
+  });
 });
 
 describe('locale switching', () => {

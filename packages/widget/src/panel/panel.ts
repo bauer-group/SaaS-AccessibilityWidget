@@ -211,12 +211,21 @@ export function openPanel(ctx: PanelContext): PanelHandle {
     // Preserve focus across re-render via a language-stable selector.
     // aria-label would break when the user switches locale mid-session.
     const focusSelector = focusRestoreSelector();
+    // Emptying the scroll container resets scrollTop to 0, which would snap the
+    // panel back to the top on every feature toggle — jarring when the user is
+    // deep in the list. Capture the offset and restore it after the rebuild.
+    const scrollTop = root.scrollTop;
 
     while (root.firstChild) root.removeChild(root.firstChild);
     build();
     attachDrag();
 
-    if (focusSelector) root.querySelector<HTMLElement>(focusSelector)?.focus();
+    // Restore focus first (preventScroll so it can't yank the viewport), THEN
+    // pin the scroll offset as the last write — otherwise focus()/reflow gets
+    // the final say and the panel drifts on every toggle.
+    if (focusSelector)
+      root.querySelector<HTMLElement>(focusSelector)?.focus({ preventScroll: true });
+    root.scrollTop = scrollTop;
   }
 
   // Forward declaration so build()/commit() can reference it; defined below
@@ -628,7 +637,7 @@ export function openPanel(ctx: PanelContext): PanelHandle {
   trap = createFocusTrap(root);
   trap.activate();
   document.addEventListener('keydown', onEsc);
-  root.querySelector<HTMLButtonElement>('.aw-close')?.focus();
+  root.querySelector<HTMLButtonElement>('.aw-close')?.focus({ preventScroll: true });
   attachDrag();
 
   function setActiveLocale(next: Locale): void {
