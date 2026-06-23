@@ -7,6 +7,7 @@ import {
   isRtl,
   type FeatureId,
   type Locale,
+  type Position,
   type WidgetState,
 } from '../types/index.js';
 import { createFocusTrap, type FocusTrap } from '../focus-trap.js';
@@ -123,6 +124,41 @@ export interface PanelHandle {
   setLocale(next: Locale): void;
 }
 
+/**
+ * Pick the viewport corner nearest to a point. Used to anchor the panel to the
+ * same corner the FAB occupies after the user drags it or calls `setPosition()`
+ * — without this a moved FAB and the panel land on opposite sides (FAB
+ * bottom-left, panel bottom-right). Exact-center ties resolve to bottom/right,
+ * matching the configured default.
+ */
+export function cornerForPoint(cx: number, cy: number, vw: number, vh: number): Position {
+  const vertical = cy < vh / 2 ? 'top' : 'bottom';
+  const horizontal = cx < vw / 2 ? 'left' : 'right';
+  return `${vertical}-${horizontal}` as Position;
+}
+
+/**
+ * Resolve the corner the panel should anchor to. When the FAB has been moved to
+ * a free pixel position (drag / `setPosition()` → `data-aw-fab-pos="custom"`),
+ * follow it to the nearest corner; otherwise honor the configured anchor. The
+ * FAB's live bounding rect is the source of truth — it reflects the clamped,
+ * actually-rendered position regardless of how it got there.
+ */
+function resolvePanelAnchor(configured: Position): Position {
+  const fab = document.querySelector<HTMLElement>('[data-aw-fab][data-aw-fab-pos="custom"]');
+  if (!fab) return configured;
+  const r = fab.getBoundingClientRect();
+  // A degenerate all-zero rect (e.g. jsdom without layout) carries no position
+  // signal — fall back to the configured corner rather than forcing top-left.
+  if (!r.width && !r.height && !r.left && !r.top) return configured;
+  return cornerForPoint(
+    r.left + r.width / 2,
+    r.top + r.height / 2,
+    window.innerWidth,
+    window.innerHeight,
+  );
+}
+
 export function openPanel(ctx: PanelContext): PanelHandle {
   let locale = ctx.locale;
   let T = t(locale);
@@ -131,8 +167,12 @@ export function openPanel(ctx: PanelContext): PanelHandle {
   let trap: FocusTrap | null = null;
   let drag: DraggableHandle | null = null;
 
+  // Follow a moved FAB to its nearest corner so the panel opens next to its
+  // trigger, not at the configured default corner.
+  const anchor = resolvePanelAnchor(ctx.config.position);
+
   const root = make('div', {
-    class: `aw-panel aw-panel--${ctx.config.position}`,
+    class: `aw-panel aw-panel--${anchor}`,
     attrs: {
       id: 'aw-panel',
       role: 'dialog',
