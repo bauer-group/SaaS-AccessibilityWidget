@@ -45,6 +45,7 @@ yarn-error.log*
 playwright-report
 test-results
 .playwright
+.playwright-mcp/
 
 # generated reports
 scanner-reports
