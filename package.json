@@ -43,17 +43,17 @@
     "demo:preview": "pnpm --filter @bauer-group/accessibility-widget-demo preview"
   },
   "devDependencies": {
-    "@aws-sdk/client-s3": "^3.1072.0",
+    "@aws-sdk/client-s3": "^3.1076.0",
     "@eslint/js": "^10.0.1",
-    "@types/node": "^26.0.0",
-    "cloudflare": "^6.4.0",
-    "eslint": "^10.5.0",
-    "globals": "^17.6.0",
-    "prettier": "^3.8.4",
+    "@types/node": "^26.0.1",
+    "cloudflare": "^6.5.0",
+    "eslint": "^10.6.0",
+    "globals": "^17.7.0",
+    "prettier": "^3.9.4",
     "rimraf": "^6.0.1",
-    "turbo": "^2.9.18",
+    "turbo": "^2.10.1",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.61.1"
+    "typescript-eslint": "^8.62.1"
   },
   "prettier": {
     "printWidth": 100,
