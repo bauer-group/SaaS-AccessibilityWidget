@@ -96,6 +96,7 @@ const LABELS: Record<Locale, string> = {
   hu: 'Akadálymentességi beállítások',
   ro: 'Setări de accesibilitate',
   uk: 'Налаштування доступності',
+  lv: 'Pieejamības iestatījumi',
 };
 
 if (window.__accessibilityWidgetLoaded) {
