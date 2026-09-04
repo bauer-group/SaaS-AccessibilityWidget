@@ -31,6 +31,7 @@ import { el } from './el.js';
 import { hu } from './hu.js';
 import { ro } from './ro.js';
 import { uk } from './uk.js';
+import { lv } from './lv.js';
 
 export const translations: Record<Locale, Translation> = {
   de,
@@ -61,6 +62,7 @@ export const translations: Record<Locale, Translation> = {
   hu,
   ro,
   uk,
+  lv,
 };
 
 export function t(locale: Locale): Translation {
