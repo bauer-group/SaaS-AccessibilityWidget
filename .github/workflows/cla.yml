@@ -8,8 +8,15 @@
 # contributors sign by commenting the exact phrase below on their PR.
 #
 # Auth: uses the built-in GITHUB_TOKEN (contents: write) to store signatures in
-# this repo — no extra secret/PAT needed. Bots (dependabot, renovate, …) are
-# allowlisted via prefix wildcards so they never have to sign.
+# this repo — no extra secret/PAT needed.
+#
+# Allowlist: BAUER GROUP's own accounts are the licensor and never have to
+# sign. The action matches the commit author's GitHub login (or the git author
+# name when the email is not linked), so the organisation's maintainer and
+# every bot that commits here are listed by exact login; the prefix wildcards
+# keep other bots (renovate, …) exempt as before.
+# pull_request_target runs the base-branch copy of this file, so an allowlist
+# change only takes effect for PRs after it is merged to main.
 # =============================================================================
 
 name: ⚖️ CLA Assistant
@@ -45,6 +52,6 @@ jobs:
           path-to-signatures: 'signatures/version1/cla.json'
           path-to-document: 'https://github.com/bauer-group/SaaS-AccessibilityWidget/blob/main/CLA.md'
           branch: 'main'
-          allowlist: 'dependabot*,renovate*,github-actions*,*-bot'
+          allowlist: 'karlspace,dependabot[bot],github-actions[bot],semantic-release-bot,dependabot*,renovate*,github-actions*,*-bot'
           custom-notsigned-prcomment: 'Thank you for your contribution! Because this project is **dual-licensed** (GNU AGPL-3.0 OR commercial), we first need your agreement to our [Contributor License Agreement](https://github.com/bauer-group/SaaS-AccessibilityWidget/blob/main/CLA.md) before we can merge. Please read it, then post exactly the following comment on this pull request:'
           custom-allsigned-prcomment: '✅ All contributors have signed the CLA — thank you!'
