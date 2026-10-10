@@ -1,3 +1,21 @@
+# Changelog
+
+All notable changes to this project are documented here. This file is maintained
+automatically by [semantic-release](https://github.com/semantic-release/semantic-release)
+on every release to `main`.
+
+## [1.4.7](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.4.6...v1.4.7) (2026-10-10)
+
+### 🐛 Bug Fixes
+
+* **ci:** added the missing permissions block ([c7ede59](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/c7ede59609c911f06b84f9a53dbf6afbb0cd78cb))
+* **deps:** patched vulnerable dev dependencies ([#20](https://github.com/bauer-group/SaaS-AccessibilityWidget/issues/20)) ([6b2eede](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/6b2eedee9d66bd1ca1e915af1f938ace15bc0712))
+
+### 🔧 Maintenance
+
+* **ci:** removed issue AI summary workflow ([e918c52](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/e918c52b8a0e62acbb654c1a8b3b0b96ce2da066)), references [bauer-group/automation-templates#105](https://github.com/bauer-group/automation-templates/issues/105)
+* **ci:** removed redundant teams notification ([790582c](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/790582cb8b06f44f10c2688d7db61f3682bd76ec))
+
 ## [1.4.6](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.4.5...v1.4.6) (2026-06-23)
 
 ### 🐛 Bug Fixes
