@@ -4,6 +4,12 @@ All notable changes to this project are documented here. This file is maintained
 automatically by [semantic-release](https://github.com/semantic-release/semantic-release)
 on every release to `main`.
 
+## [1.4.8](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.4.7...v1.4.8) (2026-10-11)
+
+### 🐛 Bug Fixes
+
+* **deps:** updated source-map-js to 1.2.2 via lockfile refresh ([eb647c4](https://github.com/bauer-group/SaaS-AccessibilityWidget/commit/eb647c47fea80108785441af32a40b8eccc54224))
+
 ## [1.4.7](https://github.com/bauer-group/SaaS-AccessibilityWidget/compare/v1.4.6...v1.4.7) (2026-10-10)
 
 ### 🐛 Bug Fixes
