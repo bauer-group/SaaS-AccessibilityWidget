@@ -1,6 +1,6 @@
 {
   "name": "@bauer-group/accessibility-widget",
-  "version": "1.4.7",
+  "version": "1.4.8",
   "description": "Lazy-loading Accessibility-Widget nach BFSG/EN 301 549/WCAG 2.2 AA. Loader ~4 KB gzip, Core ~14 KB gzip. Kein Tracking, kein Cookie, kein DOM-/ARIA-Override.",
   "license": "AGPL-3.0-only",
   "author": "BAUER GROUP <info@ge.bauer-group.com>",
@@ -44,13 +44,13 @@
   "devDependencies": {
     "@types/jsdom": "^21.1.7",
     "@types/node": "^26.0.0",
-    "@vitest/coverage-v8": "^4.1.9",
+    "@vitest/coverage-v8": "^4.1.11",
     "esbuild": "^0.28.1",
     "jsdom": "^29.1.1",
     "rimraf": "^6.0.1",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.9"
+    "vitest": "^4.1.11"
   },
   "keywords": [
     "accessibility",
