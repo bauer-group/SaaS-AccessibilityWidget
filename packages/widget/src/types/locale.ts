@@ -30,6 +30,7 @@ export const SUPPORTED_LOCALES = [
   'hu', // Hungarian
   'ro', // Romanian
   'uk', // Ukrainian
+  'lv', // Latvian
 ] as const;
 
 export type Locale = (typeof SUPPORTED_LOCALES)[number];
