@@ -4,6 +4,9 @@ updates:
     directory: /
     schedule:
       interval: weekly
+      day: sunday
+      time: "13:30"
+      timezone: Etc/UTC
     open-pull-requests-limit: 10
     commit-message:
       prefix: 'chore(deps)'
@@ -15,5 +18,8 @@ updates:
     directory: /
     schedule:
       interval: weekly
+      day: sunday
+      time: "13:30"
+      timezone: Etc/UTC
     commit-message:
       prefix: 'chore(ci)'
