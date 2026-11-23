@@ -10,6 +10,13 @@ updates:
     open-pull-requests-limit: 10
     commit-message:
       prefix: 'chore(deps)'
+    ignore:
+      # TypeScript 7.0 (native compiler) ships no JS API and typescript-eslint
+      # refuses to load with it ("typescript-eslint does not support TS 7.0").
+      # Re-enable once typescript-eslint supports TS >= 7.1, see
+      # https://github.com/typescript-eslint/typescript-eslint/issues/10940
+      - dependency-name: 'typescript'
+        update-types: ['version-update:semver-major']
     groups:
       dev-dependencies:
         dependency-type: development
