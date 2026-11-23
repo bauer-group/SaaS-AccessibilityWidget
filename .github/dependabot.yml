@@ -5,7 +5,7 @@ updates:
     schedule:
       interval: weekly
       day: sunday
-      time: "13:30"
+      time: '13:30'
       timezone: Etc/UTC
     open-pull-requests-limit: 10
     commit-message:
@@ -19,7 +19,7 @@ updates:
     schedule:
       interval: weekly
       day: sunday
-      time: "13:30"
+      time: '13:30'
       timezone: Etc/UTC
     commit-message:
       prefix: 'chore(ci)'
