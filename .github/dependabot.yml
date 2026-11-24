@@ -19,9 +19,21 @@ updates:
       # https://github.com/typescript-eslint/typescript-eslint/issues/10940
       - dependency-name: 'typescript'
         update-types: ['version-update:semver-major']
+    # Minor and patch updates arrive as one PR per run, which
+    # dependabot-maintenance.yml merges once nodejs-pr.yml has passed;
+    # major updates get a PR of their own, left open for review.
+    # 0.x packages stay out of the group: below 1.0.0 a minor update counts
+    # as major, and one such update would hold the whole group open. Remove
+    # a package from exclude-patterns once it reaches 1.0.0.
     groups:
-      dev-dependencies:
-        dependency-type: development
+      npm-minor-and-patch:
+        patterns:
+          - '*'
+        exclude-patterns:
+          - 'esbuild' # 0.x (packages/widget)
+        update-types:
+          - 'minor'
+          - 'patch'
 
   - package-ecosystem: github-actions
     directory: /
