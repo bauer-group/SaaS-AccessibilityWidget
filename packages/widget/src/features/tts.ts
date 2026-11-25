@@ -29,6 +29,7 @@ const LOCALE_TO_BCP47: Record<Locale, string> = {
   hu: 'hu-HU',
   ro: 'ro-RO',
   uk: 'uk-UA',
+  lv: 'lv-LV',
 };
 
 let active = false;

@@ -38,4 +38,5 @@ export const LANGUAGE_NAMES: Record<Locale, string> = {
   hu: 'Magyar',
   ro: 'Română',
   uk: 'Українська',
+  lv: 'Latviešu',
 };
